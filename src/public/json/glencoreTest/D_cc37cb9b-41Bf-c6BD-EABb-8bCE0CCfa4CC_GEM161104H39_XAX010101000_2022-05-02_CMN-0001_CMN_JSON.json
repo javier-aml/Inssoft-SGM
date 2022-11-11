@@ -1,0 +1,2083 @@
+{
+  "Version": "1.5",
+  "RfcContribuyente": "GEM161104H39",
+  "RfcRepresentanteLegal": "BEMM720101IN6",
+  "RfcProveedor": "XAX010101000",
+  "RfcProveedores": [
+    "XAX010101000"
+  ],
+  "Caracter": "permisionario",
+  "ModalidadPermiso": "PER1",
+  "NumPermiso": "H/19916/COM/2017",
+  "ClaveInstalacion": "CMN-0001",
+  "DescripcionInstalacion": "Comercialización de gasolina con octanaje menor a 91, gasolina con octanaje mayor a 91 y Diesel automotriz",
+  "NumeroPozos": 0,
+  "NumeroTanques": 8,
+  "NumeroDuctosEntradaSalida": 0,
+  "NumeroDuctosTransporteDistribucion": 0,
+  "NumeroDispensarios": 15,
+  "FechaYHoraCorte": "2022-05-02T00:00:00-06:00",
+  "Producto": [
+    {
+      "ClaveProducto": "PR07",
+      "ClaveSubProducto": "SP16",
+      "ComposOctanajeGasolina": 87,
+      "GasolinaConCombustibleNoFosil": "No",
+      "Tanque": [
+        {
+          "ClaveIdentificacionTanque": "TQS-TDA-0002",
+          "Localizaciony/oDescripcionTanque": "Tanque de Gasolina Regular",
+          "VigenciaCalibracionTanque": "2028-05-11",
+          "CapacidadTotalTanque": {
+            "ValorNumerico": 22800812,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadOperativaTanque": {
+            "ValorNumerico": 22421556,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadUtilTanque": {
+            "ValorNumerico": 20605792,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadFondajeTanque": {
+            "ValorNumerico": 1506324,
+            "UnidadDeMedida": "UM03"
+          },
+          "VolumenMinimoOperacion": {
+            "ValorNumerico": 2195020,
+            "UnidadDeMedida": "UM03"
+          },
+          "EstadoTanque": "O",
+          "Medidores": [
+            {
+              "SistemaMedicionTanque": "SME-TQS-TDA-0002",
+              "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+              "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+              "IncertidumbreMedicionSistMedicionTanque": 0.277
+            }
+          ],
+          "Existencias": {
+            "VolumenExistenciasAnterior": 4944446.205,
+            "VolumenAcumOpsRecepcion": {
+              "ValorNumerico": 0,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraRecepcionAcumulado": "23:59:59-06:00",
+            "VolumenAcumOpsEntrega": {
+              "ValorNumerico": 337428,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraEntregaAcumulado": "23:59:59-06:00",
+            "VolumenExistencias": 4607018.205,
+            "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+            "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+          },
+          "Recepciones": {
+            "TotalRecepciones": 3,
+            "SumaVolumenRecepcion": {
+              "ValorNumerico": 39741,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 3,
+            "SumaCompras": 183897.99,
+            "RECEPCION": [
+              {
+                "NumeroDeRegistro": 7,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 19879,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:32:40",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:32:40",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "11861727-cc7c-47ee-9de1-edb6d8e7d590",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 368313.94,
+                          "FechaYHoraTransaccion": "2022-05-02 23:32:40",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 19879,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 11,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9929,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:26:35",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:26:35",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "f324bebc-0310-4f13-8639-49f1101a3a80",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 183500.23,
+                          "FechaYHoraTransaccion": "2022-05-02 23:26:35",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9929,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 16,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9933,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:12:53",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:12:53",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "40a57004-95e9-4677-97e1-35fe313cfc67",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 183894.99,
+                          "FechaYHoraTransaccion": "2022-05-02 23:12:53",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9933,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Entregas": {
+            "TotalEntregas": 17,
+            "SumaVolumenEntregado": {
+              "ValorNumerico": 197369,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 17,
+            "SumaVentas": 0,
+            "Entrega": [
+              {
+                "NumeroDeRegistro": 2,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33094,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:56",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:56",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "1ed695c7-db5c-49a9-98eb-4e34fb2821be",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 569986.202406,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:56",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33094,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 4,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33093,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:52",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:52",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "59f3f82c-0da2-429d-938f-fc7b250c9e56",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 569968.979157,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:52",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33093,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 8,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 32993,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:45",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:45",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "3bc4d04b-6cc3-42bc-a3e2-35fc71c964c4",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 568246.654257,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:45",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 32993,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 11,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33061,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:39",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:39",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "8906ac0a-6710-491b-9098-78ee53ac2b0f",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 569417.835189,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:39",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33061,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 13,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 32576,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:35",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:35",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "e3f52dfa-b5e3-4664-8a25-e0e790690d03",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 561064.559424,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:35",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 32576,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 16,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 32552,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:30",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:30",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "98fa197f-4314-499a-9b44-9da30070438e",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 560651.201448,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:30",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 32552,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "SumaCompras": 560668.201448
+          }
+        },
+        {
+          "ClaveIdentificacionTanque": "ATQ-TDA-0001",
+          "Localizaciony/oDescripcionTanque": "Autotanque",
+          "VigenciaCalibracionTanque": "2028-05-11",
+          "CapacidadTotalTanque": {
+            "ValorNumerico": 62000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadOperativaTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadUtilTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadFondajeTanque": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "VolumenMinimoOperacion": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "EstadoTanque": "O",
+          "Medidores": [
+            {
+              "SistemaMedicionTanque": "SME-ATQ-TDA-0001",
+              "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+              "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+              "IncertidumbreMedicionSistMedicionTanque": 0.277
+            }
+          ],
+          "Existencias": {
+            "VolumenExistenciasAnterior": 0,
+            "VolumenAcumOpsRecepcion": {
+              "ValorNumerico": 3731835.02,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraRecepcionAcumulado": "23:59:59-06:00",
+            "VolumenAcumOpsEntrega": {
+              "ValorNumerico": 3731836,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraEntregaAcumulado": "23:59:59-06:00",
+            "VolumenExistencias": 0,
+            "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+            "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+          },
+          "Recepciones": {
+            "TotalRecepciones": 4,
+            "SumaVolumenRecepcion": {
+              "ValorNumerico": 49677,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 4,
+            "SumaCompras": 183898.99,
+            "RECEPCION": [
+              {
+                "NumeroDeRegistro": 1,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 19872,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:48:47",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:48:47",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "adaeb226-c532-479b-8559-bf32d273a9ad",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 367901.07,
+                          "FechaYHoraTransaccion": "2022-05-02 23:48:47",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 19872,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 3,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9939,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:45:37",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:45:37",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "6f418180-06be-4679-a7fc-06d528c4336b",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 184147.7,
+                          "FechaYHoraTransaccion": "2022-05-02 23:45:37",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9939,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 6,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9933,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:34:18",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:34:18",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "08ea4ab0-1722-4e1e-84fc-17cdae1530ca",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 183574.16,
+                          "FechaYHoraTransaccion": "2022-05-02 23:34:18",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9933,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 14,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9933,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:20:38",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:20:38",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "515db0ea-cc38-4df2-b017-14131f995adc",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 183894.99,
+                          "FechaYHoraTransaccion": "2022-05-02 23:20:38",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9933,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Entregas": {
+            "TotalEntregas": 13,
+            "SumaVolumenEntregado": {
+              "ValorNumerico": 403593,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 13,
+            "SumaVentas": 5598932.344,
+            "Entrega": [
+              {
+                "NumeroDeRegistro": 3,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33091,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:54",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:54",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "73f24667-15a1-4c23-a770-f20db0f0ce23",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 569934.532659,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:54",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33091,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 5,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33074,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:50",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:50",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "09f91266-d447-4e99-aa10-afc7c47850d2",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 569641.737426,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:50",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33074,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "SumaCompras": 569654.737426
+          }
+        },
+        {
+          "ClaveIdentificacionTanque": "ATQ-TDA-0004",
+          "Localizaciony/oDescripcionTanque": "Autotanque",
+          "VigenciaCalibracionTanque": "2028-05-11",
+          "CapacidadTotalTanque": {
+            "ValorNumerico": 62000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadOperativaTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadUtilTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadFondajeTanque": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "VolumenMinimoOperacion": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "EstadoTanque": "O",
+          "Medidores": [
+            {
+              "SistemaMedicionTanque": "SME-ATQ-TDA-0004",
+              "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+              "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+              "IncertidumbreMedicionSistMedicionTanque": 0.277
+            }
+          ],
+          "Existencias": {
+            "VolumenExistenciasAnterior": 0,
+            "VolumenAcumOpsRecepcion": {
+              "ValorNumerico": 2167125,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraRecepcionAcumulado": "23:59:59-06:00",
+            "VolumenAcumOpsEntrega": {
+              "ValorNumerico": 0,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraEntregaAcumulado": "23:59:59-06:00",
+            "VolumenExistencias": 0,
+            "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+            "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+          },
+          "Recepciones": {
+            "TotalRecepciones": 4,
+            "SumaVolumenRecepcion": {
+              "ValorNumerico": 49693,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 4,
+            "SumaCompras": 367115.35,
+            "RECEPCION": [
+              {
+                "NumeroDeRegistro": 2,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9939,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:45:38",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:45:38",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "928d8590-cb53-4f08-9c98-c822da0c73a0",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 184147.7,
+                          "FechaYHoraTransaccion": "2022-05-02 23:45:38",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9939,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 4,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9943,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:37:26",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:37:26",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "52e8d88f-9cd6-4d90-832f-768cdb6b80c5",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 184221.82,
+                          "FechaYHoraTransaccion": "2022-05-02 23:37:26",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9943,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 5,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9947,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:35:17",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:35:17",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "45901857-dce4-4bba-84d7-9880afe0ab93",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 184295.93,
+                          "FechaYHoraTransaccion": "2022-05-02 23:35:17",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9947,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 8,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 19864,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:29:33",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:29:33",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32025",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "bf743968-4b3e-45e3-aa8f-1c52440d2667",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 367111.35,
+                          "FechaYHoraTransaccion": "2022-05-02 23:29:33",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 19864,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Entregas": {
+            "TotalEntregas": 13,
+            "SumaVolumenEntregado": {
+              "ValorNumerico": 403096,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 13,
+            "SumaVentas": 5598932.344,
+            "Entrega": [
+              {
+                "NumeroDeRegistro": 6,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33083,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:48",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:48",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "00950b95-1b70-4b73-9641-d6dd615f0d5f",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 569796.746667,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:48",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33083,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 7,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 32585,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:47",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:47",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "290a1cd4-ddc4-4d0b-b642-f7730a7d191a",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 561219.568665,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:47",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 32585,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "SumaCompras": 561232.568665
+          }
+        }
+      ]
+    },
+    {
+      "ClaveProducto": "PR07",
+      "ClaveSubProducto": "SP17",
+      "ComposOctanajeGasolina": 91,
+      "GasolinaConCombustibleNoFosil": "No",
+      "Tanque": [
+        {
+          "ClaveIdentificacionTanque": "TQS-TDA-0001",
+          "Localizaciony/oDescripcionTanque": "Tanque de Diesel",
+          "VigenciaCalibracionTanque": "2028-05-11",
+          "CapacidadTotalTanque": {
+            "ValorNumerico": 22884248,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadOperativaTanque": {
+            "ValorNumerico": 22506335,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadUtilTanque": {
+            "ValorNumerico": 20984069,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadFondajeTanque": {
+            "ValorNumerico": 1533508,
+            "UnidadDeMedida": "UM03"
+          },
+          "VolumenMinimoOperacion": {
+            "ValorNumerico": 1900179,
+            "UnidadDeMedida": "UM03"
+          },
+          "EstadoTanque": "O",
+          "Medidores": [
+            {
+              "SistemaMedicionTanque": "SME-TQS-TDA-0001",
+              "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+              "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+              "IncertidumbreMedicionSistMedicionTanque": 0.277
+            }
+          ],
+          "Existencias": {
+            "VolumenExistenciasAnterior": 4303808.469222,
+            "VolumenAcumOpsRecepcion": {
+              "ValorNumerico": 0,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraRecepcionAcumulado": "23:59:59-06:00",
+            "VolumenAcumOpsEntrega": {
+              "ValorNumerico": 528173,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraEntregaAcumulado": "23:59:59-06:00",
+            "VolumenExistencias": 3775635.469222,
+            "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+            "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+          },
+          "Recepciones": {
+            "TotalRecepciones": 1,
+            "SumaVolumenRecepcion": {
+              "ValorNumerico": 9936,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 1,
+            "SumaCompras": 192809.32,
+            "RECEPCION": [
+              {
+                "NumeroDeRegistro": 15,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9936,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:18:48",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:18:48",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "34015",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "46dec822-9b25-4e9f-8535-652fe5c0e40c",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 192808.32,
+                          "FechaYHoraTransaccion": "2022-05-02 23:18:48",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9936,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Entregas": {
+            "TotalEntregas": 20,
+            "SumaVolumenEntregado": {
+              "ValorNumerico": 626882,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 20,
+            "SumaVentas": 9471462.18031,
+            "Entrega": [
+              {
+                "NumeroDeRegistro": 9,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33229,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:43",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:43",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "df2c189f-97d5-4c6d-8db5-c2c9e685270c",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 614925.107804,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:43",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33229,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 12,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 32738,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:37",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:37",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "47fd5d62-dfab-447b-acf4-92382923057c",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 605838.820888,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:37",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 32738,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 14,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 32742,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:34",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:34",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "142a54cb-9872-43a6-8b9e-6e79cb1e6389",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 605912.843592,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:34",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 32742,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "SumaCompras": 605932.843592
+          }
+        },
+        {
+          "ClaveIdentificacionTanque": "ATQ-TDA-0003",
+          "Localizaciony/oDescripcionTanque": "Autotanque",
+          "VigenciaCalibracionTanque": "2028-05-11",
+          "CapacidadTotalTanque": {
+            "ValorNumerico": 62000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadOperativaTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadUtilTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadFondajeTanque": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "VolumenMinimoOperacion": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "EstadoTanque": "O",
+          "Medidores": [
+            {
+              "SistemaMedicionTanque": "SME-ATQ-TDA-0003",
+              "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+              "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+              "IncertidumbreMedicionSistMedicionTanque": 0.277
+            }
+          ],
+          "Existencias": {
+            "VolumenExistenciasAnterior": 0,
+            "VolumenAcumOpsRecepcion": {
+              "ValorNumerico": 917641.43,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraRecepcionAcumulado": "23:59:59-06:00",
+            "VolumenAcumOpsEntrega": {
+              "ValorNumerico": 917641,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraEntregaAcumulado": "23:59:59-06:00",
+            "VolumenExistencias": 0,
+            "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+            "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+          },
+          "Recepciones": {
+            "TotalRecepciones": 1,
+            "SumaVolumenRecepcion": {
+              "ValorNumerico": 9941,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 1,
+            "SumaCompras": 192906.34,
+            "RECEPCION": [
+              {
+                "NumeroDeRegistro": 9,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9941,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:27:50",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:27:50",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "34015",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "a65ffbaf-f0e5-4a25-9741-fda459105d0f",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 192905.34,
+                          "FechaYHoraTransaccion": "2022-05-02 23:27:50",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9941,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Entregas": {
+            "TotalEntregas": 17,
+            "SumaVolumenEntregado": {
+              "ValorNumerico": 530882,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 17,
+            "SumaVentas": 5598932.344,
+            "Entrega": [
+              {
+                "NumeroDeRegistro": 0,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33238,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:28:00",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:28:00",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "afb839e6-41a6-45f9-9865-fd6f17e5f815",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 615091.658888,
+                          "FechaYHoraTransaccion": "2022-05-02 21:28:00",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33238,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 1,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33223,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:58",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:58",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "38bff0b7-9242-48f2-b969-cc2828809c57",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 614814.073748,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:58",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33223,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 15,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 31246,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:32",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:32",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "88e4bac2-e27b-4229-932e-6efc30b70c60",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 578228.352296,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:32",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 31246,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 17,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 31250,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:28",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:28",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "96d5acd9-d8b7-4ada-b557-71998bb2408a",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 578302.375,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:28",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 31250,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 18,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 33244,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:26",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:26",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "8e75b2c2-7b55-40f4-bcce-a6db752a9ee7",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 615202.692944,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:26",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 33244,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 19,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 31253,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:24",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:24",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "ca594f4f-9f91-47a0-bf95-79e8425cbd6e",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 578357.892028,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:24",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 31253,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "SumaCompras": 578374.892028
+          }
+        }
+      ]
+    },
+    {
+      "ClaveProducto": "PR03",
+      "ClaveSubProducto": "SP18",
+      "DieselConCombustibleNoFosil": "No",
+      "Tanque": [
+        {
+          "ClaveIdentificacionTanque": "TQS-TDA-0003",
+          "Localizaciony/oDescripcionTanque": "Tanque de Gasolina Premium",
+          "VigenciaCalibracionTanque": "2028-05-11",
+          "CapacidadTotalTanque": {
+            "ValorNumerico": 22840745,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadOperativaTanque": {
+            "ValorNumerico": 22463159,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadUtilTanque": {
+            "ValorNumerico": 20595280,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadFondajeTanque": {
+            "ValorNumerico": 1554892,
+            "UnidadDeMedida": "UM03"
+          },
+          "VolumenMinimoOperacion": {
+            "ValorNumerico": 2245465,
+            "UnidadDeMedida": "UM03"
+          },
+          "EstadoTanque": "O",
+          "Medidores": [
+            {
+              "SistemaMedicionTanque": "SME-TQS-TDA-0003",
+              "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+              "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+              "IncertidumbreMedicionSistMedicionTanque": 0.277
+            }
+          ],
+          "Existencias": {
+            "VolumenExistenciasAnterior": 4574471.628488,
+            "VolumenAcumOpsRecepcion": {
+              "ValorNumerico": 0,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraRecepcionAcumulado": "23:59:59-06:00",
+            "VolumenAcumOpsEntrega": {
+              "ValorNumerico": 216798,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraEntregaAcumulado": "23:59:59-06:00",
+            "VolumenExistencias": 4357673.628488,
+            "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+            "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+          },
+          "Recepciones": {
+            "TotalRecepciones": 2,
+            "SumaVolumenRecepcion": {
+              "ValorNumerico": 19861,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 2,
+            "SumaCompras": 199414.82,
+            "RECEPCION": [
+              {
+                "NumeroDeRegistro": 13,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9933,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:20:39",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:20:39",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32026",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "0d794c52-95d9-4a66-b804-ef47856ee76f",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 199513.24,
+                          "FechaYHoraTransaccion": "2022-05-02 23:20:39",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9933,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 17,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9928,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:12:52",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:12:52",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32026",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "74d4dce9-91c7-40f8-9679-dd0e9782bb41",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 199412.82,
+                          "FechaYHoraTransaccion": "2022-05-02 23:12:52",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9928,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Entregas": {
+            "TotalEntregas": 11,
+            "SumaVolumenEntregado": {
+              "ValorNumerico": 337428,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 11,
+            "SumaVentas": 5598932.344,
+            "Entrega": []
+          }
+        },
+        {
+          "ClaveIdentificacionTanque": "ATQ-TDA-0002",
+          "Localizaciony/oDescripcionTanque": "Autotanque",
+          "VigenciaCalibracionTanque": "2028-05-11",
+          "CapacidadTotalTanque": {
+            "ValorNumerico": 62000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadOperativaTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadUtilTanque": {
+            "ValorNumerico": 60000,
+            "UnidadDeMedida": "UM03"
+          },
+          "CapacidadFondajeTanque": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "VolumenMinimoOperacion": {
+            "ValorNumerico": 5000,
+            "UnidadDeMedida": "UM03"
+          },
+          "EstadoTanque": "O",
+          "Medidores": [
+            {
+              "SistemaMedicionTanque": "SME-ATQ-TDA-0002",
+              "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+              "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+              "IncertidumbreMedicionSistMedicionTanque": 0.277
+            }
+          ],
+          "Existencias": {
+            "VolumenExistenciasAnterior": 0,
+            "VolumenAcumOpsRecepcion": {
+              "ValorNumerico": 1073118.56,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraRecepcionAcumulado": "23:59:59-06:00",
+            "VolumenAcumOpsEntrega": {
+              "ValorNumerico": 1073119,
+              "UnidadDeMedida": "UM03"
+            },
+            "HoraEntregaAcumulado": "23:59:59-06:00",
+            "VolumenExistencias": 0,
+            "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+            "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+          },
+          "Recepciones": {
+            "TotalRecepciones": 5,
+            "SumaVolumenRecepcion": {
+              "ValorNumerico": 82350,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 5,
+            "SumaCompras": 199518.24,
+            "RECEPCION": [
+              {
+                "NumeroDeRegistro": 0,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9931,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:56:20",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:56:20",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32026",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "3220a2db-414a-4a75-98a2-00e83f18bd9f",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 198988.64,
+                          "FechaYHoraTransaccion": "2022-05-02 23:56:20",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9931,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 10,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 19874,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:27:49",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:27:49",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32026",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "fd211c27-c34a-430e-902c-c9d928374809",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 399142.86,
+                          "FechaYHoraTransaccion": "2022-05-02 23:27:49",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 19874,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 12,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 19854,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:25:33",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:25:33",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32026",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "ea6d0c50-ea13-4424-b982-bdaa777aa5dc",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 397816.98,
+                          "FechaYHoraTransaccion": "2022-05-02 23:25:33",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 19854,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 18,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 22758,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:10:13",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:10:13",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "KSA160329PU7",
+                      "NombreClienteOProveedor": "KOCH SUPPLY & TRADING MEXICO",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "0ec48006-4cc4-42d7-9ebe-85896f7f2a38",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 389140.16,
+                          "FechaYHoraTransaccion": "2022-05-02 23:10:13",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 22758,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "NumeroDeRegistro": 19,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenRecepcion": {
+                  "ValorNumerico": 9933,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 23:04:19",
+                "FechaYHoraFinalEntrega": "2022-05-02 23:04:19",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "PTI151101TE5",
+                      "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                      "PermisoClienteOProveedor": "32026",
+                      "CFDIs": [
+                        {
+                          "Cfdi": "4ba86db4-a08f-47c7-a5f9-e58482330508",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 199513.24,
+                          "FechaYHoraTransaccion": "2022-05-02 23:04:19",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 9933,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Entregas": {
+            "TotalEntregas": 12,
+            "SumaVolumenEntregado": {
+              "ValorNumerico": 370400,
+              "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentos": 12,
+            "SumaVentas": 5598932.344,
+            "Entrega": [
+              {
+                "NumeroDeRegistro": 10,
+                "VolumenInicialTanque": {
+                  "ValorNumerico": 0,
+                  "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0,
+                "VolumenEntregado": {
+                  "ValorNumerico": 32972,
+                  "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": "2022-05-02 21:27:41",
+                "FechaYHoraFinalEntrega": "2022-05-02 21:27:41",
+                "Complemento": {
+                  "TipoComplemento": "Comercializacion",
+                  "Nacional": [
+                    {
+                      "RfcClienteOProveedor": "GEM161104H39",
+                      "NombreClienteOProveedor": "GLENCORE ENERGY MX SA DE CV",
+                      "PermisoClienteOProveedor": null,
+                      "CFDIs": [
+                        {
+                          "Cfdi": "dccce547-4da4-4a34-8fbc-929b352f309c",
+                          "TipoCfdi": "Ingreso",
+                          "PrecioVentaOCompraOContrap": 623082.10532,
+                          "FechaYHoraTransaccion": "2022-05-02 21:27:41",
+                          "VolumenDocumentado": {
+                            "ValorNumerico": 32972,
+                            "UnidadDeMedida": "UM03"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "SumaCompras": 623094.10532
+          }
+        }
+      ]
+    }
+  ],
+  "Bitacora": [
+    {
+      "NumeroRegistro": 24,
+      "FechaYHoraEvento": "2022-05-02T00:00:00-06:00",
+      "UsuarioResponsable": "Marco Bernal",
+      "TipoEvento": 5,
+      "DescripcionEvento": "Consulta de Informacion"
+    }
+  ]
+}

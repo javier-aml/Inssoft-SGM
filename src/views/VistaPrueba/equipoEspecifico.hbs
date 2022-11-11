@@ -1,0 +1,96 @@
+
+{{>navVistaPrueba}}
+
+<div>
+  {{>sideNavVistaPrueba}}
+
+</div>
+
+  <div id="mainwin">
+      <div class="container">
+          <div class="row">
+              <div class="col-3">
+                    {{>sideSidenavEquipos}}
+              </div>
+              <div class="col">
+                  <div class="containerLeft">
+                      <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{Nombre}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{idInstrumento}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">ID</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{Marca}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Marca</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{Modelo}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Modelo</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{Fabricante}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Fabricante</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{nSerie}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Numero de serie</label>
+                                </div>
+                            </div>
+                      </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{nCertificado}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Número de certificado</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{Clasificacion}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Clasificacion</label>
+                                </div>
+                            </div>
+                      </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{date}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Fecha de calibración</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                <input type="text" readonly value="{{hPromedio}}" class="form-control" id="floatingInput">
+                                <label for="floatingInput">Horas de uso por dia</label>
+                                </div>
+                            </div>
+                      </div>                                            
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+
+<script src="/js/VistaPrueba/equipoEspecifico.js"></script>

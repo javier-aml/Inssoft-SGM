@@ -1,0 +1,117 @@
+<link rel="stylesheet" href="/css/evo-calendar.css">
+<link rel="stylesheet" href="/css/evo-calendar.royal-navy.css">
+
+<div class="sidenav-body">
+  <div id="mySidenav" class="sidenav">
+    <div class="text-center blanco">
+
+    <img src="/assets/Glencore-Logo.png"  width="130"alt="">
+    </div>
+    <a href="/VistaPrueba/" id="homeNav" class="">
+      {{!-- <img id="homeImg" src="/assets/home.svg" width="30" style="padding-right: 8px; vertical-align: baseline;"> --}}
+      Inicio
+    </a>
+
+    <a href="/VistaPrueba/estructura2" id="qrScannerNav" class="">
+      {{!-- <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline"> --}}
+      Estructura
+    </a>
+        <a href="/VistaPrueba/QR" id="qrScannerNav" class="">
+      {{!-- <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline"> --}}
+      QR
+    </a>
+            <a href="/VistaPrueba/Equipos" id="qrScannerNav" class="">
+      {{!-- <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline"> --}}
+      Equipo
+    </a>
+                <a href="/VistaPrueba/CertificadoTabla" id="qrScannerNav" class="">
+      {{!-- <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline"> --}}
+    Certificados
+    </a>  
+            <a href="/VistaPrueba/Diario/{{FechaHoy}}" id="qrScannerNav" class="">
+      {{!-- <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline"> --}}
+      Control diario
+    </a>
+            <a href="/VistaPrueba/Mensual/{{FechaMes}}" id="qrScannerNav" class="">
+      {{!-- <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline"> --}}
+      Control mensual
+    </a>        
+
+    <a data-toggle="modal" data-target="#modalCalendario" id="calendarNav" class="">
+      {{!-- <img id="calendarImg" src="/assets/calendar.svg" width="30" style="padding-right: 8px; vertical-align: baseline"> --}}
+      Calendario
+    </a>
+      {{!-- <a href="/VistaPrueba/Mapa" class="">
+      <img id="calendarImg" src="/assets/QrScanner.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Mapa
+    </a> --}}
+
+  </div>
+  <button id="openNavBtn" class="btn sidenav-button" onclick="openNav()"> <img src="/assets/right-arrow.svg"
+      width="10px" alt=""> </button>
+  <button id="closeNavBtn" class="btn sidenav-button" onclick="closeNav()"> <img src="/assets/left-arrow.svg"
+      width="10px" alt=""> </button>
+
+  <script src="/js/sidenav.js"></script>
+
+</div>
+<!-- Modal Calendario -->
+<div class="modal fade" id="modalCalendario" tabindex="-1" role="dialog" aria-labelledby="modalCalendarioTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Calendario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div id="fullCalendar"></div>
+        </div>
+      </div>
+
+      <script src="/js/evo-calendar.js"></script>
+      <script src="/js/VistaPrueba/fullCalendar.js"></script>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Button trigger modal -->
+
+
+
+
+<script>
+  switch ("{{title}}") {
+    case "Inicio":
+      document.getElementById("homeNav").classList.add("navSel");
+      document.getElementById("homeImg").src = "/assets/homeS.svg"
+      break;
+    case "Kits":
+      document.getElementById("kitsNav").classList.add("navSel");
+      document.getElementById("kitsImg").src = "/assets/kitsS.svg"
+      break;
+    case "Escaner QR":
+      document.getElementById("qrScannerNav").classList.add("navSel");
+      document.getElementById("qrScannerImg").src = "/assets/QrScannerS.svg"
+
+      break;
+    case "Tickets":
+      document.getElementById("ticketsNav").classList.add("navSel");
+      document.getElementById("ticketsImg").src = "/assets/ticketS.svg"
+      break;
+  }
+
+  /**SELECT `nombre_remision` FROM `remision1` GROUP by `nombre_remision`;*/
+</script>
+<script src="/js/VistaPrueba/calendarclick.js" ></script>

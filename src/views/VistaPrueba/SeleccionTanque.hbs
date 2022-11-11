@@ -1,0 +1,210 @@
+{{>navVistaPrueba}}
+
+<div>
+    {{>sideNavVistaPrueba}}
+
+</div>
+<div id="mainwin">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2" style="top: 250px; position:absolute; left:200px">
+                <button type="button" id="inicio" class="button btn btn-ekide d-none d-lg-block" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Inicio
+                </button>
+            </div>
+                        <div class="col-2" style="top: 100px; position:absolute; left:50px">
+                <a type="button" href="/VistaPrueba/TiempoReal" id="Back" class="button btn btn-ekide d-none d-lg-block"
+                    >
+                    Regreso
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <img src="/assets/tankgas.png"  style="top: 100px; position:absolute; left:600px" width="700" height="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2" style="top: 620px; position:absolute; left:200px">
+                <button type="button" id="fin" class="button btn btn-ekide d-none d-lg-block" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Fin
+                </button>
+            </div>
+        </div>
+        <style>
+            .containerRight {
+                background: white !important;
+                margin: auto;
+                width: 135%;
+                height: 220px;
+                padding: 5%;
+                margin-top: 3.2%;
+                background-color: white;
+                border: solid;
+                border-color: #f1f1f0;
+                box-shadow: 0px 0px 20px 5px #f1f1f1;
+            }
+
+            .containerRight2 {
+                background: white !important;
+                margin: auto;
+                width: 135%;
+                height: 70px;
+                padding: 5%;
+                margin-top: 3.2%;
+                background-color: white;
+                border: solid;
+                border-color: #f1f1f0;
+                box-shadow: 0px 0px 20px 5px #f1f1f1;
+            }
+
+            .containerRight3 {
+                background: white !important;
+                height: 150px;
+                background-color: white;
+                border: solid;
+                border-color: #f1f1f0;
+                box-shadow: 0px 0px 20px 5px #f1f1f1;
+            }
+
+            input[readonly] {
+                background-color: white !important;
+
+            }
+        </style>
+        <div class="row">
+            <div class="col-2" style="top: 100px; position:absolute; left:1400px">
+                <div class="container-fluid containerRight text-right">
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Fecha</span>
+                        <input type="text" readonly class="form-control" id="iFC"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <br>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Producto</span>
+                        <input type="text" readonly class="form-control" id="iP"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2" style="top: 320px; position:absolute; left:1400px">
+                <div class="container-fluid containerRight2 text-right">
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Volumen inicial</span>
+                        <input type="text" readonly class="form-control" id="iVI"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2" style="top: 450px; position:absolute;left:1400px">
+                <div class="container-fluid containerRight text-right">
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Fecha de creación</span>
+                        <input type="text" readonly class="form-control" id="fFC"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Producto</span>
+                        <input type="text" readonly class="form-control" id="fP"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Diferencia</span>
+                        <input type="text" readonly class="form-control" id="fD"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Balance</span>
+                        <input type="text" readonly class="form-control" id="fB"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Incertidumbre</span>
+                        <input type="text" readonly class="form-control" id="fI"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2" style="top: 670px; position:absolute; left:1400px">
+                <div class="container-fluid containerRight2 text-right">
+
+                                            <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">Volumen Final</span>
+                        <input type="text" readonly class="form-control" id="fVF"
+                            aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col fixed-bottom" style="position:absolute">
+                <div class="container-fluid containerRight3 text-right">
+                    <style>
+                        .vl {
+                            border-left: 6px solid #c0c0c0;
+                            height: 100px;  
+                            position: absolute;
+                            left: 200px;
+                            top: 30px;
+
+                        }
+
+                        .vl2 {
+                            border-left: 6px solid #c0c0c0;
+                            height: 100px;
+                            left: 1700px;
+                            position: absolute;
+                            top: 30px;
+                        }
+                    </style>
+
+                    <div class="vl"></div>
+                    <hr style="height: 5px; width:1500px; margin-top:70px ; margin-left:170px">
+                    </hr>
+                    <div class="vl2"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container-fluid">
+
+    </div>
+</div>
+
+</div>
+  
+<script>
+    var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = dd + '/' + mm + '/' + yyyy;
+    $("#inicio").on('click',function(){
+
+       $("#iFC").val(today);
+       $("#iP").val("Regular");  
+       $("#iVI").val("100000"); 
+    })
+    $("#fin").on('click',function(){
+       $("#fFC").val(today);
+       $("#fP").val("Regular");  
+       $("#fD").val("50000"); 
+       $("#fB").val("0"); 
+       $("#fI").val("0.05"); 
+       $("#fVF").val("150000"); 
+    })
+
+</script>

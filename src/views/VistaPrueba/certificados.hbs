@@ -1,0 +1,91 @@
+     {{>navVistaPrueba}}
+
+<div>
+  {{>sideNavVistaPrueba}}
+
+</div>
+
+  <div id="mainwin">
+      <div class="container">
+          <div class="row">
+              <div class="col-3">
+                    {{>sideSidenavEquipos}}
+              </div>
+              <div class="col">
+                  <div class="containerLeft">
+                      <div class="row">
+                                  <div id="tabla_{{@index}}"  class="tabla container gy-5 rnd " style="background-color: #fff">
+          <div class="row">
+            <div class="col-6 col-xl-12">
+              <div class="row">
+                <div type="hidden" hidden class="col-12 col-xl py-xl-3 tableTitl tableLin rnd" >id</div>
+                <div class="col-12 col-xl py-xl-3 tableTitl tableLin rnd descTitlProv fstCap">Nombre</div>
+                <div class="col-12 col-xl py-xl-3 tableTitl tableLin rnd">Certificado</div>
+                <div class="col-12 col-xl py-xl-3 tableTitl tableLin rnd">Fecha de ingreso</div>
+
+
+              </div>
+            </div>
+                    <div id="body">
+                      {{#each tabla}}
+            <div class="col-6 col-xl-12 bodyTable clickEvent" id="{{id}}">
+              <div class="row tableSep" id="{{@index}}" >
+                <div type="hidden" hidden class="col-12 col-xl-1 mt-xl-3 p-xl-2 tableLin" id="id_{{id}}">{{id}}</div>
+                <div class="col-12 col-xl mt-xl-3 p-xl-2 tableLin" style="word-wrap: break-word" id="Nombre_{{id}}">{{Nombre}}</div>
+                <div class="col-12 col-xl mt-xl-3 p-xl-2 tableLin descLin fstCap" id="Certificado_{{id}}">{{Certificado}}</div>
+                <div class="col-12 col-xl mt-xl-3 p-xl-2 tableLin" id="Fecha_ingreso_{{id}}">{{date}}</div>
+
+               
+                {{!-- <div class="col-12 col-xl mt-xl-3 p-xl-2 tableLin tableCbx" style="padding: 0.2rem 0"><button type="button" id="{{@index}}" class="btn btn-ekide btn-sm btnTableSave" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button></div> --}}
+              </div>
+            </div>
+        {{/each}}
+                    </div>
+          </div>
+        </div>
+                      </div>
+                                           
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+          <div class="text-right position-relative">
+      <div class="position-relative bottom-0 end-0">
+        <img src="/assets/add40.png" style="margin-right: 9%; margin-top:2%;" width="40" height="40" id="imgadd" alt="" data-bs-toggle="modal" data-bs-target="#addCertificado">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal fade" id="addCertificado" tabindex="-1" aria-labelledby="addCertificadoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCertificadoLabel">Agregar Certificado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                    <div class="input-group has-validation">
+            <span class="input-group-text" id="inputGroupPrepend">Nombre</span>
+            <input type="text"   class="form-control" value="" id="Nombre" aria-describedby="inputGroupPrepend" required>
+          </div>
+          <br>
+            <div class="input-group has-validation">
+            <span class="input-group-text" id="inputGroupPrepend">Certificado</span>
+            <input type="text"   class="form-control" value="" id="Certificado" aria-describedby="inputGroupPrepend" required>
+          </div>
+          <br>
+                 <form id="certificado" enctype="multipart/form-data">
+          <input class="form-control col-12" name="task" type="file" accept="application/pdf"  id="formFile">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-id="{{id}}" id="addCertificadobtn">Agregar imagen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/VistaPrueba/equipoEspecifico.js"></script>

@@ -1,0 +1,72 @@
+{
+    "ClaveIdentificacionTanque": "ATQ-TDA-0001",
+    "Localizaciony/oDescripcionTanque": "Autotanque",
+    "VigenciaCalibracionTanque": "2028-05-11",
+    "CapacidadTotalTanque": {
+        "ValorNumerico": 62000.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "CapacidadOperativaTanque": {
+        "ValorNumerico": 60000.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "CapacidadUtilTanque": {
+        "ValorNumerico": 60000.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "CapacidadFondajeTanque": {
+        "ValorNumerico": 5000.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "VolumenMinimoOperacion": {
+        "ValorNumerico": 5000.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "EstadoTanque": "O",
+    "Medidores": [{
+        "SistemaMedicionTanque": "SME-ATQ-TDA-0001",
+        "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+        "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+        "IncertidumbreMedicionSistMedicionTanque": 0.277
+    }],
+    "Existencias": {
+        "VolumenExistenciasAnterior": 0.0,
+        "VolumenAcumOpsRecepcion": {
+            "ValorNumerico": 3731835.02,
+            "UnidadDeMedida": "UM03"
+        },
+        "HoraRecepcionAcumulado": "23:59:59-06:00",
+        "VolumenAcumOpsEntrega": {
+            "ValorNumerico": 3731836.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "HoraEntregaAcumulado": "23:59:59-06:00",
+        "VolumenExistencias": 0.0,
+        "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+        "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+    },
+    "Recepciones": {
+        "TotalRecepciones": 0,
+        "SumaVolumenRecepcion": {
+            "ValorNumerico": 0.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "TotalDocumentos": 0,
+        "SumaCompras": 0.0,
+        "RECEPCION": [ 
+           
+        ]
+    },
+    "Entregas": {
+        "TotalEntregas": 11,
+        "SumaVolumenEntregado": {
+            "ValorNumerico": 337428.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "TotalDocumentos": 11,
+        "SumaVentas": 5598932.344,
+        "Entrega": [ 
+           
+        ]
+    }
+}

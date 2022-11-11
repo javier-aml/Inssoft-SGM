@@ -1,0 +1,32 @@
+{
+    "ClaveProducto": "PR07",
+    "ClaveSubProducto": "SP16",
+    "ComposOctanajeGasolina": 87,
+    "GasolinaConCombustibleNoFosil": "No",
+    "ReporteDeVolumenMensual": {
+        "ControlDeExistencias": {
+            "VolumenExistenciasMes": 113130.593,
+            "FechaYHoraEstaMedicionMes": "2022-08-31T23:59:59-06:00"
+        },
+        "Recepciones": {
+            "TotalRecepcionesMes": 7009,
+            "SumaVolumenRecepcionMes": {
+                "ValorNumerico": 121871397.1,
+                "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentosMes": 7009,
+            "ImporteTotalRecepcionesMensual": 2383705827.133,
+            "Complemento": []
+        },
+        "Entregas": {
+            "TotalEntregasMes": 7220,
+            "SumaVolumenEntregadoMes": {
+                "ValorNumerico": 121871397.0,
+                "UnidadDeMedida": "UM03"
+            },
+            "TotalDocumentosMes": 7220,
+            "ImporteTotalEntregasMes": 2191612671.159,
+            "Complemento": []
+        }
+    }
+}

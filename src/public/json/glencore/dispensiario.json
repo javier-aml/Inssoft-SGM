@@ -1,0 +1,21 @@
+{
+    "ClaveDispensario": "DISP-0002",
+    "Medidores": [{
+        "SistemaMedicionDispensario": "SMD-DISP-0002",
+        "LocalizODescripSistMedicionDispensario": "Sistema de medicion accuload 3 marca FMC",
+        "VigenciaCalibracionSistMedicionDispensario": "2022-12-31",
+        "IncertidumbreMedicionSistMedicionDispensario": 0.001
+    }],
+    "Manguera": [{
+        "IdentificadorManguera": "DISP-0002-MGA-0002"
+    }],
+    "Entregas": {
+        "TotalEntregas": 0,
+        "SumaVolumenEntregado": {
+            "ValorNumerico": 0.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "TotalDocumentos": 0,
+        "SumaVentas": 0.0
+    }
+}

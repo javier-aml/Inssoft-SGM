@@ -1,0 +1,115 @@
+{
+    "ControlesVolumetricos":  {
+        "Version":"", 
+        "RfcContribuyente":"", 
+        "RfcRepresentanteLegal":"", 
+        "RfcProveedor":"", 
+        "RfcProveedores":"", 
+        "Caracter":{
+            "Caracter":"",
+            "ModalidadPermiso":"", 
+            "NumPermiso":"", 
+            "NumContratoOAsignacion":"",
+            "InstalacionAlmacenGasNatural":""
+
+        }, 
+        "ClaveInstalacion":"", 
+        "DescripcionInstalacion":"", 
+        "Geolocalizacion":{
+            "GeolocalizacionLatitud":"", 
+            "GeolocalizacionLongitud":""
+
+        }, 
+        "NumeroPozos":"", 
+        "NumeroTanques":"", 
+        "NumeroDuctosEntradaSalida":"", 
+        "NumeroDuctosTransporteDistribucion":"", 
+        "NumeroDispensarios":"", 
+        "FechaYHoraReporteMes":"", 
+        "PRODUCTO":{
+            "ClaveProducto":"", 
+            "ClaveSubProducto":"",
+            "Gasolina":{
+                "ComposOctanajeGasolina":"", 
+                "GasolinaConCombustibleNoFosil":"",
+                "ComposDeCombustibleNoFosilEnGasolina":""
+            }, 
+            "Diesel":{
+                "DieselConCombustibleNoFosil":"", 
+                "ComposDeCombustibleNoFosilEnDiesel":""
+
+            }, 
+            "Turbosina":{
+                "TurbosinaConCombustibleNoFosil":"",
+                "ComposDeCombustibleNoFosilEnTurbosina":""
+            }, 
+            "GasLP":{
+                "ComposDePropanoEnGasLP":"",
+                "ComposDeButanoEnGasLP":""
+            }, 
+            "Petroleo":{
+                "DensidadDePetroleo":"",
+                "ComposDeAzufreEnPetroleo":""
+            }, 
+            "GasNatural":{
+                "GasNaturalOCondensados":{
+                    "ComposGasNaturalOCondensados":"",
+                    "FraccionMolar":"", 
+                    "PoderCalorifico":""
+    
+                }
+            },
+            "Otros":"", 
+            "MarcaComercial":"", 
+            "Marcaje":"", 
+            "ConcentracionSustanciaMarcaje":"", 
+            "REPORTEDEVOLUMENMENSUAL":{
+                "CONTROLDEEXISTENCIAS":{
+                    "VolumenExistenciasMes":{
+                        "ValorNumerico":""
+                    },
+                    "FechaYHoraEstaMedicionMes":""
+                }, 
+                "RECEPCIONES":{
+                    "TotalRecepcionesMes":"", 
+                    "SumaVolumenRecepcionMes":{
+                        "ValorNumerico":"",
+                        "UM":""
+                    }, 
+                    "PoderCalorifico":{
+                        "ValorNumerico":"",
+                        "UM":""
+                    }, 
+                    "TotalDocumentosMes":"", 
+                    "ImporteTotalRecepcionesMensual":"",
+                    "Complemento":""
+                },
+                "ENTREGAS":{
+                    "TotalEntregasMes":"", 
+                    "SumaVolumenEntregadoMes":{
+                        "ValorNumerico":"",
+                        "UM":""
+                    }, 
+                    "PoderCalorifico":{
+                        "ValorNumerico":"",
+                        "UM":""
+                    }, 
+                    "TotalDocumentosMes":"", 
+                    "ImporteTotalEntregasMes":"",
+                    "Complemento":""
+                }
+
+
+            }
+        }, 
+        "BITACORAMENSUAL":{
+            "NumeroRegistro":"", 
+            "FechaYHoraEvento":"", 
+            "UsuarioResponsable":"", 
+            "TipoEvento":"", 
+            "DescripcionEvento":"",
+            "IdentificacionComponenteAlarma":""
+        }
+    }
+
+}

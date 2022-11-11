@@ -1,0 +1,330 @@
+
+{{>navVistaPrueba}}
+
+<div>
+  {{>sideNavVistaPrueba}}
+
+</div>
+
+<style>
+    input[readonly] {
+  background-color: white !important;
+  
+}
+a { color: inherit; } 
+</style>
+  <div id="mainwin">
+                {{!-- <img src="/assets/green.png" width="25" height="25" alt="" style="top: 100px; right:100px">  --}}
+    <div class="container-fluid">
+        
+        <div class="row text-center" style="top: 400px; position:absolute; right:350px">
+            <div class="col">
+                <img src="/assets/tankgas.png" data-placement="bottom" data-toggle="Premium" title="Premium">
+            </div>
+            <div class="col">
+                <img src="/assets/tankgas.png" data-placement="bottom" data-toggle="Regular" title="Regular">
+            </div>
+            <div class="col">
+                <img src="/assets/tankgas.png" data-placement="bottom" data-toggle="Disel" title="Disel">
+            </div>                        
+    </div>
+        <div class="row text-center" style="top: 700px; position:absolute; right:1260px;margin-left: 100px;">
+            <div class="col">
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">Volumen Neto</span>
+                    <input type="text" readonly class="form-control" value="10016.000" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+                <br>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">Temperatura</span>
+                    <input type="text" readonly class="form-control" value="18.5 °C" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+            </div>
+                       
+        </div>
+        <div class="row text-center" style="top: 700px; position:absolute; right:830px;margin-left: 100px;">
+            
+            <div class="col">
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">Volumen Neto</span>
+                    <input type="text" readonly class="form-control" value="10027.000" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+                <br>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">Temperatura</span>
+                    <input type="text" readonly class="form-control" value="17.5 °C" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+            </div>
+                       
+        </div>
+        <div class="row text-center" style="top: 700px; position:absolute; right:400px;margin-left: 100px;">
+            
+            <div class="col">
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">Volumen Neto</span>
+                    <input type="text" readonly class="form-control" value="10008.000" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+                <br>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">Temperatura</span>
+                    <input type="text" readonly class="form-control" value="18.4 °C" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+            </div>
+                       
+        </div> 
+        <div class="row">
+            <div class="col-3" style="left:100px; top:100px; position: abosulute">
+                <button type="button" class="button btn btn-ekide d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Integración
+                </button>
+            </div>
+        </div>     
+        <div class="row">
+            <div id="reloj" style="position: absolute; top: 100px;left:700px;">
+   00 : 00 : 00
+  </div>
+<style>
+    #reloj { width: 400px; height: 70px; padding: 5px 10px; border: 1px solid black; 
+         font: bold 3.5em dotum, "lucida sans", arial; text-align: center;
+         float: right; margin: 1em 3em 1em 1em; }
+</style>
+        </div>          
+  </div>
+
+</div>
+{{!-- href="/VistaPrueba/SeleccionTanque" --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Integración</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <a id="Quit"  data-bs-dismiss="modal" ><h3>1) S.M.D Terminal</h3></a>
+        <a  href="/VistaPrueba/SeleccionTanque" ><h3>2) S.M.E ES</h3></a>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Formulario" tabindex="-1" aria-labelledby="FormularioLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="FormularioLabel">Formulario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">Volumen Natural</span>
+                <input type="text" readonly class="form-control" id="vNatural" aria-describedby="inputGroupPrepend" required>
+            </div>
+            <br>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">Volumen Neto</span>
+                <input type="text" readonly class="form-control" id="vNeto" aria-describedby="inputGroupPrepend" required>
+            </div>
+            <br>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">Densidad</span>
+                <input type="text" readonly class="form-control" id="Densidad" aria-describedby="inputGroupPrepend" required>
+            </div>
+            <br>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">Temperatura</span>
+                <input type="text" readonly class="form-control" id="Temp" aria-describedby="inputGroupPrepend" required>
+            </div>
+            <hr>
+            <div class="text-center">
+
+                <label class="text-center" for="">Importar Factura</label>
+            </div>
+                <input class="form-control col-12" type="file" id="formFile">
+            <div class="text-right">
+                <button type="button" id="iFactura" class="btn btn-primary">Importar</button>
+            </div>
+
+            
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Terminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="Premium-content" style="display: none">
+    <ul class="list-group custom-popover">
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Volmen Natural: 9994.000
+                </h5>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Volmen Neto: 10016.000
+                </h5>                
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Temperatura: 18.8 °C
+                </h5>                
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Densidad: 724.4561
+                </h5>                
+            </div>
+        </li>             
+    </ul>
+</div>
+<div id="Regular" style="display: none">
+    <ul class="list-group custom-popover">
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Volmen Natural: 9992.000
+                </h5>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Volmen Neto: 10027.000
+                </h5>                
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Temperatura: 17.5 °C
+                </h5>                
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Densidad: 717.9709
+                </h5>                
+            </div>
+        </li>             
+    </ul>
+</div>
+<div id="Disel" style="display: none">
+    <ul class="list-group custom-popover">
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Volmen Natural: 9993.000
+                </h5>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Volmen Neto: 10008.000
+                </h5>                
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Temperatura: 18.4 °C
+                </h5>                
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group has-validation">
+                <h5>
+                    Densidad: 838.1805
+                </h5>                
+            </div>
+        </li>             
+    </ul>
+</div>
+<div id="Factura" style="display: none">
+
+</div>
+
+<script>
+
+    function actual() {
+         fecha=new Date(); //Actualizar fecha.
+         hora=fecha.getHours(); //hora actual
+         minuto=fecha.getMinutes(); //minuto actual
+         segundo=fecha.getSeconds(); //segundo actual
+         if (hora<10) { //dos cifras para la hora
+             hora="0"+hora;
+             }
+         if (minuto<10) { //dos cifras para el minuto
+             minuto="0"+minuto;
+             }
+         if (segundo<10) { //dos cifras para el segundo
+             segundo="0"+segundo;
+             }
+         //devolver los datos:
+         mireloj = hora+" : "+minuto+" : "+segundo;	
+         return mireloj; 
+         }
+         function actualizar() { //función del temporizador
+   mihora=actual(); //recoger hora actual
+   mireloj=document.getElementById("reloj"); //buscar elemento reloj
+   mireloj.innerHTML=mihora; //incluir hora en elemento
+	 }
+setInterval(actualizar,1000); //iniciar temporizador
+</script>
+<script>
+    $("#Quit").on('click',function(){
+        $('#Formulario').modal('show'); 
+    })
+</script>
+<script>
+    $(document).ready(function() {
+  $('[data-toggle="Premium"]').popover({
+    html: true,
+    content: function() {
+      return $('#Premium-content').html();
+    }
+  });
+    $('[data-toggle="Regular"]').popover({
+    html: true,
+    content: function() {
+      return $('#Regular').html();
+    }
+  });
+    $('[data-toggle="Disel"]').popover({
+    html: true,
+    content: function() {
+      return $('#Disel').html();
+    }
+  });
+    $('[data-toggle="Factura"]').popover({
+    html: true,
+    content: function() {
+      return $('#Factura').html();
+    }
+  });
+  $("#iFactura").on('click',function(){
+
+      setTimeout(function() { dataFactura(); }, 4500);
+  })
+  function dataFactura(){
+            $("#vNatural").val("100000.000");
+      $("#vNeto").val("100000.000");
+      $("#Densidad").val("820");
+      $("#Temp").val("20.00 °C");
+  }
+});
+</script>

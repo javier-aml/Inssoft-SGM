@@ -1,0 +1,26 @@
+{
+    "Version": "1.5",
+    "RfcContribuyente": "GEM161104H39",
+    "RfcRepresentanteLegal": "BEMM720101IN6",
+    "RfcProveedor": "XAX010101000",
+    "RfcProveedores": ["XAX010101000"],
+    "Caracter": "permisionario",
+    "ModalidadPermiso": "PER1",
+    "NumPermiso": "H/19916/COM/2017",
+    "ClaveInstalacion": "CMN-0001",
+    "DescripcionInstalacion": "Comercialización de gasolina con octanaje menor a 91, gasolina con octanaje mayor a 91 y Diesel automotriz",
+    "NumeroPozos": 0,
+    "NumeroTanques": 8,
+    "NumeroDuctosEntradaSalida": 0,
+    "NumeroDuctosTransporteDistribucion": 0,
+    "NumeroDispensarios": 15,
+    "FechaYHoraCorte": "2022-05-02T00:00:00-06:00",
+    "Producto": [],
+    "Bitacora": [{
+        "NumeroRegistro": 24,
+        "FechaYHoraEvento": "2022-05-02T00:00:00-06:00",
+        "UsuarioResponsable": "Marco Bernal",
+        "TipoEvento": 5,
+        "DescripcionEvento": "Consulta de Informacion"
+    }]
+}

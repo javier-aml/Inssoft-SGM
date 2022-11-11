@@ -1,0 +1,105 @@
+{
+    "ControlesVolumetricos":  {
+        "co:Version":"1.0", 
+        "co:RfcContribuyente":"", 
+        "co:RfcProveedor":"", 
+        "co:Caracter":{
+            "co:Caracter":"Usuario",
+            "co:ModalidadPermiso":"", 
+            "co:NumPermiso":"", 
+            "co:NumContratoOAsignacion":"",
+            "co:InstalacionAlmacenGasNatural":""
+
+        }, 
+        "co:ClaveInstalacion":"", 
+        "co:DescripcionInstalacion":"", 
+        "co:Geolocalizacion":{
+            "co:GeolocalizacionLatitud":"", 
+            "co:GeolocalizacionLongitud":""
+
+        }, 
+
+        "co:FechaYHoraReporteMes":"FULLDATE", 
+        "co:PRODUCTO":{
+            "co:ClaveProducto":"PR03", 
+            "co:ClaveSubProducto":"PR03",
+            "co:Gasolina":{
+                "co:ComposOctanajeGasolina":"91", 
+                "co:GasolinaConCombustibleNoFosil":"No",
+                "co:ComposDeCombustibleNoFosilEnGasolina":""
+            }, 
+            "co:Diesel":{
+                "co:DieselConCombustibleNoFosil":"No", 
+                "co:ComposDeCombustibleNoFosilEnDiesel":""
+
+            }, 
+            "co:MarcaComercial":"GLENCORE ENERGY MX", 
+            "co:REPORTEDEVOLUMENMENSUAL":{
+                "co:CONTROLDEEXISTENCIAS":{
+                    "co:VolumenExistenciasMes":{
+                        "co:ValorNumerico":"TotalLTS ingreso - salida"
+                    },
+                    "co:FechaYHoraEstaMedicionMes":"hoy"
+                }, 
+                "co:RECEPCIONES":{
+                    "co:TotalRecepcionesMes":"index max ingreso", 
+                    "co:SumaVolumenRecepcionMes":{
+                        "co:ValorNumerico":"total ingreso",
+                        "co:UM":"UM03"
+                    }, 
+                    "co:TotalDocumentosMes":"", 
+                    "co:ImporteTotalRecepcionesMensual":"max mxn ingreso",
+                    "co:Complemento":""
+                },
+                "co:ENTREGAS":{
+                    "co:TotalEntregasMes":"index max salida", 
+                    "co:SumaVolumenEntregadoMes":{
+                        "co:ValorNumerico":"total salida",
+                        "co:UM":"UM03"
+                    }, 
+ 
+                    "co:TotalDocumentosMes":"", 
+                    "co:ImporteTotalEntregasMes":"max mxn salida",
+                    "co:Complemento":""
+                }
+
+
+            }
+        }, 
+        "co:BITACORAMENSUAL":{
+            "co:NumeroRegistro":"index", 
+            "co:FechaYHoraEvento":"hora registro", 
+            "co:UsuarioResponsable":"Adrián Sánchez", 
+            "co:TipoEvento":"0", 
+            "co:DescripcionEvento":"Todo bien",
+            "co:IdentificacionComponenteAlarma":""
+        }
+    },
+    "Complemento_Comercializacion":{
+ 
+        "co:DICTAMEN":{
+            "co:RfcDictamen":{}, 
+            "co:LoteDictamen":{},
+            "co:NumeroFolioDictamen":{}, 
+            "co:FechaEmisionDictamen":{}, 
+            "co:ResultadoDictamen":{}
+        }, 
+        "co:NACIONAL":{
+            "co:RfcClienteOProveedor":{}, 
+            "co:NombreClienteOProveedor":{},
+            "co:PermisoProveedor":{},
+            "co:CFDIs":{
+                "co:CFDI":"uuid", 
+                "co:TipoCFDI":"tipo compra", 
+                "co:PrecioVentaOCompraOContrap":"totalMXN", 
+                "co:FechayHoraTransaccion":"Full Date", 
+                "co:VolumenDocumentado":{
+                    "co:ValorNumerico":"cantidad",
+                    "co:UM":"UM03"
+                }
+            }
+        }, 
+        "co:ACLARACION":{}
+    }
+
+}

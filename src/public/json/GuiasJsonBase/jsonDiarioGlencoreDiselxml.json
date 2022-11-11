@@ -1,0 +1,68 @@
+{
+    "ControlesVolumetricos":  {
+        "co:Version":"1.0", 
+        "co:RfcContribuyente":"", 
+        "co:RfcProveedor":"", 
+        "co:Caracter":{
+            "co:Caracter":"Usuario",
+            "co:ModalidadPermiso":"", 
+            "co:NumPermiso":"", 
+            "co:NumContratoOAsignacion":"",
+            "co:InstalacionAlmacenGasNatural":""
+
+        }, 
+        "co:ClaveInstalacion":"", 
+        "co:DescripcionInstalacion":"", 
+        "co:Geolocalizacion":{
+            "co:GeolocalizacionLatitud":"", 
+            "co:GeolocalizacionLongitud":""
+
+        }, 
+        "co:FechaYHoraCorte":"FULLDATE", 
+        "co:PRODUCTO":{
+            "co:ClaveProducto":"PR03", 
+            "co:ClaveSubProducto":"PR03",
+            "co:Diesel":{
+                "co:DieselConCombustibleNoFosil":"No", 
+                "co:ComposDeCombustibleNoFosilEnDiesel":""
+
+            }, 
+            "co:MarcaComercial":"GLENCORE ENERGY MX"
+
+        }, 
+        "co:BITACORA":{
+            "co:NumeroRegistro":"index", 
+            "co:FechaYHoraEvento":"hora registro", 
+            "co:UsuarioResponsable":"Adrián Sánchez", 
+            "co:TipoEvento":"0", 
+            "co:DescripcionEvento":"Todo bien",
+            "co:IdentificacionComponenteAlarma":""
+        }
+    },
+    "Complemento_Comercializacion":{
+        "co:DICTAMEN":{
+            "co:RfcDictamen":"", 
+            "co:LoteDictamen":"",
+            "co:NumeroFolioDictamen":"", 
+            "co:FechaEmisionDictamen":"", 
+            "co:ResultadoDictamen":""
+        }, 
+        "co:NACIONAL":{
+            "co:RfcClienteOProveedor":"", 
+            "co:NombreClienteOProveedor":"",
+            "co:PermisoProveedor":"",
+            "co:CFDIs":{
+                "co:CFDI":"uuid", 
+                "co:TipoCFDI":"tipo compra", 
+                "co:PrecioVentaOCompraOContrap":"totalMXN", 
+                "co:FechayHoraTransaccion":"Full Date", 
+                "co:VolumenDocumentado":{
+                    "co:ValorNumerico":"cantidad",
+                    "co:UM":"UM03"
+                }
+            }
+        }, 
+        "co:ACLARACION":{}
+    }
+
+}

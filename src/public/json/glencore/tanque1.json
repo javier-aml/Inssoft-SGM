@@ -1,0 +1,72 @@
+{
+    "ClaveIdentificacionTanque": "TQS-TDA-0001",
+    "Localizaciony/oDescripcionTanque": "Tanque de Diesel",
+    "VigenciaCalibracionTanque": "2028-05-11",
+    "CapacidadTotalTanque": {
+        "ValorNumerico":  22884248.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "CapacidadOperativaTanque": {
+        "ValorNumerico": 22506335.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "CapacidadUtilTanque": {
+        "ValorNumerico": 20984069.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "CapacidadFondajeTanque": {
+        "ValorNumerico": 1533508.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "VolumenMinimoOperacion": {
+        "ValorNumerico": 1900179.0,
+        "UnidadDeMedida": "UM03"
+    },
+    "EstadoTanque": "O",
+    "Medidores": [{
+        "SistemaMedicionTanque": "SME-TQS-TDA-0001",
+        "LocalizODescripSistMedicionTanque": "medidor de nivel tipo radar",
+        "VigenciaCalibracionSistMedicionTanque": "2022-04-07",
+        "IncertidumbreMedicionSistMedicionTanque": 0.277
+    }],
+    "Existencias": {
+        "VolumenExistenciasAnterior": 4303808.469222,
+        "VolumenAcumOpsRecepcion": {
+            "ValorNumerico": 0.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "HoraRecepcionAcumulado": "23:59:59-06:00",
+        "VolumenAcumOpsEntrega": {
+            "ValorNumerico": 528173.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "HoraEntregaAcumulado": "23:59:59-06:00",
+        "VolumenExistencias": 3775635.469222,
+        "FechaYHoraEstaMedicion": "2022-05-02T23:59:59-06:00",
+        "FechaYHoraMedicionAnterior": "2022-05-01T23:59:59-06:00"
+    },
+    "Recepciones": {
+        "TotalRecepciones": 0,
+        "SumaVolumenRecepcion": {
+            "ValorNumerico": 0.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "TotalDocumentos": 0,
+        "SumaCompras": 0.0,
+        "RECEPCION": [ 
+           
+        ]
+    },
+    "Entregas": {
+        "TotalEntregas": 17,
+        "SumaVolumenEntregado": {
+            "ValorNumerico": 528173.0,
+            "UnidadDeMedida": "UM03"
+        },
+        "TotalDocumentos": 17,
+        "SumaVentas": 9471462.18031,
+        "Entrega": [ 
+           
+        ]
+    }
+}

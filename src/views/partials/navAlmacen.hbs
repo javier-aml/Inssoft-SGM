@@ -1,0 +1,54 @@
+<header class="site-header">
+  <title>{{pageTitle}}</title>
+  <nav class="navbar navbar-expand-lg navbar-light container-title" style="background-color: #fff">
+    <div class="container  container-title">
+      <a class="navbar-brand" href="/almacen/{{uid}}">
+        <img src="/assets/0_LogoEkide.svg" width="250" alt="ekidelogo">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <h2 style="text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 0; font-family: calibri; text-transform: Capitalize " class="justify-content-center d-none d-lg-block" >{{title}}</h2>
+        <ul class="navbar-nav ">         
+          <li class="nav-item usericon">
+            <div class="nav-link d-none d-lg-block" href="#"> <img src="/assets/usericon.svg" width="50" alt=""> </div>
+          </li>		      
+          <div class="align-self-center username mx-3" id="User" style="text-transform: lowercase;">{{Nombre}}</div>	
+                    <li class="nav-item usericon">
+            <div class="nav-link d-none d-lg-block btn-group" href="#"> <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ><img src="/assets/icons8-bell-48.png" width="40" alt=""></a> 
+            <ul class="dropdown-menu">
+              {{#each tornilleria}}
+                {{#if status}}
+
+                     <li><a class="dropdown-item tornilleria" name="{{id_movimiento}}">{{solicitante}} <br>{{proyecto}} <br>
+                       Fecha solicitada: {{dates}}</a></li>
+                {{else}}
+                   <li><a class="dropdown-item tornilleria" name="{{id_movimiento}}" style="background-color: #a7c3d1 ;" href="#">{{solicitante}} <br>{{proyecto}} <br>
+                       Fecha solicitada: {{dates}}</a></li>
+
+                {{/if}}
+              {{/each}}
+              {{#each diff}}
+                {{#if status}}
+
+                     <li><a class="dropdown-item  caducos">{{nParte}} <br>{{dPedido}} <br>
+                       Quedan {{diff}}    dias para caducar</a></li>
+                {{else}}
+                   <li><a class="dropdown-item  caducos" style="background-color: #a7c3d1 ;" href="#">{{nParte}}<br>{{dPedido}} <br>
+                       Quedan {{diff}}    dias para caducar</a></li>
+
+                {{/if}}
+              {{/each}}
+            </ul>
+            </div>
+          </li>	
+                    <p id="sign-out-Ekide"  class="btn align-self-center sign-out-btn ml-3 nowrap" style="white-space: nowrap" >Cerrar sesión</p>                             
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+        <script src="/js/almacen/tornilleria.js"></script>

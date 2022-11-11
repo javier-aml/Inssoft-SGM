@@ -1,0 +1,61 @@
+{
+    "Complemento_Comercializacion":{
+        "TERMINALALMYDIST":{
+            "Almacenamiento":{
+                "TerminalAlmYDist":{}, 
+                "PermisoAlmYDist":{},
+                "TarifaDeAlmac":{}, 
+                "CargoPorCapacidadAlmac":{}, 
+                "CargoPorUsoAlmac":{}, 
+                "CargoVolumetricoAlmac":{}
+            }, 
+            "Transporte":{
+                "PermisoTransporte":{}, 
+                "ClaveDeVehiculo":{}, 
+                "TarifaDeTransporte":{}, 
+                "CargoPorCapacidadTrans":{}, 
+                "CargoPorUsoTrans":{},
+                "CargoVolumetricoTrans":{}
+
+            }
+        }, 
+        "DICTAMEN":{
+            "RfcDictamen":{}, 
+            "LoteDictamen":{},
+            "NumeroFolioDictamen":{}, 
+            "FechaEmisionDictamen":{}, 
+            "ResultadoDictamen":{}
+        }, 
+        "NACIONAL":{
+            "RfcClienteOProveedor":{}, 
+            "NombreClienteOProveedor":{},
+            "PermisoProveedor":{},
+            "CFDIs":{
+                "CFDI":"uuid", 
+                "TipoCFDI":"tipo compra", 
+                "PrecioVentaOCompraOContrap":"totalMXN", 
+                "FechayHoraTransaccion":"Full Date", 
+                "VolumenDocumentado":{
+                    "ValorNumerico":"cantidad",
+                    "UM":"UM03"
+                }
+            }
+        }, 
+        "EXTRANJERO":{
+            "PermisoImportacionOExportacion":{},
+            "PEDIMENTOS":{
+                "PuntoDeInternacionOExtraccion":{},
+                "PaisOrigenODestino":{}, 
+                "MedioDeTransEntraOSaleAduana":{}, 
+                "PedimentoAduanal":{}, 
+                "Incoterms":{},
+                "PrecioDeImportacionOExportacion":{}, 
+                "VolumenDocumentado":{
+                    "ValorNumerico":"cantidad",
+                    "UM":""
+                }
+            }
+        }, 
+        "ACLARACION":{}
+    }
+}

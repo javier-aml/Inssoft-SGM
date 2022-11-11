@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Complemento_Almacenamiento>
+  <TRANSPORTE>
+    <PermisoTransporte>PL/20200/TRA/OM/2022</PermisoTransporte>
+    <ClaveDeVehiculo>456TRD</ClaveDeVehiculo>
+    <TarifaDeTransporte>4.465</TarifaDeTransporte>
+    <CargoPorCapacidadTrans>0.992</CargoPorCapacidadTrans>
+    <CargoPorUsoTrans>0.036</CargoPorUsoTrans>
+    <CargoVolumetricoTrans>3.437</CargoVolumetricoTrans>
+  </TRANSPORTE>
+  <DICTAMEN>
+    <RfcDictamen>GEO9506184R6</RfcDictamen>
+    <LoteDictamen>435</LoteDictamen>
+    <NumeroFolioDictamen>GEO9506184R6000232020</NumeroFolioDictamen>
+    <FechaEmisionDictamen>2020-10-31</FechaEmisionDictamen>
+    <ResultadoDictamen>se aplicó el método de muestreo ASTM D4057 al lote 435 y se determinó que el diésel contiene 5% de biodiésel.</ResultadoDictamen>
+  </DICTAMEN>
+  <CERTIFICADO>
+    <RfcCertificado>EVA9612104R6</RfcCertificado>
+    <NumeroFolioCertificado>EVA9612104R6000232020</NumeroFolioCertificado>
+    <FechaEmisionCertificado>2020-11-12</FechaEmisionCertificado>
+    <ResultadoCertificado>se acredita la correcta operación y funcionamiento de los equipos y programas informáticos para llevar controles volumétricos.</ResultadoCertificado>
+  </CERTIFICADO>
+  <NACIONAL>
+    <RfcClienteOProveedor>CABL840215RF4</RfcClienteOProveedor>
+    <NombreClienteOProveedor>Petromexico S.A. de C.V</NombreClienteOProveedor>
+    <PermisoClienteOProveedor>H/88888/COM/2021</PermisoClienteOProveedor>
+    <CFDIs>
+      <CFDI>4FE29D07-F126-4038-AC77-C60A33646FF9</CFDI>
+      <TipoCFDI>Ingreso</TipoCFDI>
+      <PrecioCompra>18000.45</PrecioCompra>
+      <Contraprestacion>12000.45</Contraprestacion>
+      <TarifaDeAlmacenamiento>58.698</TarifaDeAlmacenamiento>
+      <CargoPorCapacidadAlmac>15.631</CargoPorCapacidadAlmac>
+      <CargoPorUsoAlmac>13.946</CargoPorUsoAlmac>
+      <CargoVolumetricoAlmac>29.120</CargoVolumetricoAlmac>
+      <Descuento>3900.00</Descuento>
+      <FechaYHoraTransaccion>2020-10-31T11:59:45-0100</FechaYHoraTransaccion>
+      <VolumenDocumentado>
+        <ValorNumerico>20000.000</ValorNumerico>
+        <UM>UM03</UM>
+      </VolumenDocumentado>
+    </CFDIs>
+  </NACIONAL>
+  <EXTRANJERO>
+    <PermisoImportacion>1234C123456789</PermisoImportacion>
+    <PEDIMENTOS>
+      <PuntoDeInternacion>280</PuntoDeInternacion>
+      <PaisOrigen>USA</PaisOrigen>
+      <MedioDeTransEntraAduana>1</MedioDeTransEntraAduana>
+      <PedimentoAduanal>20 28 3454 0123456</PedimentoAduanal>
+      <Incoterms>DAT</Incoterms>
+      <PrecioDeImportacion>1000432.340</PrecioDeImportacion>
+      <VolumenDocumentado>
+        <ValorNumerico>1500000.000</ValorNumerico>
+        <UM>UM03</UM>
+      </VolumenDocumentado>
+    </PEDIMENTOS>
+  </EXTRANJERO>
+  <ACLARACION>
+    <Aclaracion>La inconsistencia en el volumen se debe a cambios de presión y temperatura dentro del tanque de almacenamiento TQS-ALM-0070, la lectura correcta de VolumenInicialTanque debería ser 14,000 litros, mismos que se entregaron.</Aclaracion>
+  </ACLARACION>
+</Complemento_Almacenamiento>

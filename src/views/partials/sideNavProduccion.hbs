@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="/css/evo-calendar.css">
+<link rel="stylesheet" href="/css/evo-calendar.royal-navy.css">
+
+<div class="sidenav-body"> 
+  <div id="mySidenav" class="sidenav">
+    <a href="/produccion/{{uid}}" id="homeNav" class="">
+      <img id="homeImg" src="/assets/home.svg" width="30" style="padding-right: 8px; vertical-align: baseline;"> 
+      Inicio
+    </a>
+        <a href="/produccion/Lector/QR" id="qrScannerNav" class="">
+      <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline">
+      Escaner QR
+    </a>
+    <a href="/produccion/etiquetas/tabla" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;"> 
+      Etiquetas historicos
+    </a>
+        <a href="/produccion/etiquetas/tabla2" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;"> 
+      Etiquetas
+    </a>
+    <a href="/produccion/historicos/Tickets" id="ticketsNav" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline"> 
+      Tickets
+    </a>
+    {{!-- <a href="" id="ncrNav" class="">
+      <img id="ncrImg" src="/assets/ncr.svg" width="30"  style="padding-right: 8px; vertical-align: baseline"> 
+      NCRs
+    </a> --}}
+    <a data-toggle="modal" data-target="#modalCalendario" id="calendarNav" class="">
+      <img id="calendarImg" src="/assets/calendar.svg" width="30" style="padding-right: 8px; vertical-align: baseline"> 
+      Calendario
+    </a>
+  </div>
+  <button id="openNavBtn" class="btn sidenav-button"  onclick="openNav()"> <img src="/assets/right-arrow.svg" width= "10px" alt=""> </button>
+  <button id="closeNavBtn" class="btn sidenav-button"  onclick="closeNav()"> <img src="/assets/left-arrow.svg" width= "10px" alt=""> </button>
+
+  <script src="/js/sidenav.js"></script> 
+</div>
+
+<!-- Modal Calendario -->
+<div class="modal fade" id="modalCalendario" tabindex="-1" role="dialog" aria-labelledby="modalCalendarioTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Calendario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div id="fullCalendar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+    switch ("{{title}}") {
+      case "Inicio":
+          document.getElementById("homeNav").classList.add("navSel");
+          document.getElementById("homeImg").src = "/assets/homeS.svg"        
+        break;
+      case "Etiquetas":
+          document.getElementById("tagsNav").classList.add("navSel");
+          document.getElementById("tagsImg").src = "/assets/tagsS.svg"
+        break;
+      case "Tickets":
+          document.getElementById("ticketsNav").classList.add("navSel");
+          document.getElementById("ticketsImg").src = "/assets/ticketS.svg"        
+        break;
+      case "NCRs":
+          document.getElementById("ncrNav").classList.add("navSel");
+          document.getElementById("ncrImg").src = "/assets/ncrS.svg"
+        break;
+      case "Calendario":
+          document.getElementById("calendarNav").classList.add("navSel");
+          document.getElementById("calendarImg").src = "/assets/calendarS.svg"
+        break;
+    }
+  </script>
+  
+<script src="/js/evo-calendar.js"></script>
+<script src="/js/fullCalendar.js" ></script>

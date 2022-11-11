@@ -1,0 +1,415 @@
+<link rel="stylesheet" href="/css/evo-calendar.css">
+<link rel="stylesheet" href="/css/evo-calendar.royal-navy.css">
+
+<div class="sidenav-body">
+  <div id="mySidenav" class="sidenav">
+    <a href="/almacen/{{uid}}" id="homeNav" class="">
+      <img id="homeImg" src="/assets/home.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Inicio
+    </a>
+    {{!-- <a href="/almacen/Lector/QR" id="qrScannerNav" class="">
+      <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline">
+      Escaner QR
+    </a> --}}
+    <a href="/almacen/ubicacion/almacen" id="qrScannerNav" class="">
+      <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline">
+      Ubicaciones
+    </a>
+    {{!-- <a href="/almacen/etiquetasRemision/tabla" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Asignar Remision
+    </a> --}}
+        <a href="/almacen/remision/remisionPc" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Tabla de remisiones
+    </a>
+    {{!-- <a href="/almacen/etiquetas/tabla" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Generar Etiquetas
+    </a>
+    <a href="/almacen/etiquetasHistorico/tabla" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Generar Etiquetas Historico
+    </a> --}}
+    {{!-- <a href="/almacen/tickets/almacen" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      tickets
+    </a> --}}
+    {{!-- <a data-toggle="modal" data-target="#modaExcel" id="excel" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Excel pedidos
+    </a> --}}
+    {{!-- <a data-toggle="modal" data-target="#remisionModal" id="remision" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Remisiones
+    </a> --}}
+        <a data-toggle="modal" data-target="#staticBackdrop" id="remision" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Agregar Excel de Remisiones
+    </a>
+    {{!-- <a href="/almacen/tabla/movimientos/" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      movimientos
+    </a> --}}
+    {{!-- <a href="/almacen/orden/compras/" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Orden de compra
+    </a> --}}
+    <a data-toggle="modal" data-target="#modalCalendario" id="calendarNav" class="">
+      <img id="calendarImg" src="/assets/calendar.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Calendario
+    </a>
+    {{!-- <a id="ir" data-toggle="modal" data-target="#IR" id="calendarNav" class="">
+      <img id="calendarImg" src="/assets/calendar.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      I.R.
+    </a> --}}
+    <a data-toggle="modal" data-target="#Movimiento" id="generarM" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Generar PDF de movimientos
+    </a>
+  </div>
+  <button id="openNavBtn" class="btn sidenav-button" onclick="openNav()"> <img src="/assets/right-arrow.svg"
+      width="10px" alt=""> </button>
+  <button id="closeNavBtn" class="btn sidenav-button" onclick="closeNav()"> <img src="/assets/left-arrow.svg"
+      width="10px" alt=""> </button>
+
+  <script src="/js/sidenav.js"></script>
+
+</div>
+<!-- Modal Calendario -->
+<div class="modal fade" id="modalCalendario" tabindex="-1" role="dialog" aria-labelledby="modalCalendarioTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Calendario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div id="fullCalendar"></div>
+        </div>
+      </div>
+
+      <script src="/js/evo-calendar.js"></script>
+      <script src="/js/fullCalendar.js"></script>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Excel -->
+<div class="modal fade" id="modaExcel" tabindex="-1" role="dialog" aria-labelledby="modaExcelTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Excel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="formExcel">
+          <div class="container-fluid">
+            <div class="mb-1">
+
+              <div class="row">
+                <label class="form-label">Proyecto</label>
+
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" name="proyecto"
+                    aria-label="Floating label select example">
+                    <option value="All" selected>ALL</option>
+                    <option value="Brochas-Gages J9.">Brochas-Gages J9.</option>
+                    <option value="Modificacion QB00351 Voestalpine">Modificacion QB00351 Voestalpine</option>
+                    <option value="Checking Fixture - 8MA_803_164">Checking Fixture - 8MA_803_164</option>
+                  </select>
+                  <label for="floatingSelect">Seleccionar proyecto</label>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="row">
+                <div class="div col-6">
+                  <label class="form-label">Desde</label>
+                  <td class="cantidad"><input class="form-control" name="fechaDesde" type="date"></input> </td>
+                </div>
+
+                <div class="div col-6">
+                  <label class="form-label">Hasta</label>
+                  <td class="cantidad"><input class="form-control" name="fechaHasta" type="date"></input> </td>
+                </div>
+
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="row">
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="generarExcel" class="btn btn-primary" data-dismiss="modal">Generar Excel</button>
+      </div>
+      <script src="/js/Ekide/Excel.js"></script>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="remisionModal" tabindex="-1" aria-labelledby="remisionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="remisionModalLabel">Remisiones</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="body-remision" class="container-fluid">
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeBtnTicket" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="btnTicket" class="btn btn-success" data-dismiss="modal">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="IR" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="IRLabel"
+  aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="IRLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>N. Parte</th>
+              <th>Descripción de pedido</th>
+              <th>Cantidad</th>
+              <th>Ticket</th>
+            </tr>
+          </thead>
+          <tbody id="ir_body">
+
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="ticketModal" data-backdrop="static" tabindex="-1" aria-labelledby="ticketModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ticketModalLabel">Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="body-ticket" class="container-fluid">
+
+          <div class="container-fluid">
+
+            <div class="mb-1">
+              <div class="row">
+                <div class="div col-6">
+                  <label class="form-label">Numero de parte</label>
+                  <input type="text" placeholder="" readonly value="" class="form-control" id="nParte">
+                </div>
+                <div class="div col-6">
+                  <label class="form-label">Fecha de llegada a planta</label>
+                  <input placeholder="Select date" type="date" id="date" class="form-control">
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+            <div class="mb-1">
+              <div class="row">
+
+                <div class="div col-12">
+                  <label class="form-label">Descripcion de pedido</label>
+                  <input type="text" placeholder="" readonly value="" class="form-control" id="dPedido">
+                </div>
+
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="row">
+                <div class="div col-12">
+                  <label class="form-label">Proveedor</label>
+                  <input type="text" placeholder="" value="" class="form-control" id="proveedor">
+                </div>
+
+              </div>
+            </div>
+
+            <div class="mb-1">
+              <div class="row">
+                <div class="div col-12">
+                  <label class="form-label">Reclamo</label>
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="reclamo"></textarea>
+                    <label for="reclamo">Escribe aqui el motivo del ticket</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeBtnTicket" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="btnTicket" data-target="#myModalTicket" class="btn btn-success">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModalTicket" tabindex="-1" aria-labelledby="myModalTicketLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalTicketLabel">Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modalBodyticket" class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" id="" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Movimiento" tabindex="-1" aria-labelledby="MovimientoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="MovimientoLabel">Generar PDF traspaso</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="movimientoBody" class="modal-body">
+
+      </div>
+      <div class="modal-footer" id="cancelBtn">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Guardar</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="form_file" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label  for="file">seleccionar Pedido de compra</label>
+                    <input type="file" name="attachment" class="form-control-file" id="file">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
+                <button type="button" id="remisionAddBtn" value="" data-toggle="modal" data-target="#succesModal" data-dismiss="modal"
+                  class="btn btn-primary ">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+          <script type="text/javascript">
+  $("#remisionAddBtn").on("click",function(){
+  
+          // const form = $("#form_file");
+          // const data = new FormData(form[0]);
+          var data = new FormData($('#form_file')[0]);
+          $.ajax({
+              url:'/almacen/add/remisiones/codigoP',
+              type: 'POST',
+              contentType: false,
+              processData: false,
+              cache: false,
+              data: data,
+              success: function(res){
+                  if (res == true) {
+                    console.log(res)
+                      $("#succes").empty()
+                      $("#succes").append("Se realizo correctamente la operacion.")
+                  }else{
+                      $("#succes").empty()
+                      $("#succes").append("Porfavor ingrese un archivo de excel para funcionar.")
+                  }
+                  // $.post("/almacen/add/pc", function( data ) {
+
+                  // });
+              },
+              error: function(){
+                  alert('Error: In sending the request!');
+              }
+          })
+
+  })
+  </script>
+<script src="/js/almacen/remisiones.js"></script>
+<script src="/js/almacen/tickets.js"></script>
+<script src="/js/almacen/movimiento.js"></script>
+<script>
+  switch ("{{title}}") {
+    case "Inicio":
+      document.getElementById("homeNav").classList.add("navSel");
+      document.getElementById("homeImg").src = "/assets/homeS.svg"
+      break;
+    case "Kits":
+      document.getElementById("kitsNav").classList.add("navSel");
+      document.getElementById("kitsImg").src = "/assets/kitsS.svg"
+      break;
+    case "Escaner QR":
+      document.getElementById("qrScannerNav").classList.add("navSel");
+      document.getElementById("qrScannerImg").src = "/assets/QrScannerS.svg"
+
+      break;
+    case "Tickets":
+      document.getElementById("ticketsNav").classList.add("navSel");
+      document.getElementById("ticketsImg").src = "/assets/ticketS.svg"
+      break;
+  }
+
+
+  $("#body-remision").on("click", ".remision", function () {
+    console.log($(this).val());
+    window.open("/almacen/open/remision/" + $(this).val());
+  })
+  /**SELECT `nombre_remision` FROM `remision1` GROUP by `nombre_remision`;*/
+</script>

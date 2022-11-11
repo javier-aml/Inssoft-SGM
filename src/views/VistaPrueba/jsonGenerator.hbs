@@ -1,0 +1,40 @@
+
+{{>navVistaPrueba}}
+
+<div>
+  {{>sideNavVistaPrueba}}
+
+</div>
+
+  <div id="mainwin">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="text-rigth">
+          <a   type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="button col-2 btn btn-ekide d-none d-lg-block float-end">Agregar Excel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Generar json</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                         <form id="json" enctype="multipart/form-data">
+          <input class="form-control col-12" name="excel" type="file" data-toggle="tooltip" data-placement="top" title="Solo archivos xlsx" accept=".xlsx"  id="formFile">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" id="btnJson" class="btn btn-primary">Generar Json</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/VistaPrueba/Json.js"></script>

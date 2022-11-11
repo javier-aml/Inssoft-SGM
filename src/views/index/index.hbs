@@ -1,0 +1,180 @@
+<style>
+  footer{
+        height : 0px;
+    margin-bottom:0; 
+  }
+</style>
+ <header class="site-header ">
+      <title>SOFTOIL</title>
+      <nav class="navbar navbar-expand-lg navbar-light container-title" style="background-color: #fff">
+        <div class="container container-title">
+          <div class="text-left">
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto "> 
+                <li class="nav-item mr-0 mr-lg-4">
+                  <div class="nav-link" href="#"> <img src="/assets/userOrange.svg" width="10" height="50" alt=""> </div>
+                </li>
+                <button class="btn btn-rounded align-self-center login-btn ml-3 nowrap" data-toggle="modal" data-target="#modalLoginForm">Iniciar sesión</button>             
+              </ul>
+            </div>
+                      </div>
+
+          <a class="navbar-brand" href="#">
+            <img src="/assets/SOFTOIL.png" width="130" height="80" alt="logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+        </div>
+      </nav>
+    </header>
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Iniciar sesión</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <div class="modal-body mx-3">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="grupo-6924">
+                      <div class="flex-row text-center">
+                        <img class="loginImg" src="/assets/iconSoft.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                      <label for="User" class="form-label">Usuario</label>
+                      <input required type="text"placeholder="Usuario" class="form-control" id="User">
+
+                    </div>
+                    <div class="mb-3">
+                      <label for="Password" class="form-label">Constraseña</label>
+                      <input required type="password" placeholder="Contraseña" class="form-control" id="Password">
+                    </div>  
+                </div>
+              </div>
+              {{!-- <div class="md-form mb-5">
+                <i class="fas fa-user prefix grey-text"></i>
+                <input name="user" id="user" type="text" value="" class="form-control validate">
+                <label data-error="wrong" data-success="right" for="user">Usuario</label>
+              </div>
+    
+              <div class="md-form mb-4">
+                <i class="fas fa-lock prefix grey-text"></i>
+                <input id="password" type="password" value="" class="form-control validate">
+                <label data-error="wrong" data-success="right" for="password">Contraseña</label>
+              </div> --}}
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+              <button class="btn btn-softoil" type="submit" id="login" >Entrar</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+{{{some}}}
+    
+    <div  id="img" class="container-fluid">
+      <img src="/assets/Refineria.jpg" id="img" alt="">
+      <div class="row">
+        <div class="col">
+          <div class="text-center">
+            <a href="" class="btn btn-primary btn-rounded mb-4" style="display:none " data-toggle="modal" data-target="#modalRegisterForm">Registrar usuario</a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="text-center">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <style>
+      body{
+          background: white !important;
+        }
+      img{
+        width: 100%;
+      }
+    </style>
+    <script>
+      $("#login").on("click",function(){
+        const user = $("#User").val();
+        const pass = $("#Password").val();
+        console.log(user + "----" + pass);
+        if ( user== "adminAdrSan" && pass== "Usuario1") {
+            window.location.replace(`/VistaPrueba`);
+        }else{
+          alert("Usuario o contraseña incorrectos")
+        }
+      })
+
+
+                /*          const json1 = {
+                            "url": "http://localhost:3000/",
+                            "events": [
+                            "credential.created",
+                            "credential.updated"
+                            ],
+                            "enabled": true
+                          }
+                          
+                          const json = {
+                            "type": "efirma",
+                            "certificate": "C:\Users\USER\Desktop\matc9906196g8.cer",
+                            "privateKey": "C:\Users\USER\Desktop\FIEL_MATC9906196G8_20210623094811.key",
+                            "password": "Bo@stful11"
+                          }
+//12345678a
+                            $.ajax({
+                          url:'https://api.satws.com/webhook-endpoints',
+                          type: 'POST',
+                          contentType: 'application/json',
+                           headers: {
+                              'headerX-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+                          },
+                          processData: false,
+                          cache: false,
+                          data: json1,
+                          success: function(res){
+                            console.log(res)
+                            /*$.ajax({
+                              url:'https://api.satws.com/credentials',
+                              type: 'POST',
+                              contentType: '',
+                              headers: {
+                              'headerX-API-Key': 'headerX-API-Key: <API key>'
+                              },
+                              processData: false,
+                              cache: false,
+                              data: json,
+                              success: function(res){
+                                console.log(res)
+                                
+                              }
+                              ,
+                              error: function(err){
+                                  alert('Error: In sending the request!');
+                                  console.log(err)
+                              }
+                            })
+                          }
+                          ,
+                          error: function(err){
+                              alert('Error: In sending the request!');
+                              console.log(err)
+                          }
+
+              })*/
+      </script>

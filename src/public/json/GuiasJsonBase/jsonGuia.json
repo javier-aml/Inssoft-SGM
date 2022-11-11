@@ -1,0 +1,65 @@
+{
+    "Complemento_Almacenamiento":{
+        "TRANSPORTE":{
+            "PermisoTransporte":"PL/20200/TRA/OM/2022", 
+            "ClaveDeVehiculo":"456TRD", 
+            "TarifaDeTransporte":"4.465", 
+            "CargoPorCapacidadTrans":"0.992", 
+            "CargoPorUsoTrans":"0.036",
+            "CargoVolumetricoTrans":"3.437"
+        }, 
+        "DICTAMEN":{
+            "RfcDictamen":"GEO9506184R6", 
+            "LoteDictamen":"435", 
+            "NumeroFolioDictamen":"GEO9506184R6000232020", 
+            "FechaEmisionDictamen":"2020-10-31",
+            "ResultadoDictamen":"se aplicó el método de muestreo ASTM D4057 al lote 435 y se determinó que el diésel contiene 5% de biodiésel."
+        }, 
+        "CERTIFICADO":{
+            "RfcCertificado":"EVA9612104R6", 
+            "NumeroFolioCertificado":"EVA9612104R6000232020", 
+            "FechaEmisionCertificado":"2020-11-12",
+            "ResultadoCertificado":"se acredita la correcta operación y funcionamiento de los equipos y programas informáticos para llevar controles volumétricos."
+        }, 
+        "NACIONAL":{
+            "RfcClienteOProveedor":"CABL840215RF4", 
+            "NombreClienteOProveedor":"Petromexico S.A. de C.V",
+            "PermisoClienteOProveedor":"H/88888/COM/2021",
+            "CFDIs":{
+                "CFDI":"4FE29D07-F126-4038-AC77-C60A33646FF9", 
+                "TipoCFDI":"Ingreso", 
+                "PrecioCompra":"18000.45", 
+                "Contraprestacion":"12000.45", 
+                "TarifaDeAlmacenamiento":"58.698", 
+                "CargoPorCapacidadAlmac":"15.631", 
+                "CargoPorUsoAlmac":"13.946", 
+                "CargoVolumetricoAlmac":"29.120", 
+                "Descuento":"3900.00", 
+                "FechaYHoraTransaccion":"2020-10-31T11:59:45-0100",
+                "VolumenDocumentado":{
+                    "ValorNumerico":"20000.000",
+                    "UM":"UM03"
+                }
+
+            }
+        }, 
+        "EXTRANJERO":{
+            "PermisoImportacion":"1234C123456789",
+            "PEDIMENTOS":{
+                "PuntoDeInternacion":"280",
+                "PaisOrigen":"USA", 
+                "MedioDeTransEntraAduana":"1", 
+                "PedimentoAduanal":"20 28 3454 0123456", 
+                "Incoterms":"DAT", 
+                "PrecioDeImportacion":"1000432.340",
+                "VolumenDocumentado":{
+                    "ValorNumerico":"1500000.000",
+                    "UM":"UM03"
+                }
+            }
+        },
+        "ACLARACION":{
+            "Aclaracion":"La inconsistencia en el volumen se debe a cambios de presión y temperatura dentro del tanque de almacenamiento TQS-ALM-0070, la lectura correcta de VolumenInicialTanque debería ser 14,000 litros, mismos que se entregaron."
+        }
+    }
+}

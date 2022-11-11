@@ -1,0 +1,140 @@
+<link rel="stylesheet" href="/css/evo-calendar.css">
+<link rel="stylesheet" href="/css/evo-calendar.royal-navy.css">
+
+<div class="sidenav-body"> 
+  <div id="mySidenav" class="sidenav">
+    <a href="/proveedor/{{uid}}" id="homeNav" class="">
+      <img id="homeImg" src="/assets/home.svg" width="30" style="padding-right: 8px; vertical-align: baseline;"> 
+      Inicio
+    </a>
+    <a href="/proveedor/etiquetas/tabla" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;"> 
+      Etiquetas historicos
+    </a>
+        <a href="/proveedor/etiquetas/tabla2" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;"> 
+      Etiquetas
+    </a>
+    {{!-- <a href="/proveedor/historicos/Tickets" id="ticketsNav" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline"> 
+      Tickets
+    </a> --}}
+    {{!-- <a href="" id="ncrNav" class="">
+      <img id="ncrImg" src="/assets/ncr.svg" width="30"  style="padding-right: 8px; vertical-align: baseline"> 
+      NCRs
+    </a> --}}
+    <a data-toggle="modal" data-target="#modalCalendario" id="calendarNav" class="">
+      <img id="calendarImg" src="/assets/calendar.svg" width="30" style="padding-right: 8px; vertical-align: baseline"> 
+      Calendario
+    </a>
+        <a data-toggle="modal" data-target="#eventosModal" id="calendarNav" class="">
+      <img id="calendarImg" src="/assets/calendar.svg" width="30" style="padding-right: 8px; vertical-align: baseline"> 
+      Asignar Eventos
+    </a>
+  </div>
+  <button id="openNavBtn" class="btn sidenav-button"  onclick="openNav()"> <img src="/assets/right-arrow.svg" width= "10px" alt=""> </button>
+  <button id="closeNavBtn" class="btn sidenav-button"  onclick="closeNav()"> <img src="/assets/left-arrow.svg" width= "10px" alt=""> </button>
+
+  <script src="/js/sidenav.js"></script> 
+</div>
+
+<!-- Modal Calendario -->
+<div class="modal fade" id="modalCalendario" tabindex="-1" role="dialog" aria-labelledby="modalCalendarioTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Calendario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div id="fullCalendar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Calendario -->
+<div class="modal fade" id="eventosModal" tabindex="-1" role="dialog" aria-labelledby="eventosModalTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Eventos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+
+          <label class="col-6" for="">Descripción del pedido</label>
+          <input class="col-6 form-control" type="text" name="" id="dPedidoE">
+          </div>
+          <br>
+                    <div class="row">
+
+          <label class="col-6" for="">Proveedor</label>
+          <input class="col-6 form-control" type="text" name="" id="proveedorE">
+          </div>
+          <br>
+            <div class="row">
+          <label class="col-6"for="">Fecha de llegada</label>
+          <input class="col-6 form-control" type="date" name="" id="FechaLLegadaE">
+            </div>
+        </div>
+      </div>
+            <div class="modal-footer">
+        <button type="button" id="closeBtnTicket" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="btnEvento" class="btn btn-success" data-target="#EventoSave" data-dismiss="modal" data-toggle="modal" >Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="EventoSave" tabindex="-1" aria-labelledby="EventoSaveLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="EventoSaveLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id ="bodyE"class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/proveedor/eventos.js"></script>
+  <script>
+    switch ("{{title}}") {
+      case "Inicio":
+          document.getElementById("homeNav").classList.add("navSel");
+          document.getElementById("homeImg").src = "/assets/homeS.svg"        
+        break;
+      case "Etiquetas":
+          document.getElementById("tagsNav").classList.add("navSel");
+          document.getElementById("tagsImg").src = "/assets/tagsS.svg"
+        break;
+      case "Tickets":
+          document.getElementById("ticketsNav").classList.add("navSel");
+          document.getElementById("ticketsImg").src = "/assets/ticketS.svg"        
+        break;
+      case "NCRs":
+          document.getElementById("ncrNav").classList.add("navSel");
+          document.getElementById("ncrImg").src = "/assets/ncrS.svg"
+        break;
+      case "Calendario":
+          document.getElementById("calendarNav").classList.add("navSel");
+          document.getElementById("calendarImg").src = "/assets/calendarS.svg"
+        break;
+    }
+  </script>
+  
+<script src="/js/evo-calendar.js"></script>
+<script src="/js/fullCalendar.js" ></script>

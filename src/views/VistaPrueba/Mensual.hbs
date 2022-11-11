@@ -1,0 +1,507 @@
+  <style>
+      .containerRight{
+  /*background: #F1F1F1 !important;*/
+  margin:auto;
+width:1400px;
+padding:1%;
+background-color:white;
+  border: solid;
+border-color:#f1f1f0;
+height: 700px;
+margin-top: 5%;
+overflow:scroll;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+            input[readonly] {
+                background-color: white !important;
+
+            }
+  </style>
+     {{>navVistaPrueba}}
+
+<div>
+  {{>sideNavVistaPrueba}}
+
+</div>
+
+  <div id="mainwin">
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col">
+                    <div class="input-group col-2 float-end" style="margin-right: 13%;">
+                            <span class="input-group-text" id="inputGroupPrepend">Año</span>
+                            <input type="text" readonly class="form-control" id="ano"
+                                aria-describedby="inputGroupPrepend" >
+                        </div>
+                        <div class="input-group col-2 float-end" >
+                            <span class="input-group-text" id="inputGroupPrepend">Mes</span>
+                            <input type="text" readonly  class="form-control" id="mes"
+                                aria-describedby="inputGroupPrepend" >
+                        </div>
+                        <a  type="button" id="cambiarFecha" class="col-2 float-end button btn btn-ekide d-none d-lg-block" style="margin-right: 13%;">Cambiar Fecha</a>
+                </div>
+            </div>
+            
+                    <div class="row">
+                <div class="col text-right">
+
+                        <a  type="button" id="Filtro" data-bs-toggle="modal" data-bs-target="#FiltroModal" class="col-2  button btn btn-ekide d-none d-lg-block" style="margin-left: 24%;">Filtro</a>
+
+                    </div>
+                </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="containerRight text-center">
+                    <h3>Compra</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">Rfc emisor</th>
+                            <th scope="col">Emisor</th>
+                            <th scope="col">Rfc receptor</th>
+                            <th scope="col">Receptor</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Moneda</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Total MXN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyCompraTable">
+                            {{#each tabla}}
+                                <tr class="detalleFactura" id="{{@key}}" data-bs-toggle="modal" data-bs-target="#compraDetallado">
+                                    <th>{{RFCEmisor}}</th>
+                                    <th>{{Emisor}}</th>
+                                    <th>{{RFCReceptor}}</th>
+                                    <th>{{Receptor}}</th>
+                                    <th>{{Fechacompleta}}</th>
+                                    <th>{{Descripcion}}</th>
+                                    <th>{{Cantidad}}</th>
+                                    <th>{{Moneda}}</th>
+                                    <th>{{Total}}</th>
+                                    <th>{{TotalMXN}}</th>
+
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group col-2 float-end" style="margin-right: 13%;">
+                            <span class="input-group-text" id="inputGroupPrepend">Total MXN</span>
+                            <input type="text" readonly value="{{numberSeparation totalMXNC}}" class="form-control" id="totalMXN"
+                                aria-describedby="inputGroupPrepend" >
+                        </div>
+                        <div class="input-group col-2 float-end" >
+                            <span class="input-group-text" id="inputGroupPrepend">Total Litros</span>
+                            <input type="text" readonly value="{{numberSeparation totalLTSC}}" class="form-control" id="totalMXN"
+                                aria-describedby="inputGroupPrepend" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-12 w-25 p-3">
+                  <div class="containerRight text-center">
+                    <h3>Venta</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">Rfc emisor</th>
+                            <th scope="col">Emisor</th>
+                            <th scope="col">Rfc receptor</th>
+                            <th scope="col">Receptor</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Moneda</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Total MXN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyVentaTable">
+                            {{#each tablaVenta}}
+                                <tr class="detalleFacturaVenta" id="{{@key}}" data-bs-toggle="modal" data-bs-target="#VentaDetallado">
+                                    <th>{{RFCEmisor}}</th>
+                                    <th>{{Emisor}}</th>
+                                    <th>{{RFCReceptor}}</th>
+                                    <th>{{Receptor}}</th>
+                                    <th>{{Fechacompleta}}</th>
+                                    <th>{{Descripcion}}</th>
+                                    <th>{{Cantidad}}</th>
+                                    <th>{{Moneda}}</th>
+                                    <th>{{Total}}</th>
+                                    <th>{{TotalMXN}}</th>
+
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                                          <div class="input-group col-2 float-end" style="margin-right: 13%; margin-bottom:3%">
+                        <span class="input-group-text" id="inputGroupPrepend">Total MXN</span>
+                        <input type="text" readonly value="{{numberSeparation totalMXNCV}}" class="form-control" id="totalMXN"
+                            aria-describedby="inputGroupPrepend" >
+                    </div>
+                                                              <div class="input-group col-2 float-end" >
+                        <span class="input-group-text" id="inputGroupPrepend">Total Litros</span>
+                        <input type="text" readonly value="{{numberSeparation totalLTSCV}}" class="form-control" id="totalMXN"
+                            aria-describedby="inputGroupPrepend" >
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr>
+                    <div class="col">
+                        <div class="input-group col-2 float-end" style="margin-right: 13%; margin-bottom:1%">
+                            <span class="input-group-text" id="inputGroupPrepend">Diferencia MXN</span>
+                            <input type="text" readonly value="{{numberSeparation diferenciaMXN}}" class="form-control" id="totalMXN"
+                                aria-describedby="inputGroupPrepend" >
+                        </div>
+                        <div class="input-group  has-validation col-2 float-end needs-validation">
+                            <span class="input-group-text" id="inputGroupPrepend">Diferencia LTS</span>
+                            <input type="text" readonly value="{{numberSeparation diferenciaLTS}}" class="form-control " id="totalLTS"
+                                aria-describedby="inputGroupPrepend" required>
+                                      <div class="invalid-feedback text-center">
+                                        Revisar facturas
+                                      </div>
+                        </div>
+                                                <div class="input-group  has-validation col-2 float-end needs-validation">
+                            <span class="input-group-text" id="inputGroupPrepend">Diferencia LTS %</span>
+                            <input type="text" readonly value="{{porcentajeLts diferenciaLTS totalLTSC}} %" class="form-control " id="totalLTS"
+                                aria-describedby="inputGroupPrepend" required>
+                                      <div class="invalid-feedback text-center">
+                                        Revisar facturas
+                                      </div>
+                        </div>
+                            <a  type="button" id="jsonMensual" class="col-2 float-end button btn btn-ekide d-none d-lg-block" style="margin-right: 13%;">Generar json Mensual</a>
+
+
+                    </div>
+                </div>                
+        </div>
+
+
+
+  </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="compraDetallado" tabindex="-1" aria-labelledby="compraDetalladoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="compraDetalladoLabel">Detallado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                <div id="tabla_{{@index}}"  class="tabla container gy-5 rnd " style="background-color: #fff;">
+          <div class="row">
+            <div class="col-6 ">
+              <div class="row">
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >RFC Emisor</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd descTitlProv2"> Emisor</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Regimen Fiscal</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Lugar Expedicion</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >RFC Receptor</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Receptor</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >RegimenFiscalReceptor</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">DomicilioFiscalReceptor</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >UsoCFDI</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Exportacion</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Estatus</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Fecha Emision</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Full Date	</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >SerieFolio</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Serie</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Folio</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Subtotal</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Descuento</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >IVA</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">ISR</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >IEPS</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">TASA IVA</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >TASA ISR</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">TASA IEPS</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Total</div>
+                <div class="col-12  tableTitl2 tableLin2 descTitlProv2 rnd">UUID</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Tipo comprobante</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Unidad</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Clave Unidad</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Cantidad</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Descripcion</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Valor unitario</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Importe Concepto</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Descuento Concepto</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >No Identificacion</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Clave SAT</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >ObjetoIMP</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Descripcion SAT</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Importe Impuesto</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Impuesto</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >TasaOCuota</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">TipoFactor</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Moneda</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Tipo Cambio</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >TASA IMP_LOCAL_T</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">IMP_LOCAL_T</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Version CFDI</div>
+                <div  class="col-12  tableTitl2 tableLin2 rnd" >Fecha completa</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Total MXN</div>
+
+
+
+                {{!-- <div class="col-12  tableTitl2 tableLin2 rnd descTitlProv2 fstCap">Descripción Línea de Pedido</div> --}}
+              </div>
+            </div>
+            <div class="col-6  bodyTable">
+              <div class="row" id="" >
+                <div  class="col-12   tableLin2 " id="RFCEmisor" >test</div>
+                <div class="col-12   tableLin2 descTitlProv2" id="Emisor"> test</div>
+                <div  class="col-12   tableLin2 " id="RegimenFiscal" >test</div>
+                <div class="col-12   tableLin2 " id="LugarExpedicion">test</div>
+                <div  class="col-12   tableLin2 " id="RFCReceptor" >test</div>
+                <div class="col-12   tableLin2 " id="Receptor">test</div>
+                <div  class="col-12   tableLin2 " id="RegimenFiscalReceptor" >test</div>
+                <div class="col-12   tableLin2 " id="DomicilioFiscalReceptor">test</div>
+                <div  class="col-12   tableLin2 " id="UsoCFDI" >test</div>
+                <div class="col-12   tableLin2 " id="Exportacion">test</div>
+                <div  class="col-12   tableLin2 " id="Estatus" >test</div>
+                <div class="col-12   tableLin2 " id="FechaEmision">test</div>
+                <div class="col-12   tableLin2 " id="FullDate">	test</div>
+                <div  class="col-12   tableLin2 " id="SerieFolio" >test</div>
+                <div class="col-12   tableLin2 " id="Serie">test</div>
+                <div class="col-12   tableLin2 " id="Folio">test</div>
+                <div  class="col-12   tableLin2 " id="Subtotal" >test</div>
+                <div class="col-12   tableLin2 " id="Descuento">test</div>
+                <div  class="col-12   tableLin2 " id="IVA" >test</div>
+                <div class="col-12   tableLin2 " id="ISR">test</div>
+                <div  class="col-12   tableLin2 " id="IEPS" >test</div>
+                <div class="col-12   tableLin2 " id="TASAIVA">test</div>
+                <div  class="col-12   tableLin2 " id="TASAISR" >test</div>
+                <div class="col-12   tableLin2 " id="TASAIEPS">test</div>
+                <div  class="col-12   tableLin2 " id="Total" >test</div>
+                <div class="col-12   tableLin2 descTitlProv2 " id="UUID">test</div>
+                <div  class="col-12   tableLin2 " id="Tipocomprobante" >test</div>
+                <div class="col-12   tableLin2 " id="Unidad">test</div>
+                <div  class="col-12   tableLin2 " id="ClaveUnidad" >test</div>
+                <div class="col-12   tableLin2 " id="Cantidad">test</div>
+                <div  class="col-12   tableLin2 " id="Descripcion" >test</div>
+                <div class="col-12   tableLin2 " id="Valorunitario">test</div>
+                <div  class="col-12   tableLin2 " id="ImporteConcepto" >test</div>
+                <div class="col-12   tableLin2 " id="DescuentoConcepto">test</div>
+                <div  class="col-12   tableLin2 " id="NoIdentificacion" >test</div>
+                <div class="col-12   tableLin2 " id="ClaveSAT">test</div>
+                <div  class="col-12   tableLin2 " id="ObjetoIMP" >test</div>
+                <div class="col-12   tableLin2 " id="DescripcionSAT">test</div>
+                <div  class="col-12   tableLin2 " id="ImporteImpuesto" >test</div>
+                <div class="col-12   tableLin2 " id="Impuesto">test</div>
+                <div  class="col-12   tableLin2 " id="TasaOCuota" >test</div>
+                <div class="col-12   tableLin2 " id="TipoFactor">test</div>
+                <div  class="col-12   tableLin2 " id="Moneda" >test</div>
+                <div class="col-12   tableLin2 " id="TipoCambio">test</div>
+                <div  class="col-12   tableLin2 " id="TASAIMP_LOCAL_T" >test</div>
+                <div class="col-12   tableLin2 " id="IMP_LOCAL_T">test</div>
+
+                <div class="col-12   tableLin2 " id="VersionCFDI">test</div>
+                <div  class="col-12   tableLin2 " id="Fechacompleta" >test</div>
+                <div class="col-12   tableLin2 " id="TotalMXN">test</div>
+                {{!-- <div class="col-12  tableLin2 descLin2 fstCap" id="Pedido_{{@index}}">descTarea</div> --}}
+              
+               
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger borrarjsonCompra" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#CompraBorrar">Omitir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="VentaDetallado" tabindex="-1" aria-labelledby="VentaDetalladoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="VentaDetalladoLabel">Detallado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                <div id="tabla_{{@index}}"  class="tabla container gy-5 rnd " style="background-color: #fff;">
+          <div class="row">
+            <div class="col-6 ">
+              <div class="row">
+
+                <div class="col-12  tableTitl2 tableLin2 rnd">Voucher</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Folio</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Tipo</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Estatus</div>
+                <div class="col-12  tableTitl2 tableLin2 descLin2 rnd">Cliente</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Fecha</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Fecha Vencimiento</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Subtotal</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Iva</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Monto</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Interes</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Moneda</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Atraso</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Por Vencer</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Observaciones</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Cantidad</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd">Orden de Compra</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd descTitlProv2">Producto</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd descTitlProv2">UUID</div>
+                <div class="col-12  tableTitl2 tableLin2 rnd descTitlProv2">Source.name</div>
+
+                {{!-- <div class="col-12  tableTitl2 tableLin2 rnd descTitlProv2 fstCap">Descripción Línea de Pedido</div> --}}
+              </div>
+            </div>
+            <div class="col-6  bodyTable">
+              <div class="row" id="" >
+                <div class="col-12 tableLin2" id="Voucher"></div>
+                <div class="col-12 tableLin2" id="FolioV"></div>
+                <div class="col-12 tableLin2" id="Tipo"></div>
+                <div class="col-12 tableLin2" id="EstatusV"></div>
+                <div class="col-12 tableLin2 descLin2" id="Cliente"></div>
+                <div class="col-12 tableLin2" id="Fecha"></div>
+                <div class="col-12 tableLin2" id="FechaVencimiento"></div>
+                <div class="col-12 tableLin2" id="SubtotalV"></div>
+                <div class="col-12 tableLin2" id="IvaV"></div>
+                <div class="col-12 tableLin2" id="Monto"></div>
+                <div class="col-12 tableLin2" id="Interes"></div>
+                <div class="col-12 tableLin2" id="MonedaV"></div>
+                <div class="col-12 tableLin2" id="Atraso"></div>
+                <div class="col-12 tableLin2" id="PorVencer"></div>
+                <div class="col-12 tableLin2" id="Observaciones"></div>
+                <div class="col-12 tableLin2" id="CantidadV"></div>
+                <div class="col-12 tableLin2" id="OrdendeCompra"></div>
+                <div class="col-12 tableLin2 descLin2" id="Producto"></div>
+                <div class="col-12 tableLin2 descLin2" id="UUIDV"></div>
+                <div class="col-12 tableLin2 descLin2" id="Source_name"></div>
+                {{!-- <div class="col-12  tableLin2 descLin2 fstCap" id="Pedido_{{@index}}">descTarea</div> --}}
+              
+               
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger borrarjsonVenta" id=""  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#VentaBorrar">Omitir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="VentaBorrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="VentaBorrarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="VentaBorrarLabel">Eliminar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bodyvender">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button " class="btn btn-primary btnCancelarBorrar" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger borrarjsonVentaSure" >Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="CompraBorrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="CompraBorrarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CompraBorrarLabel">Eliminar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bodyComprar">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button " class="btn btn-primary btnCancelarBorrarCompra" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger borrarjsonCompraSure" >Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="FiltroModal" tabindex="-1" aria-labelledby="FiltroModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="FiltroModalLabel">Filtro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+          <h3>Compras</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">RFC</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th >KOCH SUPPLY & TRADING MEXICO</th>
+              <td>KSA160329PU7</td>
+
+            </tr>
+         
+          </tbody>
+        </table>
+         <h3>Ventas</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">RFC</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th >G500 Network Sapi De Cv</th>
+              <td>GNE170531RH0</td>
+            </tr>
+            <tr>
+              <th >ENERGETICOS CENTRIFUGADOS DEL NORTE SA DE CV</th>
+              <td>ECN7809184IA</td>
+            </tr>            
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Agregar</button>
+        <button type="button" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/VistaPrueba/jsonZipMensual.js"></script>

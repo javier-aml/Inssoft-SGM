@@ -1,0 +1,100 @@
+{
+  "ControlesVolumetricos": {
+    "Version": "1.0",
+    "RfcContribuyente": "GEM161104H39",
+    "RfcProveedor": "KSA160329PU7",
+    "Caracter": {
+      "Caracter": "Usuario",
+      "ModalidadPermiso": "",
+      "NumPermiso": "",
+      "NumContratoOAsignacion": "",
+      "InstalacionAlmacenGasNatural": ""
+    },
+    "ClaveInstalacion": "",
+    "DescripcionInstalacion": "",
+    "Geolocalizacion": {
+      "GeolocalizacionLatitud": "",
+      "GeolocalizacionLongitud": ""
+    },
+    "FechaYHoraReporteMes": "FULLDATE",
+    "PRODUCTO": {
+      "ClaveProducto": "PR03",
+      "ClaveSubProducto": "PR03",
+      "Gasolina": {
+        "ComposOctanajeGasolina": "91",
+        "GasolinaConCombustibleNoFosil": "No",
+        "ComposDeCombustibleNoFosilEnGasolina": ""
+      },
+      "Diesel": {
+        "DieselConCombustibleNoFosil": "No",
+        "ComposDeCombustibleNoFosilEnDiesel": ""
+      },
+      "MarcaComercial": "GLENCORE ENERGY MX",
+      "REPORTEDEVOLUMENMENSUAL": {
+        "CONTROLDEEXISTENCIAS": {
+          "VolumenExistenciasMes": {
+            "ValorNumerico": 867567
+          },
+          "FechaYHoraEstaMedicionMes": "2022-10-11T18:35:55.958Z"
+        },
+        "RECEPCIONES": {
+          "TotalRecepcionesMes": 100,
+          "SumaVolumenRecepcionMes": {
+            "ValorNumerico": 2996141,
+            "UM": "UM03"
+          },
+          "TotalDocumentosMes": "",
+          "ImporteTotalRecepcionesMensual": 80977812.42999999,
+          "Complemento": ""
+        },
+        "ENTREGAS": {
+          "TotalEntregasMes": 100,
+          "SumaVolumenEntregadoMes": {
+            "ValorNumerico": 2128574,
+            "UM": "UM03"
+          },
+          "TotalDocumentosMes": "",
+          "ImporteTotalEntregasMes": null,
+          "Complemento": ""
+        }
+      }
+    },
+    "BITACORAMENSUAL": {
+      "NumeroRegistro": "1",
+      "FechaYHoraEvento": "2022-10-11T18:35:55.958Z",
+      "UsuarioResponsable": "Adrián Sánchez",
+      "TipoEvento": "0",
+      "DescripcionEvento": "Todo bien",
+      "IdentificacionComponenteAlarma": ""
+    },
+    "RfcRepresentanteLegal": "GEM161104H39",
+    "FechaYHoraCorte": "2022-10-11T18:35:55.958Z"
+  },
+  "Complemento_Comercializacion": {
+    "DICTAMEN": {
+      "RfcDictamen": {},
+      "LoteDictamen": {},
+      "NumeroFolioDictamen": {},
+      "FechaEmisionDictamen": {},
+      "ResultadoDictamen": {}
+    },
+    "NACIONAL": {
+      "RfcClienteOProveedor": {},
+      "NombreClienteOProveedor": {},
+      "PermisoProveedor": {},
+      "CFDIs": {
+        "CFDI": "e5115e04-6473-4835-8fb1-9d0d4fb48500",
+        "TipoCFDI": "ingreso",
+        "PrecioVentaOCompraOContrap": 80977812.42999999,
+        "FechayHoraTransaccion": "2022-10-11T18:35:55.958Z",
+        "VolumenDocumentado": {
+          "ValorNumerico": 2996141,
+          "UM": "UM03"
+        }
+      }
+    },
+    "ACLARACION": {},
+    "RfcClienteOProveedor": "KSA160329PU7",
+    "NombreClienteOProveedor": "KOCH SUPPLY & TRADING MEXICO"
+  }
+}

@@ -1,0 +1,164 @@
+{{>navVistaPrueba}}
+<div>
+    <div>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </div>
+    {{>sideNavVistaPrueba}}
+    <div id="mainwin">
+
+    </div>
+
+
+
+    <script type="module">
+
+        import('/js/qrScanner/qr-scanner.min.js').then((module) => {
+    const QrScanner = module.default;
+    QrScanner.WORKER_PATH = '/js/qrScanner/qr-scanner-worker.min.js';
+
+    const video = document.getElementById('qr-video');
+    const camHasCamera = document.getElementById('cam-has-camera');
+    const camList = document.getElementById('cam-list');
+    //const camHasFlash = document.getElementById('cam-has-flash');
+    const flashToggle = document.getElementById('flash-toggle');
+    const flashState = document.getElementById('flash-state');
+    const camQrResult = document.getElementById('cam-qr-result');
+    const camQrResultTimestamp = document.getElementById('cam-qr-result-timestamp');
+
+    function setResult(label, result) {
+        label.textContent = result;
+        camQrResultTimestamp.textContent = new Date().toString();
+        label.style.color = 'teal';
+        clearTimeout(label.highlightTimeout);
+        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
+        scanner.stop();
+
+    let text= "";
+                                $('#myModal').modal('show');
+                            $('#modalBody').empty();
+                            $('#modalBody').append(`${result}`);   
+    //console.log(result)
+    }
+
+    // ####### Web Cam Scanning #######
+
+    const scanner = new QrScanner(video, result => setResult(camQrResult, result), error => {
+        camQrResult.textContent = error;
+        camQrResult.style.color = 'inherit';
+    });
+
+    const updateFlashAvailability = () => {
+        scanner.hasFlash().then(hasFlash => {
+            camHasFlash.textContent = hasFlash;
+            flashToggle.style.display = hasFlash ? 'inline-block' : 'none';
+        });
+    };
+
+    scanner.start().then(() => {
+        //updateFlashAvailability();
+        // List cameras after the scanner started to avoid listCamera's stream and the scanner's stream being requested
+        // at the same time which can result in listCamera's unconstrained stream also being offered to the scanner.
+        // Note that we can also start the scanner after listCameras, we just have it this way around in the demo to
+        // start the scanner earlier.
+        QrScanner.listCameras(true).then(cameras => cameras.forEach(camera => {
+            const option = document.createElement('option');
+            option.value = camera.id;
+            option.text = camera.label;
+            camList.add(option);
+        }));
+    });
+
+    QrScanner.hasCamera().then(hasCamera => camHasCamera.textContent = hasCamera);
+
+    // for debugging
+    window.scanner = scanner;
+
+    document.getElementById('show-scan-region').addEventListener('change', (e) => {
+        const input = e.target;
+        const label = input.parentNode;
+        label.parentNode.insertBefore(scanner.$canvas, label.nextSibling);
+        scanner.$canvas.style.display = input.checked ? 'block' : 'none';
+    });
+
+    //document.getElementById('inversion-mode-select').addEventListener('change', event => {
+        //scanner.setInversionMode(event.target.value);
+    //});
+
+    camList.addEventListener('change', event => {
+        scanner.setCamera(event.target.value).then(updateFlashAvailability);
+    });
+
+    flashToggle.addEventListener('click', () => {
+        scanner.toggleFlash().then(() => flashState.textContent = scanner.isFlashOn() ? 'on' : 'off');
+    });
+
+    document.getElementById('start-button').addEventListener('click', () => {
+        scanner.start();
+    });
+    document.getElementById('stop-button').addEventListener('click', () => {
+        scanner.stop();
+    });
+
+
+    // do something with QrScanner
+        });
+        
+    $("#QrButton").on("click",function(){
+scanner.start();
+});
+
+</script>
+    {{!-- Modal --}}
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Escaner QR</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="modalBody" class="modal-body"></div>
+
+                <div class="modal-footer">
+                    <button type="button" id="" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="QrButton" class="btn btn-primary" data-bs-dismiss="modal">Volver a
+                        escanear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=" container-fluid text-center">
+        <div class="row">
+            <div class="col">
+                {{!-- <button id="QRstart" class="btn btn-primary">Comencar</button> --}}
+                <br>
+                <video id="qr-video"></video>
+                <br>
+                <label>
+                    <input id="show-scan-region" type="checkbox">
+                    Show scan region
+                </label>
+                <b>Preferred camera:</b>
+                <select id="cam-list">
+                    <option value="environment" selected>Environment Facing (default)</option>
+                    <option value="user">User Facing</option>
+                </select>
+            </div>
+                <button id="flash-toggle">📸 Flash: <span id="flash-state">off</span></button>
+            </div>
+            <br>
+            <b>Detected QR code: </b>
+            <span id="cam-qr-result">None</span>
+            <br>
+            <b>Last detected at: </b>
+            <span id="cam-qr-result-timestamp"></span>
+            <br>
+            <button id="start-button" class="btn btn-primary">Start</button>
+            <button id="stop-button" class="btn btn-danger">Stop</button>
+
+        </div>
+    </div>
+
+</div>

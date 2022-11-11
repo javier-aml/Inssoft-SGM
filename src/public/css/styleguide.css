@@ -1,0 +1,20 @@
+:root { 
+  --french-gray: #b5bcc2;
+  --white: #ffffff;
+ 
+  --font-size-l: 18px;
+  --font-size-m: 16px;
+  --font-size-s: 9.7px;
+  --font-size-xl: 28px;
+ 
+  --font-family-raleway: "Raleway", Helvetica;
+  --font-family-roboto: "Roboto", Helvetica;
+  --font-family-yugothic_ui-regular: "YuGothic UI-Regular", Helvetica;
+}
+.raleway-bold-french-gray-16px {
+  color: var(--french-gray);
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}

@@ -1,0 +1,34 @@
+{
+    "NumeroDeRegistro": "",
+    "VolumenInicialTanque": {
+        "ValorNumerico": "",
+        "UnidadDeMedida": "UM03"
+    },
+    "VolumenFinalTanque": "",
+    "VolumenEntregado": {
+        "ValorNumerico": "",
+        "UnidadDeMedida": "UM03"
+    },
+    "Temperatura": 20.0,
+    "PresionAbsoluta": "",
+    "FechaYHoraInicialEntrega": "",
+    "FechaYHoraFinalEntrega": "",
+    "Complemento": {
+        "TipoComplemento": "Comercializacion",
+        "Nacional": [{
+            "RfcClienteOProveedor": "",
+            "NombreClienteOProveedor": "",
+            "PermisoClienteOProveedor": "",
+            "CFDIs": [{
+                "Cfdi": "",
+                "TipoCfdi": "Ingreso",
+                "PrecioVentaOCompraOContrap": "",
+                "FechaYHoraTransaccion": "",
+                "VolumenDocumentado": {
+                    "ValorNumerico": "",
+                    "UnidadDeMedida": "UM03"
+                }
+            }]
+        }]
+    }
+}

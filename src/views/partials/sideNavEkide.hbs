@@ -1,0 +1,168 @@
+<link rel="stylesheet" href="/css/evo-calendar.css">
+<link rel="stylesheet" href="/css/evo-calendar.royal-navy.css">
+
+<div class="sidenav-body">
+  <div id="mySidenav" class="sidenav">
+    <a href="/Ekide/{{uid}}" id="homeNav" class="">
+      <img id="homeImg" src="/assets/home.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Inicio
+    </a>
+    <a href="/Ekide/cli/cliente" id="clientNav" class="">
+      <img id="clientImg" src="/assets/client.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Cliente
+    </a>
+    {{!-- <a href="/Ekide/prv/proveedor" id="supplierNav" class="">
+      <img id="supplierImg" src="/assets/supplier.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Proveedor
+    </a>
+    <a href="/Ekide/qr/lectorQr" id="qrScannerNav" class="">
+      <img id="qrScannerImg" src="/assets/QrScanner.svg" width="30"
+        style="padding-right: 8px; vertical-align: baseline">
+      Escaner QR
+    </a> --}}
+    <a href="/Ekide/kit/kits" id="kitsNav" class="">
+      <img id="kitsImg" src="/assets/kits.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Kits
+    </a>
+        <a href="/Ekide/kit/kits2" id="kitsNav" class="">
+      <img id="kitsImg" src="/assets/kits.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Kits CENTER CEILING
+    </a>
+    <a href="/Ekide/historicos/Tickets" id="ticketsNav" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Tickets
+    </a>
+    <a href="/Ekide/etiquetas/tabla" id="tagsNav" class="">
+      <img id="tagsImg" src="/assets/tags.svg" width="30" style="padding-right: 8px; vertical-align: baseline;">
+      Etiquetas
+    </a>
+    <a data-toggle="modal" data-target="#modaExcel" id="calendarNav" class="">
+      <img id="ticketsImg" src="/assets/ticket.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Excel pedidos
+    </a>
+    <a data-toggle="modal" data-target="#modalCalendario" id="calendarNav" class="">
+      <img id="calendarImg" src="/assets/calendar.svg" width="30" style="padding-right: 8px; vertical-align: baseline">
+      Calendario
+    </a>
+  </div>
+  <button id="openNavBtn" class="btn sidenav-button" onclick="openNav()"> <img src="/assets/right-arrow.svg"
+      width="10px" alt=""> </button>
+  <button id="closeNavBtn" class="btn sidenav-button" onclick="closeNav()"> <img src="/assets/left-arrow.svg"
+      width="10px" alt=""> </button>
+
+  <script src="/js/sidenav.js"></script>
+
+</div>
+<!-- Modal Calendario -->
+<div class="modal fade" id="modalCalendario" tabindex="-1" role="dialog" aria-labelledby="modalCalendarioTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Calendario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div id="fullCalendar"></div>
+        </div>
+      </div>
+
+      <script src="/js/evo-calendar.js"></script>
+      <script src="/js/fullCalendar.js" ></script>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Excel -->
+<div class="modal fade" id="modaExcel" tabindex="-1" role="dialog" aria-labelledby="modaExcelTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Excel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="formExcel">
+          <div class="container-fluid">
+            <div class="mb-1">
+
+              <div class="row">
+                  <label class="form-label">Proyecto</label>
+
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" name="proyecto" aria-label="Floating label select example">
+                    <option value="All" selected>ALL</option>
+                    <option value="Brochas-Gages J9.">Brochas-Gages J9.</option>
+                    <option value="Modificacion QB00351 Voestalpine">Modificacion QB00351 Voestalpine</option>
+                    <option value="Checking Fixture - 8MA_803_164">Checking Fixture - 8MA_803_164</option>
+                  </select>
+                  <label for="floatingSelect">Seleccionar proyecto</label>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="row">
+                <div class="div col-6">
+                  <label class="form-label">Desde</label>
+                  <td class="cantidad"><input class="form-control" name="fechaDesde" type="date"></input> </td>
+                </div>
+
+                <div class="div col-6">
+                  <label class="form-label">Hasta</label>
+                  <td class="cantidad"><input class="form-control" name="fechaHasta" type="date"></input> </td>
+                </div>
+
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="row">
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button"  id="generarExcel" class="btn btn-primary" data-dismiss="modal">Generar Excel</button>
+          </div>
+                <script src="/js/Ekide/Excel.js"></script>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  switch ("{{title}}") {
+    case "Inicio":
+      document.getElementById("homeNav").classList.add("navSel");
+      document.getElementById("homeImg").src = "/assets/homeS.svg"
+      break;
+    case "Cliente":
+      document.getElementById("clientNav").classList.add("navSel");
+      document.getElementById("clientImg").src = "/assets/clientS.svg"
+      break;
+    case "Proveedor":
+      document.getElementById("supplierNav").classList.add("navSel");
+      document.getElementById("supplierImg").src = "/assets/supplierS.svg"
+      break;
+    case "Kits":
+      document.getElementById("kitsNav").classList.add("navSel");
+      document.getElementById("kitsImg").src = "/assets/kitsS.svg"
+      break;
+    case "Escaner QR":
+      document.getElementById("qrScannerNav").classList.add("navSel");
+      document.getElementById("qrScannerImg").src = "/assets/QrScannerS.svg"
+
+      break;
+    case "Tickets":
+      document.getElementById("ticketsNav").classList.add("navSel");
+      document.getElementById("ticketsImg").src = "/assets/ticketS.svg"
+      break;
+  }
+</script>
