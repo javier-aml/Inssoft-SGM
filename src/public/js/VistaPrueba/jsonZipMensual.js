@@ -12,11 +12,23 @@ $("#jsonMensual").on('click',function(){
     let url = window.location.href;
     url = url.split('Mensual') 
     url = url[1];
+    console.log(url);
+    console.log(`Download/ZipMensual${url}`);
     window.open(`Download/ZipMensual${url}`);
     // $.post(`Download/ZipDiario`, function( data.aaaaaaaaa ) {
        
     
     // });
+})
+$("#ExcelMensual").on('click',function(){
+    let url = window.location.href;
+    url = url.split('Mensual') 
+    console.log(url);
+    url = url[1];
+    window.open(`Download/ExcelMensual${url}`);
+        // $.post(`Excel/Mensual${url}`, function( data ) {
+        //     hideLoader()
+        // });
 })
 $( document ).ready(function() {
     let date = window.location.href.split('/')
@@ -30,61 +42,43 @@ $( document ).ready(function() {
         const id = $(this).attr("id")
         $.post(`json/modalCompraMensual`,{id:$(this).attr("id")}, function( data ) {
 
+           
             $("#RFCEmisor" ).html(`${data.RFCEmisor}`)
             $("#Emisor").html(`${data.Emisor}`)
             $("#RegimenFiscal" ).html(`${data.RegimenFiscal}`)
-            $("#LugarExpedicion").html(`${data.LugarExpedicion}`)
             $("#RFCReceptor" ).html(`${data.RFCReceptor}`)
             $("#Receptor").html(`${data.Receptor}`)
             $("#RegimenFiscalReceptor" ).html(`${data.RegimenFiscalReceptor}`)
             $("#DomicilioFiscalReceptor").html(`${data.DomicilioFiscalReceptor}`)
             $("#UsoCFDI" ).html(`${data.UsoCFDI}`)
-            $("#Exportacion").html(`${data.Exportacion}`)
             $("#Estatus" ).html(`${data.Estatus}`)
             $("#FechaEmision").html(`${data.FechaEmision}`)
             $("#Emision" ).html(`${data.Emision}`)
             $("#FullDate").html(`${data.FullDate}`)
-            $("#SerieFolio" ).html(`${data.SerieFolio}`)
-            $("#Serie").html(`${data.Serie}`)
-            $("#Folio").html(`${data.Folio}`)
             $("#Subtotal" ).html(`${data.Subtotal}`)
             $("#Descuento").html(`${data.Descuento}`)
-            $("#IVA" ).html(`${data.IVA}`)
-            $("#ISR").html(`${data.ISR}`)
-            $("#IEPS" ).html(`${data.IEPS}`)
-            $("#TASAIVA").html(`${data.TASAIVA}`)
-            $("#TASAISR" ).html(`${data.TASAISR}`)
-            $("#TASAIEPS").html(`${data.TASAIEPS}`)
             $("#Total" ).html(`${data.Total}`)
             $("#UUID").html(`${data.UUID}`)
             $("#Tipocomprobante" ).html(`${data.Tipocomprobante}`)
             $("#Unidad").html(`${data.Unidad}`)
-            $("#ClaveUnidad" ).html(`${data.ClaveUnidad}`)
             $("#Cantidad").html(`${data.Cantidad}`)
             $("#Descripcion" ).html(`${data.Descripcion}`)
             $("#Valorunitario").html(`${data.Valorunitario}`)
             $("#ImporteConcepto" ).html(`${data.ImporteConcepto}`)
             $("#DescuentoConcepto").html(`${data.DescuentoConcepto}`)
             // $("#NoIdentificacion" ).html(`${data.NoIdentificacion}`)
-            $("#NoIdentificacion" ).html('No registrado')
+            $("#NoIdentificacion" ).html(`${data.NoIdentificacion}`)
             $("#ClaveSAT").html(`${data.ClaveSAT}`)
-            $("#ObjetoIMP" ).html(`${data.ObjetoIMP}`)
-            $("#DescripcionSAT").html(`${data.DescripcionSAT}`)
             $("#ImporteImpuesto" ).html(`${data.ImporteImpuesto}`)
             $("#Impuesto").html(`${data.Impuesto}`)
             $("#TasaOCuota" ).html(`${data.TasaOCuota}`)
-            $("#TipoFactor").html(`${data.TipoFactor}`)
             $("#Emisor" ).html(`${data.Emisor}`)
             $("#Receptor").html(`${data.Receptor}`)
             $("#Moneda" ).html(`${data.Moneda}`)
-            $("#TipoCambio").html(`${data.TipoCambio}`)
-            $("#TASAIMP_LOCAL_T" ).html(`${data.TASAIMP_LOCAL_T}`)
-            $("#IMP_LOCAL_T").html(`${data.IMP_LOCAL_T}`)
             $("#LugarExpedicion" ).html(`${data.LugarExpedicion}`)
             $("#VersionCFDI").html(`${data.VersionCFDI}`)
             $("#Fechacompleta" ).html(`${data.Fechacompleta}`)
             $("#TotalMXN").html(`${data.TotalMXN}`)
-
     
         });
         $(".borrarjsonCompra").attr("id",id)
@@ -93,30 +87,42 @@ $( document ).ready(function() {
     $(".detalleFacturaVenta").on('click',function(){
         const id = $(this).attr("id")
         $.post(`json/modalVentaMensual`,{id:id}, function( data ) {
-            console.log(data);
-            $("#Voucher").html(data.Voucher)
-            $("#FolioV").html(data.Folio)
-            $("#Tipo").html(data.Tipo)
-            $("#EstatusV").html(data.Estatus)
-            $("#Cliente").html(data.Cliente)
-            $("#Fecha").html(data.Fecha)
-            $("#FechaVencimiento").html(data.FechaVencimiento)
-            $("#SubtotalV").html(data.Subtotal)
-            $("#IvaV").html(data.Iva)
-            $("#Monto").html(data.Monto)
-            $("#Interes").html(data.Interes)
-            $("#MonedaV").html(data.Moneda)
-            // $("#Atraso").html(data.Atraso)
-            $("#Atraso").html('No registrado')
-            $("#PorVencer").html(data.PorVencer)
-            // $("#Observaciones").html(data.Observaciones)
-            $("#Observaciones").html('No registrado')
-            $("#CantidadV").html(data.Cantidad)
-            $("#OrdendeCompra").html(data.OrdendeCompra)
-            $("#Producto").html(data.Producto)
-            $("#UUIDV").html(data.UUID)
-            $("#Source_name").html(data.Source_name)
-            $(".borrarjsonVenta").attr("id",id)
+            $("#VRFCEmisor" ).html(`${data.RFCEmisor}`)
+            $("#VEmisor").html(`${data.Emisor}`)
+            $("#VRegimenFiscal" ).html(`${data.RegimenFiscal}`)
+            $("#VRFCReceptor" ).html(`${data.RFCReceptor}`)
+            $("#VReceptor").html(`${data.Receptor}`)
+            $("#VRegimenFiscalReceptor" ).html(`${data.RegimenFiscalReceptor}`)
+            $("#VDomicilioFiscalReceptor").html(`${data.DomicilioFiscalReceptor}`)
+            $("#VUsoCFDI" ).html(`${data.UsoCFDI}`)
+            $("#VEstatus" ).html(`${data.Estatus}`)
+            $("#VFechaEmision").html(`${data.FechaEmision}`)
+            $("#VEmision" ).html(`${data.Emision}`)
+            $("#VFullDate").html(`${data.FullDate}`)
+            $("#VSubtotal" ).html(`${data.Subtotal}`)
+            $("#VDescuento").html(`${data.Descuento}`)
+            $("#VTotal" ).html(`${data.Total}`)
+            $("#VUUID").html(`${data.UUID}`)
+            $("#VTipocomprobante" ).html(`${data.Tipocomprobante}`)
+            $("#VUnidad").html(`${data.Unidad}`)
+            $("#VCantidad").html(`${data.Cantidad}`)
+            $("#VDescripcion" ).html(`${data.Descripcion}`)
+            $("#VValorunitario").html(`${data.Valorunitario}`)
+            $("#VImporteConcepto" ).html(`${data.ImporteConcepto}`)
+            $("#VDescuentoConcepto").html(`${data.DescuentoConcepto}`)
+            // $("#VNoIdentificacion" ).html(`${data.NoIdentificacion}`)
+            $("#VNoIdentificacion" ).html(`${data.NoIdentificacion}`)
+            $("#VClaveSAT").html(`${data.ClaveSAT}`)
+            $("#VImporteImpuesto" ).html(`${data.ImporteImpuesto}`)
+            $("#VImpuesto").html(`${data.Impuesto}`)
+            $("#VTasaOCuota" ).html(`${data.TasaOCuota}`)
+            $("#VEmisor" ).html(`${data.Emisor}`)
+            $("#VReceptor").html(`${data.Receptor}`)
+            $("#VMoneda" ).html(`${data.Moneda}`)
+            $("#VLugarExpedicion" ).html(`${data.LugarExpedicion}`)
+            $("#VVersionCFDI").html(`${data.VersionCFDI}`)
+            $("#VFechacompleta" ).html(`${data.Fechacompleta}`)
+            $("#VTotalMXN").html(`${data.TotalMXN}`)
         });
       
     })

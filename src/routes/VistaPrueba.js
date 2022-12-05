@@ -264,8 +264,8 @@ router.get('/JsonGenerator', async (req, res) => {
   res.render('VistaPrueba/jsonGenerator');
 
 });
-var datoCompra
-var datoVenta
+var datoCompraDiario
+var datoVentaDiario
 
 // var datoCompraMensual = ExcelMensualCompra()
 // var datoVentaMensual = ExcelMensualVenta()
@@ -274,171 +274,1364 @@ var datoVenta
 
 // var datoCompraMensual = ExcelMensualCompra()
 // var datoVentaMensual = ExcelMensualVenta()
-// var datoCompraMensual;
-// var datoVentaMensual;
-apiDiario('2022-10-25')
-async function apiDiario(fecha) {
-   datoCompra =  await ApiDiarioCompra(fecha)
-   console.log(datoCompra);
- datoVenta =    await ApiDiarioVenta(fecha)
-}
+var datoCompraMensual;
+var datoVentaMensual;
+// apiDiario('2022-10-25')
+// async function apiDiario(fecha) {
+//    datoCompra =  await ApiDiarioCompra(fecha)
+//    console.log(datoCompra);
+//  datoVenta =    await ApiDiarioVenta(fecha)
+// }
+
 router.get('/Diario/:fecha', async (req, res) => {
   var request = require('request');
   // let temp;2022-10-25
   var datoCompra;
-  const fecha = req.params.fecha
+  const xl = require('excel4node');
+  console.log("Empieza");
+  const wb = new xl.Workbook();
+  const ws = wb.addWorksheet('Compra');
+  const ws2 = wb.addWorksheet('Venta');
+  const headingColumnNames = [
+    "UUID",
+    "RFC Emisor",
+    "Nombre del Emisor",
+    "RFC Receptor",
+    "Nombre del Receptor",
+    "Tipo",
+    "Estatus",
+    "PAC",
+    "Moneda",
+    "Fecha de Certificación",
+    "Método de Pago",
+    "Fecha de Emisión",
+    "Condiciones de pago (original)",
+    "No. Identificación",
+    "Clave del producto y/o servicio",
+    "Descripción",
+    "Cantidad",
+    "Clave de unidad",
+    "Valor unitario",
+    "Descuento",
+    "Impuesto",
+    "Subtotal",
+    "Total",
+    "TotalMXN"
+]
+  let fecha = req.params.fecha
+  let fechasplit = fecha.split("-")
+  console.log(fechasplit[2].length );
+  console.log(fechasplit[2].length );
+  let fechaArreglada;
+  if (fechasplit[2].length == 1) {
+    fecha = `${fechasplit[0]}-${fechasplit[1]}-0${fechasplit[2]}`
+
+  }
+   fechasplit = fecha.split("-")
+  console.log(fecha);
+  if (fechasplit[1].length == 1) {
+
+    fecha = `${fechasplit[0]}-0${fechasplit[1]}-${fechasplit[2]}`
+  }
+  console.log(fecha);
   console.log(fecha)
   if (fecha== null) {
     fecha = acomodarFecha(DateNow())
   }
+  let headingColumnIndex = 1;
+  let headingColumnIndex2 = 1;
+  let rowIndex = 2;
+  const compra = [
+
+  ]
+  let rowIndex2 = 2;
+ //  let index2 = 0
+  const venta = [
+
+ ]
+  let tabla
+  let totalMXNC
+  let totalLTSC
+  let fecha2 =fecha
+  var pagIndexCompra =1
+  let TotalMXN = 0.00;
+  let TotalLTS = 0.00;
+  let ApiLength= 10
+  let indexCompra = 0;
+  const jsonCompra = {}
+  headingColumnNames.forEach(heading => {
+    ws.cell(1, headingColumnIndex++)
+        .string(heading)
+});//Write Data in Excel file headingColumnIndex = 1;
+headingColumnNames.forEach(heading => {
+    ws2.cell(1, headingColumnIndex2++)
+        .string(heading)
+});//Write Data in Excel file
+if (fechasplit[2].length == 1) {
+  fecha = `${fechasplit[0]}-${fechasplit[1]}-0${fechasplit[2]}`
+
+}
+console.log(fecha);
+console.log("^^^^^");
+    while (ApiLength > 0 && fecha == fecha2) {
+        console.log(fecha == fecha2);
+        console.log(fecha);
+console.log("^^^^^");
+console.log(fecha2);
+console.log("^^^^^");
+      var options = {
+        'method': 'GET',
+        'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}T23:59:59.000Z&issuedAt[after]=${fecha}T00:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+        'headers': {
+          'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+        }
+      };
+      pagIndexCompra++
+
+      let fecha3;
+
+      await request(options, function (error, response) {
+        if (error) throw new Error(error);
+        // console.log(response.body);
+                    // console.log(diario);
+
+
+        let temp = JSON.parse(response.body);
+        temp = temp['hydra:member']
+        console.log("@@@@@@@@@@@");
+        ApiLength = temp.length
+        console.log(ApiLength);
+        console.log(pagIndexCompra);
+        for (const key in temp) {
+          const res = temp[key]
+          switch (res.paymentMethod) {
+            case 01:
+              metodoPago = 'Efectivo'
+              break;
+              case 02:
+                metodoPago = 'Cheque de nómina'
+                break;
+                case 03:
+                  metodoPago = 'Transferencia electrónica'
+                  break;
+                  case 04:
+                    metodoPago = 'Tarjeta de crédito'
+                    break;
+                    case 05:
+                      metodoPago = 'Monedero electrónico'
+                      break;
+                      case 06:
+                        metodoPago = 'Dinero digital'
+                        break;
+                        case 08:
+                          metodoPago = 'Vales de despensa'
+                          break;
+                          case 12:
+                            metodoPago = 'Liquidación'
+                            break;
+                            case 13:
+                              metodoPago = 'Pago por subrogación'
+                              break;
+                              case 14:
+                                metodoPago = 'Pago por consignación'
+                                break;
+                                case 15:
+                                  metodoPago = 'Condonación'
+                                  break;
+                                  case 17:
+                                    metodoPago = 'Compensación'
+                                    break;
+                                    case 23:
+                                      metodoPago = 'Novacion'
+                                      break;
+                                      case 24:
+                                        metodoPago = 'Confusión'
+                                        break;
+                                        case 25:
+                                          metodoPago = 'Envío de deuda'
+                                          break;
+                                          case 26:
+                                            metodoPago = 'Prescripción o caducidad'
+                                            break;
+                                            case 27:
+                                              metodoPago = 'A satisfacción del acreedor'
+                                              break;
+                                              case 28:
+                                                metodoPago = 'Tarjeta de débito'
+                                                break;
+                                                case 29:
+                                                  metodoPago = 'Tarjeta de servicio'
+                                                  break;
+              
+          
+            default:
+              metodoPago = 'Por definir'
+              break;
+          }
+          fecha3 = res.issuedAt.substring(0, 10)
+          console.log(fecha3);
+          console.log("::::::::::::::::::::");
+          fecha2 = fecha3
+          console.log(fecha2 + "<-----------------");
+          console.log(indexCompra);
+          if (fecha3!=fecha) {
+            break;
+          }
+          if (res.items[0] != undefined ) {
+            if (res.items[0].unitCode == 'LTR') {
+              let RECEPCION = {
+                "NumeroDeRegistro": indexCompra,
+                "VolumenInicialTanque": {
+                    "ValorNumerico": 0.0,
+                    "UnidadDeMedida": "UM03"
+                },
+                "VolumenFinalTanque": 0.0,
+                "VolumenRecepcion": {
+                    "ValorNumerico": res.items[0].quantity,
+                    "UnidadDeMedida": "UM03"
+                },
+                "Temperatura": 20.0,
+                "PresionAbsoluta": 101.325,
+                "FechaYHoraInicialEntrega": res.issuedAt,
+                "FechaYHoraFinalEntrega": res.issuedAt,
+                "Complemento": {
+                    "TipoComplemento": "Comercializacion",
+                    "Nacional": [{
+                        "RfcClienteOProveedor": res.issuer.rfc,
+                        "NombreClienteOProveedor": res.issuer.name,
+                        "PermisoClienteOProveedor": res.items[0].identificationNumber,
+                        "CFDIs": [{
+                            "Cfdi": res.uuid,
+                            "TipoCfdi": "Ingreso",
+                            "PrecioVentaOCompraOContrap": res.items[0].totalAmount,
+                            "FechaYHoraTransaccion": res.issuedAt,
+                            "VolumenDocumentado": {
+                                "ValorNumerico": res.items[0].quantity,
+                                "UnidadDeMedida": "UM03"
+                            }
+                        }]
+                    }]
+                }
+            }
+              if (res.currency == 'MXN') {
+                if (res.issuer.rfc == 'PTI151101TE5') {
+                  // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
+                  RECEPCION.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Complemento.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+                  // RECEPCION.Tanque = res.Tanque
+                  // entrega.VolumenInicialTanque.ValorNumerico = res.VolumenInicialTanque
+                  // entrega.VolumenFinalTanque = res.VolumenFinalTanque
+                  RECEPCION.VolumenInicialTanque.ValorNumerico = 0.0
+                  RECEPCION.VolumenFinalTanque = 0.0
+                  RECEPCION.VolumenRecepcion.ValorNumerico = res.items[0].quantity
+                  RECEPCION.Temperatura = 20
+                  RECEPCION.PresionAbsoluta = 101.325
+                  RECEPCION.FechaYHoraInicioRecepcion = res.issuedAt
+                  RECEPCION.FechaYHoraFinalRecepcion = res.issuedAt
+                // console.log(tabla);
+                  if (res.items[0].productIdentification == '15101514') {
+                    let tanques = [2,5,8]
+                    let indexT = tanques.length * Math.random() | 0
+                    switch (tanques[indexT]) {
+                      case 2:
+                        tanque2.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
+                        tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
+                        tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+                        break;
+                        case 5:
+                          tanque5.Recepciones.RECEPCION.push(RECEPCION)
+                          tanque5.Recepciones.TotalRecepciones= tanque5.Recepciones.TotalRecepciones + 1
+                          tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                          tanque5.Recepciones.TotalDocumentos = tanque5.Recepciones.TotalDocumentos + 1
+                          tanque5.Recepciones.SumaCompras = tanque5.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          break;
+                          case 8:
+                            tanque8.Recepciones.RECEPCION.push(RECEPCION)
+                            tanque8.Recepciones.TotalRecepciones= tanque8.Recepciones.TotalRecepciones + 1
+                            tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                            tanque8.Recepciones.TotalDocumentos = tanque8.Recepciones.TotalDocumentos + 1
+                            tanque8.Recepciones.SumaCompras = tanque8.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                            break;
+                    
+                      default:
+                        tanque2.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
+                        tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
+                        tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                        break;
+                    }
+                  }
+                  if (res.items[0].productIdentification == '15101515') {
+                    let tanques = [6,3]
+                    let indexT = tanques.length * Math.random() | 0
+                    switch (tanques[indexT]) {
+                      case 6:
+                        tanque6.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque6.Recepciones.TotalRecepciones= tanque6.Recepciones.TotalRecepciones + 1
+                        tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque6.Recepciones.TotalDocumentos = tanque6.Recepciones.TotalDocumentos + 1
+                        tanque6.Recepciones.SumaCompras = tanque6.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                        break;
+                        case 3:
+                          tanque3.Recepciones.RECEPCION.push(RECEPCION)
+                          tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
+                          tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                          tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
+                          tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          break;
+                    
+                      default:
+                        tanque3.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
+                        tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
+                        tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                        break;
+                    }
+                  }
+                  if (res.items[0].productIdentification == '15101505') {
+                    let tanques = [1,7]
+                    let indexT = tanques.length * Math.random() | 0
+                    switch (tanques[indexT]) {
+                      case 1:
+                        tanque1.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
+                        tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
+                        tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                        break;
+                        case 7:
+                          tanque7.Recepciones.RECEPCION.push(RECEPCION)
+                          tanque7.Recepciones.TotalRecepciones= tanque7.Recepciones.TotalRecepciones + 1
+                          tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                          tanque7.Recepciones.TotalDocumentos = tanque7.Recepciones.TotalDocumentos + 1
+                          tanque7.Recepciones.SumaCompras = tanque7.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          break;
+                    
+                      default:
+                        tanque1.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
+                        tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
+                        tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                        break;
+                    }
+                  }
+                  const dataTabla = {
+                    "UUID":res.uuid,
+                    "RFC Emisor":res.issuer.rfc,
+                    "Nombre del Emisor":res.issuer.name,
+                    "RFC Receptor":res.receiver.rfc,
+                    "Nombre del Receptor":res.receiver.name,
+                    "Tipo":res.type == 'I' ? 'Ingreso':'',
+                    "Estatus":res.status,
+                    "PAC":res.pac,
+                    "Moneda":res.currency,
+                    "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                    "Método de Pago":metodoPago,
+                    "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                    "Condiciones de pago (original)":res.paymentTermsRaw,
+                    "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber : '',
+                    "Clave del producto y/o servicio":res.items[0].productIdentification,
+                    "Descripción":res.items[0].description,
+                    "Cantidad":res.items[0].quantity,
+                    "Clave de unidad":res.items[0].unitCode,
+                    "Valor unitario":res.items[0].unitAmount,
+                    "Descuento":res.discount,
+                    "Impuesto":res.tax,
+                    "Subtotal":res.items[0].totalAmount,
+                    "Total":(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount),
+                    "TotalMXN": (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                   }
+                  const tabla = {
+                    RFCEmisor:res.issuer.rfc,
+                    Emisor:res.issuer.name,
+                    RegimenFiscal:res.issuer.taxRegime,
+                    RFCReceptor:res.receiver.rfc,
+                    Receptor:res.receiver.rfc,
+                    RegimenFiscalReceptor:res.issuer.taxRegime,
+                    DomicilioFiscalReceptor:'11560',
+                    UsoCFDI:res.usage,
+                    Estatus:res.status,
+                    FechaEmision:res.issuedAt,
+                    FullDate:res.issuedAt.substring(0, 10),
+                    Subtotal:res.subtotal,
+                    Descuento:res.discount,
+                    Impuesto:res.tax,
+                    Total:res.total,
+                    UUID:res.uuid,
+                    Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                    Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                    Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                    Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                    Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                    ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                    DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                    NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                    ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                    ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+                    Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+                    TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                    Moneda:res.currency,
+                    VersionCFDI:res.version,
+                    Fechacompleta:res.issuedAt.substring(0, 10),
+                    TotalMXN:(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                  }
+                  if (fecha3!=fecha) {
+                    break;
+                  }
+                   TotalMXN += parseFloat(tabla.TotalMXN);
+              
+                   TotalLTS += parseFloat(tabla.Cantidad);
+                   jsonCompra[indexCompra] = tabla
+                   compra[indexCompra] = dataTabla
+                   indexCompra++
+                } else {
+                  // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
+                  RECEPCION.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Complemento.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = res.items[0].totalAmount
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+                  RECEPCION.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+                  // RECEPCION.Tanque = res.Tanque
+                  // RECEPCION.VolumenInicialTanque.ValorNumerico = res.VolumenInicialTanque
+                  // RECEPCION.VolumenFinalTanque = res.VolumenFinalTanque
+                  RECEPCION.VolumenInicialTanque.ValorNumerico = 0.0
+                  RECEPCION.VolumenFinalTanque = 0.0
+                  RECEPCION.VolumenRecepcion.ValorNumerico = res.items[0].quantity
+                  RECEPCION.Temperatura = 20
+                  RECEPCION.PresionAbsoluta = 101.325
+                  RECEPCION.FechaYHoraInicioRecepcion = res.issuedAt
+                  RECEPCION.FechaYHoraFinalRecepcion = res.issuedAt
+                // console.log(tabla);
+                  if (res.items[0].productIdentification == '15101514') {
+                    let tanques = [2,5,8]
+                    let indexT = tanques.length * Math.random() | 0
+                    switch (tanques[indexT]) {
+                      case 2:
+                        tanque2.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
+                        tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
+                        tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                        break;
+                        case 5:
+                          tanque5.Recepciones.RECEPCION.push(RECEPCION)
+                          tanque5.Recepciones.TotalRecepciones= tanque5.Recepciones.TotalRecepciones + 1
+                          tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                          tanque5.Recepciones.TotalDocumentos = tanque5.Recepciones.TotalDocumentos + 1
+                          tanque5.Recepciones.SumaCompras = tanque5.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                          break;
+                          case 8:
+                            tanque8.Recepciones.RECEPCION.push(RECEPCION)
+                            tanque8.Recepciones.TotalRecepciones= tanque8.Recepciones.TotalRecepciones + 1
+                            tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                            tanque8.Recepciones.TotalDocumentos = tanque8.Recepciones.TotalDocumentos + 1
+                            tanque8.Recepciones.SumaCompras = tanque8.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                            break;
+                    
+                      default:
+                        tanque2.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
+                        tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
+                        tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                        break;
+                    }
+                  }
+                  if (res.items[0].productIdentification == '15101515') {
+                    let tanques = [6,3]
+                    let indexT = tanques.length * Math.random() | 0
+                    switch (tanques[indexT]) {
+                      case 6:
+                        tanque6.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque6.Recepciones.TotalRecepciones= tanque6.Recepciones.TotalRecepciones + 1
+                        tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque6.Recepciones.TotalDocumentos = tanque6.Recepciones.TotalDocumentos + 1
+                        tanque6.Recepciones.SumaCompras = tanque6.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                        break;
+                        case 3:
+                          tanque3.Recepciones.RECEPCION.push(RECEPCION)
+                          tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
+                          tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                          tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
+                          tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                          break;
+                    
+                      default:
+                        tanque3.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
+                        tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
+                        tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                        break;
+                    }
+                  }
+                  if (res.items[0].productIdentification == '15101505') {
+                    let tanques = [1,7]
+                    let indexT = tanques.length * Math.random() | 0
+                    switch (tanques[indexT]) {
+                      case 1:
+                        tanque1.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
+                        tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
+                        tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                        break;
+                        case 7:
+                          tanque7.Recepciones.RECEPCION.push(RECEPCION)
+                          tanque7.Recepciones.TotalRecepciones= tanque7.Recepciones.TotalRecepciones + 1
+                          tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                          tanque7.Recepciones.TotalDocumentos = tanque7.Recepciones.TotalDocumentos + 1
+                          tanque7.Recepciones.SumaCompras = tanque7.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                          break;
+                    
+                      default:
+                        tanque1.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
+                        tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
+                        tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  res.items[0].totalAmount //mxn
+                        break;
+                    }
+                  }
+                  const dataTabla = {
+                    "UUID":res.uuid,
+                    "RFC Emisor":res.issuer.rfc,
+                    "Nombre del Emisor":res.issuer.name,
+                    "RFC Receptor":res.receiver.rfc,
+                    "Nombre del Receptor":res.receiver.name,
+                    "Tipo":res.type == 'I' ? 'Ingreso':'',
+                    "Estatus":res.status,
+                    "PAC":res.pac,
+                    "Moneda":res.currency,
+                    "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                    "Método de Pago":metodoPago,
+                    "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                    "Condiciones de pago (original)":res.paymentTermsRaw,
+                    "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber : '',
+                    "Clave del producto y/o servicio":res.items[0].productIdentification,
+                    "Descripción":res.items[0].description,
+                    "Cantidad":res.items[0].quantity,
+                    "Clave de unidad":res.items[0].unitCode,
+                    "Valor unitario":res.items[0].unitAmount,
+                    "Descuento":res.discount,
+                    "Impuesto":res.tax,
+                    "Subtotal":res.subtotal,
+                    "Total":res.total,
+                    "TotalMXN": (res.total)
+                   }
+                  const tabla = {
+                    RFCEmisor:res.issuer.rfc,
+                    Emisor:res.issuer.name,
+                    RegimenFiscal:res.issuer.taxRegime,
+                    RFCReceptor:res.receiver.rfc,
+                    Receptor:res.receiver.name,
+                    RegimenFiscalReceptor:res.issuer.taxRegime,
+                    DomicilioFiscalReceptor:'11560',
+                    UsoCFDI:res.usage,
+                    Estatus:res.status,
+                    FechaEmision:res.issuedAt,
+                    FullDate:res.issuedAt.substring(0, 10),
+                    Subtotal:res.subtotal,
+                    Descuento:res.discount,
+                    Impuesto:res.tax,
+                    Total:res.total,
+                    UUID:res.uuid,
+                    Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                    Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                    Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                    Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                    Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                    ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                    DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                    NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                    ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                    ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+                    Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+                    TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                    Moneda:res.currency,
+                    VersionCFDI:res.version,
+                    Fechacompleta:res.issuedAt.substring(0, 10),
+                    TotalMXN:res.total
+                  }
+                  if (fecha3!=fecha) {
+                    break;
+                  }
+                   TotalMXN += parseFloat(tabla.TotalMXN);
+              
+                   TotalLTS += parseFloat(tabla.Cantidad);
+                   jsonCompra[indexCompra] = tabla
+                   compra[indexCompra] = dataTabla
+                   indexCompra++
+                }
+              } else {
+                // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
+                RECEPCION.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+                RECEPCION.Complemento.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+                RECEPCION.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
+                RECEPCION.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
+                RECEPCION.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+                RECEPCION.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount * res.exchangeRate)
+                RECEPCION.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+                RECEPCION.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+                // RECEPCION.Tanque = res.Tanque
+                // RECEPCION.VolumenInicialTanque.ValorNumerico = res.VolumenInicialTanque
+                // RECEPCION.VolumenFinalTanque = res.VolumenFinalTanque
+                RECEPCION.VolumenInicialTanque.ValorNumerico = 0.0
+                RECEPCION.VolumenFinalTanque = 0.0
+                RECEPCION.VolumenRecepcion.ValorNumerico = res.items[0].quantity
+                RECEPCION.Temperatura = 20
+                RECEPCION.PresionAbsoluta = 101.325
+                RECEPCION.FechaYHoraInicioRecepcion = res.issuedAt
+                RECEPCION.FechaYHoraFinalRecepcion = res.issuedAt
+              // console.log(tabla);
+                if (res.items[0].productIdentification == '15101514') {
+                  let tanques = [2,5,8]
+                  let indexT = tanques.length * Math.random() | 0
+                  switch (tanques[indexT]) {
+                    case 2:
+                      tanque2.Recepciones.RECEPCION.push(RECEPCION)
+                      tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
+                      tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                      tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
+                      tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                      break;
+                      case 5:
+                        tanque5.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque5.Recepciones.TotalRecepciones= tanque5.Recepciones.TotalRecepciones + 1
+                        tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque5.Recepciones.TotalDocumentos = tanque5.Recepciones.TotalDocumentos + 1
+                        tanque5.Recepciones.SumaCompras = tanque5.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                        break;
+                        case 8:
+                          tanque8.Recepciones.RECEPCION.push(RECEPCION)
+                          tanque8.Recepciones.TotalRecepciones= tanque8.Recepciones.TotalRecepciones + 1
+                          tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                          tanque8.Recepciones.TotalDocumentos = tanque8.Recepciones.TotalDocumentos + 1
+                          tanque8.Recepciones.SumaCompras = tanque8.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                          break;
+                  
+                    default:
+                      tanque2.Recepciones.RECEPCION.push(RECEPCION)
+                      tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
+                      tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                      tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
+                      tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                      break;
+                  }
+                }
+                if (res.items[0].productIdentification == '15101515') {
+                  let tanques = [6,3]
+                  let indexT = tanques.length * Math.random() | 0
+                  switch (tanques[indexT]) {
+                    case 6:
+                      tanque6.Recepciones.RECEPCION.push(RECEPCION)
+                      tanque6.Recepciones.TotalRecepciones= tanque6.Recepciones.TotalRecepciones + 1
+                      tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                      tanque6.Recepciones.TotalDocumentos = tanque6.Recepciones.TotalDocumentos + 1
+                      tanque6.Recepciones.SumaCompras = tanque6.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                      break;
+                      case 3:
+                        tanque3.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
+                        tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
+                        tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                        break;
+                  
+                    default:
+                      tanque3.Recepciones.RECEPCION.push(RECEPCION)
+                      tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
+                      tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                      tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
+                      tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                      break;
+                  }
+                }
+                if (res.items[0].productIdentification == '15101505') {
+                  let tanques = [1,7]
+                  let indexT = tanques.length * Math.random() | 0
+                  switch (tanques[indexT]) {
+                    case 1:
+                      tanque1.Recepciones.RECEPCION.push(RECEPCION)
+                      tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
+                      tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                      tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
+                      tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                      break;
+                      case 7:
+                        tanque7.Recepciones.RECEPCION.push(RECEPCION)
+                        tanque7.Recepciones.TotalRecepciones= tanque7.Recepciones.TotalRecepciones + 1
+                        tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                        tanque7.Recepciones.TotalDocumentos = tanque7.Recepciones.TotalDocumentos + 1
+                        tanque7.Recepciones.SumaCompras = tanque7.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                        break;
+                  
+                    default:
+                      tanque1.Recepciones.RECEPCION.push(RECEPCION)
+                      tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
+                      tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
+                      tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
+                      tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].totalAmount * res.exchangeRate) //mxn
+                      break;
+                  }
+                }
+                const dataTabla = {
+                  "UUID":res.uuid,
+                  "RFC Emisor":res.issuer.rfc,
+                  "Nombre del Emisor":res.issuer.name,
+                  "RFC Receptor":res.receiver.rfc,
+                  "Nombre del Receptor":res.receiver.name,
+                  "Tipo":res.type == 'I' ? 'Ingreso':'',
+                  "Estatus":res.status,
+                  "PAC":res.pac,
+                  "Moneda":res.currency,
+                  "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                  "Método de Pago":metodoPago,
+                  "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                  "Condiciones de pago (original)":res.paymentTermsRaw,
+                  "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber : '',
+                  "Clave del producto y/o servicio":res.items[0].productIdentification,
+                  "Descripción":res.items[0].description,
+                  "Cantidad":res.items[0].quantity,
+                  "Clave de unidad":res.items[0].unitCode,
+                  "Valor unitario":res.items[0].unitAmount,
+                  "Descuento":res.discount,
+                  "Impuesto":res.tax,
+                  "Subtotal":res.subtotal,
+                  "Total":res.total,
+                  "TotalMXN":(res.total * res.exchangeRate)
+                 }
+                const tabla = {
+                  RFCEmisor:res.issuer.rfc,
+                  Emisor:res.issuer.name,
+                  RegimenFiscal:res.issuer.taxRegime,
+                  RFCReceptor:res.receiver.rfc,
+                  Receptor:res.receiver.name,
+                  RegimenFiscalReceptor:res.issuer.taxRegime,
+                  DomicilioFiscalReceptor:'11560',
+                  UsoCFDI:res.usage,
+                  Estatus:res.status,
+                  FechaEmision:res.issuedAt,
+                  FullDate:res.issuedAt.substring(0, 10),
+                  Subtotal:res.subtotal,
+                  Descuento:res.discount,
+                  Impuesto:res.tax,
+                  Total:res.total,
+                  UUID:res.uuid,
+                  Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                  Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                  Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                  Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                  Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                  ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                  DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                  NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                  ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                  ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+                  Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+                  TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                  Moneda:res.currency,
+                  VersionCFDI:res.version,
+                  Fechacompleta:res.issuedAt.substring(0, 10),
+                  TotalMXN:(res.total * res.exchangeRate)
+                }
+                if (fecha3!=fecha) {
+                  break;
+                }
+                 TotalMXN += parseFloat(tabla.TotalMXN);
+            
+                 TotalLTS += parseFloat(tabla.Cantidad);
+                 jsonCompra[indexCompra] = tabla
+                 compra[indexCompra] = dataTabla
+                 indexCompra++
+              }
+            }
+
+          }
+
+
+        // console.log(tabla);
+        }
+
+    });
+    await delay(2300);
+    }
+    console.log("paso");
+     datoCompra = {
+      data:jsonCompra,
+      totalMXN:TotalMXN,
+      totalLTS:TotalLTS
+    }
+    datoCompraDiario = {
+      data:datoCompra.data
+    }
+     tabla = datoCompra.data
+     totalMXNC = datoCompra.totalMXN
+     totalLTSC = datoCompra.totalLTS
+     compra.forEach( record => {
+      let columnIndex= 1;
+      Object.keys(record ).forEach(columnName =>{
+        if (isNumber(record [columnName])) {
+          ws.cell(rowIndex,columnIndex++)
+          .number(parseFloat(record [columnName]))
+        } else {
+          
+          ws.cell(rowIndex,columnIndex++)
+              .string(record [columnName])
+        }
+      });
+      rowIndex++;
+  }); 
+     let tablaVenta
+let totalMXNVT = 0.0
+let totalLTSVT = 0.0
+let totalMXNV= 0.0
+let totalLTSV= 0.0
+
+var pagIndexVenta =1
+
+let ApiLengthVenta= 10
+let indexVenta = 0;
+const jsonVenta = {}
+
+///venta
+let fecha4 = fecha;
+while (ApiLengthVenta > 0 && fecha == fecha4) {
   var options = {
     'method': 'GET',
-    'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}T23:59:59.000Z&issuedAt[after]=${fecha}T00:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE`,
+    'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}T23:59:59.000Z&issuedAt[after]=${fecha}T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
     'headers': {
       'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
     }
   };
+  pagIndexVenta++
+
+  let fecha5;
+
   await request(options, function (error, response) {
     if (error) throw new Error(error);
     // console.log(response.body);
                 // console.log(diario);
-        let index = 0;
-        const json = {}
-        let TotalMXN = 0.00;
-        let TotalLTS = 0.00;
+
+
     let temp = JSON.parse(response.body);
     temp = temp['hydra:member']
-    
+    ApiLengthVenta = temp.length
     for (const key in temp) {
       const res = temp[key]
-        const tabla = {
-      RFCEmisor:res.issuer.rfc,
-      Emisor:res.issuer.name,
-      RegimenFiscal:res.issuer.taxRegime,
-      RFCReceptor:res.receiver.rfc,
-      Receptor:res.receiver.rfc,
-      RegimenFiscalReceptor:res.issuer.taxRegime,
-      DomicilioFiscalReceptor:'11560',
-      UsoCFDI:res.usage,
-      Estatus:res.status,
-      FechaEmision:res.issuedAt,
-      FullDate:res.issuedAt.substring(0, 10),
-      Subtotal:res.subtotal,
-      Impuesto:res.tax,
-      Total:res.total,
-      UUID:res.uuid,
-      Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-      Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-      Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-      Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-      Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-      ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-      DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-      NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-      ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-      ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-      Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-      TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
-      Moneda:res.currency,
-      VersionCFDI:res.version,
-      Fechacompleta:res.issuedAt.substring(0, 10),
-      TotalMXN:res.total
-    }
-     TotalMXN += parseFloat(tabla.TotalMXN);
 
-     TotalLTS += parseFloat(tabla.Cantidad);
-    json[index] = tabla
-    index++
+      console.log(fecha5);
+      fecha5 = res.issuedAt.substring(0, 10)
+      fecha4 = fecha5
+      // if (fecha3!=fecha) {
+      //   break;
+      // }
+      if (res.items[0] != undefined ) {
+        console.log(res.items[0].unitCode);
+        if (res.items[0].unitCode == 'LTR') {
+
+          let entrega = {
+            "NumeroDeRegistro": indexVenta,
+            "VolumenInicialTanque": {
+                "ValorNumerico": 0.0,
+                "UnidadDeMedida": "UM03"
+            },
+            "VolumenFinalTanque": 0.0,
+            "VolumenEntregado": {
+                "ValorNumerico": res.items[0].quantity,
+                "UnidadDeMedida": "UM03"
+            },
+            "Temperatura": 20.0,
+            "PresionAbsoluta": 101.325,
+            "FechaYHoraInicialEntrega": res.issuedAt,
+            "FechaYHoraFinalEntrega": res.issuedAt,
+            "Complemento": {
+                "TipoComplemento": "Comercializacion",
+                "Nacional": [{
+                    "RfcClienteOProveedor": res.issuer.rfc,
+                    "NombreClienteOProveedor": res.issuer.name,
+                    "PermisoClienteOProveedor": res.items[0].identificationNumber,
+                    "CFDIs": [{
+                        "Cfdi": res.uuid,
+                        "TipoCfdi": "Ingreso",
+                        "PrecioVentaOCompraOContrap": res.items[0].totalAmount,
+                        "FechaYHoraTransaccion": res.issuedAt,
+                        "VolumenDocumentado": {
+                            "ValorNumerico": res.items[0].quantity,
+                            "UnidadDeMedida": "UM03"
+                        }
+                    }]
+                }]
+            }
+        }
+          if (res.currency == 'MXN') {
+            // entrega.NumeroDeRegistro = res.NumeroDeRegistro
+            entrega.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+            entrega.Complemento.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+            entrega.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
+            entrega.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
+            entrega.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+            entrega.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = res.items[0].totalAmount
+            entrega.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+            entrega.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+            // entrega.Tanque = res.Tanque
+            // entrega.VolumenInicialTanque.ValorNumerico = res.VolumenInicialTanque
+            // entrega.VolumenFinalTanque = res.VolumenFinalTanque
+            entrega.VolumenInicialTanque.ValorNumerico = 0.0
+            entrega.VolumenFinalTanque = 0.0
+            entrega.VolumenEntregado.ValorNumerico = res.items[0].quantity
+            entrega.Temperatura = 20
+            entrega.PresionAbsoluta = 101.325
+            entrega.FechaYHoraInicioRecepcion = res.issuedAt
+            entrega.FechaYHoraFinalRecepcion = res.issuedAt
+          // console.log(tabla);
+            if (res.items[0].productIdentification == '15101514') {
+              let tanques = [2,5,8]
+              let indexT = tanques.length * Math.random() | 0
+              switch (tanques[indexT]) {
+                case 2:
+                  tanque2.Entregas.Entrega.push(entrega)
+                  tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
+                  tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
+                  tanque2.Entregas.SumaCompras = tanque2.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                  break;
+                  case 5:
+                    tanque5.Entregas.Entrega.push(entrega)
+                    tanque5.Entregas.TotalEntregas= tanque5.Entregas.TotalEntregas + 1
+                    tanque5.Entregas.SumaVolumenEntregado.ValorNumerico = tanque5.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                    tanque5.Entregas.TotalDocumentos = tanque5.Entregas.TotalDocumentos + 1
+                    tanque5.Entregas.SumaCompras = tanque5.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                    break;
+                    case 8:
+                      tanque8.Entregas.Entrega.push(entrega)
+                      tanque8.Entregas.TotalEntregas= tanque8.Entregas.TotalEntregas + 1
+                      tanque8.Entregas.SumaVolumenEntregado.ValorNumerico = tanque8.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                      tanque8.Entregas.TotalDocumentos = tanque8.Entregas.TotalDocumentos + 1
+                      tanque8.Entregas.SumaCompras = tanque8.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                      break;
+              
+                default:
+                  tanque2.Entregas.Entrega.push(entrega)
+                  tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
+                  tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
+                  tanque2.Entregas.SumaCompras = tanque2.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                  break;
+              }
+            }
+            if (res.items[0].productIdentification == '15101515') {
+              let tanques = [6,3]
+              let indexT = tanques.length * Math.random() | 0
+              switch (tanques[indexT]) {
+                case 6:
+                  tanque6.Entregas.Entrega.push(entrega)
+                  tanque6.Entregas.TotalEntregas= tanque6.Entregas.TotalEntregas + 1
+                  tanque6.Entregas.SumaVolumenEntregado.ValorNumerico = tanque6.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque6.Entregas.TotalDocumentos = tanque6.Entregas.TotalDocumentos + 1
+                  tanque6.Entregas.SumaCompras = tanque6.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                  break;
+                  case 3:
+                    tanque3.Entregas.Entrega.push(entrega)
+                    tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
+                    tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                    tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
+                    tanque3.Entregas.SumaCompras = tanque3.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                    break;
+              
+                default:
+                  tanque3.Entregas.Entrega.push(entrega)
+                  tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
+                  tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
+                  tanque3.Entregas.SumaCompras = tanque3.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                  break;
+              }
+            }
+            if (res.items[0].productIdentification == '15101505') {
+              let tanques = [1,7]
+              let indexT = tanques.length * Math.random() | 0
+              switch (tanques[indexT]) {
+                case 1:
+                  tanque1.Entregas.Entrega.push(entrega)
+                  tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
+                  tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
+                  tanque1.Entregas.SumaCompras = tanque1.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                  break;
+                  case 7:
+                    tanque7.Entregas.Entrega.push(entrega)
+                    tanque7.Entregas.TotalEntregas= tanque7.Entregas.TotalEntregas + 1
+                    tanque7.Entregas.SumaVolumenEntregado.ValorNumerico = tanque7.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                    tanque7.Entregas.TotalDocumentos = tanque7.Entregas.TotalDocumentos + 1
+                    tanque7.Entregas.SumaCompras = tanque7.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                    break;
+              
+                default:
+                  tanque1.Entregas.Entrega.push(entrega)
+                  tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
+                  tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
+                  tanque1.Entregas.SumaCompras = tanque1.Entregas.SumaCompras +  res.items[0].totalAmount //mxn
+                  break;
+              }
+            }
+            const dataTabla = {
+              "UUID":res.uuid,
+              "RFC Emisor":res.issuer.rfc,
+              "Nombre del Emisor":res.issuer.name,
+              "RFC Receptor":res.receiver.rfc,
+              "Nombre del Receptor":res.receiver.name,
+              "Tipo":res.type == 'I' ? 'Ingreso':'',
+              "Estatus":res.status,
+              "PAC":res.pac,
+              "Moneda":res.currency,
+              "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+              "Método de Pago":metodoPago,
+              "Fecha de Emisión":res.issuedAt.substring(0, 10),
+              "Condiciones de pago (original)":res.paymentTermsRaw,
+              "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+              "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+              "Descripción":res.items[0].description,
+              "Cantidad":res.items[0].quantity.toString(),
+              "Clave de unidad":res.items[0].unitCode,
+              "Valor unitario":res.items[0].unitAmount.toString(),
+              "Descuento":res.discount.toString(),
+              "Impuesto":res.tax.toString(),
+              "Subtotal":res.subtotal.toString(),
+              "Total":res.total.toString(),
+              "TotalMXN": (res.total).toString()
+             }
+            const tabla = {
+              RFCEmisor:res.issuer.rfc,
+              Emisor:res.issuer.name,
+              RegimenFiscal:res.issuer.taxRegime,
+              RFCReceptor:res.receiver.rfc,
+              Receptor:res.receiver.name,
+              RegimenFiscalReceptor:res.issuer.taxRegime,
+              DomicilioFiscalReceptor:'11560',
+              UsoCFDI:res.usage,
+              Estatus:res.status,
+              FechaEmision:res.issuedAt,
+              FullDate:res.issuedAt.substring(0, 10),
+              Subtotal:res.subtotal,
+              Descuento:res.discount,
+              Impuesto:res.tax,
+              Total:res.total,
+              UUID:res.uuid,
+              Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+              Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+              Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+              Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+              Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+              ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+              DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+              NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+              ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              Moneda:res.currency,
+              VersionCFDI:res.version,
+              Fechacompleta:res.issuedAt.substring(0, 10),
+              TotalMXN:res.total
+            }
+            
+            if (fecha5!=fecha) {
+              break;
+            }
+            totalMXNVT += parseFloat(tabla.TotalMXN);
+            totalLTSVT += parseFloat(tabla.Cantidad);
+            jsonVenta[indexVenta] = tabla
+            venta[indexVenta] = dataTabla
+             indexVenta++
+          } else {
+            // entrega.NumeroDeRegistro = res.NumeroDeRegistro
+            entrega.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+            entrega.Complemento.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+            entrega.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
+            entrega.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
+            entrega.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+            entrega.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.total * res.exchangeRate)
+            entrega.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+            entrega.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+            // entrega.Tanque = res.Tanque
+            // entrega.VolumenInicialTanque.ValorNumerico = res.VolumenInicialTanque
+            // entrega.VolumenFinalTanque = res.VolumenFinalTanque
+            entrega.VolumenInicialTanque.ValorNumerico = 0.0
+            entrega.VolumenFinalTanque = 0.0
+            entrega.VolumenEntregado.ValorNumerico = res.items[0].quantity
+            entrega.Temperatura = 20
+            entrega.PresionAbsoluta = 101.325
+            entrega.FechaYHoraInicioRecepcion = res.issuedAt
+            entrega.FechaYHoraFinalRecepcion = res.issuedAt
+          // console.log(tabla);
+            if (res.items[0].productIdentification == '15101514') {
+              let tanques = [2,5,8]
+              let indexT = tanques.length * Math.random() | 0
+              switch (tanques[indexT]) {
+                case 2:
+                  tanque2.Entregas.Entrega.push(entrega)
+                  tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
+                  tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
+                  tanque2.Entregas.SumaCompras = tanque2.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                  break;
+                  case 5:
+                    tanque5.Entregas.Entrega.push(entrega)
+                    tanque5.Entregas.TotalEntregas= tanque5.Entregas.TotalEntregas + 1
+                    tanque5.Entregas.SumaVolumenEntregado.ValorNumerico = tanque5.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                    tanque5.Entregas.TotalDocumentos = tanque5.Entregas.TotalDocumentos + 1
+                    tanque5.Entregas.SumaCompras = tanque5.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                    break;
+                    case 8:
+                      tanque8.Entregas.Entrega.push(entrega)
+                      tanque8.Entregas.TotalEntregas= tanque8.Entregas.TotalEntregas + 1
+                      tanque8.Entregas.SumaVolumenEntregado.ValorNumerico = tanque8.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                      tanque8.Entregas.TotalDocumentos = tanque8.Entregas.TotalDocumentos + 1
+                      tanque8.Entregas.SumaCompras = tanque8.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                      break;
+              
+                default:
+                  tanque2.Entregas.Entrega.push(entrega)
+                  tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
+                  tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
+                  tanque2.Entregas.SumaCompras = tanque2.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                  break;
+              }
+            }
+            if (res.items[0].productIdentification == '15101515') {
+              let tanques = [6,3]
+              let indexT = tanques.length * Math.random() | 0
+              switch (tanques[indexT]) {
+                case 6:
+                  tanque6.Entregas.Entrega.push(entrega)
+                  tanque6.Entregas.TotalEntregas= tanque6.Entregas.TotalEntregas + 1
+                  tanque6.Entregas.SumaVolumenEntregado.ValorNumerico = tanque6.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque6.Entregas.TotalDocumentos = tanque6.Entregas.TotalDocumentos + 1
+                  tanque6.Entregas.SumaCompras = tanque6.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                  break;
+                  case 3:
+                    tanque3.Entregas.Entrega.push(entrega)
+                    tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
+                    tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                    tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
+                    tanque3.Entregas.SumaCompras = tanque3.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                    break;
+              
+                default:
+                  tanque3.Entregas.Entrega.push(entrega)
+                  tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
+                  tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
+                  tanque3.Entregas.SumaCompras = tanque3.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                  break;
+              }
+            }
+            if (res.items[0].productIdentification == '15101505') {
+              let tanques = [1,7]
+              let indexT = tanques.length * Math.random() | 0
+              switch (tanques[indexT]) {
+                case 1:
+                  tanque1.Entregas.Entrega.push(entrega)
+                  tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
+                  tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
+                  tanque1.Entregas.SumaCompras = tanque1.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                  break;
+                  case 7:
+                    tanque7.Entregas.Entrega.push(entrega)
+                    tanque7.Entregas.TotalEntregas= tanque7.Entregas.TotalEntregas + 1
+                    tanque7.Entregas.SumaVolumenEntregado.ValorNumerico = tanque7.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                    tanque7.Entregas.TotalDocumentos = tanque7.Entregas.TotalDocumentos + 1
+                    tanque7.Entregas.SumaCompras = tanque7.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                    break;
+              
+                default:
+                  tanque1.Entregas.Entrega.push(entrega)
+                  tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
+                  tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
+                  tanque1.Entregas.SumaCompras = tanque1.Entregas.SumaCompras +  (res.total * res.exchangeRate) //mxn
+                  break;
+              }
+            }
+            const dataTabla = {
+              "UUID":res.uuid,
+              "RFC Emisor":res.issuer.rfc,
+              "Nombre del Emisor":res.issuer.name,
+              "RFC Receptor":res.receiver.rfc,
+              "Nombre del Receptor":res.receiver.name,
+              "Tipo":res.type == 'I' ? 'Ingreso':'',
+              "Estatus":res.status,
+              "PAC":res.pac,
+              "Moneda":res.currency,
+              "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+              "Método de Pago":metodoPago,
+              "Fecha de Emisión":res.issuedAt.substring(0, 10),
+              "Condiciones de pago (original)":res.paymentTermsRaw,
+              "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+              "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+              "Descripción":res.items[0].description,
+              "Cantidad":res.items[0].quantity.toString(),
+              "Clave de unidad":res.items[0].unitCode,
+              "Valor unitario":res.items[0].unitAmount.toString(),
+              "Descuento":res.discount.toString(),
+              "Impuesto":res.tax.toString(),
+              "Subtotal":res.subtotal.toString(),
+              "Total":res.total.toString(),
+              "TotalMXN": (res.total * res.exchangeRate).toString()
+             }
+            const tabla = {
+              RFCEmisor:res.issuer.rfc,
+              Emisor:res.issuer.name,
+              RegimenFiscal:res.issuer.taxRegime,
+              RFCReceptor:res.receiver.rfc,
+              Receptor:res.receiver.name,
+              RegimenFiscalReceptor:res.issuer.taxRegime,
+              DomicilioFiscalReceptor:'11560',
+              UsoCFDI:res.usage,
+              Estatus:res.status,
+              FechaEmision:res.issuedAt,
+              FullDate:res.issuedAt.substring(0, 10),
+              Subtotal:res.subtotal,
+              Descuento:res.discount,
+              Impuesto:res.tax,
+              Total:res.total,
+              UUID:res.uuid,
+              Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+              Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+              Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+              Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+              Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+              ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+              DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+              NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+              ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              Moneda:res.currency,
+              VersionCFDI:res.version,
+              Fechacompleta:res.issuedAt.substring(0, 10),
+              TotalMXN:(res.total * res.exchangeRate)
+            }
+            
+            if (fecha5!=fecha) {
+              break;
+            }
+            totalMXNVT += parseFloat(tabla.TotalMXN);
+            totalLTSVT += parseFloat(tabla.Cantidad);
+            jsonVenta[indexVenta] = tabla
+            venta[indexVenta] = dataTabla
+             indexVenta++
+          }
+        }
+
+      }
+
+
     // console.log(tabla);
     }
-    datoCompra = {
-    data:json,
-    totalMXN:TotalMXN,
-    totalLTS:TotalLTS
-  }
-  const tabla = datoCompra.data
-  const totalMXNC = datoCompra.totalMXN
-  const totalLTSC = datoCompra.totalLTS
-  var options = {
-    'method': 'GET',
-    'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}T23:59:59.000Z&issuedAt[after]=${fecha}T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE`,
-    'headers': {
-      'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
-    }
-  };
-   request(options, function (error, response) {
-    if (error) throw new Error(error);
-    // console.log(response.body);
-                // console.log(diario);
-        let index = 0;
-        const json = {}
-        let TotalMXN = 0.00;
-        let TotalLTS = 0.00;
-    let temp = JSON.parse(response.body);
-    temp = temp['hydra:member']
-    // console.log(temp);
-      for (const key in temp) {
-        const res = temp[key]
-          const tabla = {
-        RFCEmisor:res.issuer.rfc,
-        Emisor:res.issuer.name,
-        RegimenFiscal:res.issuer.taxRegime,
-        RFCReceptor:res.receiver.rfc,
-        Receptor:res.receiver.rfc,
-        RegimenFiscalReceptor:res.issuer.taxRegime,
-        DomicilioFiscalReceptor:'11560',
-        UsoCFDI:res.usage,
-        Estatus:res.status,
-        FechaEmision:res.issuedAt,
-        FullDate:res.issuedAt.substring(0, 10),
-        Subtotal:res.subtotal,
-        Impuesto:res.tax,
-        Total:res.total,
-        UUID:res.uuid,
-        Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-        Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-        Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-        Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-        Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-        ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-        DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-        NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-        ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-        ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-        Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-        TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
-        Moneda:res.currency,
-        VersionCFDI:res.version,
-        Fechacompleta:res.issuedAt.substring(0, 10),
-        TotalMXN:res.total
-      }
-       TotalMXN += parseFloat(tabla.TotalMXN);
-  
-       TotalLTS += parseFloat(tabla.Cantidad);
-      json[index] = tabla
-      index++
-      // console.log(tabla);
-      }
-    
-    const datoVenta = {
-      data:json,
-      totalMXN:TotalMXN,
-      totalLTS:TotalLTS
-    }
-  // console.log(data);
-    const tablaVenta = datoVenta.data
-    const totalMXNCV = datoVenta.totalMXN
-    const totalLTSCV = datoVenta.totalLTS
-    
-    const diferenciaMXN = (totalMXNC - totalMXNCV).toFixed(2)
-    const diferenciaLTS = (totalLTSC - totalLTSCV).toFixed(2)
-   res.render('VistaPrueba/diario',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNCV,totalLTSCV,diferenciaMXN,diferenciaLTS});
-  });
-
-  // console.log(data);
 
 });
+await delay(2300);
+venta.forEach( record => {
+  let columnIndex2= 1;
+  Object.keys(record ).forEach(columnName =>{
+    if (isNumber(record [columnName])) {
+      ws2.cell(rowIndex2,columnIndex2++)
+      .number(parseFloat(record [columnName]))
+    } else {
+      
+      ws2.cell(rowIndex2,columnIndex2++)
+          .string(record [columnName])
+    }
+  });
+  rowIndex2++;
+}); 
+}
+const datoVenta = {
+  data:jsonVenta,
+  totalMXN:totalMXNVT,
+  totalLTS:totalLTSVT
+}
+datoVentaDiario = {
+  data:datoVenta.data
+}
+// console.log(data);
+ tablaVenta = datoVenta.data
+ totalMXNV = datoVenta.totalMXN
+ totalLTSV = datoVenta.totalLTS
+  
+const diferenciaMXN = (totalMXNC - totalMXNV).toFixed(2)
+const diferenciaLTS = (totalLTSC - totalLTSV).toFixed(2)
+await delay(1000);
+let gas87 =require(path.join(__dirname, '../public/json/glencore/separarGas87.json'))
+let gas91 =require(path.join(__dirname, '../public/json/glencore/separarGas91.json'))
+let disel =require(path.join(__dirname, '../public/json/glencore/separarDisel.json'))
 
+let estructura =require(path.join(__dirname, '../public/json/glencore/glencoreEstructura.json'))
+gas87.Tanque.push(tanque2)
+gas87.Tanque.push(tanque5)
+gas87.Tanque.push(tanque8)
+
+gas91.Tanque.push(tanque1)
+gas91.Tanque.push(tanque7)
+
+disel.Tanque.push(tanque3)
+disel.Tanque.push(tanque6)
+const event = new Date();
+// expected output: Wed Oct 05 2011 16:48:00 GMT+0200 (CEST)
+// (note: your timezone may vary)
+
+
+estructura.Bitacora[0].NumeroRegistro = indexCompra + indexCompra
+estructura.Bitacora[0].FechaYHoraEvento = event.toISOString().slice(0,-1)
+estructura.FechaYHoraCorte = event.toISOString().slice(0,-1)
+
+estructura.Producto.push(gas87)
+estructura.Producto.push(gas91)
+estructura.Producto.push(disel)
+
+let fileNameKey = `DiarioTemp`
+
+// const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+//  fs.promises.mkdir(dirpath, { recursive: true })
+const fileJsonName = path.join(__dirname, `../public/json/glencore/DiarioTemp/${fileNameKey}.json`);
+fs.writeFile(fileJsonName, JSON.stringify(estructura,null, 2), function writeJSON(err) {
+  if (err) return console.log(err);
+
+});
+const FileCompra = path.join(__dirname, `../public/json/glencore/DiarioTemp/Compra${fecha}.json`);
+fs.writeFile(FileCompra, JSON.stringify(datoCompra,null, 2), function writeJSON(err) {
+  if (err) return console.log(err);
+
+});
+const FileVenta = path.join(__dirname, `../public/json/glencore/DiarioTemp/Venta${fecha}.json`);
+fs.writeFile(FileVenta, JSON.stringify(datoVenta,null, 2), function writeJSON(err) {
+  if (err) return console.log(err);
+
+});
+wb.write(path.join(__dirname, `../public/Excel/Diario_${fecha}.xlsx`));
+
+await delay(2000);
+  res.render('VistaPrueba/diario',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS});
 
 
 
@@ -449,190 +1642,1212 @@ router.get('/Diario/:fecha', async (req, res) => {
 
 });
 router.get('/Mensual/:fecha', async (req, res) => {
-  var request = require('request');
-  // let temp;2022-10-25
-  var datoCompra;
-  const fecha = req.params.fecha
-  if (fecha== null) {
-    fecha = acomodarFecha(DateNow())
-  }
-  var options = {
-    'method': 'GET',
-    'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}30T23:59:59.000Z&issuedAt[after]=${fecha}01T00:00:00.000Z&receiver.rfc=GEM161104H39`,
-    'headers': {
-      'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
-    }
-  };
-      await request(options, function (error, response) {
-        if (error) throw new Error(error);
-        // console.log(response.body);
-                    // console.log(diario);
-            let index = 0;
-            const json = {}
-            let TotalMXN = 0.00;
-            let TotalLTS = 0.00;
-        let temp = JSON.parse(response.body);
-        temp = temp['hydra:member']
-        // console.log(temp);
-        for (const key in temp) {
-          const res = temp[key]
-            const tabla = {
-          RFCEmisor:res.issuer.rfc,
-          Emisor:res.issuer.name,
-          RegimenFiscal:res.issuer.taxRegime,
-          RFCReceptor:res.receiver.rfc,
-          Receptor:res.receiver.rfc,
-          RegimenFiscalReceptor:res.issuer.taxRegime,
-          DomicilioFiscalReceptor:'11560',
-          UsoCFDI:res.usage,
-          Estatus:res.status,
-          FechaEmision:res.issuedAt,
-          FullDate:res.issuedAt.substring(0, 10),
-          Subtotal:res.subtotal,
-          Impuesto:res.tax,
-          Total:res.total,
-          UUID:res.uuid,
-          Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-          Unidad:res.items[0].unitCode,
-          Cantidad:res.items[0].quantity,
-          Descripcion:res.items[0].description,
-          Valorunitario:res.items[0].unitAmount,
-          ImporteConcepto:res.items[0].totalAmount,
-          DescuentoConcepto:res.items[0].discountAmount,
-          NoIdentificacion:res.items[0].identificationNumber,
-          ClaveSAT:res.items[0].productIdentification,
-          ImporteImpuesto:res.items[0].taxes[0].amount,
-          Impuesto:res.items[0].taxes[0].tax,
-          TasaOCuota:res.items[0].taxes[0].factor.amount,
-          Moneda:res.currency,
-          VersionCFDI:res.version,
-          Fechacompleta:res.issuedAt.substring(0, 10),
-          TotalMXN:res.total
-        }
-        TotalMXN += parseFloat(tabla.TotalMXN);
+  console.log("mess");
+  const xl = require('excel4node');
+console.log("Empieza");
+const wb = new xl.Workbook();
+const ws = wb.addWorksheet('Compra');
+const ws2 = wb.addWorksheet('Venta');
 
-        TotalLTS += parseFloat(tabla.Cantidad);
-        json[index] = tabla
-        index++
-        // console.log(tabla);
-        }
-        datoCompra = {
-        data:json,
-        totalMXN:TotalMXN,
-        totalLTS:TotalLTS
+const headingColumnNames = [
+  "UUID",
+  "RFC Emisor",
+  "Nombre del Emisor",
+  "RFC Receptor",
+  "Nombre del Receptor",
+  "Tipo",
+  "Estatus",
+  "PAC",
+  "Moneda",
+  "Fecha de Certificación",
+  "Método de Pago",
+  "Fecha de Emisión",
+  "Condiciones de pago (original)",
+  "No. Identificación",
+  "Clave del producto y/o servicio",
+  "Descripción",
+  "Cantidad",
+  "Clave de unidad",
+  "Valor unitario",
+  "Descuento",
+  "Impuesto",
+  "Subtotal",
+  "Total",
+  "TotalMXN"
+]//Write Column Title in Excel file
+
+var pagIndexCompra = 1
+var pagIndexVenta = 1
+let headingColumnIndex = 1;
+let headingColumnIndex2 = 1;
+let rowIndex = 2;
+const compra = [
+
+]
+let rowIndex2 = 2;
+//  let index2 = 0
+const venta = [
+
+]
+headingColumnNames.forEach(heading => {
+ws.cell(1, headingColumnIndex++)
+    .string(heading)
+});//Write Data in Excel file headingColumnIndex = 1;
+headingColumnNames.forEach(heading => {
+ws2.cell(1, headingColumnIndex2++)
+    .string(heading)
+});//Write Data in Excel file
+
+var request = require('request');
+// let temp;2022-10-25
+var datoCompra;
+
+let fecha = req.params.fecha
+const fechasplit = fecha.split("-")
+if (fechasplit[1].length == 1) {
+
+  fecha = `${fechasplit[0]}-0${fechasplit[1]}`
+}
+console.log(fecha)
+
+
+let tabla
+let totalMXNC
+let totalLTSC
+let fecha2 =fecha
+var pagIndexCompra =1
+let TotalMXN = 0.00;
+let TotalLTS = 0.00;
+let ApiLength= 10
+let indexCompra = 0;
+const jsonCompra = {}
+while (ApiLength > 0 && fecha2.indexOf(fecha) != -1) {
+console.log(fecha2.indexOf(fecha) != -1);
+    var options = {
+      'method': 'GET',
+      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+      'headers': {
+        'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
       }
-      const tabla = datoCompra.data
-      const totalMXNC = datoCompra.totalMXN
-      const totalLTSC = datoCompra.totalLTS
-      console.log(totalMXNC);
-      var options = {
-        'method': 'GET',
-        'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}30T23:59:59.000Z&issuedAt[after]=${fecha}01T00:00:00.000Z&issuer.rfc=GEM161104H39`,
-        'headers': {
-          'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+    };
+    pagIndexCompra++
+
+    let fecha3;
+
+  /*
+  
+  15101505 == DISEL 
+  15101514 == 87 OCTANOS
+  15101515 == 91 OCTANOS
+  */
+    await request(options, function (error, response) {
+      if (error) throw new Error(error);
+      // console.log(response.body);
+                  // console.log(diario);
+
+
+      let temp = JSON.parse(response.body);
+      temp = temp['hydra:member']
+      console.log("@@@@@@@@@@@");
+      ApiLength = temp.length
+
+      for (const key in temp) {
+        const res = temp[key]
+        fecha3 = res.issuedAt.substring(0, 10)
+        fecha2 = fecha3
+        console.log(fecha3);
+        if (res.items[0] != undefined ) {
+          if (res.items[0].unitCode == 'LTR') {
+            let RECEPCION = {
+              "TipoComplemento": "Comercializacion",
+              "Nacional": [{
+                  "RfcClienteOProveedor": "PTI151101TE5",
+                  "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                  "PermisoClienteOProveedor": "H/09857/COM/2015",
+                  "CFDIs": [{
+                      "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
+                      "TipoCfdi": "Ingreso",
+                      "PrecioVentaOCompraOContrap": 0.0,
+                      "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
+                      "VolumenDocumentado": {
+                          "ValorNumerico": 0.0,
+                          "UnidadDeMedida": "UM03"
+                      }
+                  }]
+              }]
+          }
+            if (res.currency == 'MXN') {
+              if (res.issuer.rfc == 'PTI151101TE5') {
+                console.log("pemex");
+                // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
+                RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+                RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+                RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
+                RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
+                RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+                RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+                RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+               
+              // console.log(tabla);
+                if (res.items[0].productIdentification == '15101514') {
+
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+                  
+                  productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+                }
+                if (res.items[0].productIdentification == '15101515') {
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+
+                  productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+                }
+                if (res.items[0].productIdentification == '15101505') {
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+                  productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+                }
+                let metodoPago = ''
+                switch (res.paymentMethod) {
+                  case 01:
+                    metodoPago = 'Efectivo'
+                    break;
+                    case 02:
+                      metodoPago = 'Cheque de nómina'
+                      break;
+                      case 03:
+                        metodoPago = 'Transferencia electrónica'
+                        break;
+                        case 04:
+                          metodoPago = 'Tarjeta de crédito'
+                          break;
+                          case 05:
+                            metodoPago = 'Monedero electrónico'
+                            break;
+                            case 06:
+                              metodoPago = 'Dinero digital'
+                              break;
+                              case 08:
+                                metodoPago = 'Vales de despensa'
+                                break;
+                                case 12:
+                                  metodoPago = 'Liquidación'
+                                  break;
+                                  case 13:
+                                    metodoPago = 'Pago por subrogación'
+                                    break;
+                                    case 14:
+                                      metodoPago = 'Pago por consignación'
+                                      break;
+                                      case 15:
+                                        metodoPago = 'Condonación'
+                                        break;
+                                        case 17:
+                                          metodoPago = 'Compensación'
+                                          break;
+                                          case 23:
+                                            metodoPago = 'Novacion'
+                                            break;
+                                            case 24:
+                                              metodoPago = 'Confusión'
+                                              break;
+                                              case 25:
+                                                metodoPago = 'Envío de deuda'
+                                                break;
+                                                case 26:
+                                                  metodoPago = 'Prescripción o caducidad'
+                                                  break;
+                                                  case 27:
+                                                    metodoPago = 'A satisfacción del acreedor'
+                                                    break;
+                                                    case 28:
+                                                      metodoPago = 'Tarjeta de débito'
+                                                      break;
+                                                      case 29:
+                                                        metodoPago = 'Tarjeta de servicio'
+                                                        break;
+                    
+                
+                  default:
+                    metodoPago = 'Por definir'
+                    break;
+                }
+                const dataExcel = {
+                  "UUID":res.uuid,
+                  "RFC Emisor":res.issuer.rfc,
+                  "Nombre del Emisor":res.issuer.name,
+                  "RFC Receptor":res.receiver.rfc,
+                  "Nombre del Receptor":res.receiver.name,
+                  "Tipo":res.type == 'I' ? 'Ingreso':'',
+                  "Estatus":res.status,
+                  "PAC":res.pac,
+                  "Moneda":res.currency,
+                  "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                  "Método de Pago":metodoPago,
+                  "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                  "Condiciones de pago (original)":res.paymentTermsRaw,
+                  "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                  "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                  "Descripción":res.items[0].description,
+                  "Cantidad":res.items[0].quantity.toString(),
+                  "Clave de unidad":res.items[0].unitCode,
+                  "Valor unitario":res.items[0].unitAmount.toString(),
+                  "Descuento":res.discount.toString(),
+                  "Impuesto":res.tax.toString(),
+                  "Subtotal":res.items[0].totalAmount.toString(),
+                  "Total":(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount).toString(),
+                  "TotalMXN": (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount).toString()
+                 }
+                const tabla = {
+                  RFCEmisor:res.issuer.rfc,
+                  Emisor:res.issuer.name,
+                  RegimenFiscal:res.issuer.taxRegime,
+                  RFCReceptor:res.receiver.rfc,
+                  Receptor:res.receiver.name,
+                  RegimenFiscalReceptor:res.issuer.taxRegime,
+                  DomicilioFiscalReceptor:'11560',
+                  UsoCFDI:res.usage,
+                  Estatus:res.status,
+                  FechaEmision:res.issuedAt,
+                  FullDate:res.issuedAt.substring(0, 10),
+                  Subtotal:res.subtotal,
+                  Descuento:res.discount,
+                  Impuesto:res.tax,
+                  Total:res.total,
+                  UUID:res.uuid,
+                  Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                  Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                  Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                  Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                  Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                  ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                  DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                  NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                  ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                  ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+                  Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+                  TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                  Moneda:res.currency,
+                  VersionCFDI:res.version,
+                  Fechacompleta:res.issuedAt.substring(0, 10),
+                  TotalMXN:(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                }
+                // if (fecha3!=fecha) {
+                //   break;
+                // }
+                 TotalMXN += parseFloat(tabla.TotalMXN);
+            
+                 TotalLTS += parseFloat(tabla.Cantidad);
+                 jsonCompra[indexCompra] = tabla
+                 compra[indexCompra] = dataExcel
+                 indexCompra++
+              } else {
+                console.log("normal");
+                RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+                RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+                RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
+                RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
+                RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+                RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
+                RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+                RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+               
+              // console.log(tabla);
+                if (res.items[0].productIdentification == '15101514') {
+
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+                  
+                  productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+                }
+                if (res.items[0].productIdentification == '15101515') {
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+
+                  productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+                }
+                if (res.items[0].productIdentification == '15101505') {
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+                  productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+                }
+                let metodoPago = ''
+                switch (res.paymentMethod) {
+                  case 01:
+                    metodoPago = 'Efectivo'
+                    break;
+                    case 02:
+                      metodoPago = 'Cheque de nómina'
+                      break;
+                      case 03:
+                        metodoPago = 'Transferencia electrónica'
+                        break;
+                        case 04:
+                          metodoPago = 'Tarjeta de crédito'
+                          break;
+                          case 05:
+                            metodoPago = 'Monedero electrónico'
+                            break;
+                            case 06:
+                              metodoPago = 'Dinero digital'
+                              break;
+                              case 08:
+                                metodoPago = 'Vales de despensa'
+                                break;
+                                case 12:
+                                  metodoPago = 'Liquidación'
+                                  break;
+                                  case 13:
+                                    metodoPago = 'Pago por subrogación'
+                                    break;
+                                    case 14:
+                                      metodoPago = 'Pago por consignación'
+                                      break;
+                                      case 15:
+                                        metodoPago = 'Condonación'
+                                        break;
+                                        case 17:
+                                          metodoPago = 'Compensación'
+                                          break;
+                                          case 23:
+                                            metodoPago = 'Novacion'
+                                            break;
+                                            case 24:
+                                              metodoPago = 'Confusión'
+                                              break;
+                                              case 25:
+                                                metodoPago = 'Envío de deuda'
+                                                break;
+                                                case 26:
+                                                  metodoPago = 'Prescripción o caducidad'
+                                                  break;
+                                                  case 27:
+                                                    metodoPago = 'A satisfacción del acreedor'
+                                                    break;
+                                                    case 28:
+                                                      metodoPago = 'Tarjeta de débito'
+                                                      break;
+                                                      case 29:
+                                                        metodoPago = 'Tarjeta de servicio'
+                                                        break;
+                    
+                
+                  default:
+                    metodoPago = 'Por definir'
+                    break;
+                }
+                const dataExcel = {
+                  "UUID":res.uuid,
+                  "RFC Emisor":res.issuer.rfc,
+                  "Nombre del Emisor":res.issuer.name,
+                  "RFC Receptor":res.receiver.rfc,
+                  "Nombre del Receptor":res.receiver.name,
+                  "Tipo":res.type == 'I' ? 'Ingreso':'',
+                  "Estatus":res.status,
+                  "PAC":res.pac,
+                  "Moneda":res.currency,
+                  "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                  "Método de Pago":metodoPago,
+                  "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                  "Condiciones de pago (original)":res.paymentTermsRaw,
+                  "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                  "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                  "Descripción":res.items[0].description,
+                  "Cantidad":res.items[0].quantity.toString(),
+                  "Clave de unidad":res.items[0].unitCode,
+                  "Valor unitario":res.items[0].unitAmount.toString(),
+                  "Descuento":res.discount.toString(),
+                  "Impuesto":res.tax.toString(),
+                  "Subtotal":res.subtotal.toString(),
+                  "Total":res.total.toString(),
+                  "TotalMXN": (res.items[0].totalAmount).toString()
+                 }
+                const tabla = {
+                  RFCEmisor:res.issuer.rfc,
+                  Emisor:res.issuer.name,
+                  RegimenFiscal:res.issuer.taxRegime,
+                  RFCReceptor:res.receiver.rfc,
+                  Receptor:res.receiver.name,
+                  RegimenFiscalReceptor:res.issuer.taxRegime,
+                  DomicilioFiscalReceptor:'11560',
+                  UsoCFDI:res.usage,
+                  Estatus:res.status,
+                  FechaEmision:res.issuedAt,
+                  FullDate:res.issuedAt.substring(0, 10),
+                  Subtotal:res.subtotal,
+                  Descuento:res.discount,
+                  Impuesto:res.tax,
+                  Total:res.total,
+                  UUID:res.uuid,
+                  Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                  Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                  Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                  Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                  Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                  ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                  DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                  NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                  ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                  ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+                  Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+                  TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                  Moneda:res.currency,
+                  VersionCFDI:res.version,
+                  Fechacompleta:res.issuedAt.substring(0, 10),
+                  TotalMXN:(res.items[0].totalAmount)
+                }
+                // if (fecha3!=fecha) {
+                //   break;
+                // }
+                 TotalMXN += parseFloat(tabla.TotalMXN);
+            
+                 TotalLTS += parseFloat(tabla.Cantidad);
+                 jsonCompra[indexCompra] = tabla
+                 compra[indexCompra] = dataExcel
+                 indexCompra++
+              }
+            } else {
+              console.log("usd");
+              RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+              RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+              RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
+              RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
+              RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+              RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount * res.exchangeRate)
+              RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+              RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+             
+            // console.log(tabla);
+              if (res.items[0].productIdentification == '15101514') {
+
+                productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
+                productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
+                
+                productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+              }
+              if (res.items[0].productIdentification == '15101515') {
+                productoGas91.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
+
+                productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+              }
+              if (res.items[0].productIdentification == '15101505') {
+                productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
+                productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+              }
+              let metodoPago = ''
+              switch (res.paymentMethod) {
+                case 01:
+                  metodoPago = 'Efectivo'
+                  break;
+                  case 02:
+                    metodoPago = 'Cheque de nómina'
+                    break;
+                    case 03:
+                      metodoPago = 'Transferencia electrónica'
+                      break;
+                      case 04:
+                        metodoPago = 'Tarjeta de crédito'
+                        break;
+                        case 05:
+                          metodoPago = 'Monedero electrónico'
+                          break;
+                          case 06:
+                            metodoPago = 'Dinero digital'
+                            break;
+                            case 08:
+                              metodoPago = 'Vales de despensa'
+                              break;
+                              case 12:
+                                metodoPago = 'Liquidación'
+                                break;
+                                case 13:
+                                  metodoPago = 'Pago por subrogación'
+                                  break;
+                                  case 14:
+                                    metodoPago = 'Pago por consignación'
+                                    break;
+                                    case 15:
+                                      metodoPago = 'Condonación'
+                                      break;
+                                      case 17:
+                                        metodoPago = 'Compensación'
+                                        break;
+                                        case 23:
+                                          metodoPago = 'Novacion'
+                                          break;
+                                          case 24:
+                                            metodoPago = 'Confusión'
+                                            break;
+                                            case 25:
+                                              metodoPago = 'Envío de deuda'
+                                              break;
+                                              case 26:
+                                                metodoPago = 'Prescripción o caducidad'
+                                                break;
+                                                case 27:
+                                                  metodoPago = 'A satisfacción del acreedor'
+                                                  break;
+                                                  case 28:
+                                                    metodoPago = 'Tarjeta de débito'
+                                                    break;
+                                                    case 29:
+                                                      metodoPago = 'Tarjeta de servicio'
+                                                      break;
+                  
+              
+                default:
+                  metodoPago = 'Por definir'
+                  break;
+              }
+              const dataExcel = {
+                "UUID":res.uuid,
+                "RFC Emisor":res.issuer.rfc,
+                "Nombre del Emisor":res.issuer.name,
+                "RFC Receptor":res.receiver.rfc,
+                "Nombre del Receptor":res.receiver.name,
+                "Tipo":res.type == 'I' ? 'Ingreso':'',
+                "Estatus":res.status,
+                "PAC":res.pac,
+                "Moneda":res.currency,
+                "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                "Método de Pago":metodoPago,
+                "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                "Condiciones de pago (original)":res.paymentTermsRaw,
+                "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                "Descripción":res.items[0].description,
+                "Cantidad":res.items[0].quantity.toString(),
+                "Clave de unidad":res.items[0].unitCode,
+                "Valor unitario":res.items[0].unitAmount.toString(),
+                "Descuento":res.discount.toString(),
+                "Impuesto":res.tax.toString(),
+                "Subtotal":res.subtotal.toString(),
+                "Total":res.total.toString(),
+                "TotalMXN": (res.items[0].totalAmount * res.exchangeRate).toString()
+               }
+              const tabla = {
+                RFCEmisor:res.issuer.rfc,
+                Emisor:res.issuer.name,
+                RegimenFiscal:res.issuer.taxRegime,
+                RFCReceptor:res.receiver.rfc,
+                Receptor:res.receiver.name,
+                RegimenFiscalReceptor:res.issuer.taxRegime,
+                DomicilioFiscalReceptor:'11560',
+                UsoCFDI:res.usage,
+                Estatus:res.status,
+                FechaEmision:res.issuedAt,
+                FullDate:res.issuedAt.substring(0, 10),
+                Subtotal:res.subtotal,
+                Descuento:res.discount,
+                Impuesto:res.tax,
+                Total:res.total,
+                UUID:res.uuid,
+                Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+                Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+                TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                Moneda:res.currency,
+                VersionCFDI:res.version,
+                Fechacompleta:res.issuedAt.substring(0, 10),
+                TotalMXN:(res.items[0].totalAmount * res.exchangeRate)
+              }
+              // if (fecha3!=fecha) {
+              //   break;
+              // }
+               TotalMXN += parseFloat(tabla.TotalMXN);
+          
+               TotalLTS += parseFloat(tabla.Cantidad);
+               jsonCompra[indexCompra] = tabla
+               compra[indexCompra] = dataExcel
+               indexCompra++
+            }
+          }
+
         }
-      };
-      request(options, function (error, response) {
-        if (error) throw new Error(error);
-        // console.log(response.body);
-                    // console.log(diario);
-            let index = 0;
-            const json = {}
-            let TotalMXN = 0.00;
-            let TotalLTS = 0.00;
-        let temp = JSON.parse(response.body);
-        temp = temp['hydra:member']
-        // console.log(temp);
-        for (const key in temp) {
-          const res = temp[key]
+
+
+      // console.log(tabla);
+      }
+
+  });
+  await delay(2300);
+  }
+  console.log("paso");
+   datoCompra = {
+    data:jsonCompra,
+    totalMXN:TotalMXN,
+    totalLTS:TotalLTS
+  }
+  datoCompraMensual = {
+    data:datoCompra.data
+  }
+   tabla = datoCompra.data
+   totalMXNC = datoCompra.totalMXN
+   totalLTSC = datoCompra.totalLTS
+
+   let tablaVenta
+let totalMXNVT = 0.0
+let totalLTSVT = 0.0
+let totalMXNV= 0.0
+let totalLTSV= 0.0
+
+var pagIndexVenta =1
+
+let ApiLengthVenta= 10
+let indexVenta = 0;
+const jsonVenta = {}
+
+///venta
+let fecha4 = fecha;
+while (ApiLengthVenta > 0 && fecha4.indexOf(fecha) != -1) {
+
+var options = {
+  'method': 'GET',
+  'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
+  'headers': {
+    'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+  }
+};
+pagIndexVenta++
+
+let fecha5;
+
+await request(options, function (error, response) {
+  if (error) throw new Error(error);
+  // console.log(response.body);
+              // console.log(diario);
+
+
+  let temp = JSON.parse(response.body);
+  temp = temp['hydra:member']
+  console.log("@@@@@@@@@@@");
+  ApiLengthVenta = temp.length
+  for (const key in temp) {
+    const res = temp[key]
+
+    fecha5 = res.issuedAt.substring(0, 10)
+    fecha4 = fecha5
+    console.log(fecha5);
+
+    if (res.items[0] != undefined ) {
+      if (res.items[0].unitCode == 'LTR') {
+        let entrega = {
+          "TipoComplemento": "Comercializacion",
+          "Nacional": [{
+              "RfcClienteOProveedor": "PTI151101TE5",
+              "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+              "PermisoClienteOProveedor": "H/09857/COM/2015",
+              "CFDIs": [{
+                  "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
+                  "TipoCfdi": "Ingreso",
+                  "PrecioVentaOCompraOContrap": 0.0,
+                  "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
+                  "VolumenDocumentado": {
+                      "ValorNumerico": 0.0,
+                      "UnidadDeMedida": "UM03"
+                  }
+              }]
+          }]
+      }
+        if (res.currency == 'MXN') {
+            entrega.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+            entrega.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+            entrega.Nacional[0].PermisoClienteOProveedor = res.name
+            entrega.Nacional[0].CFDIs[0].Cfdi = res.uuid
+            entrega.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+            entrega.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
+            entrega.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+            entrega.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+           
+          // console.log(tabla);
+            if (res.items[0].productIdentification == '15101514') {
+
+              productoGas87.ReporteDeVolumenMensual.Entregas.Complemento.push(entrega)
+              productoGas87.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoGas87.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+              productoGas87.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+              productoGas87.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+              productoGas87.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoGas87.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[0].totalAmount)//mxn
+              
+              productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+            }
+            if (res.items[0].productIdentification == '15101515') {
+              productoGas91.ReporteDeVolumenMensual.Entregas.Complemento.push(entrega)
+              productoGas91.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoGas91.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+              productoGas91.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+              productoGas91.ReporteDeVolumenMensual.Entregas.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Entregas.TotalDocumentos + 1
+              productoGas91.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoGas91.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[0].totalAmount)//mxn
+
+              productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+            }
+            if (res.items[0].productIdentification == '15101505') {
+              productoDisel.ReporteDeVolumenMensual.Entregas.Complemento.push(entrega)
+              productoDisel.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoDisel.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+              productoDisel.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+              productoDisel.ReporteDeVolumenMensual.Entregas.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Entregas.TotalDocumentos + 1
+              productoDisel.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoDisel.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[0].totalAmount)//mxn
+              productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+            }
+            let metodoPago = ''
+            switch (res.paymentMethod) {
+              case 01:
+                metodoPago = 'Efectivo'
+                break;
+                case 02:
+                  metodoPago = 'Cheque de nómina'
+                  break;
+                  case 03:
+                    metodoPago = 'Transferencia electrónica'
+                    break;
+                    case 04:
+                      metodoPago = 'Tarjeta de crédito'
+                      break;
+                      case 05:
+                        metodoPago = 'Monedero electrónico'
+                        break;
+                        case 06:
+                          metodoPago = 'Dinero digital'
+                          break;
+                          case 08:
+                            metodoPago = 'Vales de despensa'
+                            break;
+                            case 12:
+                              metodoPago = 'Liquidación'
+                              break;
+                              case 13:
+                                metodoPago = 'Pago por subrogación'
+                                break;
+                                case 14:
+                                  metodoPago = 'Pago por consignación'
+                                  break;
+                                  case 15:
+                                    metodoPago = 'Condonación'
+                                    break;
+                                    case 17:
+                                      metodoPago = 'Compensación'
+                                      break;
+                                      case 23:
+                                        metodoPago = 'Novacion'
+                                        break;
+                                        case 24:
+                                          metodoPago = 'Confusión'
+                                          break;
+                                          case 25:
+                                            metodoPago = 'Envío de deuda'
+                                            break;
+                                            case 26:
+                                              metodoPago = 'Prescripción o caducidad'
+                                              break;
+                                              case 27:
+                                                metodoPago = 'A satisfacción del acreedor'
+                                                break;
+                                                case 28:
+                                                  metodoPago = 'Tarjeta de débito'
+                                                  break;
+                                                  case 29:
+                                                    metodoPago = 'Tarjeta de servicio'
+                                                    break;
+                
+            
+              default:
+                metodoPago = 'Por definir'
+                break;
+            }
+            const dataExcel = {
+              "UUID":res.uuid,
+              "RFC Emisor":res.issuer.rfc,
+              "Nombre del Emisor":res.issuer.name,
+              "RFC Receptor":res.receiver.rfc,
+              "Nombre del Receptor":res.receiver.name,
+              "Tipo":res.type == 'I' ? 'Ingreso':'',
+              "Estatus":res.status,
+              "PAC":res.pac,
+              "Moneda":res.currency,
+              "Fecha de Certificación":res.certifiedAt,
+              "Método de Pago":metodoPago,
+              "Fecha de Emisión":res.issuedAt,
+              "Condiciones de pago (original)":res.paymentTermsRaw,
+              "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+              "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+              "Descripción":res.items[0].description,
+              "Cantidad":res.items[0].quantity.toString(),
+              "Clave de unidad":res.items[0].unitCode,
+              "Valor unitario":res.items[0].unitAmount.toString(),
+              "Descuento":res.discount.toString(),
+              "Impuesto":res.tax.toString(),
+              "Subtotal":res.subtotal.toString(),
+              "Total":res.total.toString(),
+              "TotalMXN": (res.items[0].totalAmount).toString()
+             }
             const tabla = {
-          RFCEmisor:res.issuer.rfc,
-          Emisor:res.issuer.name,
-          RegimenFiscal:res.issuer.taxRegime,
-          RFCReceptor:res.receiver.rfc,
-          Receptor:res.receiver.rfc,
-          RegimenFiscalReceptor:res.issuer.taxRegime,
-          DomicilioFiscalReceptor:'11560',
-          UsoCFDI:res.usage,
-          Estatus:res.status,
-          FechaEmision:res.issuedAt,
-          FullDate:res.issuedAt.substring(0, 10),
-          Subtotal:res.subtotal,
-          Impuesto:res.tax,
-          Total:res.total,
-          UUID:res.uuid,
-          Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-          Unidad:res.items[0].unitCode,
-          Cantidad:res.items[0].quantity,
-          Descripcion:res.items[0].description,
-          Valorunitario:res.items[0].unitAmount,
-          ImporteConcepto:res.items[0].totalAmount,
-          DescuentoConcepto:res.items[0].discountAmount,
-          NoIdentificacion:res.items[0].identificationNumber,
-          ClaveSAT:res.items[0].productIdentification,
-          ImporteImpuesto:res.items[0].taxes[0].amount,
-          Impuesto:res.items[0].taxes[0].tax,
-          TasaOCuota:res.items[0].taxes[0].factor.amount,
-          Moneda:res.currency,
-          VersionCFDI:res.version,
-          Fechacompleta:res.issuedAt.substring(0, 10),
-          TotalMXN:res.total
+              RFCEmisor:res.issuer.rfc,
+              Emisor:res.issuer.name,
+              RegimenFiscal:res.issuer.taxRegime,
+              RFCReceptor:res.receiver.rfc,
+              Receptor:res.receiver.name,
+              RegimenFiscalReceptor:res.issuer.taxRegime,
+              DomicilioFiscalReceptor:'11560',
+              UsoCFDI:res.usage,
+              Estatus:res.status,
+              FechaEmision:res.issuedAt,
+              FullDate:res.issuedAt.substring(0, 10),
+              Subtotal:res.subtotal,
+              Descuento:res.discount,
+              Impuesto:res.tax,
+              Total:res.total,
+              UUID:res.uuid,
+              Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+              Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+              Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+              Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+              Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+              ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+              DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+              NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+              ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              Moneda:res.currency,
+              VersionCFDI:res.version,
+              Fechacompleta:res.issuedAt.substring(0, 10),
+              TotalMXN:(res.items[0].totalAmount)
+            }
+            // if (fecha5!=fecha) {
+            //   break;
+            // }
+             venta[indexVenta] = dataExcel
+             totalMXNVT += parseFloat(tabla.TotalMXN);
+             totalLTSVT += parseFloat(tabla.Cantidad);
+             jsonVenta[indexVenta] = tabla
+              indexVenta++
+
+        } else {
+            // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
+            entrega.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+            entrega.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+            entrega.Nacional[0].PermisoClienteOProveedor = res.name
+            entrega.Nacional[0].CFDIs[0].Cfdi = res.uuid
+            entrega.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+            entrega.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.total * res.exchangeRate)
+            entrega.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+            entrega.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+           
+          // console.log(tabla);
+            if (res.items[0].productIdentification == '15101514') {
+
+              productoGas87.ReporteDeVolumenMensual.Entregas.Complemento.push(entrega)
+              productoGas87.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoGas87.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+              productoGas87.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+              productoGas87.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+              productoGas87.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoGas87.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.total * res.exchangeRate)//mxn
+              
+              productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+            }
+            if (res.items[0].productIdentification == '15101515') {
+              productoGas91.ReporteDeVolumenMensual.Entregas.Complemento.push(entrega)
+              productoGas91.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoGas91.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+              productoGas91.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+              productoGas91.ReporteDeVolumenMensual.Entregas.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Entregas.TotalDocumentos + 1
+              productoGas91.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoGas91.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.total * res.exchangeRate)//mxn
+
+              productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+            }
+            if (res.items[0].productIdentification == '15101505') {
+              productoDisel.ReporteDeVolumenMensual.Entregas.Complemento.push(entrega)
+              productoDisel.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoDisel.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+              productoDisel.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+              productoDisel.ReporteDeVolumenMensual.Entregas.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Entregas.TotalDocumentos + 1
+              productoDisel.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoDisel.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.total * res.exchangeRate)//mxn
+              productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+
+            }
+            let metodoPago = ''
+            switch (res.paymentMethod) {
+              case 01:
+                metodoPago = 'Efectivo'
+                break;
+                case 02:
+                  metodoPago = 'Cheque de nómina'
+                  break;
+                  case 03:
+                    metodoPago = 'Transferencia electrónica'
+                    break;
+                    case 04:
+                      metodoPago = 'Tarjeta de crédito'
+                      break;
+                      case 05:
+                        metodoPago = 'Monedero electrónico'
+                        break;
+                        case 06:
+                          metodoPago = 'Dinero digital'
+                          break;
+                          case 08:
+                            metodoPago = 'Vales de despensa'
+                            break;
+                            case 12:
+                              metodoPago = 'Liquidación'
+                              break;
+                              case 13:
+                                metodoPago = 'Pago por subrogación'
+                                break;
+                                case 14:
+                                  metodoPago = 'Pago por consignación'
+                                  break;
+                                  case 15:
+                                    metodoPago = 'Condonación'
+                                    break;
+                                    case 17:
+                                      metodoPago = 'Compensación'
+                                      break;
+                                      case 23:
+                                        metodoPago = 'Novacion'
+                                        break;
+                                        case 24:
+                                          metodoPago = 'Confusión'
+                                          break;
+                                          case 25:
+                                            metodoPago = 'Envío de deuda'
+                                            break;
+                                            case 26:
+                                              metodoPago = 'Prescripción o caducidad'
+                                              break;
+                                              case 27:
+                                                metodoPago = 'A satisfacción del acreedor'
+                                                break;
+                                                case 28:
+                                                  metodoPago = 'Tarjeta de débito'
+                                                  break;
+                                                  case 29:
+                                                    metodoPago = 'Tarjeta de servicio'
+                                                    break;
+                
+            
+              default:
+                metodoPago = 'Por definir'
+                break;
+            }
+            const dataExcel = {
+              "UUID":res.uuid,
+              "RFC Emisor":res.issuer.rfc,
+              "Nombre del Emisor":res.issuer.name,
+              "RFC Receptor":res.receiver.rfc,
+              "Nombre del Receptor":res.receiver.name,
+              "Tipo":res.type == 'I' ? 'Ingreso':'',
+              "Estatus":res.status,
+              "PAC":res.pac,
+              "Moneda":res.currency,
+              "Fecha de Certificación":res.certifiedAt,
+              "Método de Pago":metodoPago,
+              "Fecha de Emisión":res.issuedAt,
+              "Condiciones de pago (original)":res.paymentTermsRaw,
+              "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+              "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+              "Descripción":res.items[0].description,
+              "Cantidad":res.items[0].quantity.toString(),
+              "Clave de unidad":res.items[0].unitCode,
+              "Valor unitario":res.items[0].unitAmount.toString(),
+              "Descuento":res.discount.toString(),
+              "Impuesto":res.tax.toString(),
+              "Subtotal":res.subtotal.toString(),
+              "Total":res.total.toString(),
+              "TotalMXN": (res.total * res.exchangeRate).toString()
+             }
+            const tabla = {
+              RFCEmisor:res.issuer.rfc,
+              Emisor:res.issuer.name,
+              RegimenFiscal:res.issuer.taxRegime,
+              RFCReceptor:res.receiver.rfc,
+              Receptor:res.receiver.name,
+              RegimenFiscalReceptor:res.issuer.taxRegime,
+              DomicilioFiscalReceptor:'11560',
+              UsoCFDI:res.usage,
+              Estatus:res.status,
+              FechaEmision:res.issuedAt,
+              FullDate:res.issuedAt.substring(0, 10),
+              Subtotal:res.subtotal,
+              Descuento:res.discount,
+              Impuesto:res.tax,
+              Total:res.total,
+              UUID:res.uuid,
+              Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+              Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+              Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+              Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+              Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+              ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+              DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+              NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+              ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
+              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
+              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              Moneda:res.currency,
+              VersionCFDI:res.version,
+              Fechacompleta:res.issuedAt.substring(0, 10),
+              TotalMXN:(res.total * res.exchangeRate)
+            }
+            // if (fecha5!=fecha) {
+            //   break;
+            // }
+             venta[indexVenta] = dataExcel
+             totalMXNVT += parseFloat(tabla.TotalMXN);
+             totalLTSVT += parseFloat(tabla.Cantidad);
+             jsonVenta[indexVenta] = tabla
+              indexVenta++
         }
-        TotalMXN += parseFloat(tabla.TotalMXN);
+      }
 
-        TotalLTS += parseFloat(tabla.Cantidad);
-        json[index] = tabla
-        index++
-        // console.log(tabla);
-        }
-        const datoVenta = {
-          data:json,
-          totalMXN:TotalMXN,
-          totalLTS:TotalLTS
-        }
-      // console.log(data);
-        const tablaVenta = datoVenta.data
-        const totalMXNCV = datoVenta.totalMXN
-        const totalLTSCV = datoVenta.totalLTS
-        const diferenciaMXN = (totalMXNC - totalMXNCV).toFixed(2)
-        const diferenciaLTS = (totalLTSC - totalLTSCV).toFixed(2)
-      res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNCV,totalLTSCV,diferenciaMXN,diferenciaLTS});
-      });
-
-      // console.log(data);
-
-    });
+    }
 
 
-
-
-
-
-
-  // res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNCV,totalLTSCV,diferenciaMXN,diferenciaLTS});
+  // console.log(tabla);
+  }
 
 });
+await delay(2300);
+
+}
+const datoVenta = {
+data:jsonVenta,
+totalMXN:totalMXNVT,
+totalLTS:totalLTSVT
+}
+datoVentaMensual = {
+  data:datoVenta.data
+}
+// console.log(data);
+tablaVenta = datoVenta.data
+totalMXNV = datoVenta.totalMXN
+totalLTSV = datoVenta.totalLTS
+
+const diferenciaMXN = (totalMXNC - totalMXNV).toFixed(2)
+const diferenciaLTS = (totalLTSC - totalLTSV).toFixed(2)
+await delay(1000);
+
+
+let estructura =require(path.join(__dirname, '../public/json/glencore/Mensual/MensualEstructura.json'))
+const event = new Date();
+estructura.BitacoraMensual[0].NumeroRegistro = indexCompra + indexCompra
+estructura.BitacoraMensual[0].FechaYHoraEvento = event.toISOString().slice(0,-1)
+estructura.FechaYHoraReporteMes = event.toISOString().slice(0,-1)
+
+estructura.Producto.push(productoGas87)
+estructura.Producto.push(productoGas91)
+estructura.Producto.push(productoDisel)
+compra.forEach( record => {
+let columnIndex= 1;
+Object.keys(record ).forEach(columnName =>{
+  if (isNumber(record [columnName])) {
+    ws.cell(rowIndex,columnIndex++)
+    .number(parseFloat(record [columnName]))
+  } else {
+    
+    ws.cell(rowIndex,columnIndex++)
+        .string(record [columnName])
+  }
+});
+rowIndex++;
+}); 
+await delay(1000);
+console.log("Venta");
+venta.forEach( record => {
+    let columnIndex2= 1;
+    Object.keys(record ).forEach(columnName =>{
+      if (isNumber(record [columnName])) {
+        ws2.cell(rowIndex2,columnIndex2++)
+        .number(parseFloat(record [columnName]))
+      } else {
+        
+        ws2.cell(rowIndex2,columnIndex2++)
+            .string(record [columnName])
+      }
+    });
+    rowIndex2++;
+  }); 
+wb.write(path.join(__dirname, `../public/Excel/Mes_${fecha}.xlsx`));
+let fileNameKey = `MesTemp`
+
+// const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+//  fs.promises.mkdir(dirpath, { recursive: true })
+const fileJsonName = path.join(__dirname, `../public/json/glencore/DiarioTemp/${fileNameKey}.json`);
+fs.writeFile(fileJsonName, JSON.stringify(estructura,null, 2), function writeJSON(err) {
+if (err) return console.log(err);
+
+});
+await delay(2000);
+res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS});
+
+
+});
+
 router.post('/calendar/simple',async (req,res) =>{
      const tareas = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
      res.send(tareas)
 
 });
-router.post('/json/modalCompra',async (req,res) =>{
+router.post('/Diario/json/modalCompra',async (req,res) =>{
   const id = req.body.id
-  const tabla = datoCompra.data[`${id}`]
+  const tabla = datoCompraDiario.data[`${id}`]
   res.send(tabla)
 });
-router.post('/json/modalVenta',async (req,res) =>{
+router.post('/Diario/json/modalVenta',async (req,res) =>{
   const id = req.body.id
-  const tabla = datoVenta.data[`${id}`]
+  const tabla = datoVentaDiario.data[`${id}`]
   res.send(tabla)
 });
-router.post('/json/modalCompraMensual',async (req,res) =>{
+router.post('/Mensual/json/modalCompraMensual',async (req,res) =>{
   const id = req.body.id
   const tabla = datoCompraMensual.data[`${id}`]
   res.send(tabla)
 });
-router.post('/json/modalVentaMensual',async (req,res) =>{
+router.post('/Mensual/json/modalVentaMensual',async (req,res) =>{
   const id = req.body.id
   const tabla = datoVentaMensual.data[`${id}`]
   res.send(tabla)
@@ -877,9 +3092,18 @@ router.post('/add/equipo',  async (req, res) => {
 })
 const delay = ms => new Promise(res => setTimeout(res, ms));
 router.post('/Diario/Excel/Diario/:fecha',  async (req, res) => {
-  const fecha = req.params.fecha
+  let fecha = req.params.fecha
+  const fechasplit = fecha.split("-")
+  if (fechasplit[2].length == 1) {
+    fecha = `${fechasplit[0]}-${fechasplit[1]}-0${fechasplit[2]}`
+  }
+  if (fechasplit[1].length == 1) {
+
+    fecha = `${fechasplit[0]}-0${fechasplit[1]}-${fechasplit[2]}`
+  }
   console.log(fecha);
   const tabla = await ExcelApiCreate(fecha)
+  await delay(5000);
   // if (fs.existsSync(path.join(__dirname, `../public/excel/Diario_${fecha}.xlsx`))) {
   //   console.log('file exists');
   // } else {
@@ -894,40 +3118,31 @@ router.post('/Diario/Excel/Diario/:fecha',  async (req, res) => {
 })
 
 router.get('/Diario/Download/ExcelDiario/:fecha', async(req, res) => {
-    const fecha = req.params.fecha
+    let fecha = req.params.fecha
+    const fechasplit = fecha.split("-")
+    if (fechasplit[2].length == 1) {
+      fecha = `${fechasplit[0]}-${fechasplit[1]}-0${fechasplit[2]}`
+    }
+    if (fechasplit[1].length == 1) {
 
+      fecha = `${fechasplit[0]}-0${fechasplit[1]}-${fechasplit[2]}`
+    }
     const pathExcel = path.join(__dirname, `../public/excel/Diario_${fecha}.xlsx`);
     res.download(pathExcel);
     // res.send('ok')
   })
+
+  
+  router.get('/Mensual/Download/ExcelMensual/:fecha', async(req, res) => {
+      let fecha = req.params.fecha
+
+      const pathExcel = path.join(__dirname, `../public/excel/Mes_${fecha}.xlsx`);
+      res.download(pathExcel);
+      // res.send('ok')
+    })
+
 router.get('/Diario/Download/ZipDiario/:fecha', async(req, res) => {
-//   const pathToDirCompraDiario = path.join(__dirname, "../public/json/jsonGenerados/Diario/Compra")
-//   const pathToDirVentaDiario = path.join(__dirname, "../public/json/jsonGenerados/Diario/Venta")
-
-//   removeDirDiario(pathToDirCompraDiario)
-//   removeDirDiario(pathToDirVentaDiario)
-
-//   getGasoline87()
-//   getGasoline91()
-//   getDisel()
-//   let gas87 =require(path.join(__dirname, '../public/json/glencore/separarGas87.json'))
-//   let gas91 =require(path.join(__dirname, '../public/json/glencore/separarGas91.json'))
-//   let disel =require(path.join(__dirname, '../public/json/glencore/separarDisel.json'))
-
-//   let estructura =require(path.join(__dirname, '../public/json/glencore/glencoreEstructura.json'))
-//   gas87.Tanque.push(tanque2)
-//   gas87.Tanque.push(tanque5)
-//   gas87.Tanque.push(tanque8)
-
-//   gas91.Tanque.push(tanque1)
-//   gas91.Tanque.push(tanque7)
-
-//   disel.Tanque.push(tanque3)
-//   disel.Tanque.push(tanque6)
-
-//   estructura.Producto.push(gas87)
-//   estructura.Producto.push(gas91)
-//   estructura.Producto.push(disel)
+  const fecha = req.params.fecha
   const letters = ['a','b','c','d','e','f']
 const mayus = ['A','B','C','D','E','F']
 
@@ -954,10 +3169,10 @@ for (let index = 0; index < 32; index++) {
   }
   indexletters++;
 }
-let diario =require(path.join(__dirname, '../public/json/glencore/glencore/D_7d4B0bD5-EbFd-1Cce-9d5f-13cB3ee0e274_GEM161104H39_XAX010101000_2022-05-02_CMN-0001_CMN_JSON.json'))
+let diario =require(path.join(__dirname, '../public/json/glencore/DiarioTemp/DiarioTemp.json'))
 const pathJson = path.join(__dirname, "../public/json/glencoreTest/")
 removeDirDiario(pathJson)
-  let fileNameKey = `D_${keyEnvio}_GEM161104H39_XAX010101000_2022-05-02_CMN-0001_CMN_JSON`
+  let fileNameKey = `D_${keyEnvio}_GEM161104H39_XAX010101000_${fecha}_CMN-0001_CMN_JSON`
   // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
   //  fs.promises.mkdir(dirpath, { recursive: true })
   const fileJsonName = path.join(__dirname, `../public/json/glencoreTest/${fileNameKey}.json`);
@@ -974,6 +3189,7 @@ removeDirDiario(pathJson)
   // res.send('ok')
 })
 router.get('/Mensual/Download/ZipMensual/:fecha', async(req, res) => {
+  const fecha = req.params.fecha
   const letters = ['a','b','c','d','e','f']
   const mayus = ['A','B','C','D','E','F']
   
@@ -1000,11 +3216,14 @@ router.get('/Mensual/Download/ZipMensual/:fecha', async(req, res) => {
     }
     indexletters++;
   }
-  let Mensual =require(path.join(__dirname, '../public/json/glencore/glencore/M_1AcEcafE-8B34-eFEa-d27D-C0d64e23567A_GEM161104H39_XAX010101000_2022-08-31_CMN-0001_CMN_JSON.json'))
+  let Mensual =require(path.join(__dirname, '../public/json/glencore/DiarioTemp/MesTemp.json'))
 
   const pathJson = path.join(__dirname, "../public/json/glencore/glencoreMensualJson/")
   removeDirDiario(pathJson)
-    let fileNameKey = `M_${keyEnvio}_GEM161104H39_XAX010101000_2022-08-31_CMN-0001_CMN_JSON`
+  let fechaSplit = fecha.split("-")
+  let lastDayMonth = new Date(fechaSplit[0],fechaSplit[1],0);
+  lastDayMonth = lastDayMonth.toString().split(" ")
+    let fileNameKey = `M_${keyEnvio}_GEM161104H39_XAX010101000_${fecha}-${lastDayMonth[2]}_CMN-0001_CMN_JSON`
     // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
     //  fs.promises.mkdir(dirpath, { recursive: true })
     const fileJsonName = path.join(__dirname, `../public/json/glencore/glencoreMensualJson/${fileNameKey}.json`);
@@ -1556,7 +3775,7 @@ router.post('/finish/task',async (req,res) =>{
           Emisor:res.issuer.name,
           RegimenFiscal:res.issuer.taxRegime,
           RFCReceptor:res.receiver.rfc,
-          Receptor:res.receiver.rfc,
+          Receptor:res.receiver.name,
           RegimenFiscalReceptor:res.issuer.taxRegime,
           DomicilioFiscalReceptor:'11560',
           UsoCFDI:res.usage,
@@ -1564,6 +3783,7 @@ router.post('/finish/task',async (req,res) =>{
           FechaEmision:res.issuedAt,
           FullDate:res.issuedAt.substring(0, 10),
           Subtotal:res.subtotal,
+          Descuento:res.discount,
           Impuesto:res.tax,
           Total:res.total,
           UUID:res.uuid,
@@ -1637,7 +3857,7 @@ router.post('/finish/task',async (req,res) =>{
           Emisor:res.issuer.name,
           RegimenFiscal:res.issuer.taxRegime,
           RFCReceptor:res.receiver.rfc,
-          Receptor:res.receiver.rfc,
+          Receptor:res.receiver.name,
           RegimenFiscalReceptor:res.issuer.taxRegime,
           DomicilioFiscalReceptor:'11560',
           UsoCFDI:res.usage,
@@ -1645,6 +3865,7 @@ router.post('/finish/task',async (req,res) =>{
           FechaEmision:res.issuedAt,
           FullDate:res.issuedAt.substring(0, 10),
           Subtotal:res.subtotal,
+          Descuento:res.discount,
           Impuesto:res.tax,
           Total:res.total,
           UUID:res.uuid,
@@ -1813,7 +4034,15 @@ router.post('/finish/task',async (req,res) =>{
     let tanque6 =require(path.join(__dirname, '../public/json/glencore/tanque6.json'))
     let tanque7 =require(path.join(__dirname, '../public/json/glencore/tanque7.json'))
     let tanque8 =require(path.join(__dirname, '../public/json/glencore/tanque8.json'))
-    testJsonApi()
+
+    let productoGas87 = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualGas87.json'))
+    
+    let productoGas91 = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualGas91.json'))
+    
+    let productoDisel = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualDisel.json'))
+    // testJsonApi()
+    // console.log(productoDisel);
+    // console.log(productoDisel.ReporteDeVolumenMensual.Recepciones);
     async function testJsonApi() {
       await apiDiarioJsonZip()
     
@@ -2388,7 +4617,7 @@ router.post('/finish/task',async (req,res) =>{
           // const rep = RECEPCION
           
          index++;
-          if (res.items[0].description.indexOf('87') != -1) {
+          if (res.items[0].productIdentification == '15101514') {
             let tanques = [2,5,8]
             let indexT = tanques.length * Math.random() | 0
  
@@ -2424,7 +4653,7 @@ router.post('/finish/task',async (req,res) =>{
                 break;
             }
           }
-          if (res.items[0].description.indexOf('91') != -1) {
+          if (res.items[0].productIdentification == '15101515') {
             let tanques = [6,3]
             let indexT = tanques.length * Math.random() | 0
             switch (tanques[indexT]) {
@@ -2453,7 +4682,7 @@ router.post('/finish/task',async (req,res) =>{
                 break;
             }
           }
-          if (res.items[0].description.indexOf('DIESEL') != -1) {
+          if (res.items[0].productIdentification == '15101505') {
             let tanques = [1,7]
             let indexT = tanques.length * Math.random() | 0
             switch (tanques[indexT]) {
@@ -2557,7 +4786,7 @@ router.post('/finish/task',async (req,res) =>{
             // entrega.FechaYHoraFinalRecepcion = res.issuedAt
           // console.log(tabla);
           index++;
-            if (res.items[0].description.indexOf('87') != -1) {
+            if (res.items[0].productIdentification == '15101514') {
               let tanques = [2,5,8]
               let indexT = tanques.length * Math.random() | 0
               switch (tanques[indexT]) {
@@ -2592,7 +4821,7 @@ router.post('/finish/task',async (req,res) =>{
                   break;
               }
             }
-            if (res.items[0].description.indexOf('91') != -1) {
+            if (res.items[0].productIdentification == '15101515') {
               let tanques = [6,3]
               let indexT = tanques.length * Math.random() | 0
               switch (tanques[indexT]) {
@@ -2620,7 +4849,7 @@ router.post('/finish/task',async (req,res) =>{
                   break;
               }
             }
-            if (res.items[0].description.indexOf('DIESEL') != -1) {
+            if (res.items[0].productIdentification == '15101505') {
               let tanques = [1,7]
               let indexT = tanques.length * Math.random() | 0
               switch (tanques[indexT]) {
@@ -2708,7 +4937,7 @@ router.post('/finish/task',async (req,res) =>{
     
     });
     }
-    function name(params) {
+    function getJsonApi(params) {
       var options = {
         'method': 'GET',
         'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}T23:59:59.000Z&issuedAt[after]=${fecha}T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE`,
@@ -2716,181 +4945,181 @@ router.post('/finish/task',async (req,res) =>{
           'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
         }
       };
-      //  request(options, function (error, response) {
-      //   if (error) throw new Error(error);
-      //   let entrega =require(path.join(__dirname, '../public/json/glencore/entregaTanque.json'))
+       request(options, function (error, response) {
+        if (error) throw new Error(error);
+        let entrega =require(path.join(__dirname, '../public/json/glencore/entregaTanque.json'))
 
-      //   let temp = JSON.parse(response.body);
-      //   temp = temp['hydra:member']
-      //   // console.log(temp);
-      //   for (const key in temp) {
-      //     const res = temp[key]
-      //     entrega.NumeroDeRegistro = res.NumeroDeRegistro
-      //     entrega.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
-      //     entrega.Complemento.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
-      //     entrega.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
-      //     entrega.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
-      //     entrega.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
-      //     entrega.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = res.items[0].totalAmount
-      //     entrega.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
-      //     entrega.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
-      //     // entrega.Tanque = res.Tanque
-      //     // entrega.VolumenInicialTanque.ValorNumerico = res.VolumenInicialTanque
-      //     // entrega.VolumenFinalTanque = res.VolumenFinalTanque
-      //     entrega.VolumenInicialTanque.ValorNumerico = 0.0
-      //     entrega.VolumenFinalTanque = 0.0
-      //     entrega.VolumenEntregado.ValorNumerico = res.items[0].quantity
-      //     entrega.Temperatura = 20
-      //     entrega.PresionAbsoluta = 101.325
-      //     entrega.FechaYHoraInicioRecepcion = res.issuedAt
-      //     entrega.FechaYHoraFinalRecepcion = res.issuedAt
-      //   // console.log(tabla);
-      //     if (res.items[0].description.indexOf('87') != -1) {
-      //       let tanques = [2,5,8]
-      //       let indexT = tanques.length * Math.random() | 0
-      //       switch (tanques[indexT]) {
-      //         case 2:
-      //           tanque2.Entregas.Entrega.push(entrega)
-      //           tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
-      //           tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //           tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
-      //           tanque2.Entregas.SumaCompras = tanque2.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //           break;
-      //           case 5:
-      //             tanque5.Entregas.Entrega.push(entrega)
-      //             tanque5.Entregas.TotalEntregas= tanque5.Entregas.TotalEntregas + 1
-      //             tanque5.Entregas.SumaVolumenEntregado.ValorNumerico = tanque5.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //             tanque5.Entregas.TotalDocumentos = tanque5.Entregas.TotalDocumentos + 1
-      //             tanque5.Entregas.SumaCompras = tanque5.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //             break;
-      //             case 8:
-      //               tanque8.Entregas.Entrega.push(entrega)
-      //               tanque8.Entregas.TotalEntregas= tanque8.Entregas.TotalEntregas + 1
-      //               tanque8.Entregas.SumaVolumenEntregado.ValorNumerico = tanque8.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //               tanque8.Entregas.TotalDocumentos = tanque8.Entregas.TotalDocumentos + 1
-      //               tanque8.Entregas.SumaCompras = tanque8.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //               break;
+        let temp = JSON.parse(response.body);
+        temp = temp['hydra:member']
+        // console.log(temp);
+        for (const key in temp) {
+          const res = temp[key]
+          entrega.NumeroDeRegistro = res.NumeroDeRegistro
+          entrega.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+          entrega.Complemento.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+          entrega.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
+          entrega.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
+          entrega.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+          entrega.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = res.items[0].totalAmount
+          entrega.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+          entrega.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+          // entrega.Tanque = res.Tanque
+          // entrega.VolumenInicialTanque.ValorNumerico = res.VolumenInicialTanque
+          // entrega.VolumenFinalTanque = res.VolumenFinalTanque
+          entrega.VolumenInicialTanque.ValorNumerico = 0.0
+          entrega.VolumenFinalTanque = 0.0
+          entrega.VolumenEntregado.ValorNumerico = res.items[0].quantity
+          entrega.Temperatura = 20
+          entrega.PresionAbsoluta = 101.325
+          entrega.FechaYHoraInicioRecepcion = res.issuedAt
+          entrega.FechaYHoraFinalRecepcion = res.issuedAt
+        // console.log(tabla);
+          if (res.items[0].productIdentification == '15101514') {
+            let tanques = [2,5,8]
+            let indexT = tanques.length * Math.random() | 0
+            switch (tanques[indexT]) {
+              case 2:
+                tanque2.Entregas.Entrega.push(entrega)
+                tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
+                tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
+                tanque2.Entregas.SumaCompras = tanque2.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                break;
+                case 5:
+                  tanque5.Entregas.Entrega.push(entrega)
+                  tanque5.Entregas.TotalEntregas= tanque5.Entregas.TotalEntregas + 1
+                  tanque5.Entregas.SumaVolumenEntregado.ValorNumerico = tanque5.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque5.Entregas.TotalDocumentos = tanque5.Entregas.TotalDocumentos + 1
+                  tanque5.Entregas.SumaCompras = tanque5.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                  break;
+                  case 8:
+                    tanque8.Entregas.Entrega.push(entrega)
+                    tanque8.Entregas.TotalEntregas= tanque8.Entregas.TotalEntregas + 1
+                    tanque8.Entregas.SumaVolumenEntregado.ValorNumerico = tanque8.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                    tanque8.Entregas.TotalDocumentos = tanque8.Entregas.TotalDocumentos + 1
+                    tanque8.Entregas.SumaCompras = tanque8.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                    break;
             
-      //         default:
-      //           tanque2.Entregas.Entrega.push(entrega)
-      //           tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
-      //           tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //           tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
-      //           tanque2.Entregas.SumaCompras = tanque2.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //           break;
-      //       }
-      //     }
-      //     if (res.items[0].description.indexOf('91') != -1) {
-      //       let tanques = [6,3]
-      //       let indexT = tanques.length * Math.random() | 0
-      //       switch (tanques[indexT]) {
-      //         case 6:
-      //           tanque6.Entregas.Entrega.push(entrega)
-      //           tanque6.Entregas.TotalEntregas= tanque6.Entregas.TotalEntregas + 1
-      //           tanque6.Entregas.SumaVolumenEntregado.ValorNumerico = tanque6.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //           tanque6.Entregas.TotalDocumentos = tanque6.Entregas.TotalDocumentos + 1
-      //           tanque6.Entregas.SumaCompras = tanque6.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //           break;
-      //           case 3:
-      //             tanque3.Entregas.Entrega.push(entrega)
-      //             tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
-      //             tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //             tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
-      //             tanque3.Entregas.SumaCompras = tanque3.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //             break;
+              default:
+                tanque2.Entregas.Entrega.push(entrega)
+                tanque2.Entregas.TotalEntregas= tanque2.Entregas.TotalEntregas + 1
+                tanque2.Entregas.SumaVolumenEntregado.ValorNumerico = tanque2.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                tanque2.Entregas.TotalDocumentos = tanque2.Entregas.TotalDocumentos + 1
+                tanque2.Entregas.SumaCompras = tanque2.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                break;
+            }
+          }
+          if (res.items[0].productIdentification == '15101515') {
+            let tanques = [6,3]
+            let indexT = tanques.length * Math.random() | 0
+            switch (tanques[indexT]) {
+              case 6:
+                tanque6.Entregas.Entrega.push(entrega)
+                tanque6.Entregas.TotalEntregas= tanque6.Entregas.TotalEntregas + 1
+                tanque6.Entregas.SumaVolumenEntregado.ValorNumerico = tanque6.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                tanque6.Entregas.TotalDocumentos = tanque6.Entregas.TotalDocumentos + 1
+                tanque6.Entregas.SumaCompras = tanque6.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                break;
+                case 3:
+                  tanque3.Entregas.Entrega.push(entrega)
+                  tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
+                  tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
+                  tanque3.Entregas.SumaCompras = tanque3.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                  break;
             
-      //         default:
-      //           tanque3.Entregas.Entrega.push(entrega)
-      //           tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
-      //           tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //           tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
-      //           tanque3.Entregas.SumaCompras = tanque3.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //           break;
-      //       }
-      //     }
-      //     if (res.items[0].description.indexOf('DIESEL') != -1) {
-      //       let tanques = [1,7]
-      //       let indexT = tanques.length * Math.random() | 0
-      //       switch (tanques[indexT]) {
-      //         case 1:
-      //           tanque1.Entregas.Entrega.push(entrega)
-      //           tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
-      //           tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //           tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
-      //           tanque1.Entregas.SumaCompras = tanque1.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //           break;
-      //           case 7:
-      //             tanque7.Entregas.Entrega.push(entrega)
-      //             tanque7.Entregas.TotalEntregas= tanque7.Entregas.TotalEntregas + 1
-      //             tanque7.Entregas.SumaVolumenEntregado.ValorNumerico = tanque7.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //             tanque7.Entregas.TotalDocumentos = tanque7.Entregas.TotalDocumentos + 1
-      //             tanque7.Entregas.SumaCompras = tanque7.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //             break;
+              default:
+                tanque3.Entregas.Entrega.push(entrega)
+                tanque3.Entregas.TotalEntregas= tanque3.Entregas.TotalEntregas + 1
+                tanque3.Entregas.SumaVolumenEntregado.ValorNumerico = tanque3.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                tanque3.Entregas.TotalDocumentos = tanque3.Entregas.TotalDocumentos + 1
+                tanque3.Entregas.SumaCompras = tanque3.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                break;
+            }
+          }
+          if (res.items[0].productIdentification == '15101505') {
+            let tanques = [1,7]
+            let indexT = tanques.length * Math.random() | 0
+            switch (tanques[indexT]) {
+              case 1:
+                tanque1.Entregas.Entrega.push(entrega)
+                tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
+                tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
+                tanque1.Entregas.SumaCompras = tanque1.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                break;
+                case 7:
+                  tanque7.Entregas.Entrega.push(entrega)
+                  tanque7.Entregas.TotalEntregas= tanque7.Entregas.TotalEntregas + 1
+                  tanque7.Entregas.SumaVolumenEntregado.ValorNumerico = tanque7.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                  tanque7.Entregas.TotalDocumentos = tanque7.Entregas.TotalDocumentos + 1
+                  tanque7.Entregas.SumaCompras = tanque7.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                  break;
             
-      //         default:
-      //           tanque1.Entregas.Entrega.push(entrega)
-      //           tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
-      //           tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
-      //           tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
-      //           tanque1.Entregas.SumaCompras = tanque1.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
-      //           break;
-      //       }
-      //     }
-      //   }
-      //   let gas87 =require(path.join(__dirname, '../public/json/glencore/separarGas87.json'))
-      //   let gas91 =require(path.join(__dirname, '../public/json/glencore/separarGas91.json'))
-      //   let disel =require(path.join(__dirname, '../public/json/glencore/separarDisel.json'))
+              default:
+                tanque1.Entregas.Entrega.push(entrega)
+                tanque1.Entregas.TotalEntregas= tanque1.Entregas.TotalEntregas + 1
+                tanque1.Entregas.SumaVolumenEntregado.ValorNumerico = tanque1.Entregas.SumaVolumenEntregado.ValorNumerico + res.items[0].quantity//ltr
+                tanque1.Entregas.TotalDocumentos = tanque1.Entregas.TotalDocumentos + 1
+                tanque1.Entregas.SumaCompras = tanque1.Entregas.TotalDocumentos +  res.items[0].totalAmount //mxn
+                break;
+            }
+          }
+        }
+        let gas87 =require(path.join(__dirname, '../public/json/glencore/separarGas87.json'))
+        let gas91 =require(path.join(__dirname, '../public/json/glencore/separarGas91.json'))
+        let disel =require(path.join(__dirname, '../public/json/glencore/separarDisel.json'))
       
-      //   let estructura =require(path.join(__dirname, '../public/json/glencore/glencoreEstructura.json'))
-      //   gas87.Tanque.push(tanque2)
-      //   gas87.Tanque.push(tanque5)
-      //   gas87.Tanque.push(tanque8)
+        let estructura =require(path.join(__dirname, '../public/json/glencore/glencoreEstructura.json'))
+        gas87.Tanque.push(tanque2)
+        gas87.Tanque.push(tanque5)
+        gas87.Tanque.push(tanque8)
       
-      //   gas91.Tanque.push(tanque1)
-      //   gas91.Tanque.push(tanque7)
+        gas91.Tanque.push(tanque1)
+        gas91.Tanque.push(tanque7)
       
-      //   disel.Tanque.push(tanque3)
-      //   disel.Tanque.push(tanque6)
+        disel.Tanque.push(tanque3)
+        disel.Tanque.push(tanque6)
       
-      //   estructura.Producto.push(gas87)
-      //   estructura.Producto.push(gas91)
-      //   estructura.Producto.push(disel)
-      //   const letters = ['a','b','c','d','e','f']
-      // const mayus = ['A','B','C','D','E','F']
+        estructura.Producto.push(gas87)
+        estructura.Producto.push(gas91)
+        estructura.Producto.push(disel)
+        const letters = ['a','b','c','d','e','f']
+      const mayus = ['A','B','C','D','E','F']
       
-      // let keyEnvio = ''
-      // indexletters = 1
-      // for (let index = 0; index < 32; index++) {
-      //   // console.log(keyEnvio);
-      //   if ((index== 8) ||(index== 12) ||(index== 16)||(index== 20) ) {
-      //       keyEnvio+="-";
-      //   }
-      //   switch (Math.floor(Math.random() * 3)) {
-      //     case 0:
-      //       keyEnvio+=Math.floor(Math.random() * 10);
-      //       break;
-      //       case 1:
-      //         keyEnvio+=letters[Math.floor(Math.random() * 6)]
-      //         break;
-      //         case 2:
-      //           keyEnvio+=mayus[Math.floor(Math.random() * 6)]
-      //           break;
+      let keyEnvio = ''
+      indexletters = 1
+      for (let index = 0; index < 32; index++) {
+        // console.log(keyEnvio);
+        if ((index== 8) ||(index== 12) ||(index== 16)||(index== 20) ) {
+            keyEnvio+="-";
+        }
+        switch (Math.floor(Math.random() * 3)) {
+          case 0:
+            keyEnvio+=Math.floor(Math.random() * 10);
+            break;
+            case 1:
+              keyEnvio+=letters[Math.floor(Math.random() * 6)]
+              break;
+              case 2:
+                keyEnvio+=mayus[Math.floor(Math.random() * 6)]
+                break;
         
-      //     default:
-      //       break;
-      //   }
-      //   indexletters++;
-      // }
-      //   let fileNameKey = `D_${keyEnvio}_GEM161104H39_XAX010101000_2022-05-02_CMN-0001_CMN_JSON`
-      //   console.log(fileNameKey);
-      //   // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
-      //   //  fs.promises.mkdir(dirpath, { recursive: true })
-      //   const fileJsonName = path.join(__dirname, `../public/json/glencoreTest/${fileNameKey}.json`);
-      //   fs.writeFile(fileJsonName, JSON.stringify(estructura,null, 2), function writeJSON(err) {
-      //     if (err) return console.log(err);
+          default:
+            break;
+        }
+        indexletters++;
+      }
+        let fileNameKey = `D_${keyEnvio}_GEM161104H39_XAX010101000_2022-05-02_CMN-0001_CMN_JSON`
+        console.log(fileNameKey);
+        // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+        //  fs.promises.mkdir(dirpath, { recursive: true })
+        const fileJsonName = path.join(__dirname, `../public/json/glencoreTest/${fileNameKey}.json`);
+        fs.writeFile(fileJsonName, JSON.stringify(estructura,null, 2), function writeJSON(err) {
+          if (err) return console.log(err);
       
-      //   });
-      // });
+        });
+      });
     
     }
     function getGasoline87() {
@@ -3227,7 +5456,7 @@ const removeDirDiario = function(path1) {
 async function ExcelApiCreate(fechaD){
   var request = require('request');
     const xl = require('excel4node');
-
+    console.log("Empieza");
     const wb = new xl.Workbook();
     const ws = wb.addWorksheet('Compra');
     const ws2 = wb.addWorksheet('Venta');
@@ -3249,96 +5478,194 @@ async function ExcelApiCreate(fechaD){
         "No. Identificación",
         "Clave del producto y/o servicio",
         "Descripción",
+        "Cantidad",
         "Clave de unidad",
         "Valor unitario",
         "Descuento",
         "Impuesto",
         "Subtotal",
-        "Total"
+        "Total",
+        "TotalMXN"
     ]//Write Column Title in Excel file
     // let temp;2022-10-25
     console.log(fechaD);
+    var pagIndexCompra = 1
+    var pagIndexVenta = 1
+    let ApiLength= 10
+    let ApiLengthV= 10
+    let indexCompra = 0;
+    let indexVenta = 0; 
+    let headingColumnIndex = 1;
+    let headingColumnIndex2 = 1;
+    let rowIndex = 2;
+    const compra = [
+
+     ]
+     let rowIndex2 = 2;
+    //  let index2 = 0
+     const venta = [
+
+    ]
+     headingColumnNames.forEach(heading => {
+      ws.cell(1, headingColumnIndex++)
+          .string(heading)
+  });//Write Data in Excel file headingColumnIndex = 1;
+  headingColumnNames.forEach(heading => {
+      ws2.cell(1, headingColumnIndex2++)
+          .string(heading)
+  });//Write Data in Excel file
+
+    while (ApiLength > 0) {
+
+      var options = {
+        'method': 'GET',
+        'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fechaD}T23:59:59.000Z&issuedAt[after]=${fechaD}T00:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+        'headers': {
+          'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+        }
+      };
+      await request(options, function (error, response) {
+        if (error) throw new Error(error);
+        // console.log(response.body);
+                    // console.log(diario);
+            let index = 0;
+        let temp = JSON.parse(response.body);
+        temp = temp['hydra:member']
+        pagIndexCompra++
+        ApiLength = temp.length
+        console.log(ApiLength);
+        console.log("@@@@@@@");
+        for (const key in temp) {
+          const res = temp[key]
+          let Tipo = ''
+          let metodoPago = ''
+          switch (res.paymentMethod) {
+            case 01:
+              metodoPago = 'Efectivo'
+              break;
+              case 02:
+                metodoPago = 'Cheque de nómina'
+                break;
+                case 03:
+                  metodoPago = 'Transferencia electrónica'
+                  break;
+                  case 04:
+                    metodoPago = 'Tarjeta de crédito'
+                    break;
+                    case 05:
+                      metodoPago = 'Monedero electrónico'
+                      break;
+                      case 06:
+                        metodoPago = 'Dinero digital'
+                        break;
+                        case 08:
+                          metodoPago = 'Vales de despensa'
+                          break;
+                          case 12:
+                            metodoPago = 'Liquidación'
+                            break;
+                            case 13:
+                              metodoPago = 'Pago por subrogación'
+                              break;
+                              case 14:
+                                metodoPago = 'Pago por consignación'
+                                break;
+                                case 15:
+                                  metodoPago = 'Condonación'
+                                  break;
+                                  case 17:
+                                    metodoPago = 'Compensación'
+                                    break;
+                                    case 23:
+                                      metodoPago = 'Novacion'
+                                      break;
+                                      case 24:
+                                        metodoPago = 'Confusión'
+                                        break;
+                                        case 25:
+                                          metodoPago = 'Envío de deuda'
+                                          break;
+                                          case 26:
+                                            metodoPago = 'Prescripción o caducidad'
+                                            break;
+                                            case 27:
+                                              metodoPago = 'A satisfacción del acreedor'
+                                              break;
+                                              case 28:
+                                                metodoPago = 'Tarjeta de débito'
+                                                break;
+                                                case 29:
+                                                  metodoPago = 'Tarjeta de servicio'
+                                                  break;
+              
+          
+            default:
+              metodoPago = 'Por definir'
+              break;
+          }
+
+
+          if (res.items[0] != undefined) {
+            if (res.items[0].unitCode == 'LTR') {
+                const totalMXN = (res.total * (res.currency == "USD" ? res.exchangeRate : 1))
+                const data = {
+                  "UUID":res.uuid,
+                  "RFC Emisor":res.issuer.rfc,
+                  "Nombre del Emisor":res.issuer.name,
+                  "RFC Receptor":res.receiver.rfc,
+                  "Nombre del Receptor":res.receiver.name,
+                  "Tipo":res.type == 'I' ? 'Ingreso':'',
+                  "Estatus":res.status,
+                  "PAC":res.pac,
+                  "Moneda":res.currency,
+                  "Fecha de Certificación":res.certifiedAt,
+                  "Método de Pago":metodoPago,
+                  "Fecha de Emisión":res.issuedAt,
+                  "Condiciones de pago (original)":res.paymentTermsRaw,
+                  "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                  "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                  "Descripción":res.items[0].description,
+                  "Cantidad":res.items[0].quantity,
+                  "Clave de unidad":res.items[0].unitCode,
+                  "Valor unitario":res.items[0].unitAmount.toString(),
+                  "Descuento":res.discount.toString(),
+                  "Impuesto":res.tax.toString(),
+                  "Subtotal":res.subtotal.toString(),
+                  "Total":res.total.toString(),
+                  "TotalMXN": totalMXN.toString()
+                 }
+                 compra[indexCompra] = data
+  
+  
+                 indexCompra++
+              }
+            }
+
+  
+  
+        // console.log(tabla);
+        }
+      
+    });
+    await delay(2300);
+  }
+  compra.forEach( record => {
+    let columnIndex= 1;
+    Object.keys(record ).forEach(columnName =>{
+        ws.cell(rowIndex,columnIndex++)
+            .string(record [columnName])
+    });
+    rowIndex++;
+}); 
+  while (ApiLengthV > 0) {
     var options = {
       'method': 'GET',
-      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fechaD}T23:59:59.000Z&issuedAt[after]=${fechaD}T00:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE`,
+      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fechaD}T23:59:59.000Z&issuedAt[after]=${fechaD}T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
       'headers': {
         'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
       }
     };
-    await request(options, function (error, response) {
-      if (error) throw new Error(error);
-      // console.log(response.body);
-                  // console.log(diario);
-          let index = 0;
-      let temp = JSON.parse(response.body);
-      temp = temp['hydra:member']
-      let headingColumnIndex = 1;
-      let headingColumnIndex2 = 1;
-      headingColumnNames.forEach(heading => {
-          ws.cell(1, headingColumnIndex++)
-              .string(heading)
-      });//Write Data in Excel file headingColumnIndex = 1;
-      headingColumnNames.forEach(heading => {
-          ws2.cell(1, headingColumnIndex2++)
-              .string(heading)
-      });//Write Data in Excel file
-      let rowIndex = 2;
-      const compra = [
-
-       ]
-
-      for (const key in temp) {
-        const res = temp[key]
-
-          const data = {
-            "UUID":res.uuid,
-            "RFC Emisor":res.issuer.rfc,
-            "Nombre del Emisor":res.issuer.name,
-            "RFC Receptor":res.receiver.rfc,
-            "Nombre del Receptor":res.receiver.name,
-            "Tipo":res.type == 'I' ? 'Ingreso':'',
-            "Estatus":res.status,
-            "PAC":res.pac,
-            "Moneda":res.currency,
-            "Fecha de Certificación":res.certifiedAt,
-            "Método de Pago":(res.paymentMethod == '99') ?  "Por definir":'',
-            "Fecha de Emisión":res.issuedAt,
-            "Condiciones de pago (original)":res.paymentTermsRaw,
-            "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
-            "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
-            "Descripción":res.items[0].description,
-            "Clave de unidad":res.items[0].unitCode,
-            "Valor unitario":res.items[0].unitAmount.toString(),
-            "Descuento":res.discount.toString(),
-            "Impuesto":res.tax.toString(),
-            "Subtotal":res.subtotal.toString(),
-            "Total":res.total.toString()
-           }
-           compra[index] = data
-
-
-         index++
-
-
-      // console.log(tabla);
-      }
-      compra.forEach( record => {
-        let columnIndex= 1;
-        Object.keys(record ).forEach(columnName =>{
-            ws.cell(rowIndex,columnIndex++)
-                .string(record [columnName])
-        });
-        rowIndex++;
-    }); 
-
-
-    var options = {
-      'method': 'GET',
-      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fechaD}T23:59:59.000Z&issuedAt[after]=${fechaD}T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE`,
-      'headers': {
-        'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
-      }
-    };
+    pagIndexVenta++
      request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log(response.body);
@@ -3346,60 +5673,66 @@ async function ExcelApiCreate(fechaD){
         
       let temp = JSON.parse(response.body);
       temp = temp['hydra:member']
-      const venta = [
 
-      ]
-      let rowIndex2 = 2;
-      let index2 = 0
+      ApiLengthV = temp.length
         for (const key in temp) {
           const res = temp[key]
+          if (res.items[0] != undefined) {
+            if (res.items[0].unitCode == 'LTR') {
+              const totalMXN = (res.total * (res.currency == "USD" ? res.exchangeRate : 1))
 
-            const data2 = {
-              "UUID":res.uuid,
-              "RFC Emisor":res.issuer.rfc,
-              "Nombre del Emisor":res.issuer.name,
-              "RFC Receptor":res.receiver.rfc,
-              "Nombre del Receptor":res.receiver.name,
-              "Tipo":res.type == 'I' ? 'Ingreso':'',
-              "Estatus":res.status,
-              "PAC":res.pac,
-              "Moneda":res.currency,
-              "Fecha de Certificación":res.certifiedAt,
-              "Método de Pago":(res.paymentMethod == '99') ?  "Por definir":'',
-              "Fecha de Emisión":res.issuedAt,
-              "Condiciones de pago (original)":res.paymentTermsRaw,
-              "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
-              "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
-              "Descripción":res.items[0].description,
-              "Clave de unidad":res.items[0].unitCode,
-              "Valor unitario":res.items[0].unitAmount.toString(),
-              "Descuento":res.discount.toString(),
-              "Impuesto":res.tax.toString(),
-              "Subtotal":res.subtotal.toString(),
-              "Total":res.total.toString()
-             }
-             index2++
-             venta[index2] = data2
-
+              const data2 = {
+                "UUID":res.uuid,
+                "RFC Emisor":res.issuer.rfc,
+                "Nombre del Emisor":res.issuer.name,
+                "RFC Receptor":res.receiver.rfc,
+                "Nombre del Receptor":res.receiver.name,
+                "Tipo":res.type == 'I' ? 'Ingreso':'',
+                "Estatus":res.status,
+                "PAC":res.pac,
+                "Moneda":res.currency,
+                "Fecha de Certificación":res.certifiedAt,
+                "Método de Pago":(res.paymentMethod == '99') ?  "Por definir":'',
+                "Fecha de Emisión":res.issuedAt,
+                "Condiciones de pago (original)":res.paymentTermsRaw,
+                "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                "Descripción":res.items[0].description,
+                "Clave de unidad":res.items[0].unitCode,
+                "Valor unitario":res.items[0].unitAmount.toString(),
+                "Descuento":res.discount.toString(),
+                "Impuesto":res.tax.toString(),
+                "Subtotal":res.subtotal.toString(),
+                "Total":res.total.toString(),
+                "TotalMXN": totalMXN.toString()
+               }
+               indexVenta++
+               venta[indexVenta] = data2
   
+    
+            }
+          }
+
 
         }
 
-        venta.forEach( record => {
-          let columnIndex2= 1;
-          Object.keys(record ).forEach(columnName =>{
-              ws2.cell(rowIndex2,columnIndex2++)
-                  .string(record [columnName])
-          });
-          rowIndex2++;
-      }); 
-       wb.write(path.join(__dirname, `../public/Excel/Diario_${fechaD}.xlsx`));
-      });
-      return
-  
-    // console.log(data);
-  
-  });
+
+    });
+    await delay(2300);
+  }
+  console.log("Venta");
+  venta.forEach( record => {
+    let columnIndex2= 1;
+    Object.keys(record ).forEach(columnName =>{
+      ws2.cell(rowIndex2,columnIndex2++)
+      .string(record [columnName])
+    });
+    rowIndex2++;
+  }); 
+  console.log("Here");
+  await delay(1000);
+  wb.write(path.join(__dirname, `../public/Excel/Diario_${fechaD}.xlsx`));
+  return
   
    
 
@@ -4037,4 +6370,5 @@ async function ExcelApiCreate(fechaD){
   theOutput.end()
 
   }
+  function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) } 
  module.exports = router;

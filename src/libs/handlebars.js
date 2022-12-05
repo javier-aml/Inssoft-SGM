@@ -82,7 +82,7 @@ function acomodarFecha(date) {
     let date = new Date()
 
     let day = date.getDate()
-    let month = date.getMonth() + 1
+    let month = date.getMonth()
     let year = date.getFullYear()
     let fecha = "";
     if (month < 10) {

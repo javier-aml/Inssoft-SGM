@@ -1,0 +1,39 @@
+{
+  "data": {
+    "0": {
+      "RFCEmisor": "PTI151101TE5",
+      "Emisor": "PEMEX TRANSFORMACION INDUSTRIAL",
+      "RegimenFiscal": 601,
+      "RFCReceptor": "GEM161104H39",
+      "Receptor": "GEM161104H39",
+      "RegimenFiscalReceptor": 601,
+      "DomicilioFiscalReceptor": "11560",
+      "UsoCFDI": "G01",
+      "Estatus": "VIGENTE",
+      "FechaEmision": "2022-12-01 00:00:22",
+      "FullDate": "2022-12-01",
+      "Subtotal": 177614.38,
+      "Descuento": 14920.6,
+      "Impuesto": "002",
+      "Total": 187951.79,
+      "UUID": "41f30b1d-c4b5-4129-8f43-4f52ecea2992",
+      "Tipocomprobante": "Ingreso",
+      "Unidad": "LTR",
+      "Cantidad": 9967,
+      "Descripcion": "GASOLINA CONTENIDO MIN.87 OCTANOS",
+      "Valorunitario": 17.7695,
+      "ImporteConcepto": 177108.61,
+      "DescuentoConcepto": 14920.6,
+      "NoIdentificacion": "H/9857/COM/2015-32025",
+      "ClaveSAT": "15101514",
+      "ImporteImpuesto": 25177.09,
+      "TasaOCuota": 0.16,
+      "Moneda": "MXN",
+      "VersionCFDI": 4,
+      "Fechacompleta": "2022-12-01",
+      "TotalMXN": 166852.12
+    }
+  },
+  "totalMXN": 166852.12,
+  "totalLTS": 9967
+}

@@ -21,7 +21,7 @@ app.use(session({
 // settings
  app.disable('x-powered-by');
 
-app.set('port',process.env.PORT || 3000);
+app.set('port',process.env.PORT || 4040);
 app.set('views',path.join(__dirname, 'views'));
 app.engine('.hbs',exphbs({
     defaultLayout: 'main',
@@ -44,14 +44,6 @@ app.use(express.json());
     });
 // routes
 app.use(require('./routes'));
-app.use('/proveedor',require('./routes/proveedor'));
-app.use('/cliente',require('./routes/cliente.js'));
-app.use('/Admin',require('./routes/Admin.js'));
-app.use('/almacen',require('./routes/almacen.js'));
-app.use('/prueba',require('./routes/prueba.js'));
-app.use('/Ekide',require('./routes/Ekide.js'));
-app.use('/produccion',require('./routes/produccion.js'));
-app.use('/utiles',require('./routes/utiles.js'));
 app.use('/VistaPrueba',require('./routes/VistaPrueba.js'));
 //app.use(express.static('src'));
 

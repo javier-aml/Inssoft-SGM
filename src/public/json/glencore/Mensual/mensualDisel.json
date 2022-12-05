@@ -4,7 +4,7 @@
     "DieselConCombustibleNoFosil": "No",
     "ReporteDeVolumenMensual": {
         "ControlDeExistencias": {
-            "VolumenExistenciasMes": 113130.593,
+            "VolumenExistenciasMes": 0.0,
             "FechaYHoraEstaMedicionMes": "2022-08-31T23:59:59-06:00"
         },
         "Recepciones": {
