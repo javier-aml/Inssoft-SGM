@@ -45,6 +45,7 @@ app.use(express.json());
 // routes
 app.use(require('./routes'));
 app.use('/VistaPrueba',require('./routes/VistaPrueba.js'));
+app.use('/api_sgm_v1',require('./routes/api_sgm_v1.js'));
 //app.use(express.static('src'));
 
 var url = require('url')
