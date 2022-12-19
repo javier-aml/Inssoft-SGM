@@ -1,0 +1,27 @@
+{
+    "BitacoraMensual": [
+      {
+        "DescripcionEvento": "Bajo protesta de decir verdad, el presente no cumple en su totalidad respecto al Anexo 30 RMF 2022",
+        "FechaYHoraEvento": "2022-04-30T12:00:00-06:00",
+        "IdentificacionComponenteAlarma": "No aplica",
+        "NumeroRegistro": 1,
+        "TipoEvento": 3
+      }
+    ],
+    "Caracter": "permisionario",
+    "ClaveInstalacion": "EXO-0003",
+    "DescripcionInstalacion": "Expendio al publico de gas natural comprimido para uso vehicular en estacion de servicio",
+    "FechaYHoraReporteMes": "2022-11-03T12:57:11-06:00",
+    "ModalidadPermiso": "PER24",
+    "NumPermiso": "G/18923/EXP/ES/FE/2016",
+    "NumeroDispensarios": 6,
+    "NumeroDuctosEntradaSalida": 0,
+    "NumeroDuctosTransporteDistribucion": 0,
+    "NumeroPozos": 0,
+    "NumeroTanques": 0,
+    "Producto": [],
+    "RfcContribuyente": "NQU120510QZ7",
+    "RfcProveedor": "XEX010101000",
+    "RfcRepresentanteLegal": "TASE571222586",
+    "Version": "1.0"
+  }

@@ -1,0 +1,19 @@
+{
+    "Complemento": [
+      {
+        "Nacional": [],
+        "TipoComplemento": "Expendio"
+      }
+    ],
+    "ImporteTotalEntregasMes": 590114.33,
+    "PoderCalorifico": {
+      "UnidadDeMedida": "UM04",
+      "ValorNumerico": 36.133
+    },
+    "SumaVolumenEntregadoMes": {
+      "UnidadDeMedida": "UM04",
+      "ValorNumerico": 604622.53
+    },
+    "TotalDocumentosMes": 8261,
+    "TotalEntregasMes": 43550
+  }

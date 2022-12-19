@@ -1,0 +1,96 @@
+{
+    "ClaveProducto": "PR09",
+    "ClaveSubProducto": "SP27",
+    "GasNaturalOCondensados": [
+      {
+        "ComposGasNaturalOCondensados": "GNC01",
+        "FraccionMolar": 0.949,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC02",
+        "FraccionMolar": 0.03,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC03",
+        "FraccionMolar": 0.001,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC04",
+        "FraccionMolar": 0.0,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC05",
+        "FraccionMolar": 0.0,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC06",
+        "FraccionMolar": 0.0,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC07",
+        "FraccionMolar": 0.0,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC08",
+        "FraccionMolar": 0.0,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC09",
+        "FraccionMolar": 0.0,
+        "PoderCalorifico": 36.133
+      },
+      {
+        "ComposGasNaturalOCondensados": "GNC10",
+        "FraccionMolar": 0.02,
+        "PoderCalorifico": 36.133
+      }
+    ],
+    "ReporteDeVolumenMensual": {
+      "Entregas": {
+        "Complemento": [
+          {
+            "Nacional": [],
+            "TipoComplemento": "Expendio"
+          }
+        ],
+        "ImporteTotalEntregasMes": 590114.33,
+        "PoderCalorifico": {
+          "UnidadDeMedida": "UM04",
+          "ValorNumerico": 36.133
+        },
+        "SumaVolumenEntregadoMes": {
+          "UnidadDeMedida": "UM04",
+          "ValorNumerico": 604622.53
+        },
+        "TotalDocumentosMes": 8261,
+        "TotalEntregasMes": 43550
+      },
+      "Recepciones": {
+        "Complemento": [
+          {
+            "Nacional": [],
+            "TipoComplemento": "Expendio"
+          }
+        ],
+        "ImporteTotalRecepcionesMensual": 4725099.26,
+        "PoderCalorifico": {
+          "UnidadDeMedida": "UM04",
+          "ValorNumerico": 36.133
+        },
+        "SumaVolumenRecepcionMes": {
+          "UnidadDeMedida": "UM04",
+          "ValorNumerico": 597985.78
+        },
+        "TotalDocumentosMes": 1,
+        "TotalRecepcionesMes": 30
+      }
+    }
+  }

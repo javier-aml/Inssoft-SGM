@@ -1,0 +1,37 @@
+{
+    "Complemento": [
+      {
+        "Nacional": [
+          {
+            "CFDIs": [
+              {
+                "Cfdi": "BF711B00-2959-459C-AD68-A3D595DE96C3",
+                "FechaYHoraTransaccion": "2022-10-12T18:09:55-06:00",
+                "PrecioCompra": 7.9,
+                "TipoCfdi": "Egreso",
+                "VolumenDocumentado": {
+                  "UnidadDeMedida": "UM04",
+                  "ValorNumerico": 597985.78
+                }
+              }
+            ],
+            "NombreClienteOProveedor": "GDF SUEZ MEXICO COMERCIALIZADORA",
+            "PermisoProveedor": "G/089/DIS/2000",
+            "RfcClienteOProveedor": "TRA0002119W1"
+          }
+        ],
+        "TipoComplemento": "Expendio"
+      }
+    ],
+    "ImporteTotalRecepcionesMensual": 4725099.26,
+    "PoderCalorifico": {
+      "UnidadDeMedida": "UM04",
+      "ValorNumerico": 36.133
+    },
+    "SumaVolumenRecepcionMes": {
+      "UnidadDeMedida": "UM04",
+      "ValorNumerico": 597985.78
+    },
+    "TotalDocumentosMes": 1,
+    "TotalRecepcionesMes": 30
+  }

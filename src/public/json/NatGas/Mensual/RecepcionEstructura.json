@@ -1,0 +1,19 @@
+{
+    "Complemento": [
+      {
+        "Nacional": [],
+        "TipoComplemento": "Expendio"
+      }
+    ],
+    "ImporteTotalRecepcionesMensual": 4725099.26,
+    "PoderCalorifico": {
+      "UnidadDeMedida": "UM04",
+      "ValorNumerico": 36.133
+    },
+    "SumaVolumenRecepcionMes": {
+      "UnidadDeMedida": "UM04",
+      "ValorNumerico": 597985.78
+    },
+    "TotalDocumentosMes": 1,
+    "TotalRecepcionesMes": 30
+  }
