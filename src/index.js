@@ -9,7 +9,7 @@ app.use(cookieParase(signStr));
 const session = require('express-session');
 const cors = require("cors")
 var corsOptions = {
-    origin: 'http://localhost:4000',
+    origin: 'http://localhost:3000',
     "methods": "GET,POST",
     allowedHeaders:"Content-Type",
     credentials:true
