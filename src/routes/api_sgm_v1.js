@@ -20,6 +20,12 @@ router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
+
+router.get('/TestApi',(req,res) => {
+  const Prueba = {Test: 'Prueba'}
+  res.send(Prueba)
+})
+
 router.post('/DiarioGlencore/:fecha', async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
