@@ -5,8 +5,13 @@ const router = express.Router();
 // console.log(router);
 // const pool = require('../database');
 const fs = require("fs");
-
-
+const cors = require("cors")
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  "methods": "GET,POST",
+  allowedHeaders:"Content-Type",
+  credentials:true
+}
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
 let tanque3 =require(path.join(__dirname, '../public/json/glencore/tanque3.json'))
@@ -26,7 +31,7 @@ router.get('/TestApi',(req,res) => {
   res.send(Prueba)
 })
 
-router.post('/DiarioGlencore/:fecha', async (req, res) => {
+router.post('/DiarioGlencore/:fecha', cors(corsOptions), async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
     var datoCompra;
@@ -1366,7 +1371,7 @@ if (tomorrowsplit[1].length == 1) {
   
   
 });
-router.post('/MensualGlencore/:fecha', async (req, res) => {
+router.post('/MensualGlencore/:fecha', cors(corsOptions), async (req, res) => {
   console.log("mess");
   const xl = require('excel4node');
 console.log("Empieza");
@@ -2549,7 +2554,7 @@ res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV
 
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
-router.post('/DiarioNatgas/:fecha', async (req, res) => {
+router.post('/DiarioNatgas/:fecha', cors(corsOptions), async (req, res) => {
   var request = require('request');
   // let temp;2022-10-25
   var datoCompra;
@@ -3407,7 +3412,7 @@ const datos = {
 
 
 });
-router.post('/MensualNatgas/:fecha', async (req, res) => {
+router.post('/MensualNatgas/:fecha', cors(corsOptions), async (req, res) => {
     console.log("mess");
     const xl = require('excel4node');
   console.log("Empieza");
@@ -4178,7 +4183,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
   
   
 });
-router.post('/calendar/simple',async (req,res) =>{
+router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
   // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
   let index = 0
   // console.log(data);
