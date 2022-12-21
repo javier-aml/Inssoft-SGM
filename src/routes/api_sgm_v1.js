@@ -2555,6 +2555,7 @@ res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
 router.post('/diario-natgas/:fecha', cors(corsOptions), async (req, res) => {
+ try {
   var request = require('request');
   // let temp;2022-10-25
   var datoCompra;
@@ -2591,7 +2592,7 @@ router.post('/diario-natgas/:fecha', cors(corsOptions), async (req, res) => {
   ]
   let fecha = req.params.fecha
   let fechasplit = fecha.split("-")
-  console.log(fechasplit[2].length );
+  console.log(fecha);
   console.log(fechasplit[2].length );
   let fechaArreglada;
   if (fechasplit[2].length == 1) {
@@ -2646,8 +2647,6 @@ const today = new Date(fecha)
 let tomorrow = new Date(today)
 tomorrow.setDate(tomorrow.getDate() + 2)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
-console.log(today);
-console.log(tomorrow);
 tomorrow = tomorrow.split('-')
 tomorrow = `${tomorrow[2]}-${tomorrow[1]}-${tomorrow[0]}`
 let tomorrowsplit = tomorrow.split("-")
@@ -2656,7 +2655,6 @@ tomorrow = `${tomorrowsplit[0]}-${tomorrowsplit[1]}-0${tomorrowsplit[2]}`
 
 }
 tomorrowsplit = tomorrow.split("-")
-console.log(tomorrow);
 if (tomorrowsplit[1].length == 1) {
 
 tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
@@ -2750,11 +2748,7 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
               break;
           }
           fecha3 = res.issuedAt.substring(0, 10)
-          console.log(fecha3);
-          console.log("::::::::::::::::::::");
           fecha2 = fecha3
-          console.log(fecha2 + "<-----------------");
-          console.log(indexCompra);
           if (res.items[0] != undefined ) {
             let RECEPCION = {
               "TipoComplemento": "Expendio",
@@ -2997,8 +2991,6 @@ while (ApiLengthVenta > 0) {
     ApiLengthVenta = temp.length
     for (const key in temp) {
       const res = temp[key]
-
-      console.log(fecha5);
       fecha5 = res.issuedAt.substring(0, 10)
       fecha4 = fecha5
       if (res.items[0] != undefined ) {
@@ -3404,15 +3396,13 @@ const datos = {
 }
   res.send(datos)
 
-
-
-
-
-
-
+ } catch (error) {
+  res.send(datos)
+ }
 
 });
 router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
+   try {
     console.log("mess");
     const xl = require('excel4node');
   console.log("Empieza");
@@ -4180,6 +4170,9 @@ router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
     tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS
   }
     res.send(datos)
+   } catch (error) {
+    res.send(error)
+   }
   
   
 });
