@@ -2554,7 +2554,7 @@ res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV
 
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
-router.post('/DiarioNatgas/:fecha', cors(corsOptions), async (req, res) => {
+router.get('/DiarioNatgas/:fecha', cors(corsOptions), async (req, res) => {
   var request = require('request');
   // let temp;2022-10-25
   var datoCompra;
