@@ -26,7 +26,7 @@ router.post('/TestApi',(req,res) => {
   res.send(Prueba)
 })
 
-router.get('/TestApi',(req,res) => {
+router.get('/TestApi',cors(corsOptions),(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
@@ -2554,7 +2554,7 @@ res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV
 
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
-router.get('/DiarioNatgas/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/DiarioNatgas/:fecha', cors(corsOptions), async (req, res) => {
   var request = require('request');
   // let temp;2022-10-25
   var datoCompra;
@@ -2588,7 +2588,7 @@ router.get('/DiarioNatgas/:fecha', cors(corsOptions), async (req, res) => {
     "Subtotal",
     "Total",
     "TotalMXN"
-]
+  ]
   let fecha = req.params.fecha
   let fechasplit = fecha.split("-")
   console.log(fechasplit[2].length );
