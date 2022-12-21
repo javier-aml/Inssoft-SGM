@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const router = express.Router();
-const pool = require('../database');
+// console.log(router);
+// const pool = require('../database');
 const fs = require("fs");
-var cors= require('cors')
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
 let tanque3 =require(path.join(__dirname, '../public/json/glencore/tanque3.json'))
@@ -4171,7 +4171,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
   
 });
 router.post('/calendar/simple',async (req,res) =>{
-  const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
+  // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
   let index = 0
   // console.log(data);
   let eventos = [];

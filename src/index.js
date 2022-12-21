@@ -46,8 +46,11 @@ app.use(express.json());
         next();
     });
 // routes
-app.use(require('./routes'));
-app.use('/VistaPrueba',require('./routes/VistaPrueba.js'));
+// console.log("routes");
+// routes = require('./routes')
+// app.use('/', routes);
+// app.use(require('./routes'));
+// app.use('/VistaPrueba',require('./routes/VistaPrueba.js'));
 app.use('/api_sgm_v1',require('./routes/api_sgm_v1.js'));
 //app.use(express.static('src'));
 
