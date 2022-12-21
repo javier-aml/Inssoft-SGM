@@ -264,7 +264,7 @@ if (tomorrowsplit[1].length == 1) {
                     RECEPCION.Complemento.Nacional[0].PermisoClienteOProveedor = res.name
                     RECEPCION.Complemento.Nacional[0].CFDIs[0].Cfdi = res.uuid
                     RECEPCION.Complemento.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
-                    RECEPCION.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                    RECEPCION.Complemento.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
                     RECEPCION.Complemento.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
                     RECEPCION.Complemento.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
                     // RECEPCION.Tanque = res.Tanque
@@ -287,21 +287,21 @@ if (tomorrowsplit[1].length == 1) {
                           tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
                           tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                           tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
-                          tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+                          tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
                           break;
                           case 5:
                             tanque5.Recepciones.RECEPCION.push(RECEPCION)
                             tanque5.Recepciones.TotalRecepciones= tanque5.Recepciones.TotalRecepciones + 1
                             tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque5.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                             tanque5.Recepciones.TotalDocumentos = tanque5.Recepciones.TotalDocumentos + 1
-                            tanque5.Recepciones.SumaCompras = tanque5.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                            tanque5.Recepciones.SumaCompras = tanque5.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                             break;
                             case 8:
                               tanque8.Recepciones.RECEPCION.push(RECEPCION)
                               tanque8.Recepciones.TotalRecepciones= tanque8.Recepciones.TotalRecepciones + 1
                               tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque8.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                               tanque8.Recepciones.TotalDocumentos = tanque8.Recepciones.TotalDocumentos + 1
-                              tanque8.Recepciones.SumaCompras = tanque8.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                              tanque8.Recepciones.SumaCompras = tanque8.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                               break;
                       
                         default:
@@ -309,7 +309,7 @@ if (tomorrowsplit[1].length == 1) {
                           tanque2.Recepciones.TotalRecepciones= tanque2.Recepciones.TotalRecepciones + 1
                           tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque2.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                           tanque2.Recepciones.TotalDocumentos = tanque2.Recepciones.TotalDocumentos + 1
-                          tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          tanque2.Recepciones.SumaCompras = tanque2.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                           break;
                       }
                     }
@@ -322,14 +322,14 @@ if (tomorrowsplit[1].length == 1) {
                           tanque6.Recepciones.TotalRecepciones= tanque6.Recepciones.TotalRecepciones + 1
                           tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque6.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                           tanque6.Recepciones.TotalDocumentos = tanque6.Recepciones.TotalDocumentos + 1
-                          tanque6.Recepciones.SumaCompras = tanque6.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          tanque6.Recepciones.SumaCompras = tanque6.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                           break;
                           case 3:
                             tanque3.Recepciones.RECEPCION.push(RECEPCION)
                             tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
                             tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                             tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
-                            tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                            tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                             break;
                       
                         default:
@@ -337,7 +337,7 @@ if (tomorrowsplit[1].length == 1) {
                           tanque3.Recepciones.TotalRecepciones= tanque3.Recepciones.TotalRecepciones + 1
                           tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque3.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                           tanque3.Recepciones.TotalDocumentos = tanque3.Recepciones.TotalDocumentos + 1
-                          tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          tanque3.Recepciones.SumaCompras = tanque3.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                           break;
                       }
                     }
@@ -350,14 +350,14 @@ if (tomorrowsplit[1].length == 1) {
                           tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
                           tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                           tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
-                          tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                           break;
                           case 7:
                             tanque7.Recepciones.RECEPCION.push(RECEPCION)
                             tanque7.Recepciones.TotalRecepciones= tanque7.Recepciones.TotalRecepciones + 1
                             tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque7.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                             tanque7.Recepciones.TotalDocumentos = tanque7.Recepciones.TotalDocumentos + 1
-                            tanque7.Recepciones.SumaCompras = tanque7.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                            tanque7.Recepciones.SumaCompras = tanque7.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                             break;
                       
                         default:
@@ -365,7 +365,7 @@ if (tomorrowsplit[1].length == 1) {
                           tanque1.Recepciones.TotalRecepciones= tanque1.Recepciones.TotalRecepciones + 1
                           tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico = tanque1.Recepciones.SumaVolumenRecepcion.ValorNumerico + res.items[0].quantity//ltr
                           tanque1.Recepciones.TotalDocumentos = tanque1.Recepciones.TotalDocumentos + 1
-                          tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount) //mxn
+                          tanque1.Recepciones.SumaCompras = tanque1.Recepciones.SumaCompras +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) //mxn
                           break;
                       }
                     }
@@ -392,8 +392,8 @@ if (tomorrowsplit[1].length == 1) {
                       "Descuento":res.discount,
                       "Impuesto":res.tax,
                       "Subtotal":res.items[0].totalAmount,
-                      "Total":(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount),
-                      "TotalMXN": (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                      "Total":(res.items[0].discountAmount-res.tax+res.items[0].totalAmount),
+                      "TotalMXN": (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
                      }
                     const tabla = {
                       RFCEmisor:res.issuer.rfc,
@@ -421,13 +421,12 @@ if (tomorrowsplit[1].length == 1) {
                       DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                       NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                       ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                      ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                      Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                      TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                      ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                      Impuesto:res.items[0] != undefined ? res.tax : '',
                       Moneda:res.currency,
                       VersionCFDI:res.version,
                       Fechacompleta:res.issuedAt.substring(0, 10),
-                      TotalMXN:(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                      TotalMXN:(res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
                     }
                      TotalMXN += parseFloat(tabla.TotalMXN);
                 
@@ -599,9 +598,8 @@ if (tomorrowsplit[1].length == 1) {
                       DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                       NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                       ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                      ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                      Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                      TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                      ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                      Impuesto:res.items[0] != undefined ? res.tax : '',
                       Moneda:res.currency,
                       VersionCFDI:res.version,
                       Fechacompleta:res.issuedAt.substring(0, 10),
@@ -778,9 +776,8 @@ if (tomorrowsplit[1].length == 1) {
                     DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                     NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                     ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                    ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                    Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                    TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                    ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                    Impuesto:res.items[0] != undefined ? res.tax : '',
                     Moneda:res.currency,
                     VersionCFDI:res.version,
                     Fechacompleta:res.issuedAt.substring(0, 10),
@@ -1073,9 +1070,8 @@ if (tomorrowsplit[1].length == 1) {
                 DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                 NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                 ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                Impuesto:res.items[0] != undefined ? res.tax : '',
                 Moneda:res.currency,
                 VersionCFDI:res.version,
                 Fechacompleta:res.issuedAt.substring(0, 10),
@@ -1251,9 +1247,8 @@ if (tomorrowsplit[1].length == 1) {
                 DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                 NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                 ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                Impuesto:res.items[0] != undefined ? res.tax : '',
                 Moneda:res.currency,
                 VersionCFDI:res.version,
                 Fechacompleta:res.issuedAt.substring(0, 10),
@@ -1508,7 +1503,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                 RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
                 RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
                 RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
-                RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
                 RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
                 RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
                
@@ -1519,7 +1514,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                   productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
                   productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
                   productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
-                  productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
                   
                   productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
                 }
@@ -1528,7 +1523,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                   productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
                   productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
                   productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                  productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
 
                   productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
 
@@ -1538,7 +1533,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                   productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
                   productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
                   productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                  productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)//mxn
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
                   productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
 
                 }
@@ -1628,10 +1623,10 @@ console.log(fecha2.indexOf(fecha) != -1);
                   "Clave de unidad":res.items[0].unitCode,
                   "Valor unitario":res.items[0].unitAmount.toString(),
                   "Descuento":res.discount.toString(),
-                  "Impuesto":res.items[0].taxAmount.toString(),
+                  "Impuesto":res.tax.toString(),
                   "Subtotal":res.items[0].totalAmount.toString(),
-                  "Total":(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount).toString(),
-                  "TotalMXN": (res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount).toString()
+                  "Total":(res.items[0].discountAmount-res.tax+res.items[0].totalAmount).toString(),
+                  "TotalMXN": (res.items[0].discountAmount-res.tax+res.items[0].totalAmount).toString()
                  }
                 const tabla = {
                   RFCEmisor:res.issuer.rfc,
@@ -1647,7 +1642,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                   FullDate:res.issuedAt.substring(0, 10),
                   Subtotal:res.subtotal,
                   Descuento:res.discount,
-                  Impuesto:res.items[0].taxAmount,
+                  Impuesto:res.tax,
                   Total:res.total,
                   UUID:res.uuid,
                   Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -1659,13 +1654,12 @@ console.log(fecha2.indexOf(fecha) != -1);
                   DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                   NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                   ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                  ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                  Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                  TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                  ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                  Impuesto:res.items[0] != undefined ? res.tax : '',
                   Moneda:res.currency,
                   VersionCFDI:res.version,
                   Fechacompleta:res.issuedAt.substring(0, 10),
-                  TotalMXN:(res.items[0].discountAmount-res.items[0].taxAmount+res.items[0].totalAmount)
+                  TotalMXN:(res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
                 }
                 // if (fecha3!=fecha) {
                 //   break;
@@ -1804,7 +1798,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                   "Clave de unidad":res.items[0].unitCode,
                   "Valor unitario":res.items[0].unitAmount.toString(),
                   "Descuento":res.discount.toString(),
-                  "Impuesto":res.items[0].taxAmount.toString(),
+                  "Impuesto":res.tax.toString(),
                   "Subtotal":res.subtotal.toString(),
                   "Total":res.total.toString(),
                   "TotalMXN": (res.items[0].totalAmount).toString()
@@ -1823,7 +1817,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                   FullDate:res.issuedAt.substring(0, 10),
                   Subtotal:res.subtotal,
                   Descuento:res.discount,
-                  Impuesto:res.items[0].taxAmount,
+                  Impuesto:res.tax,
                   Total:res.total,
                   UUID:res.uuid,
                   Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -1835,9 +1829,8 @@ console.log(fecha2.indexOf(fecha) != -1);
                   DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                   NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                   ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                  ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                  Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                  TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                  ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                  Impuesto:res.items[0] != undefined ? res.tax : '',
                   Moneda:res.currency,
                   VersionCFDI:res.version,
                   Fechacompleta:res.issuedAt.substring(0, 10),
@@ -1980,7 +1973,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                 "Clave de unidad":res.items[0].unitCode,
                 "Valor unitario":res.items[0].unitAmount.toString(),
                 "Descuento":res.discount.toString(),
-                "Impuesto":res.items[0].taxAmount.toString(),
+                "Impuesto":res.tax.toString(),
                 "Subtotal":res.subtotal.toString(),
                 "Total":res.total.toString(),
                 "TotalMXN": (res.items[0].totalAmount * res.exchangeRate).toString()
@@ -1999,7 +1992,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                 FullDate:res.issuedAt.substring(0, 10),
                 Subtotal:res.subtotal,
                 Descuento:res.discount,
-                Impuesto:res.items[0].taxAmount,
+                Impuesto:res.tax,
                 Total:res.total,
                 UUID:res.uuid,
                 Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -2011,9 +2004,8 @@ console.log(fecha2.indexOf(fecha) != -1);
                 DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                 NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                 ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                Impuesto:res.items[0] != undefined ? res.tax : '',
                 Moneda:res.currency,
                 VersionCFDI:res.version,
                 Fechacompleta:res.issuedAt.substring(0, 10),
@@ -2243,7 +2235,7 @@ await request(options, function (error, response) {
               "Clave de unidad":res.items[0].unitCode,
               "Valor unitario":res.items[0].unitAmount.toString(),
               "Descuento":res.discount.toString(),
-              "Impuesto":res.items[0].taxAmount.toString(),
+              "Impuesto":res.tax.toString(),
               "Subtotal":res.subtotal.toString(),
               "Total":res.total.toString(),
               "TotalMXN": (res.items[0].totalAmount).toString()
@@ -2262,7 +2254,7 @@ await request(options, function (error, response) {
               FullDate:res.issuedAt.substring(0, 10),
               Subtotal:res.subtotal,
               Descuento:res.discount,
-              Impuesto:res.items[0].taxAmount,
+              Impuesto:res.tax,
               Total:res.total,
               UUID:res.uuid,
               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -2274,9 +2266,8 @@ await request(options, function (error, response) {
               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+              Impuesto:res.items[0] != undefined ? res.tax : '',
               Moneda:res.currency,
               VersionCFDI:res.version,
               Fechacompleta:res.issuedAt.substring(0, 10),
@@ -2418,7 +2409,7 @@ await request(options, function (error, response) {
               "Clave de unidad":res.items[0].unitCode,
               "Valor unitario":res.items[0].unitAmount.toString(),
               "Descuento":res.discount.toString(),
-              "Impuesto":res.items[0].taxAmount.toString(),
+              "Impuesto":res.tax.toString(),
               "Subtotal":res.subtotal.toString(),
               "Total":res.total.toString(),
               "TotalMXN": (res.total * res.exchangeRate).toString()
@@ -2437,7 +2428,7 @@ await request(options, function (error, response) {
               FullDate:res.issuedAt.substring(0, 10),
               Subtotal:res.subtotal,
               Descuento:res.discount,
-              Impuesto:res.items[0].taxAmount,
+              Impuesto:res.tax,
               Total:res.total,
               UUID:res.uuid,
               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -2449,9 +2440,8 @@ await request(options, function (error, response) {
               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+              Impuesto:res.items[0] != undefined ? res.tax : '',
               Moneda:res.currency,
               VersionCFDI:res.version,
               Fechacompleta:res.issuedAt.substring(0, 10),
@@ -2873,7 +2863,7 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
               "Clave de unidad":res.items[0].unitCode,
               "Valor unitario":res.items[0].unitAmount.toString(),
               "Descuento":res.discount.toString(),
-              "Impuesto":res.items[0].taxAmount.toString(),
+              "Impuesto":res.tax.toString(),
               "Subtotal":res.subtotal.toString(),
               "Total":res.total.toString(),
               "TotalMXN": (res.items[0].totalAmount).toString()
@@ -2892,7 +2882,7 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
               FullDate:res.issuedAt.substring(0, 10),
               Subtotal:res.subtotal,
               Descuento:res.discount,
-              Impuesto:res.items[0].taxAmount,
+              Impuesto:res.tax,
               Total:res.total,
               UUID:res.uuid,
               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -2904,9 +2894,8 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+              Impuesto:res.items[0] != undefined ? res.tax : '',
               Moneda:res.currency,
               VersionCFDI:res.version,
               Fechacompleta:res.issuedAt.substring(0, 10),
@@ -3131,7 +3120,7 @@ while (ApiLengthVenta > 0) {
                 "Clave de unidad":res.items[0].unitCode,
                 "Valor unitario":res.items[0].unitAmount.toString(),
                 "Descuento":res.discount.toString(),
-                "Impuesto":res.items[0].taxAmount.toString(),
+                "Impuesto":res.tax.toString(),
                 "Subtotal":res.subtotal.toString(),
                 "Total":res.total.toString(),
                 "TotalMXN": (res.items[0].totalAmount).toString()
@@ -3150,7 +3139,7 @@ while (ApiLengthVenta > 0) {
                 FullDate:res.issuedAt.substring(0, 10),
                 Subtotal:res.subtotal,
                 Descuento:res.discount,
-                Impuesto:res.items[0].taxAmount,
+                Impuesto:res.tax,
                 Total:res.total,
                 UUID:res.uuid,
                 Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -3162,9 +3151,8 @@ while (ApiLengthVenta > 0) {
                 DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                 NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                 ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                Impuesto:res.items[0] != undefined ? res.tax : '',
                 Moneda:res.currency,
                 VersionCFDI:res.version,
                 Fechacompleta:res.issuedAt.substring(0, 10),
@@ -3280,7 +3268,7 @@ while (ApiLengthVenta > 0) {
               "Clave de unidad":res.items[0].unitCode,
               "Valor unitario":res.items[0].unitAmount.toString(),
               "Descuento":res.discount.toString(),
-              "Impuesto":res.items[0].taxAmount.toString(),
+              "Impuesto":res.tax.toString(),
               "Subtotal":res.subtotal.toString(),
               "Total":res.total.toString(),
               "TotalMXN": (res.items[0].totalAmount).toString()
@@ -3299,7 +3287,7 @@ while (ApiLengthVenta > 0) {
               FullDate:res.issuedAt.substring(0, 10),
               Subtotal:res.subtotal,
               Descuento:res.discount,
-              Impuesto:res.items[0].taxAmount,
+              Impuesto:res.tax,
               Total:res.total,
               UUID:res.uuid,
               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -3311,9 +3299,8 @@ while (ApiLengthVenta > 0) {
               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-              ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-              Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-              TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+              Impuesto:res.items[0] != undefined ? res.tax : '',
               Moneda:res.currency,
               VersionCFDI:res.version,
               Fechacompleta:res.issuedAt.substring(0, 10),
@@ -3649,7 +3636,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
                 "Clave de unidad":res.items[0].unitCode,
                 "Valor unitario":res.items[0].unitAmount.toString(),
                 "Descuento":res.discount.toString(),
-                "Impuesto":res.items[0].taxAmount,
+                "Impuesto":res.tax,
                 "Subtotal":res.subtotal.toString(),
                 "Total":res.total.toString(),
                 "TotalMXN": (res.items[0].totalAmount).toString()
@@ -3668,7 +3655,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
                 FullDate:res.issuedAt.substring(0, 10),
                 Subtotal:res.subtotal,
                 Descuento:res.discount,
-                Impuesto:res.items[0].taxAmount,
+                Impuesto:res.tax,
                 Total:res.total,
                 UUID:res.uuid,
                 Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -3680,9 +3667,9 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
                 DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                 NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                 ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                // ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                // Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                // TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                // Impuesto:res.items[0] != undefined ? res.tax : '',
+              
                 Moneda:res.currency,
                 VersionCFDI:res.version,
                 Fechacompleta:res.issuedAt.substring(0, 10),
@@ -3898,7 +3885,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
                 "Clave de unidad":res.items[0].unitCode,
                 "Valor unitario":res.items[0].unitAmount.toString(),
                 "Descuento":res.discount.toString(),
-                "Impuesto":res.items[0].taxAmount.toString(),
+                "Impuesto":res.tax.toString(),
                 "Subtotal":res.subtotal.toString(),
                 "Total":res.total.toString(),
                 "TotalMXN": (res.items[0].totalAmount).toString()
@@ -3917,7 +3904,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
                 FullDate:res.issuedAt.substring(0, 10),
                 Subtotal:res.subtotal,
                 Descuento:res.discount,
-                Impuesto:res.items[0].taxAmount,
+                Impuesto:res.tax,
                 Total:res.total,
                 UUID:res.uuid,
                 Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -3929,9 +3916,8 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
                 DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
                 NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
                 ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-                Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-                TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                Impuesto:res.items[0] != undefined ? res.tax : '',
                 Moneda:res.currency,
                 VersionCFDI:res.version,
                 Fechacompleta:res.issuedAt.substring(0, 10),
@@ -4047,7 +4033,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
               "Clave de unidad":res.items[0].unitCode,
               "Valor unitario":res.items[0].unitAmount.toString(),
               "Descuento":res.discount.toString(),
-              "Impuesto":res.items[0].taxAmount,
+              "Impuesto":res.tax,
               "Subtotal":res.subtotal.toString(),
               "Total":res.total.toString(),
               "TotalMXN": (res.items[0].totalAmount).toString()
@@ -4066,7 +4052,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
               FullDate:res.issuedAt.substring(0, 10),
               Subtotal:res.subtotal,
               Descuento:res.discount,
-              Impuesto:res.items[0].taxAmount,
+              Impuesto:res.tax,
               Total:res.total,
               UUID:res.uuid,
               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
@@ -4078,9 +4064,9 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-              // ImporteImpuesto:res.items[0] != undefined ? res.items[0].taxes[0].amount : '',
-              // Impuesto:res.items[0] != undefined ? res.items[0].taxes[0].tax : '',
-              // TasaOCuota:res.items[0] != undefined ? res.items[0].taxes[0].factor.amount : '',
+              // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+              // Impuesto:res.items[0] != undefined ? res.tax : '',
+            
               Moneda:res.currency,
               VersionCFDI:res.version,
               Fechacompleta:res.issuedAt.substring(0, 10),
