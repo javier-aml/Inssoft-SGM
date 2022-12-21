@@ -14,11 +14,11 @@ let tanque6 =require(path.join(__dirname, '../public/json/glencore/tanque6.json'
 let tanque7 =require(path.join(__dirname, '../public/json/glencore/tanque7.json'))
 let tanque8 =require(path.join(__dirname, '../public/json/glencore/tanque8.json'))
 const delay = ms => new Promise(res => setTimeout(res, ms));
-router.post('/TestApi', cors(),(req,res) => {
+router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.post('/DiarioGlencore/:fecha',cors(), async (req, res) => {
+router.post('/DiarioGlencore/:fecha', async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
     var datoCompra;
@@ -1358,7 +1358,7 @@ if (tomorrowsplit[1].length == 1) {
   
   
 });
-router.post('/MensualGlencore/:fecha',cors(), async (req, res) => {
+router.post('/MensualGlencore/:fecha', async (req, res) => {
   console.log("mess");
   const xl = require('excel4node');
 console.log("Empieza");
@@ -4169,7 +4169,7 @@ router.post('/MensualNatgas/:fecha', async (req, res) => {
     res.send(datos)
   
   
-  });
+});
 router.post('/calendar/simple',async (req,res) =>{
   const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
   let index = 0
