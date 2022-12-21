@@ -3397,7 +3397,8 @@ const datos = {
   res.send(datos)
 
  } catch (error) {
-  res.send(datos)
+  console.log(error);
+  res.send(error)
  }
 
 });
