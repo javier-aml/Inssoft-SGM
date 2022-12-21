@@ -2990,7 +2990,6 @@ while (ApiLengthVenta > 0) {
     temp = temp['hydra:member']
     ApiLengthVenta = temp.length
     for (const key in temp) {
-      console.log("Venta");
       const res = temp[key]
       fecha5 = res.issuedAt.substring(0, 10)
       fecha4 = fecha5
@@ -3026,6 +3025,8 @@ while (ApiLengthVenta > 0) {
                 }
             }]
     }
+    console.log('Venta');
+    console.log(res.uuid);
         if (res.receiver.rfc == "XAXX010101000") {
           for (const key in res.items) {
             entregaCFDI.Cfdi = res.uuid
