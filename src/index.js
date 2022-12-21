@@ -10,7 +10,7 @@ const session = require('express-session');
 const cors = require("cors")
 var corsOptions = {
     origin: 'http://localhost:3000',
-    "methods": "GET,POST",
+    "methods": "GET,POST,OPTIONS",
     allowedHeaders:"Content-Type",
     credentials:true
   }
