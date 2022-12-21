@@ -7,13 +7,13 @@ const cookieParase = require('cookie-parser');
 const signStr = 'okokkokokokokokokok'
 app.use(cookieParase(signStr));
 const session = require('express-session');
-const cors = require("cors")
-var corsOptions = {
-    origin: 'http://localhost:3000',
-    "methods": "GET,POST",
-    allowedHeaders:"Content-Type",
-    credentials:true
-  }
+// const cors = require("cors")
+// var corsOptions = {
+//     origin: 'http://localhost:3000',
+//     "methods": "GET,POST",
+//     allowedHeaders:"Content-Type",
+//     credentials:true
+//   }
   
 const favicon = require('serve-favicon');
 
@@ -45,7 +45,9 @@ app.use(express.json());
 // var expiryDate = new Date( Date.now() + 60 * 60 * 1000 ); // 1 hour
 // Global variables
     app.use((req,res,next) => {
-
+        res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        res.header('Access-Control-Allow-Methods', 'GET, POST');
+        res.header('Access-Control-Allow-Credentials','true')
         next();
     });
 // routes
@@ -54,7 +56,9 @@ app.use(express.json());
 // app.use('/', routes);
 // app.use(require('./routes'));
 // app.use('/VistaPrueba',require('./routes/VistaPrueba.js'));
-app.use('/api_sgm_v1',cors(corsOptions),require('./routes/api_sgm_v1.js'));
+// app.use('/api_sgm_v1',cors(corsOptions),require('./routes/api_sgm_v1.js'));
+app.use('/api_sgm_v1',require('./routes/api_sgm_v1.js'));
+
 //app.use(express.static('src'));
 
 var url = require('url')
