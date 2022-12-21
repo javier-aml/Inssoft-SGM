@@ -36,13 +36,16 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 // var expiryDate = new Date( Date.now() + 60 * 60 * 1000 ); // 1 hour
-
+const cors = require("cors")
+var corsOptions = {
+    origin: 'http://localhost:4000',
+    "methods": "GET,POST",
+    allowedHeaders:"Content-Type"
+  }
 
 // Global variables
     app.use((req,res,next) => {
-        res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-        res.header('Access-Control-Allow-Methods', 'GET, POST');
-        res.header('Access-Control-Allow-Credentials','true')
+        cors(corsOptions)
         next();
     });
 // routes
