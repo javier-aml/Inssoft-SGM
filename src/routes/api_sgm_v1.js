@@ -5,6 +5,8 @@ const router = express.Router();
 // console.log(router);
 // const pool = require('../database');
 const fs = require("fs");
+
+
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
 let tanque3 =require(path.join(__dirname, '../public/json/glencore/tanque3.json'))
