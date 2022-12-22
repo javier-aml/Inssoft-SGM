@@ -121,12 +121,12 @@ router.post('/DiarioGlencore/:fecha', cors(corsOptions), async (req, res) => {
   }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 2)
+tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 console.log(today);
 console.log(tomorrow);
 tomorrow = tomorrow.split('-')
-tomorrow = `${tomorrow[2]}-${tomorrow[1]}-${tomorrow[0]}`
+tomorrow = `${tomorrow[2]}-${tomorrow[0]}-${tomorrow[1]}`
 let tomorrowsplit = tomorrow.split("-")
 if (tomorrowsplit[2].length == 1) {
   tomorrow = `${tomorrowsplit[0]}-${tomorrowsplit[1]}-0${tomorrowsplit[2]}`
@@ -2645,10 +2645,10 @@ if (fechasplit[2].length == 1) {
 }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 2)
+tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 tomorrow = tomorrow.split('-')
-tomorrow = `${tomorrow[2]}-${tomorrow[1]}-${tomorrow[0]}`
+tomorrow = `${tomorrow[2]}-${tomorrow[0]}-${tomorrow[1]}`
 let tomorrowsplit = tomorrow.split("-")
 console.log(tomorrow + ">>>>>>>>>>>>>>>")
 
