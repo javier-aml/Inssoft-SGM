@@ -2666,7 +2666,7 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
   console.log(fecha);
   let indexLoopCompra = 0
   console.log(indexLoopCompra);
-    while (indexLoopCompra < 11) {
+    while (indexLoopCompra < 3) {
       indexLoopCompra++
       var options = {
         'method': 'GET',
@@ -2913,8 +2913,8 @@ const jsonVenta = {}
 ///venta
 let fecha4 = fecha;
 let indexLoopVenta = 0
-console.log(indexLoopVenta < 11);
-while (indexLoopVenta < 11) {
+console.log(indexLoopVenta < 3);
+while (indexLoopVenta < 3) {
   indexLoopVenta++
   var options = {
     'method': 'GET',
@@ -3434,7 +3434,7 @@ router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
   let indexCompra = 0;
   const jsonCompra = {}
   let indexLoopCompra = 0
-  while (indexLoopCompra < 11) {
+  while (indexLoopCompra < 3) {
     indexLoopCompra++
   console.log(fecha2.indexOf(fecha) != -1);
       var options = {
@@ -3680,7 +3680,7 @@ router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
   ///venta
   let fecha4 = fecha;
   let indexLoopVenta = 0
-  while (indexLoopVenta < 11) {
+  while (indexLoopVenta < 3) {
   indexLoopVenta++
   var options = {
     'method': 'GET',
