@@ -2592,8 +2592,6 @@ router.post('/diario-natgas/:fecha', cors(corsOptions), async (req, res) => {
   ]
   let fecha = req.params.fecha
   let fechasplit = fecha.split("-")
-  console.log(fecha);
-  console.log(fechasplit[2].length );
   let fechaArreglada;
   if (fechasplit[2].length == 1) {
     fecha = `${fechasplit[0]}-${fechasplit[1]}-0${fechasplit[2]}`
@@ -2631,6 +2629,8 @@ router.post('/diario-natgas/:fecha', cors(corsOptions), async (req, res) => {
   let ApiLength= 10
   let indexCompra = 0;
   const jsonCompra = {}
+  let compraRepetidos = [];
+  let ventaRepetidos = [];
   headingColumnNames.forEach(heading => {
     ws.cell(1, headingColumnIndex++)
         .string(heading)
@@ -2645,10 +2645,10 @@ if (fechasplit[2].length == 1) {
 }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 1)
+tomorrow.setDate(tomorrow.getDate() + 2)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 tomorrow = tomorrow.split('-')
-tomorrow = `${tomorrow[2]}-${tomorrow[0]}-${tomorrow[1]}`
+tomorrow = `${tomorrow[2]}-${tomorrow[1]}-${tomorrow[0]}`
 let tomorrowsplit = tomorrow.split("-")
 console.log(tomorrow + ">>>>>>>>>>>>>>>")
 
@@ -2664,7 +2664,10 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
 }
   console.log(tomorrow + "---------");
   console.log(fecha);
-    while (ApiLength > 0) {
+  let indexLoopCompra = 0
+  console.log(indexLoopCompra);
+    while (indexLoopCompra < 11) {
+      indexLoopCompra++
       var options = {
         'method': 'GET',
         'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
@@ -2688,7 +2691,6 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
         ApiLength = temp.length
         for (const key in temp) {
           const res = temp[key]
-          console.log(res.uuid);
           let metodoPago;
           switch (res.paymentMethod) {
             case 01:
@@ -2756,7 +2758,7 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
           }
           fecha3 = res.issuedAt.substring(0, 10)
           fecha2 = fecha3
-          if (res.items[0] != undefined ) {
+          if (res.items[0] != undefined) {
             let RECEPCION = {
               "TipoComplemento": "Expendio",
               "Nacional": [{
@@ -2867,7 +2869,9 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
 
     });
     await delay(3300);
-    }
+  
+  
+  }
     console.log("paso");
      datoCompra = {
       data:jsonCompra,
@@ -2908,7 +2912,10 @@ const jsonVenta = {}
 
 ///venta
 let fecha4 = fecha;
-while (ApiLengthVenta > 0) {
+let indexLoopVenta = 0
+console.log(indexLoopVenta < 11);
+while (indexLoopVenta < 11) {
+  indexLoopVenta++
   var options = {
     'method': 'GET',
     'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
@@ -3290,6 +3297,7 @@ venta.forEach( record => {
   });
   rowIndex2++;
 }); 
+
 }
 const datoVenta = {
   data:jsonVenta,
@@ -3425,7 +3433,9 @@ router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
   let ApiLength= 10
   let indexCompra = 0;
   const jsonCompra = {}
-  while (ApiLength > 0 && fecha2.indexOf(fecha) != -1) {
+  let indexLoopCompra = 0
+  while (indexLoopCompra < 11) {
+    indexLoopCompra++
   console.log(fecha2.indexOf(fecha) != -1);
       var options = {
         'method': 'GET',
@@ -3669,8 +3679,9 @@ router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
   
   ///venta
   let fecha4 = fecha;
-  while (ApiLengthVenta > 0 && fecha4.indexOf(fecha) != -1) {
-  
+  let indexLoopVenta = 0
+  while (indexLoopVenta < 11) {
+  indexLoopVenta++
   var options = {
     'method': 'GET',
     'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-02T00:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
