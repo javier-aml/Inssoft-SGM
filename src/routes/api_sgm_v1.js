@@ -2650,16 +2650,19 @@ tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 tomorrow = tomorrow.split('-')
 tomorrow = `${tomorrow[2]}-${tomorrow[1]}-${tomorrow[0]}`
 let tomorrowsplit = tomorrow.split("-")
+console.log(tomorrow + ">>>>>>>>>>>>>>>")
+
 if (tomorrowsplit[2].length == 1) {
 tomorrow = `${tomorrowsplit[0]}-${tomorrowsplit[1]}-0${tomorrowsplit[2]}`
 
 }
 tomorrowsplit = tomorrow.split("-")
+console.log(tomorrow + "<<<<<<<");
 if (tomorrowsplit[1].length == 1) {
 
 tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
 }
-  console.log(tomorrow);
+  console.log(tomorrow + "---------");
   console.log(fecha);
     while (ApiLength > 0) {
       var options = {
