@@ -2681,6 +2681,8 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
         temp = temp['hydra:member']
         console.log("@@@@@@@@@@@");
         ApiLength = temp.length
+        console.log(ApiLength);
+        console.log(temp);
         for (const key in temp) {
           const res = temp[key]
           console.log(res.uuid);
