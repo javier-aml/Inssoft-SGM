@@ -2648,7 +2648,7 @@ let tomorrow = new Date(today)
 tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 tomorrow = tomorrow.split('-')
-tomorrow = `${tomorrow[2]}-${tomorrow[1]}-${tomorrow[0]}`
+tomorrow = `${tomorrow[2]}-${tomorrow[0]}-${tomorrow[1]}`
 let tomorrowsplit = tomorrow.split("-")
 console.log(tomorrow + ">>>>>>>>>>>>>>>")
 
@@ -2686,8 +2686,6 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
         temp = temp['hydra:member']
         console.log("@@@@@@@@@@@");
         ApiLength = temp.length
-        console.log(ApiLength);
-        console.log(temp);
         for (const key in temp) {
           const res = temp[key]
           console.log(res.uuid);
