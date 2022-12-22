@@ -2664,7 +2664,7 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
     while (ApiLength > 0) {
       var options = {
         'method': 'GET',
-        'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+        'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
         'headers': {
           'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
         }
@@ -2910,7 +2910,7 @@ let fecha4 = fecha;
 // while (ApiLengthVenta > 0) {
 //   var options = {
 //     'method': 'GET',
-//     'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
+//     'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
 //     'headers': {
 //       'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
 //     }
