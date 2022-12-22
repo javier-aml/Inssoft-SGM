@@ -2683,6 +2683,8 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
         ApiLength = temp.length
         for (const key in temp) {
           const res = temp[key]
+          console.log(res.uuid);
+          let metodoPago;
           switch (res.paymentMethod) {
             case 01:
               metodoPago = 'Efectivo'
@@ -2768,7 +2770,6 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
                   }]
               }]
           }
-            console.log("normal");
             RECEPCION.Nacional[0].RfcClienteOProveedor = res.receiver.rfc
             RECEPCION.Nacional[0].NombreClienteOProveedor = res.receiver.name
             RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
@@ -2782,72 +2783,6 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
             productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
             productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
             productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
-            
-            let metodoPago = ''
-            switch (res.paymentMethod) {
-              case 01:
-                metodoPago = 'Efectivo'
-                break;
-                case 02:
-                  metodoPago = 'Cheque de nómina'
-                  break;
-                  case 03:
-                    metodoPago = 'Transferencia electrónica'
-                    break;
-                    case 04:
-                      metodoPago = 'Tarjeta de crédito'
-                      break;
-                      case 05:
-                        metodoPago = 'Monedero electrónico'
-                        break;
-                        case 06:
-                          metodoPago = 'Dinero digital'
-                          break;
-                          case 08:
-                            metodoPago = 'Vales de despensa'
-                            break;
-                            case 12:
-                              metodoPago = 'Liquidación'
-                              break;
-                              case 13:
-                                metodoPago = 'Pago por subrogación'
-                                break;
-                                case 14:
-                                  metodoPago = 'Pago por consignación'
-                                  break;
-                                  case 15:
-                                    metodoPago = 'Condonación'
-                                    break;
-                                    case 17:
-                                      metodoPago = 'Compensación'
-                                      break;
-                                      case 23:
-                                        metodoPago = 'Novacion'
-                                        break;
-                                        case 24:
-                                          metodoPago = 'Confusión'
-                                          break;
-                                          case 25:
-                                            metodoPago = 'Envío de deuda'
-                                            break;
-                                            case 26:
-                                              metodoPago = 'Prescripción o caducidad'
-                                              break;
-                                              case 27:
-                                                metodoPago = 'A satisfacción del acreedor'
-                                                break;
-                                                case 28:
-                                                  metodoPago = 'Tarjeta de débito'
-                                                  break;
-                                                  case 29:
-                                                    metodoPago = 'Tarjeta de servicio'
-                                                    break;
-                
-            
-              default:
-                metodoPago = 'Por definir'
-                break;
-            }
            
             const dataExcel = {
               "UUID":res.uuid,
