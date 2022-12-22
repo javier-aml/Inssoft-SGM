@@ -2645,7 +2645,7 @@ if (fechasplit[2].length == 1) {
 }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 2)
+tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 tomorrow = tomorrow.split('-')
 tomorrow = `${tomorrow[2]}-${tomorrow[1]}-${tomorrow[0]}`
