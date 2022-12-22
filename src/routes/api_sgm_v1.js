@@ -2659,6 +2659,8 @@ if (tomorrowsplit[1].length == 1) {
 
 tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
 }
+  console.log(tomorrow);
+  console.log(fecha);
     while (ApiLength > 0) {
       var options = {
         'method': 'GET',
