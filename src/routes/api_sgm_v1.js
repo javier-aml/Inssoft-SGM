@@ -25,7 +25,16 @@ router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-
+router.post('/Estructura',async (req,res) => {
+  try {
+     dirRoot = await arbolArchivos()
+     const Prueba = await dirRoot
+      res.send(Prueba)
+  } catch (error) {
+    console.log(error);
+    res.send(error)
+  }
+})
 router.get('/TestApi',cors(corsOptions),(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)

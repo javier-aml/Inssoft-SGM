@@ -60,6 +60,7 @@ var url = require('url')
 
 // public
  app.use(express.static(path.join(__dirname, 'public')));
+ app.use('/sgm',express.static(path.join(__dirname, 'public/formatos-sgm')));
 
 // start the server
 
