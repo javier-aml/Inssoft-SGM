@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const multer = require('multer');
 const router = express.Router();
+const pool = require('../database');
 // console.log(router);
 // const pool = require('../database');
 const fs = require("fs");
@@ -12,6 +14,12 @@ var corsOptions = {
   allowedHeaders:"Content-Type",
   credentials:true
 }
+const storage = multer.diskStorage({
+  destination:  path.join(__dirname, '../public/formatos-sgm'),
+  filename: function(req,file,cb) {
+    cb(file.originalname);
+  }
+})
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
 let tanque3 =require(path.join(__dirname, '../public/json/glencore/tanque3.json'))
@@ -35,11 +43,13 @@ router.post('/Estructura',async (req,res) => {
     res.send(error)
   }
 })
+router.post('/add/file',cors(corsOptions),async (req,res) => [
+
+])
 router.get('/TestApi',cors(corsOptions),(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-
 router.post('/DiarioGlencore/:fecha', cors(corsOptions), async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
@@ -4220,6 +4230,74 @@ function acomodarFecha(date) {
   const fecha = `${split[2]}-${split[1]}-${split[0]}`;
   return fecha;
   }
+
+  async function arbolArchivos(){
+    const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_natgas;')
+    const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_natgas;')
+    let root = {};
+    for (const key in directory) {
+         let directoryname =directory[key].position
+         if (directoryname.indexOf(".") == -1) {
+              root[directory[key].position] = {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+         }else{
+              let position = directoryname.split(".")
+              switch (position.length) {
+                   case 2:
+                        root[position[0]]['dir'][position[1]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                        break;
+                        case 3:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                             break;
+                             case 4:
+                               // console.log(root[position[0]]['dir'][position[1]]['dir']);
+                               // console.log(position);
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                  break;
+                                  case 5:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                       break;
+                                       case 6:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                         break;
+  
+                   default:
+                        break;
+              }
+         }
+    }
+    for (const key in file) {
+         let fileP =file[key].position
+  
+         let position = fileP.split(".")
+  
+         switch (position.length) {
+              case 2:
+                   root[position[0]]['file'][position[1]]= {fileName:file[key].fileName,ext:file[key].ext}
+                   break;
+                   case 3:
+                        root[position[0]]['dir'][position[1]]['file'][position[2]]= {fileName:file[key].fileName,ext:file[key].ext}
+                        break;
+                        case 4:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]['file'][position[3]]= {fileName:file[key].fileName,ext:file[key].ext}
+                             break;
+                             case 5:
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['file'][position[4]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                  break;
+                                  case 6:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['file'][position[5]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                       break;
+                                       case 7:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]['file'][position[6]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                         break;
+  
+              default:
+                   break;
+         }
+    }
+    // console.log(root);
+    return root;
+  }
+
 
 function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) } 
 module.exports = router;
