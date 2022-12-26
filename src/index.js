@@ -5,6 +5,9 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const cookieParase = require('cookie-parser');
 const signStr = 'okokkokokokokokokok'
+require('dotenv').config()
+console.log(`postgres://${process.env.DATABASE_USER_SGM}:${process.env.DATABASE_PASSWORD_SGM}@${process.env.DATABASE_HOST_SGM}:${process.env.DATABASE_PORT_SGM}/${process.env.DATABASE_NAME_SGM}`);
+console.log('postgres://schtelemetria:Sch3m@T3l3m3tr1@@localhost:5432/dbtelemetria');
 app.use(cookieParase(signStr));
 const session = require('express-session');
 const cors = require("cors")
