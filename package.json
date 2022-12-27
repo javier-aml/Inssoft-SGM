@@ -45,6 +45,7 @@
     "pdfkit": "^0.12.3",
     "pdfkit-table": "^0.1.73",
     "pg-promise": "^10.15.4",
+    "phantom-html2pdf": "^4.0.2",
     "qrcode": "^1.4.4",
     "serve-favicon": "^2.5.0",
     "timeago.js": "^4.0.2",

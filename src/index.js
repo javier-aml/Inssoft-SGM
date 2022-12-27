@@ -12,9 +12,8 @@ app.use(cookieParase(signStr));
 const session = require('express-session');
 const cors = require("cors")
 var corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:4000',
     "methods": "GET,POST,OPTIONS",
-    allowedHeaders:"Content-Type",
     credentials:true
   }
   
@@ -48,12 +47,12 @@ app.use(express.json());
 // var expiryDate = new Date( Date.now() + 60 * 60 * 1000 ); // 1 hour
 // Global variables
     app.use((req,res,next) => {
-        res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        res.header('Access-Control-Allow-Origin', 'http://localhost:4000');
         res.header('Access-Control-Allow-Methods', 'GET, POST,OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'x-www-form-urlencoded, Origin, X-Requested-With, Content-Type, Accept, Authorization, *');
         res.header('Access-Control-Allow-Credentials',true)
         next();
     });
-
 app.use('/api_sgm_v1',cors(corsOptions),require('./routes/api_sgm_v1.js'));
 // app.use('/api_sgm_v1',require('./routes/api_sgm_v1.js'));
 
@@ -74,6 +73,10 @@ var url = require('url')
 // });
 
 var port = app.get('port');
+app.use(function(err, req, res, next) {
+    console.error(err);
+    res.status(500).send('Something broke!');
+  });
 app.listen(port, () => {
     console.log("server is running on port :" + port);
 }).on('error', function (err) {

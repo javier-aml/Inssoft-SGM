@@ -9,17 +9,54 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:4000',
   "methods": "GET,POST,OPTIONS",
-  allowedHeaders:"Content-Type",
   credentials:true
 }
 const storage = multer.diskStorage({
-  destination:  path.join(__dirname, '../public/formatos-sgm'),
+  destination:  path.join(__dirname, '../public/TestArchivosMulter'),
   filename: function(req,file,cb) {
-    cb(file.originalname);
+    console.log(path.join(__dirname, '../public/TestArchivosMulter'));
+    cb(null, file.originalname )
   }
 })
+const upload = multer({
+  storage:storage,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
+// const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
+
+router.post('/api/test', upload.single('upl'), function (req, res) {
+   console.log(req.body);
+   console.log('-------------');
+   console.log(req.file);
+   var pdf = require('phantom-html2pdf');
+ console.log(path.join(__dirname, '../public/TestArchivosMulter/' + req.file.filename));
+   const options = {
+        "html" : path.join(__dirname, '../public/TestArchivosMulter/', req.file.filename),
+        "runnings" : "Path to runnings file. Check further below for explanation.",
+        "paperSize" : "Two ways to do this, see below",
+    }
+pdf.convert(options, function(err, result) {
+ 
+    /* Using a buffer and callback */
+    result.toBuffer(function(returnedBuffer) {});
+ 
+    /* Using a readable stream */
+    var stream = result.toStream();
+ 
+    /* Using the temp file path */
+    var tmpPath = result.getTmpPath();
+    /* Using the file writer and callback */
+    result.toFile(path.join(__dirname, '../public/TestArchivosMulter/testPDf.pdf'), function() {});
+});
+   // do stuff with file
+
+});
+
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
 let tanque3 =require(path.join(__dirname, '../public/json/glencore/tanque3.json'))
