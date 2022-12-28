@@ -4204,6 +4204,16 @@ router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
 
 });
 
+router.get('/equipos',cors(corsOptions), async (req, res) => {
+
+  try {
+     const equipos = await pool.any('SELECT * FROM schtelemetria.equipo;')
+     res.send({equipos});
+  } catch (error) {
+    res.send(error)
+  }
+});
+
 function dateFormat(fecha) {
   const separar = fecha.split("-")
   let fechaformat = ""
