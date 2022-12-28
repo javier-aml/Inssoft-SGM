@@ -29,34 +29,90 @@ const upload = multer({
 })
 // const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
 
-router.post('/api/test', upload.single('upl'), function (req, res) {
+router.post('/api/test', upload.single('upl'),async function (req, res) {
    console.log(req.body);
    console.log('-------------');
    console.log(req.file);
-//    var pdf = require('phantom-html2pdf');
-//  console.log(path.join(__dirname, '../public/TestArchivosMulter/' + req.file.filename));
-//    const options = {
-//         "html" : path.join(__dirname, '../public/TestArchivosMulter/', req.file.filename),
-//         "runnings" : "Path to runnings file. Check further below for explanation.",
-//         "paperSize" : "Two ways to do this, see below",
-//     }
-// pdf.convert(options, function(err, result) {
-//  
-//     /* Using a buffer and callback */
-//     result.toBuffer(function(returnedBuffer) {});
-//  
-//     /* Using a readable stream */
-//     var stream = result.toStream();
-//  
-//     /* Using the temp file path */
-//     var tmpPath = result.getTmpPath();
-//     /* Using the file writer and callback */
-//     result.toFile(path.join(__dirname, '../public/TestArchivosMulter/testPDf.pdf'), function() {});
-// });
-//    // do stuff with file
+
+res.send('test')
+});
+router.post('/add/task/:position/:nombre',async function (req, res) {
+  const nombre = req.params.nombre
+  const position = req.params.position
+
+  await pool.query('INSERT INTO schtelemetria.tarea("descTarea", tarea,"Fecha", "Id_File", "Finished") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished})', {
+    descTarea: nombre,
+    tarea: position,
+    Fecha: '2022/12/30',
+    Id_File : 1,
+    "Finished": 1
+});
 res.send('test')
 });
 
+router.post('/add/File/:fileP',async function (req, res) {
+  console.log(req.params);
+  let fileP = req.params.fileP
+  if (fileP ==  '1') {
+   dataP = '1.1'
+ } else {
+  max = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position LIKE '${fileP}%';`);
+  let  positions = [];
+  const dots = fileP.split(".").length;
+
+  let max1 = null;
+  if (max == null) {
+       dataP = fileP + '.1'
+  }else{
+       for (const key in max) {
+            const temp =max[key].position
+            if (temp.split(".").length - 1 == dots) {
+
+                 positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                 max1 = max[key].position
+            }
+       }
+       const maxP = Math.max(...positions) + 1
+       console.log(max1);
+       if (max1==null) {
+            dataP = fileP + '.1'
+       } else {
+
+            dataP = max1.replace(/.$/,`${maxP}`)
+       }
+  }
+ }
+
+ var fileName = req.params.fileP
+//  console.log(fileName);
+//  const cant = fileName.split(".").length
+//  console.log(cant);
+//  fileName = fileName.slice(0,cant-1)
+//  console.log(fileName);
+ var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
+ console.log(file);
+ const fs = require('fs');
+ let name = file[0].dirName.split(' ')
+ name = name.join().replace(',','_')
+ name = name.replace(',','_')
+ name = name.replace(',','_')
+ name = name.replace(',','_')
+ name = name.replace(',','_')
+  name = name.replace(',','_')
+  name = name.replace(',','_')
+ console.log(name);
+ console.log(path.join(__dirname, '../public/TestArchivosMulter/',file[0].dirName.replace(' ',''),'.pdf'));
+ fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/TestArchivosMulter/',name + '.pdf'), () => {
+    console.log("\nFile Renamed!\n");
+
+  });
+  await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas("fileName", "ext", "position") VALUES(${fileName},${ext}, ${position})', {
+    fileName: name,
+    ext: 'pdf',
+    position: name + '.1'
+});
+res.send('test')
+});
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
 let tanque3 =require(path.join(__dirname, '../public/json/glencore/tanque3.json'))
@@ -69,6 +125,16 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
+})
+router.post('/Task',async (req,res) => {
+  try {
+     dirRoot = await pool.query('SELECT id, "descTarea", tarea, "Id_File", "Finished", "Fecha" FROM schtelemetria.tarea;')
+     const Prueba = dirRoot
+      res.send(Prueba)
+  } catch (error) {
+    console.log(error);
+    res.send(error)
+  }
 })
 router.post('/Estructura',async (req,res) => {
   try {
