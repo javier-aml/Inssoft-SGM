@@ -33,28 +33,28 @@ router.post('/api/test', upload.single('upl'), function (req, res) {
    console.log(req.body);
    console.log('-------------');
    console.log(req.file);
-   var pdf = require('phantom-html2pdf');
- console.log(path.join(__dirname, '../public/TestArchivosMulter/' + req.file.filename));
-   const options = {
-        "html" : path.join(__dirname, '../public/TestArchivosMulter/', req.file.filename),
-        "runnings" : "Path to runnings file. Check further below for explanation.",
-        "paperSize" : "Two ways to do this, see below",
-    }
-pdf.convert(options, function(err, result) {
- 
-    /* Using a buffer and callback */
-    result.toBuffer(function(returnedBuffer) {});
- 
-    /* Using a readable stream */
-    var stream = result.toStream();
- 
-    /* Using the temp file path */
-    var tmpPath = result.getTmpPath();
-    /* Using the file writer and callback */
-    result.toFile(path.join(__dirname, '../public/TestArchivosMulter/testPDf.pdf'), function() {});
-});
-   // do stuff with file
-
+//    var pdf = require('phantom-html2pdf');
+//  console.log(path.join(__dirname, '../public/TestArchivosMulter/' + req.file.filename));
+//    const options = {
+//         "html" : path.join(__dirname, '../public/TestArchivosMulter/', req.file.filename),
+//         "runnings" : "Path to runnings file. Check further below for explanation.",
+//         "paperSize" : "Two ways to do this, see below",
+//     }
+// pdf.convert(options, function(err, result) {
+//  
+//     /* Using a buffer and callback */
+//     result.toBuffer(function(returnedBuffer) {});
+//  
+//     /* Using a readable stream */
+//     var stream = result.toStream();
+//  
+//     /* Using the temp file path */
+//     var tmpPath = result.getTmpPath();
+//     /* Using the file writer and callback */
+//     result.toFile(path.join(__dirname, '../public/TestArchivosMulter/testPDf.pdf'), function() {});
+// });
+//    // do stuff with file
+res.send('test')
 });
 
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
@@ -72,8 +72,8 @@ router.post('/TestApi',(req,res) => {
 })
 router.post('/Estructura',async (req,res) => {
   try {
-    //  dirRoot = await arbolArchivos()
-     const Prueba = await pool.any('SELECT * FROM schtelemetria.estructura_archivos_natgas;')
+     dirRoot = await arbolArchivos()
+     const Prueba = dirRoot
       res.send(Prueba)
   } catch (error) {
     console.log(error);
