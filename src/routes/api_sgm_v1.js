@@ -4290,6 +4290,61 @@ router.get('/equipos',cors(corsOptions), async (req, res) => {
   }
 });
 
+router.post('/equipos',cors(corsOptions), async (req, res) => {
+
+  try {
+    const { 
+      nombre = '', 
+      descripcion = '',
+      instrumentoId = '',
+      marca = '', 
+      noSerie = '', 
+      fabricante = '', 
+      noActivo = '', 
+      prioridad = '', 
+      noCertificado = '', 
+      clasificacion = '', 
+      proveedor = '', 
+      fechaCalibracion = '0000-00-00',
+      hrsPromedioUso = '',
+      habilitado = 0,
+      fServicio = 0,
+      modelo = '',  
+      img = '' 
+      
+    } = req.body;
+
+    // Nombre, Marca, Modelo, nSerie, nCertificado, Clasificacion, fCalibracion, hPromedio, Descripcion
+    //const result = await pool.none('INSERT INTO  schtelemetria.equipo(Nombre) VALUES(${nombre})',{nombre});
+
+    let sql = 'INSERT INTO equipo('
+    sql += '"Nombre","Descripcion","idInstrumento","Marca","nSerie","Fabricante",'
+    sql += '"nActivo","Prioridad","nCertificado","Clasificacion","Proveedor",'
+    sql += '"fCalibracion","hPromedio","Habilitado","fServicio","Modelo","img"'
+    sql += ')'
+    sql += 'VALUES('
+    sql += '${nombre},${descripcion},${instrumentoId},${marca},${noSerie},'
+    sql += '${fabricante},${noActivo},${prioridad},${noCertificado},${clasificacion},'
+    sql += '${proveedor},${fechaCalibracion},${hrsPromedioUso},${habilitado},${fServicio},'
+    sql += '${modelo},${img}'
+    sql += ')'
+    const result = await pool.query(sql, {
+      nombre, descripcion, instrumentoId, marca, noSerie, fabricante, noActivo, 
+      prioridad, noCertificado, clasificacion, proveedor, fechaCalibracion,
+      hrsPromedioUso, habilitado, fServicio, modelo, img
+    }).then(data => {
+      return res.status(200).json({
+        success: true,
+      });
+    })
+    .catch(error => {
+      return res.status(200).json({ success: false, error: 'Something failed 1!' });
+    });
+  } catch (error) {
+    return res.status(200).json({ success: false, error: 'Something failed 2!' });
+  }
+});
+
 function dateFormat(fecha) {
   const separar = fecha.split("-")
   let fechaformat = ""
