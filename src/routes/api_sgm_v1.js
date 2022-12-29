@@ -4204,68 +4204,65 @@ router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
 
 });
 
-router.get('/equipos',cors(corsOptions), async (req, res) => {
+router.get('/instrumentos',cors(corsOptions), async (req, res) => {
 
   try {
-     const equipos = await pool.any('SELECT * FROM schtelemetria.equipo;')
-     res.send({equipos});
+     const instrumentos = await pool.any('SELECT * FROM instrumentos_tomza;')
+     res.send({instrumentos});
   } catch (error) {
     res.send(error)
   }
 });
 
-router.post('/equipos',cors(corsOptions), async (req, res) => {
+router.post('/instrumentos',cors(corsOptions), async (req, res) => {
 
   try {
     const { 
-      nombre = '', 
-      descripcion = '',
-      instrumentoId = '',
-      marca = '', 
-      noSerie = '', 
-      fabricante = '', 
-      noActivo = '', 
-      prioridad = '', 
-      noCertificado = '', 
-      clasificacion = '', 
-      proveedor = '', 
-      fechaCalibracion = '0000-00-00',
-      hrsPromedioUso = '',
-      habilitado = 0,
-      fServicio = 0,
-      modelo = '',  
-      img = '' 
-      
+      area = "", 
+      dispositivo = "",
+      identificador = "",
+      variable = "",
+      sistemaControl = 0, 
+      sistemaParoEmergencia = 0, 
+      sistemaVisualizacion = 0, 
+      alarmaBajaBajaVirtual = "", 
+      alarmaBajaVirtual = "", 
+      alarmaAltaVirtual = "", 
+      alarmaAltaAltaVirtual = "", 
+      alarmaProteccion = "", 
+      tipoSenal = "", 
+      entradaSalida = "ENTRADA"
     } = req.body;
 
-    // Nombre, Marca, Modelo, nSerie, nCertificado, Clasificacion, fCalibracion, hPromedio, Descripcion
-    //const result = await pool.none('INSERT INTO  schtelemetria.equipo(Nombre) VALUES(${nombre})',{nombre});
-
-    let sql = 'INSERT INTO equipo('
-    sql += '"Nombre","Descripcion","idInstrumento","Marca","nSerie","Fabricante",'
-    sql += '"nActivo","Prioridad","nCertificado","Clasificacion","Proveedor",'
-    sql += '"fCalibracion","hPromedio","Habilitado","fServicio","Modelo","img"'
+    let sql = 'INSERT INTO instrumentos_tomza('
+    sql += '"area", "dispositivo", "identificador",'
+    sql += '"variable", "sistemaControl", "sistemaParoEmergencia",'
+    sql += '"sistemaVisualizacion", "alarmaBajaBajaVirtual", "alarmaBajaVirtual", ' 
+    sql += '"alarmaAltaVirtual", "alarmaAltaAltaVirtual", "alarmaProteccion", "tipoSenal", "entradaSalida"' 
     sql += ')'
     sql += 'VALUES('
-    sql += '${nombre},${descripcion},${instrumentoId},${marca},${noSerie},'
-    sql += '${fabricante},${noActivo},${prioridad},${noCertificado},${clasificacion},'
-    sql += '${proveedor},${fechaCalibracion},${hrsPromedioUso},${habilitado},${fServicio},'
-    sql += '${modelo},${img}'
+    sql += '${area},${dispositivo},${identificador},${variable},${sistemaControl},'
+    sql += '${sistemaParoEmergencia},${sistemaVisualizacion},${alarmaBajaBajaVirtual},${alarmaBajaVirtual},'
+    sql += '${alarmaAltaVirtual},${alarmaAltaAltaVirtual},${alarmaProteccion},${tipoSenal},${entradaSalida}'
     sql += ')'
+
     const result = await pool.query(sql, {
-      nombre, descripcion, instrumentoId, marca, noSerie, fabricante, noActivo, 
-      prioridad, noCertificado, clasificacion, proveedor, fechaCalibracion,
-      hrsPromedioUso, habilitado, fServicio, modelo, img
+      area, dispositivo, identificador, variable,
+      sistemaControl, sistemaParoEmergencia, sistemaVisualizacion, 
+      alarmaBajaBajaVirtual, alarmaBajaVirtual, alarmaAltaVirtual, 
+      alarmaAltaAltaVirtual, alarmaProteccion, tipoSenal, entradaSalida 
     }).then(data => {
       return res.status(200).json({
         success: true,
       });
     })
     .catch(error => {
-      return res.status(200).json({ success: false, error: 'Something failed 1!' });
+      console.log(error)
+      return res.status(200).json({ success: false, error: 'Something failed!' });
     });
   } catch (error) {
-    return res.status(200).json({ success: false, error: 'Something failed 2!' });
+    console.log(error)
+    return res.status(200).json({ success: false, error: 'Something failed!' });
   }
 });
 
