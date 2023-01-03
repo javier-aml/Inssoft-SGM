@@ -4290,6 +4290,27 @@ router.get('/instrumentos',cors(corsOptions), async (req, res) => {
   }
 });
 
+router.get('/instrumento/:id',cors(corsOptions), async (req, res) => {
+
+  try {
+    
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "Id de instrumento incorrecto" });
+    }
+
+    await pool.any('SELECT * FROM instrumentos_tomza where id = $1', id).then(data => {
+      return res.status(200).json({ success: true, instrumento: data.length ? data: null });
+    }).catch(error => {
+      return res.status(200).json({ success: false, error: 'Something failed!' });
+    });
+
+  } catch (error) {
+    return res.status(200).json({ success: false, error: 'Something failed!'});
+  }
+});
+
 router.post('/instrumentos',cors(corsOptions), async (req, res) => {
 
   try {
