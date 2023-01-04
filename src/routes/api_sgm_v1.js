@@ -4207,10 +4207,10 @@ router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
 router.get('/instrumentos',cors(corsOptions), async (req, res) => {
 
   try {
-     const instrumentos = await pool.any('SELECT * FROM instrumentos_tomza;')
-     res.send({instrumentos});
+     const instrumentos = await pool.any('SELECT * FROM instrumento;')
+     return res.status(200).json({ success: true, instrumentos });
   } catch (error) {
-    res.send(error)
+    return res.status(200).json({ success: false, error: 'Something failed!' });
   }
 });
 
