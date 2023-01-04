@@ -4287,6 +4287,16 @@ router.post('/instrumentos',cors(corsOptions), async (req, res) => {
   }
 });
 
+router.get('/documental-equipo',cors(corsOptions), async (req, res) => {
+
+  try {
+     const documentales = await pool.any('SELECT * FROM documental_equipo;')
+     return res.status(200).json({ success: true, documentales });
+  } catch (error) {
+    return res.status(200).json({ success: false, error: 'Something failed!' });
+  }
+});
+
 function dateFormat(fecha) {
   const separar = fecha.split("-")
   let fechaformat = ""
