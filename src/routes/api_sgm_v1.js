@@ -4287,6 +4287,16 @@ router.post('/instrumentos',cors(corsOptions), async (req, res) => {
   }
 });
 
+router.get('/certificados-equipo',cors(corsOptions), async (req, res) => {
+
+  try {
+     const certificados = await pool.any('SELECT * FROM certificado_equipo;')
+     return res.status(200).json({ success: true, certificados });
+  } catch (error) {
+    return res.status(200).json({ success: false, error: 'Something failed!' });
+  }
+});
+
 router.get('/documental-equipo',cors(corsOptions), async (req, res) => {
 
   try {
