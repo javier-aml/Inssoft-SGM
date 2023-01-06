@@ -9,7 +9,7 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:4000',
   "methods": "GET,POST,OPTIONS",
   credentials:true
 }
@@ -36,14 +36,24 @@ router.post('/api/test', upload.single('upl'),async function (req, res) {
 
 res.send('test')
 });
-router.post('/add/task/:position/:nombre',async function (req, res) {
+
+router.get('/Tareas',async function (req,res) {
+  try {
+    const tarea = await pool.any('SELECT * FROM schtelemetria.tarea;')
+    res.send({tarea});
+ } catch (error) {
+   res.send(error)
+ }
+})
+router.post('/add/task/:position/:nombre/:Fecha',async function (req, res) {
   const nombre = req.params.nombre
   const position = req.params.position
+  const Fecha = req.params.Fecha
 
   await pool.query('INSERT INTO schtelemetria.tarea("descTarea", tarea,"Fecha", "Id_File", "Finished") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished})', {
     descTarea: nombre,
     tarea: position,
-    Fecha: '2022/12/30',
+    Fecha: Fecha,
     Id_File : 1,
     "Finished": 1
 });
@@ -106,11 +116,11 @@ router.post('/add/File/:fileP',async function (req, res) {
     console.log("\nFile Renamed!\n");
 
   });
-  await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas("fileName", "ext", "position") VALUES(${fileName},${ext}, ${position})', {
-    fileName: name,
-    ext: 'pdf',
-    position: name + '.1'
-});
+//   await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas("fileName", "ext", "position") VALUES(${fileName},${ext}, ${position})', {
+//     fileName: 'name',
+//     ext: 'pdf',
+//     position: '2' + '.1'
+// });
 res.send('test')
 });
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
@@ -156,11 +166,11 @@ router.post('/Estructura_tomza',async (req,res) => {
     res.send(error)
   }
 })
-router.get('/TestApi',cors(corsOptions),(req,res) => {
+router.get('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.post('/DiarioGlencore/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/DiarioGlencore/:fecha', async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
     var datoCompra;
@@ -1500,7 +1510,7 @@ if (tomorrowsplit[1].length == 1) {
   
   
 });
-router.post('/MensualGlencore/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/MensualGlencore/:fecha', async (req, res) => {
   console.log("mess");
   const xl = require('excel4node');
 console.log("Empieza");
@@ -2683,7 +2693,7 @@ res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV
 
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
-router.post('/diario-natgas/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/diario-natgas/:fecha', async (req, res) => {
  try {
   var request = require('request');
   // let temp;2022-10-25
@@ -3481,7 +3491,7 @@ const datos = {
  }
 
 });
-router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/mensual-natgas/:fecha', async (req, res) => {
    try {
     console.log("mess");
     const xl = require('excel4node');
@@ -4255,7 +4265,7 @@ router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
   
   
 });
-router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
+router.post('/calendar/simple', async (req,res) =>{
   // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
   let index = 0
   // console.log(data);
@@ -4280,7 +4290,7 @@ router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
 
 });
 
-router.get('/instrumentos',cors(corsOptions), async (req, res) => {
+router.get('/instrumentos', async (req, res) => {
 
   try {
      const instrumentos = await pool.any('SELECT * FROM instrumentos_tomza;')
@@ -4290,7 +4300,7 @@ router.get('/instrumentos',cors(corsOptions), async (req, res) => {
   }
 });
 
-router.get('/instrumento/:id',cors(corsOptions), async (req, res) => {
+router.get('/instrumento/:id', async (req, res) => {
 
   try {
     
@@ -4311,7 +4321,7 @@ router.get('/instrumento/:id',cors(corsOptions), async (req, res) => {
   }
 });
 
-router.post('/instrumentos',cors(corsOptions), async (req, res) => {
+router.post('/instrumentos', async (req, res) => {
 
   try {
     const { 
