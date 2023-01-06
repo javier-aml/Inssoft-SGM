@@ -4334,7 +4334,7 @@ router.post('/instrumentos', async (req, res) => {
       marca = "",
       modelo = "",
       amplitudMedicion = "",
-      frecuenciaCalibrcion = "",
+      frecuenciaCalibracion = "",
       exactitudRequerida = "",
       incertidumbre = "",
       noSerie = "",
@@ -4345,28 +4345,22 @@ router.post('/instrumentos', async (req, res) => {
       tipo = 'Otros'
     } = req.body;
 
-    let sql = 'INSERT INTO instrumento('
-    sql += '"codigo", "fechaAlta", "nombre",'
-    sql += '"ubicacion", "marca", "modelo",'
-    sql += '"amplitudMedicion", "frecuenciaCalibracion", "exactitudRequerida",' 
-    sql += '"incertidumbre", "noSerie", "noCertificado", "noPatron", "vigenciaPatron",' 
-    sql += '"ultimaCalibracion", "tipo"' 
-    sql += ')'
-    sql += 'VALUES('
-    sql += '${codigo},${fechaAlta},${nombre},${ubicacion},${marca},'
-    sql += '${modelo},${amplitudMedicion},${frecuenciaCalibrcion},${exactitudRequerida},'
-    sql += '${incertidumbre},${noSerie},${noCertificado},${noPatron},${vigenciaPatron},'
-    sql += '${ultimaCalibracion},${tipo}'
-    sql += ')'
+    let sql = `INSERT INTO instrumento
+    ("codigo", "fechaAlta", "nombre","ubicacion", "marca", "modelo",
+    "amplitudMedicion", "frecuenciaCalibracion", "exactitudRequerida",
+    "incertidumbre", "noSerie", "noCertificado", "noPatron", 
+    "vigenciaPatron","ultimaCalibracion", "tipo") 
+    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`
 
-    await pool.query(sql, {
+    await pool.none(sql, [
       codigo, fechaAlta, nombre,
       ubicacion, marca, modelo,
-      amplitudMedicion, frecuenciaCalibrcion, 
+      amplitudMedicion, frecuenciaCalibracion, 
       exactitudRequerida, incertidumbre, 
       noSerie, noCertificado, noPatron, 
       vigenciaPatron, ultimaCalibracion, tipo 
-    }).then(data => {
+    ]).then(data => {
+      console.log(data)
       return res.status(200).json({
         success: true,
       });
