@@ -4239,39 +4239,45 @@ router.post('/instrumentos',cors(corsOptions), async (req, res) => {
 
   try {
     const { 
-      area = "", 
-      dispositivo = "",
-      identificador = "",
-      variable = "",
-      sistemaControl = 0, 
-      sistemaParoEmergencia = 0, 
-      sistemaVisualizacion = 0, 
-      alarmaBajaBajaVirtual = "", 
-      alarmaBajaVirtual = "", 
-      alarmaAltaVirtual = "", 
-      alarmaAltaAltaVirtual = "", 
-      alarmaProteccion = "", 
-      tipoSenal = "", 
-      entradaSalida = "ENTRADA"
+      codigo = "", 
+      fechaAlta = null,
+      nombre = "",
+      ubicacion = "",
+      marca = "",
+      modelo = "",
+      amplitudMedicion = "",
+      frecuenciaCalibrcion = "",
+      exactitudRequerida = "",
+      incertidumbre = "",
+      noSerie = "",
+      noCertificado = "",
+      noPatron = "",
+      vigenciaPatron = null,
+      ultimaCalibracion = null,
+      tipo = 'Otros'
     } = req.body;
 
-    let sql = 'INSERT INTO instrumentos_tomza('
-    sql += '"area", "dispositivo", "identificador",'
-    sql += '"variable", "sistemaControl", "sistemaParoEmergencia",'
-    sql += '"sistemaVisualizacion", "alarmaBajaBajaVirtual", "alarmaBajaVirtual", ' 
-    sql += '"alarmaAltaVirtual", "alarmaAltaAltaVirtual", "alarmaProteccion", "tipoSenal", "entradaSalida"' 
+    let sql = 'INSERT INTO instrumento('
+    sql += '"codigo", "fechaAlta", "nombre",'
+    sql += '"ubicacion", "marca", "modelo",'
+    sql += '"amplitudMedicion", "frecuenciaCalibracion", "exactitudRequerida",' 
+    sql += '"incertidumbre", "noSerie", "noCertificado", "noPatron", "vigenciaPatron",' 
+    sql += '"ultimaCalibracion", "tipo"' 
     sql += ')'
     sql += 'VALUES('
-    sql += '${area},${dispositivo},${identificador},${variable},${sistemaControl},'
-    sql += '${sistemaParoEmergencia},${sistemaVisualizacion},${alarmaBajaBajaVirtual},${alarmaBajaVirtual},'
-    sql += '${alarmaAltaVirtual},${alarmaAltaAltaVirtual},${alarmaProteccion},${tipoSenal},${entradaSalida}'
+    sql += '${codigo},${fechaAlta},${nombre},${ubicacion},${marca},'
+    sql += '${modelo},${amplitudMedicion},${frecuenciaCalibrcion},${exactitudRequerida},'
+    sql += '${incertidumbre},${noSerie},${noCertificado},${noPatron},${vigenciaPatron},'
+    sql += '${ultimaCalibracion},${tipo}'
     sql += ')'
 
-    const result = await pool.query(sql, {
-      area, dispositivo, identificador, variable,
-      sistemaControl, sistemaParoEmergencia, sistemaVisualizacion, 
-      alarmaBajaBajaVirtual, alarmaBajaVirtual, alarmaAltaVirtual, 
-      alarmaAltaAltaVirtual, alarmaProteccion, tipoSenal, entradaSalida 
+    await pool.query(sql, {
+      codigo, fechaAlta, nombre,
+      ubicacion, marca, modelo,
+      amplitudMedicion, frecuenciaCalibrcion, 
+      exactitudRequerida, incertidumbre, 
+      noSerie, noCertificado, noPatron, 
+      vigenciaPatron, ultimaCalibracion, tipo 
     }).then(data => {
       return res.status(200).json({
         success: true,
