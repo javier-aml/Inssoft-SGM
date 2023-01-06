@@ -37,10 +37,12 @@ router.post('/api/test', upload.single('upl'),async function (req, res) {
 res.send('test')
 });
 
-router.get('/Tareas',async function (req,res) {
+router.get('/Tareas/:Ubicacion',async function (req,res) {
   try {
-    const tarea = await pool.any('SELECT * FROM schtelemetria.tarea;')
-    res.send({tarea});
+    const ubicacion = req.params.Ubicacion;
+    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM schtelemetria.tarea WHERE Tarea = '${ubicacion}';`)
+    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_tomza WHERE "position" = '${ubicacion}';`)
+    res.send({tarea,ubicacionTarea});
  } catch (error) {
    res.send(error)
  }
