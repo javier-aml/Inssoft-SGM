@@ -4293,10 +4293,10 @@ router.post('/calendar/simple', async (req,res) =>{
 router.get('/instrumentos', async (req, res) => {
 
   try {
-     const instrumentos = await pool.any('SELECT * FROM instrumentos_tomza;')
-     res.send({instrumentos});
+     const instrumentos = await pool.any('SELECT * FROM instrumento;')
+     return res.status(200).json({ success: true, instrumentos });
   } catch (error) {
-    res.send(error)
+    return res.status(200).json({ success: false, error: 'Something failed!' });
   }
 });
 
@@ -4310,7 +4310,7 @@ router.get('/instrumento/:id', async (req, res) => {
       return res.status(200).json({ success: false, msg: "Id de instrumento incorrecto" });
     }
 
-    await pool.any('SELECT * FROM instrumentos_tomza where id = $1', id).then(data => {
+    await pool.any('SELECT * FROM instrumento where id = $1', id).then(data => {
       return res.status(200).json({ success: true, instrumento: data.length ? data: null });
     }).catch(error => {
       return res.status(200).json({ success: false, error: 'Something failed!' });
@@ -4325,39 +4325,45 @@ router.post('/instrumentos', async (req, res) => {
 
   try {
     const { 
-      area = "", 
-      dispositivo = "",
-      identificador = "",
-      variable = "",
-      sistemaControl = 0, 
-      sistemaParoEmergencia = 0, 
-      sistemaVisualizacion = 0, 
-      alarmaBajaBajaVirtual = "", 
-      alarmaBajaVirtual = "", 
-      alarmaAltaVirtual = "", 
-      alarmaAltaAltaVirtual = "", 
-      alarmaProteccion = "", 
-      tipoSenal = "", 
-      entradaSalida = "ENTRADA"
+      codigo = "", 
+      fechaAlta = null,
+      nombre = "",
+      ubicacion = "",
+      marca = "",
+      modelo = "",
+      amplitudMedicion = "",
+      frecuenciaCalibrcion = "",
+      exactitudRequerida = "",
+      incertidumbre = "",
+      noSerie = "",
+      noCertificado = "",
+      noPatron = "",
+      vigenciaPatron = null,
+      ultimaCalibracion = null,
+      tipo = 'Otros'
     } = req.body;
 
-    let sql = 'INSERT INTO instrumentos_tomza('
-    sql += '"area", "dispositivo", "identificador",'
-    sql += '"variable", "sistemaControl", "sistemaParoEmergencia",'
-    sql += '"sistemaVisualizacion", "alarmaBajaBajaVirtual", "alarmaBajaVirtual", ' 
-    sql += '"alarmaAltaVirtual", "alarmaAltaAltaVirtual", "alarmaProteccion", "tipoSenal", "entradaSalida"' 
+    let sql = 'INSERT INTO instrumento('
+    sql += '"codigo", "fechaAlta", "nombre",'
+    sql += '"ubicacion", "marca", "modelo",'
+    sql += '"amplitudMedicion", "frecuenciaCalibracion", "exactitudRequerida",' 
+    sql += '"incertidumbre", "noSerie", "noCertificado", "noPatron", "vigenciaPatron",' 
+    sql += '"ultimaCalibracion", "tipo"' 
     sql += ')'
     sql += 'VALUES('
-    sql += '${area},${dispositivo},${identificador},${variable},${sistemaControl},'
-    sql += '${sistemaParoEmergencia},${sistemaVisualizacion},${alarmaBajaBajaVirtual},${alarmaBajaVirtual},'
-    sql += '${alarmaAltaVirtual},${alarmaAltaAltaVirtual},${alarmaProteccion},${tipoSenal},${entradaSalida}'
+    sql += '${codigo},${fechaAlta},${nombre},${ubicacion},${marca},'
+    sql += '${modelo},${amplitudMedicion},${frecuenciaCalibrcion},${exactitudRequerida},'
+    sql += '${incertidumbre},${noSerie},${noCertificado},${noPatron},${vigenciaPatron},'
+    sql += '${ultimaCalibracion},${tipo}'
     sql += ')'
 
-    const result = await pool.query(sql, {
-      area, dispositivo, identificador, variable,
-      sistemaControl, sistemaParoEmergencia, sistemaVisualizacion, 
-      alarmaBajaBajaVirtual, alarmaBajaVirtual, alarmaAltaVirtual, 
-      alarmaAltaAltaVirtual, alarmaProteccion, tipoSenal, entradaSalida 
+    await pool.query(sql, {
+      codigo, fechaAlta, nombre,
+      ubicacion, marca, modelo,
+      amplitudMedicion, frecuenciaCalibrcion, 
+      exactitudRequerida, incertidumbre, 
+      noSerie, noCertificado, noPatron, 
+      vigenciaPatron, ultimaCalibracion, tipo 
     }).then(data => {
       return res.status(200).json({
         success: true,
@@ -4369,6 +4375,26 @@ router.post('/instrumentos', async (req, res) => {
     });
   } catch (error) {
     console.log(error)
+    return res.status(200).json({ success: false, error: 'Something failed!' });
+  }
+});
+
+router.get('/certificados-equipo',cors(corsOptions), async (req, res) => {
+
+  try {
+     const certificados = await pool.any('SELECT * FROM certificado_equipo;')
+     return res.status(200).json({ success: true, certificados });
+  } catch (error) {
+    return res.status(200).json({ success: false, error: 'Something failed!' });
+  }
+});
+
+router.get('/documental-equipo',cors(corsOptions), async (req, res) => {
+
+  try {
+     const documentales = await pool.any('SELECT * FROM documental_equipo;')
+     return res.status(200).json({ success: true, documentales });
+  } catch (error) {
     return res.status(200).json({ success: false, error: 'Something failed!' });
   }
 });
