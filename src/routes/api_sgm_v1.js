@@ -4379,7 +4379,6 @@ router.post('/instrumentos', async (req, res) => {
       noSerie, noCertificado, noPatron, 
       vigenciaPatron, ultimaCalibracion, tipo 
     ]).then(data => {
-      console.log(data)
       return res.status(200).json({
         success: true,
       });
@@ -4394,21 +4393,41 @@ router.post('/instrumentos', async (req, res) => {
   }
 });
 
-router.get('/certificados-equipo',cors(corsOptions), async (req, res) => {
+router.get('/certificados-equipo/:id',cors(corsOptions), async (req, res) => {
 
   try {
-     const certificados = await pool.any('SELECT * FROM certificado_equipo;')
-     return res.status(200).json({ success: true, certificados });
+    
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "Id de instrumento incorrecto" });
+    }
+
+    await pool.any('SELECT * FROM certificado_equipo where id_equipo = $1', id).then(data => {
+      return res.status(200).json({ success: true, certificados: data.length ? data: null });
+    }).catch(error => {
+      return res.status(200).json({ success: false, error: 'Something failed!' });
+    });
   } catch (error) {
     return res.status(200).json({ success: false, error: 'Something failed!' });
   }
 });
 
-router.get('/documental-equipo',cors(corsOptions), async (req, res) => {
+router.get('/documental-equipo/:id',cors(corsOptions), async (req, res) => {
 
   try {
-     const documentales = await pool.any('SELECT * FROM documental_equipo;')
-     return res.status(200).json({ success: true, documentales });
+
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "Id de instrumento incorrecto" });
+    }
+
+    await pool.any('SELECT * FROM documental_equipo where id_equipo = $1', id).then(data => {
+      return res.status(200).json({ success: true, documentales: data.length ? data: null });
+    }).catch(error => {
+      return res.status(200).json({ success: false, error: 'Something failed!' });
+    });
   } catch (error) {
     return res.status(200).json({ success: false, error: 'Something failed!' });
   }
