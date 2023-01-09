@@ -9,15 +9,14 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
-  origin: 'http://localhost:4000',
+  origin: 'http://localhost:3000',
   "methods": "GET,POST,OPTIONS",
   credentials:true
 }
 const storage = multer.diskStorage({
   destination:  path.join(__dirname, '../public/TestArchivosMulter'),
   filename: function(req,file,cb) {
-    console.log(path.join(__dirname, '../public/TestArchivosMulter'));
-    cb(null, file.originalname )
+    cb(null,file.originalname )
   }
 })
 const upload = multer({
@@ -27,13 +26,23 @@ const upload = multer({
     next(err);
   }
 })
+
+const storageNatgas = multer.diskStorage({
+  destination:  path.join(__dirname, '../public/TestArchivosMulter'),
+  filename: function(req,file,cb) {
+    cb(null,file.originalname )
+  }
+})
+const uploadNatgas = multer({
+  storage:storageNatgas,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
 // const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
 
-router.post('/api/test', upload.single('upl'),async function (req, res) {
-   console.log(req.body);
-   console.log('-------------');
-   console.log(req.file);
-
+router.post('/api/uploadPDF', upload.single('upl'),async function (req, res) {
 res.send('test')
 });
 
@@ -42,7 +51,8 @@ router.get('/Tareas/:Ubicacion',async function (req,res) {
     const ubicacion = req.params.Ubicacion;
     const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM schtelemetria.tarea WHERE Tarea = '${ubicacion}';`)
     const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_tomza WHERE "position" = '${ubicacion}';`)
-    res.send({tarea,ubicacionTarea});
+    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
+    res.send({tarea,ubicacionTarea,ubicacionHTML});
  } catch (error) {
    res.send(error)
  }
@@ -61,14 +71,18 @@ router.post('/add/task/:position/:nombre/:Fecha',async function (req, res) {
 });
 res.send('test')
 });
+router.post('/delete/TaskTomza/:position',async function (req, res) {
+  const position = req.params.position;
+  await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+  res.send('test')
+});
 
-router.post('/add/File/:fileP',async function (req, res) {
-  console.log(req.params);
+router.post('/add/FileTomza/:fileP',async function (req, res) {
   let fileP = req.params.fileP
   if (fileP ==  '1') {
    dataP = '1.1'
  } else {
-  max = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position LIKE '${fileP}%';`);
+  max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
   let  positions = [];
   const dots = fileP.split(".").length;
 
@@ -94,15 +108,8 @@ router.post('/add/File/:fileP',async function (req, res) {
        }
   }
  }
-
  var fileName = req.params.fileP
-//  console.log(fileName);
-//  const cant = fileName.split(".").length
-//  console.log(cant);
-//  fileName = fileName.slice(0,cant-1)
-//  console.log(fileName);
- var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
- console.log(file);
+ var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_tomza WHERE position = '${fileName}';`);
  const fs = require('fs');
  let name = file[0].dirName.split(' ')
  name = name.join().replace(',','_')
@@ -112,17 +119,25 @@ router.post('/add/File/:fileP',async function (req, res) {
  name = name.replace(',','_')
   name = name.replace(',','_')
   name = name.replace(',','_')
- console.log(name);
- console.log(path.join(__dirname, '../public/TestArchivosMulter/',file[0].dirName.replace(' ',''),'.pdf'));
- fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/TestArchivosMulter/',name + '.pdf'), () => {
+ const hora = new Date();
+let datetext = hora.toTimeString();
+datetext = datetext.split(' ')[0];
+datetext = datetext.replace(':','-')
+datetext = datetext.replace(':','-')
+ name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+ fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/tomza/', name + '.pdf'), () => {
     console.log("\nFile Renamed!\n");
 
   });
-//   await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas("fileName", "ext", "position") VALUES(${fileName},${ext}, ${position})', {
-//     fileName: 'name',
-//     ext: 'pdf',
-//     position: '2' + '.1'
-// });
+  const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_tomza;`);
+  await pool.query('INSERT INTO schtelemetria.estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    id:maxID[0].max - 1 + 2,
+    fileName: name,
+    ext: 'pdf',
+    position: dataP,
+    Avalible:1,
+    date: acomodarFecha(DateNow())
+});
 res.send('test')
 });
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
@@ -138,10 +153,14 @@ router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.post('/Task',async (req,res) => {
+router.get('/Task',async (req,res) => {
   try {
-     dirRoot = await pool.query('SELECT id, "descTarea", tarea, "Id_File", "Finished", "Fecha" FROM schtelemetria.tarea;')
-     const Prueba = dirRoot
+     const Task = await pool.query('SELECT * FROM schtelemetria.tarea inner join schtelemetria.estructura_directorios_tomza on tarea = "position";')
+     const fechas = codigoFecha(Task);
+     const urgente = sortObject(fechas.urgente);
+     const noUrgente = sortObject(fechas.noUrgente);
+     const retraso = sortObject(fechas.retraso);
+     const Prueba = {urgente,noUrgente,retraso}
       res.send(Prueba)
   } catch (error) {
     console.log(error);
@@ -4455,7 +4474,20 @@ function acomodarFecha(date) {
   const fecha = `${split[2]}-${split[1]}-${split[0]}`;
   return fecha;
   }
+  function DateNow() {
+    let date = new Date()
 
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+    let fecha = "";
+    if (month < 10) {
+      fecha = `${day}-0${month}-${year}`
+    } else {
+      fecha = `${day}-${month}-${year}`
+    }
+    return fecha
+  }
   async function arbolArchivosNatgas(){
     const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_natgas;')
     const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_natgas;')
@@ -4591,4 +4623,61 @@ function acomodarFecha(date) {
   }
 
 function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) } 
+
+restaFechas = function (f1, f2) {
+  var aFecha1 = f1.split('-');
+  var aFecha2 = f2.split('-');
+  var fFecha1 = Date.UTC(aFecha1[2], aFecha1[1] - 1, aFecha1[0]);
+  var fFecha2 = Date.UTC(aFecha2[2], aFecha2[1] - 1, aFecha2[0]);
+  var dif = fFecha2 - fFecha1;
+  var dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+  return dias;
+}
+
+function codigoFecha(data) {
+  var datoFecha = {}
+  datoFecha["urgente"] = {};
+  datoFecha["noUrgente"] = {};
+  datoFecha["retraso"] = {};
+  // proveedor = proveedor.toLocaleLowerCase();
+    for (const key in data) {
+        var dateObj = new Date();
+        var mes = dateObj.getUTCMonth() + 1; //mes de 1-12
+        var dia = dateObj.getUTCDate();
+        var año = dateObj.getUTCFullYear();
+        const fecha1 = `${dia}-${mes}-${año}`;
+        let fechaTemp =data[key].Fecha.toISOString().split('T')[0]
+        fechaTemp = acomodarFecha(fechaTemp)
+        const fecha2 = fechaTemp
+        
+        const resta = restaFechas(fecha1, fecha2);
+      
+        if (resta < 0) {
+      
+          datoFecha["retraso"][`${data[key].tarea}`] = {FechaRestante:(resta * -1),proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+        }else if (resta < 11) {
+          datoFecha["urgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+        }
+        else {
+          datoFecha["noUrgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+        }
+    }
+  
+  return datoFecha;
+ 
+}
+function sortObject(obj) {
+  var arr = [];
+  for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+          arr.push({
+              'key': prop,
+              'value': obj[prop]
+          });
+      }
+  }
+  arr.sort(function(a, b) { return a.value - b.value; });
+  //arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
+  return arr; // returns array
+}
 module.exports = router;
