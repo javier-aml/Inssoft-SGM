@@ -4286,7 +4286,7 @@ router.post('/mensual-natgas/:fecha', async (req, res) => {
   
   
 });
-router.post('/calendar/simple', async (req,res) =>{
+router.post('/calendar', async (req,res) =>{
   // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
   let index = 0
   // console.log(data);
@@ -4673,12 +4673,12 @@ function codigoFecha(data) {
       
         if (resta < 0) {
       
-          datoFecha["retraso"][`${data[key].tarea}`] = {FechaRestante:(resta * -1),proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+          datoFecha["retraso"][`${data[key].tarea}`] = {FechaRestante:(resta * -1),proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
         }else if (resta < 11) {
-          datoFecha["urgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+          datoFecha["urgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
         }
         else {
-          datoFecha["noUrgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+          datoFecha["noUrgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
         }
     }
   
