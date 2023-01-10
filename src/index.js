@@ -12,7 +12,7 @@ app.use(cookieParase(signStr));
 const session = require('express-session');
 const cors = require("cors")
 var corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:4000','http://localhost:3000'],
     "methods": "GET,POST,OPTIONS",
     credentials:true
   }
@@ -47,7 +47,7 @@ app.use(express.json());
 // var expiryDate = new Date( Date.now() + 60 * 60 * 1000 ); // 1 hour
 // Global variables
     app.use((req,res,next) => {
-        res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        res.header('Access-Control-Allow-Origin', ['http://localhost:4000','http://localhost:3000']);
         res.header('Access-Control-Allow-Methods', 'GET, POST,OPTIONS');
         res.header('Access-Control-Allow-Headers', 'x-www-form-urlencoded, Origin, X-Requested-With, Content-Type, Accept, Authorization, *');
         res.header('Access-Control-Allow-Credentials',true)
