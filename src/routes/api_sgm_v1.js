@@ -9,15 +9,14 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
-  origin: 'http://localhost:4000',
+  origin: ['http://localhost:3000','http://localhost:4000'],
   "methods": "GET,POST,OPTIONS",
   credentials:true
 }
 const storage = multer.diskStorage({
   destination:  path.join(__dirname, '../public/TestArchivosMulter'),
   filename: function(req,file,cb) {
-    console.log(path.join(__dirname, '../public/TestArchivosMulter'));
-    cb(null, file.originalname )
+    cb(null,file.originalname )
   }
 })
 const upload = multer({
@@ -27,36 +26,120 @@ const upload = multer({
     next(err);
   }
 })
+
+const storageNatgas = multer.diskStorage({
+  destination:  path.join(__dirname, '../public/TestArchivosMulter'),
+  filename: function(req,file,cb) {
+    cb(null,file.originalname )
+  }
+})
+const uploadNatgas = multer({
+  storage:storageNatgas,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
 // const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
 
-router.post('/api/test', upload.single('upl'), function (req, res) {
-   console.log(req.body);
-   console.log('-------------');
-   console.log(req.file);
-   var pdf = require('phantom-html2pdf');
- console.log(path.join(__dirname, '../public/TestArchivosMulter/' + req.file.filename));
-   const options = {
-        "html" : path.join(__dirname, '../public/TestArchivosMulter/', req.file.filename),
-        "runnings" : "Path to runnings file. Check further below for explanation.",
-        "paperSize" : "Two ways to do this, see below",
-    }
-pdf.convert(options, function(err, result) {
- 
-    /* Using a buffer and callback */
-    result.toBuffer(function(returnedBuffer) {});
- 
-    /* Using a readable stream */
-    var stream = result.toStream();
- 
-    /* Using the temp file path */
-    var tmpPath = result.getTmpPath();
-    /* Using the file writer and callback */
-    result.toFile(path.join(__dirname, '../public/TestArchivosMulter/testPDf.pdf'), function() {});
-});
-   // do stuff with file
-
+router.post('/api/uploadPDF', upload.single('upl'),async function (req, res) {
+res.send('test')
 });
 
+router.get('/Tareas/:Ubicacion',async function (req,res) {
+  try {
+    const ubicacion = req.params.Ubicacion;
+    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM schtelemetria.tarea WHERE Tarea = '${ubicacion}';`)
+    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_tomza WHERE "position" = '${ubicacion}';`)
+    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
+    res.send({tarea,ubicacionTarea,ubicacionHTML});
+ } catch (error) {
+   res.send(error)
+ }
+})
+router.post('/add/task/:position/:nombre/:Fecha',async function (req, res) {
+  const nombre = req.params.nombre
+  const position = req.params.position
+  const Fecha = req.params.Fecha
+
+  await pool.query('INSERT INTO schtelemetria.tarea("descTarea", tarea,"Fecha", "Id_File", "Finished") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished})', {
+    descTarea: nombre,
+    tarea: position,
+    Fecha: Fecha,
+    Id_File : 1,
+    "Finished": 1
+});
+res.send('test')
+});
+router.post('/delete/TaskTomza/:position',async function (req, res) {
+  const position = req.params.position;
+  await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+  res.send('test')
+});
+
+router.post('/add/FileTomza/:fileP',async function (req, res) {
+  let fileP = req.params.fileP
+  if (fileP ==  '1') {
+   dataP = '1.1'
+ } else {
+  max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+  let  positions = [];
+  const dots = fileP.split(".").length;
+
+  let max1 = null;
+  if (max == null) {
+       dataP = fileP + '.1'
+  }else{
+       for (const key in max) {
+            const temp =max[key].position
+            if (temp.split(".").length - 1 == dots) {
+
+                 positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                 max1 = max[key].position
+            }
+       }
+       const maxP = Math.max(...positions) + 1
+       console.log(max1);
+       if (max1==null) {
+            dataP = fileP + '.1'
+       } else {
+
+            dataP = max1.replace(/.$/,`${maxP}`)
+       }
+  }
+ }
+ var fileName = req.params.fileP
+ var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_tomza WHERE position = '${fileName}';`);
+ const fs = require('fs');
+ let name = file[0].dirName.split(' ')
+ name = name.join().replace(',','_')
+ name = name.replace(',','_')
+ name = name.replace(',','_')
+ name = name.replace(',','_')
+ name = name.replace(',','_')
+  name = name.replace(',','_')
+  name = name.replace(',','_')
+ const hora = new Date();
+let datetext = hora.toTimeString();
+datetext = datetext.split(' ')[0];
+datetext = datetext.replace(':','-')
+datetext = datetext.replace(':','-')
+ name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+ fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/tomza/', name + '.pdf'), () => {
+    console.log("\nFile Renamed!\n");
+
+  });
+  const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_tomza;`);
+  await pool.query('INSERT INTO schtelemetria.estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    id:maxID[0].max - 1 + 2,
+    fileName: name,
+    ext: 'pdf',
+    position: dataP,
+    Avalible:1,
+    date: acomodarFecha(DateNow())
+});
+res.send('test')
+});
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
 let tanque3 =require(path.join(__dirname, '../public/json/glencore/tanque3.json'))
@@ -70,21 +153,45 @@ router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.post('/Estructura',async (req,res) => {
+router.get('/Task',async (req,res) => {
   try {
-    //  dirRoot = await arbolArchivos()
-     const Prueba = await pool.any('SELECT * FROM schtelemetria.estructura_archivos_natgas;')
+     const Task = await pool.query('SELECT * FROM schtelemetria.tarea inner join schtelemetria.estructura_directorios_tomza on tarea = "position";')
+     const fechas = codigoFecha(Task);
+     const urgente = sortObject(fechas.urgente);
+     const noUrgente = sortObject(fechas.noUrgente);
+     const retraso = sortObject(fechas.retraso);
+     const Prueba = {urgente,noUrgente,retraso}
       res.send(Prueba)
   } catch (error) {
     console.log(error);
     res.send(error)
   }
 })
-router.get('/TestApi',cors(corsOptions),(req,res) => {
+router.post('/Estructura_natgas',async (req,res) => {
+  try {
+     dirRoot = await arbolArchivosNatgas()
+     const Prueba = dirRoot
+      res.send(Prueba)
+  } catch (error) {
+    console.log(error);
+    res.send(error)
+  }
+})
+router.post('/Estructura_tomza',async (req,res) => {
+  try {
+     dirRoot = await arbolArchivosTomza()
+     const Prueba = dirRoot
+      res.send(Prueba)
+  } catch (error) {
+    console.log(error);
+    res.send(error)
+  }
+})
+router.get('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.post('/DiarioGlencore/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/DiarioGlencore/:fecha', async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
     var datoCompra;
@@ -1424,7 +1531,7 @@ if (tomorrowsplit[1].length == 1) {
   
   
 });
-router.post('/MensualGlencore/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/MensualGlencore/:fecha', async (req, res) => {
   console.log("mess");
   const xl = require('excel4node');
 console.log("Empieza");
@@ -2607,7 +2714,7 @@ res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV
 
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
-router.post('/diario-natgas/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/diario-natgas/:fecha', async (req, res) => {
  try {
   var request = require('request');
   // let temp;2022-10-25
@@ -3405,7 +3512,7 @@ const datos = {
  }
 
 });
-router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
+router.post('/mensual-natgas/:fecha', async (req, res) => {
    try {
     console.log("mess");
     const xl = require('excel4node');
@@ -4179,7 +4286,7 @@ router.post('/mensual-natgas/:fecha', cors(corsOptions), async (req, res) => {
   
   
 });
-router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
+router.post('/calendar', async (req,res) =>{
   // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
   let index = 0
   // console.log(data);
@@ -4204,8 +4311,8 @@ router.post('/calendar/simple',cors(corsOptions), async (req,res) =>{
 
 });
 
-router.get('/instrumentos/:id',cors(corsOptions), async (req, res) => {
 
+router.get('/instrumentos/:id',cors(corsOptions), async (req, res) => {
   try {
     const id = Number(req.params.id);
 
@@ -4221,7 +4328,7 @@ router.get('/instrumentos/:id',cors(corsOptions), async (req, res) => {
   }
 });
 
-router.get('/instrumento/:id',cors(corsOptions), async (req, res) => {
+router.get('/instrumento/:id', async (req, res) => {
 
   try {
     
@@ -4242,7 +4349,7 @@ router.get('/instrumento/:id',cors(corsOptions), async (req, res) => {
   }
 });
 
-router.post('/instrumentos',cors(corsOptions), async (req, res) => {
+router.post('/instrumentos', async (req, res) => {
 
   try {
     const { 
@@ -4395,8 +4502,21 @@ function acomodarFecha(date) {
   const fecha = `${split[2]}-${split[1]}-${split[0]}`;
   return fecha;
   }
+  function DateNow() {
+    let date = new Date()
 
-  async function arbolArchivos(){
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+    let fecha = "";
+    if (month < 10) {
+      fecha = `${day}-0${month}-${year}`
+    } else {
+      fecha = `${day}-${month}-${year}`
+    }
+    return fecha
+  }
+  async function arbolArchivosNatgas(){
     const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_natgas;')
     const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_natgas;')
     let root = {};
@@ -4463,6 +4583,129 @@ function acomodarFecha(date) {
     return root;
   }
 
+  async function arbolArchivosTomza(){
+    const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_tomza;')
+    const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_tomza;')
+    let root = {};
+    for (const key in directory) {
+         let directoryname =directory[key].position
+         if (directoryname.indexOf(".") == -1) {
+              root[directory[key].position] = {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+         }else{
+              let position = directoryname.split(".")
+              switch (position.length) {
+                   case 2:
+                        root[position[0]]['dir'][position[1]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                        break;
+                        case 3:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                             break;
+                             case 4:
+                               // console.log(root[position[0]]['dir'][position[1]]['dir']);
+                               // console.log(position);
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                  break;
+                                  case 5:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                       break;
+                                       case 6:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                         break;
+  
+                   default:
+                        break;
+              }
+         }
+    }
+    for (const key in file) {
+         let fileP =file[key].position
+  
+         let position = fileP.split(".")
+  
+         switch (position.length) {
+              case 2:
+                   root[position[0]]['file'][position[1]]= {fileName:file[key].fileName,ext:file[key].ext}
+                   break;
+                   case 3:
+                        root[position[0]]['dir'][position[1]]['file'][position[2]]= {fileName:file[key].fileName,ext:file[key].ext}
+                        break;
+                        case 4:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]['file'][position[3]]= {fileName:file[key].fileName,ext:file[key].ext}
+                             break;
+                             case 5:
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['file'][position[4]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                  break;
+                                  case 6:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['file'][position[5]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                       break;
+                                       case 7:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]['file'][position[6]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                         break;
+  
+              default:
+                   break;
+         }
+    }
+    // console.log(root);
+    return root;
+  }
 
 function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) } 
+
+restaFechas = function (f1, f2) {
+  var aFecha1 = f1.split('-');
+  var aFecha2 = f2.split('-');
+  var fFecha1 = Date.UTC(aFecha1[2], aFecha1[1] - 1, aFecha1[0]);
+  var fFecha2 = Date.UTC(aFecha2[2], aFecha2[1] - 1, aFecha2[0]);
+  var dif = fFecha2 - fFecha1;
+  var dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+  return dias;
+}
+
+function codigoFecha(data) {
+  var datoFecha = {}
+  datoFecha["urgente"] = {};
+  datoFecha["noUrgente"] = {};
+  datoFecha["retraso"] = {};
+  // proveedor = proveedor.toLocaleLowerCase();
+    for (const key in data) {
+        var dateObj = new Date();
+        var mes = dateObj.getUTCMonth() + 1; //mes de 1-12
+        var dia = dateObj.getUTCDate();
+        var año = dateObj.getUTCFullYear();
+        const fecha1 = `${dia}-${mes}-${año}`;
+        let fechaTemp =data[key].Fecha.toISOString().split('T')[0]
+        fechaTemp = acomodarFecha(fechaTemp)
+        const fecha2 = fechaTemp
+        
+        const resta = restaFechas(fecha1, fecha2);
+      
+        if (resta < 0) {
+      
+          datoFecha["retraso"][`${data[key].tarea}`] = {FechaRestante:(resta * -1),proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
+        }else if (resta < 11) {
+          datoFecha["urgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
+        }
+        else {
+          datoFecha["noUrgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
+        }
+    }
+  
+  return datoFecha;
+ 
+}
+function sortObject(obj) {
+  var arr = [];
+  for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+          arr.push({
+              'key': prop,
+              'value': obj[prop]
+          });
+      }
+  }
+  arr.sort(function(a, b) { return a.value - b.value; });
+  //arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
+  return arr; // returns array
+}
 module.exports = router;
