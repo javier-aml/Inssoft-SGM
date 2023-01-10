@@ -9,7 +9,7 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
-  origin: ['http://localhost:3000','http://localhost:4000'],
+  origin: ['http://localhost:3000','http://localhost:4000','http://127.0.0.1:3000','http://127.0.0.1:4000'],
   "methods": "GET,POST,OPTIONS",
   credentials:true
 }
