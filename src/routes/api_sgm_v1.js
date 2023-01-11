@@ -215,19 +215,24 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
   
     });
     const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
-    const position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
-    console.log(position.length);
-    let tempPsotion = dataP;
-    tempPsotion = tempPsotion.split('.')
-    const lengthPosition = tempPsotion.length;
-    const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
-    tempPsotion[lengthPosition-1] = lastdigit
-    console.log();
+    let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
     let positionInsert = ''
-    for (let index = 0; index < tempPsotion.length; index++) {
-      positionInsert+=`${tempPsotion[index]}.`
+    while (position.length !== 0) {
+      console.log(position.length);
+      position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
+      let tempPsotion = dataP;
+      tempPsotion = tempPsotion.split('.')
+      const lengthPosition = tempPsotion.length;
+      const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+      tempPsotion[lengthPosition-1] = lastdigit
+      console.log();
+
+      for (let index = 0; index < tempPsotion.length; index++) {
+        positionInsert+=`${tempPsotion[index]}.`
+      }
+      positionInsert = positionInsert.substring(0, positionInsert.length - 1);
     }
-    positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+
     console.log(positionInsert);
     await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
@@ -237,7 +242,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
       Avalible:1,
       date: acomodarFecha(DateNow())
   });
-  res.send('test')
+  res.send(positionInsert)
   } catch (error) {
     res.send(error)
   }
