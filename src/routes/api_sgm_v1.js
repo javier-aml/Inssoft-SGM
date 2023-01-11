@@ -9,7 +9,7 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
-  origin: ['http://localhost:3000','http://localhost:4000'],
+  origin: ['http://localhost:3000','http://localhost:4000','http://127.0.0.1:3000','http://127.0.0.1:4000'],
   "methods": "GET,POST,OPTIONS",
   credentials:true
 }
@@ -4286,7 +4286,7 @@ router.post('/mensual-natgas/:fecha', async (req, res) => {
   
   
 });
-router.post('/calendar/simple', async (req,res) =>{
+router.post('/calendar', async (req,res) =>{
   // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
   let index = 0
   // console.log(data);
@@ -4311,12 +4311,19 @@ router.post('/calendar/simple', async (req,res) =>{
 
 });
 
-router.get('/instrumentos', async (req, res) => {
 
+router.get('/instrumentos/:id',cors(corsOptions), async (req, res) => {
   try {
-     const instrumentos = await pool.any('SELECT * FROM instrumento;')
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "companyId incorrecto" });
+    }
+
+     const instrumentos = await pool.any('SELECT * FROM instrumento where "companyId" = $1',id)
      return res.status(200).json({ success: true, instrumentos });
   } catch (error) {
+    console.log(error)
     return res.status(200).json({ success: false, error: 'Something failed!' });
   }
 });
@@ -4361,15 +4368,17 @@ router.post('/instrumentos', async (req, res) => {
       noPatron = "",
       vigenciaPatron = null,
       ultimaCalibracion = null,
-      tipo = 'Otros'
+      tipo = 'Otros',
+      companyId = 0
     } = req.body;
 
+    console.log(req.body);
     let sql = `INSERT INTO instrumento
     ("codigo", "fechaAlta", "nombre","ubicacion", "marca", "modelo",
     "amplitudMedicion", "frecuenciaCalibracion", "exactitudRequerida",
     "incertidumbre", "noSerie", "noCertificado", "noPatron", 
-    "vigenciaPatron","ultimaCalibracion", "tipo") 
-    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`
+    "vigenciaPatron","ultimaCalibracion", "tipo","companyId") 
+    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`
 
     await pool.none(sql, [
       codigo, fechaAlta, nombre,
@@ -4377,7 +4386,7 @@ router.post('/instrumentos', async (req, res) => {
       amplitudMedicion, frecuenciaCalibracion, 
       exactitudRequerida, incertidumbre, 
       noSerie, noCertificado, noPatron, 
-      vigenciaPatron, ultimaCalibracion, tipo 
+      vigenciaPatron, ultimaCalibracion, tipo, companyId
     ]).then(data => {
       return res.status(200).json({
         success: true,
@@ -4673,12 +4682,12 @@ function codigoFecha(data) {
       
         if (resta < 0) {
       
-          datoFecha["retraso"][`${data[key].tarea}`] = {FechaRestante:(resta * -1),proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+          datoFecha["retraso"][`${data[key].tarea}`] = {FechaRestante:(resta * -1),proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
         }else if (resta < 11) {
-          datoFecha["urgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+          datoFecha["urgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
         }
         else {
-          datoFecha["noUrgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea};
+          datoFecha["noUrgente"][`${data[key].tarea}`] = {FechaRestante:resta,proveedor:`${data[key].tarea} - ${data[key].dirName}`,position:data[key].tarea,desc:data[key].descTarea,Fecha:data[key].Fecha};
         }
     }
   
