@@ -58,6 +58,7 @@ router.get('/Tareas/:Ubicacion',async function (req,res) {
  }
 })
 router.post('/add/task/:position/:nombre/:Fecha',async function (req, res) {
+try {
   const nombre = req.params.nombre
   const position = req.params.position
   const Fecha = req.params.Fecha
@@ -68,77 +69,164 @@ router.post('/add/task/:position/:nombre/:Fecha',async function (req, res) {
     Fecha: Fecha,
     Id_File : 1,
     "Finished": 1
-});
-res.send('test')
+  });
+  res.send('test')
+} catch (error) {
+  res.send(error)
+}
 });
 router.post('/delete/TaskTomza/:position',async function (req, res) {
-  const position = req.params.position;
-  await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
-  res.send('test')
+  try {
+    const position = req.params.position;
+    await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+    res.send('test')
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/delete/Tasknatgas/:position',async function (req, res) {
+  try {
+    const position = req.params.position;
+    await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+    res.send('test')
+  } catch (error) {
+    res.send(error)
+  }
 });
 
 router.post('/add/FileTomza/:fileP',async function (req, res) {
-  let fileP = req.params.fileP
-  if (fileP ==  '1') {
-   dataP = '1.1'
- } else {
-  max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
-  let  positions = [];
-  const dots = fileP.split(".").length;
-
-  let max1 = null;
-  if (max == null) {
-       dataP = fileP + '.1'
-  }else{
-       for (const key in max) {
-            const temp =max[key].position
-            if (temp.split(".").length - 1 == dots) {
-
-                 positions.push(temp.substr(temp.length - 1) - 1 + 1)
-                 max1 = max[key].position
-            }
-       }
-       const maxP = Math.max(...positions) + 1
-       console.log(max1);
-       if (max1==null) {
-            dataP = fileP + '.1'
-       } else {
-
-            dataP = max1.replace(/.$/,`${maxP}`)
-       }
-  }
- }
- var fileName = req.params.fileP
- var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_tomza WHERE position = '${fileName}';`);
- const fs = require('fs');
- let name = file[0].dirName.split(' ')
- name = name.join().replace(',','_')
- name = name.replace(',','_')
- name = name.replace(',','_')
- name = name.replace(',','_')
- name = name.replace(',','_')
-  name = name.replace(',','_')
-  name = name.replace(',','_')
- const hora = new Date();
-let datetext = hora.toTimeString();
-datetext = datetext.split(' ')[0];
-datetext = datetext.replace(':','-')
-datetext = datetext.replace(':','-')
- name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
- fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/tomza/', name + '.pdf'), () => {
-    console.log("\nFile Renamed!\n");
-
+  try {
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+   var fileName = req.params.fileP
+   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_tomza WHERE position = '${fileName}';`);
+   const fs = require('fs');
+   let name = file[0].dirName.split(' ')
+   name = name.join().replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+    name = name.replace(',','_')
+    name = name.replace(',','_')
+   const hora = new Date();
+  let datetext = hora.toTimeString();
+  datetext = datetext.split(' ')[0];
+  datetext = datetext.replace(':','-')
+  datetext = datetext.replace(':','-')
+   name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+   fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/tomza/', name + '.pdf'), () => {
+      console.log("\nFile Renamed!\n");
+  
+    });
+    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_tomza;`);
+    await pool.query('INSERT INTO schtelemetria.estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name,
+      ext: 'pdf',
+      position: dataP,
+      Avalible:1,
+      date: acomodarFecha(DateNow())
   });
-  const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_tomza;`);
-  await pool.query('INSERT INTO schtelemetria.estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
-    id:maxID[0].max - 1 + 2,
-    fileName: name,
-    ext: 'pdf',
-    position: dataP,
-    Avalible:1,
-    date: acomodarFecha(DateNow())
+  res.send('test')
+  } catch (error) {
+    res.send(error)
+  }
 });
-res.send('test')
+router.post('/add/Filenatgas/:fileP',async function (req, res) {
+  try {
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+   var fileName = req.params.fileP
+   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
+   const fs = require('fs');
+   let name = file[0].dirName.split(' ')
+   name = name.join().replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+    name = name.replace(',','_')
+    name = name.replace(',','_')
+   const hora = new Date();
+  let datetext = hora.toTimeString();
+  datetext = datetext.split(' ')[0];
+  datetext = datetext.replace(':','-')
+  datetext = datetext.replace(':','-')
+   name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+   fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
+      console.log("\nFile Renamed!\n");
+  
+    });
+    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
+    await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name,
+      ext: 'pdf',
+      position: dataP,
+      Avalible:1,
+      date: acomodarFecha(DateNow())
+  });
+  res.send('test')
+  } catch (error) {
+    res.send(error)
+  }
 });
 let tanque1 =require(path.join(__dirname, '../public/json/glencore/tanque1.json'))
 let tanque2 =require(path.join(__dirname, '../public/json/glencore/tanque2.json'))
