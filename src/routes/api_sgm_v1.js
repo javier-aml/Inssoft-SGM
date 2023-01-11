@@ -50,8 +50,8 @@ router.get('/Tareas/:Ubicacion',async function (req,res) {
   try {
     const ubicacion = req.params.Ubicacion;
     const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM schtelemetria.tarea WHERE Tarea = '${ubicacion}';`)
-    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_tomza WHERE "position" = '${ubicacion}';`)
-    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
+    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_natgas WHERE "position" = '${ubicacion}';`)
+    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
     res.send({tarea,ubicacionTarea,ubicacionHTML});
  } catch (error) {
    res.send(error)
@@ -210,6 +210,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
   datetext = datetext.replace(':','-')
   datetext = datetext.replace(':','-')
    name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+   console.log(name);
    fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
       console.log("\nFile Renamed!\n");
   
