@@ -50,8 +50,8 @@ router.get('/Tareas/:Ubicacion',async function (req,res) {
   try {
     const ubicacion = req.params.Ubicacion;
     const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM schtelemetria.tarea WHERE Tarea = '${ubicacion}';`)
-    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_tomza WHERE "position" = '${ubicacion}';`)
-    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
+    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_natgas WHERE "position" = '${ubicacion}';`)
+    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
     res.send({tarea,ubicacionTarea,ubicacionHTML});
  } catch (error) {
    res.send(error)
@@ -210,20 +210,60 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
   datetext = datetext.replace(':','-')
   datetext = datetext.replace(':','-')
    name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+   console.log(name);
    fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
       console.log("\nFile Renamed!\n");
   
     });
     const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
+    let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
+    console.log(dataP);
+    console.log(position.length);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        console.log(position.length !== 0);
+        console.log(position);
+        console.log();
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        console.log(tempPsotion);
+        tempPsotion = tempPsotion.split('.')
+        console.log(tempPsotion);
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        console.log();
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        console.log(positionInsert);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${positionInsert}';`);
+        index++;
+      }
+    }
+
+    console.log(positionInsert);
     await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
       fileName: name,
       ext: 'pdf',
-      position: dataP,
+      position: positionInsert,
       Avalible:1,
       date: acomodarFecha(DateNow())
   });
-  res.send('test')
+  res.send(positionInsert)
   } catch (error) {
     res.send(error)
   }
