@@ -4372,7 +4372,6 @@ router.post('/instrumentos', async (req, res) => {
       companyId = 0
     } = req.body;
 
-    console.log(req.body);
     let sql = `INSERT INTO instrumento
     ("codigo", "fechaAlta", "nombre","ubicacion", "marca", "modelo",
     "amplitudMedicion", "frecuenciaCalibracion", "exactitudRequerida",
@@ -4419,6 +4418,83 @@ router.get('/certificados-equipo/:id',cors(corsOptions), async (req, res) => {
     });
   } catch (error) {
     return res.status(200).json({ success: false, error: 'Something failed!' });
+  }
+});
+
+
+const storageCertificado = multer.diskStorage({
+  //destination:  path.join(__dirname, '../public/formatos-sgm/instrumentos/'),
+  destination: function (req, file, cb) {
+    const dest = path.join(__dirname, '../public/formatos-sgm/instrumentos/certificados')
+    if(!fs.existsSync(dest)){
+      fs.mkdirSync(dest,{ recursive: true });
+    }
+
+    cb(null, dest)
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null, `cert-${Date.now()}${ext}`)
+  }
+})
+
+const certificadoUpload = multer({
+  storage:storageCertificado,
+  limits: { fileSize: 3 * 1000 * 1000 },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype == "application/pdf") {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      cb(new Error('¡Solo se aceptan archivos con extensión .pdf!'))
+    }
+  },
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+}).single('certificadoFile')
+
+router.post('/certificados-equipo', cors(corsOptions), async (req, res) => {
+
+  try {
+    certificadoUpload(req, res, async function (err) {
+      if (err instanceof multer.MulterError) {
+        const msg = err.code == 'LIMIT_FILE_SIZE' ? 'Solo se aceptan archivos de máximo 3MB': 'El archivos es incorrecto';
+        return res.status(200).json({ success: false, error: msg });
+      } else if (err) {
+        return res.status(200).json({ success: false, error: err.message });
+      }
+
+      const fileName = req.file.filename;
+      const id = Number(req.body.id);
+      const { nombre = '', certificado = '', fechaIngreso = new Date()} = req.body
+
+      if(isNaN(id)){
+        return res.status(200).json({ success: false, msg: "Id de instrumento incorrecto" });
+      }
+
+      let sql = `INSERT INTO certificado_equipo
+      ("id_equipo", "Nombre", "Certificado","Fecha_Ingreso", "FileName") 
+      VALUES($1,$2,$3,$4,$5)`
+
+      await pool.none(sql, [id,nombre,certificado,fechaIngreso,fileName]).then(data => {
+        return res.status(200).json({ success: true });
+      }) .catch(error => {
+        console.log(error)
+        fs.unlink(path.join(__dirname, '../public/formatos-sgm/instrumentos/certificados/',fileName), (err => {
+          if (err) console.log(err);
+          else {
+            console.log("Deleted file: " + fileName);
+          }
+        }));
+        return res.status(200).json({ success: false, error: 'Ocurrio un error al tratar de guardar la información' });
+      });
+
+    })
+
+  } catch (error) {
+    return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
   }
 });
 
