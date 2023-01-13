@@ -4646,6 +4646,84 @@ router.get('/documental-equipo/:id',cors(corsOptions), async (req, res) => {
   }
 });
 
+
+const storageDocumental = multer.diskStorage({
+  //destination:  path.join(__dirname, '../public/formatos-sgm/instrumentos/'),
+  destination: function (req, file, cb) {
+    const dest = path.join(__dirname, '../public/formatos-sgm/instrumentos/documental')
+    if(!fs.existsSync(dest)){
+      fs.mkdirSync(dest,{ recursive: true });
+    }
+
+    cb(null, dest)
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null, `documental-${Date.now()}${ext}`)
+  }
+})
+
+const documentalUpload = multer({
+  storage:storageDocumental,
+  limits: { fileSize: 3 * 1000 * 1000 },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype == "application/pdf") {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      cb(new Error('¡Solo se aceptan archivos con extensión .pdf!'))
+    }
+  },
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+}).single('documentalFile')
+
+router.post('/documental-equipo', cors(corsOptions), async (req, res) => {
+
+  try {
+    documentalUpload(req, res, async function (err) {
+      if (err instanceof multer.MulterError) {
+        const msg = err.code == 'LIMIT_FILE_SIZE' ? 'Solo se aceptan archivos de máximo 3MB': 'El archivos es incorrecto';
+        return res.status(200).json({ success: false, error: msg });
+      } else if (err) {
+        return res.status(200).json({ success: false, error: err.message });
+      }
+
+      const fileName = req.file.filename;
+      const id = Number(req.body.id);
+      const { nombre = '', tipo = '', fechaIngreso = new Date()} = req.body
+
+      if(isNaN(id)){
+        return res.status(200).json({ success: false, msg: "Id de instrumento incorrecto" });
+      }
+
+      let sql = `INSERT INTO documental_equipo
+      ("id_equipo", "Nombre", "Tipo","Fecha_Ingreso", "FileName") 
+      VALUES($1,$2,$3,$4,$5)`
+
+      await pool.none(sql, [id,nombre,tipo,fechaIngreso,fileName]).then(data => {
+        return res.status(200).json({ success: true });
+      }) .catch(error => {
+        console.log(error)
+        fs.unlink(path.join(__dirname, '../public/formatos-sgm/instrumentos/documental/',fileName), (err => {
+          if (err) console.log(err);
+          else {
+            console.log("Deleted file: " + fileName);
+          }
+        }));
+        return res.status(200).json({ success: false, error: 'Ocurrio un error al tratar de guardar la información' });
+      });
+
+    })
+
+  } catch (error) {
+    return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
+  }
+});
+
+
 function dateFormat(fecha) {
   const separar = fecha.split("-")
   let fechaformat = ""
