@@ -13,7 +13,7 @@ const session = require('express-session');
 const cors = require("cors")
 var corsOptions = {
     origin: ['http://localhost:4000','http://localhost:3000'],
-    "methods": "GET,POST,OPTIONS",
+    "methods": "GET,POST,DELETE,OPTIONS",
     credentials:true
   }
   

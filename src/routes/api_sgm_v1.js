@@ -10,7 +10,7 @@ const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
   origin: ['http://localhost:3000','http://localhost:4000'],
-  "methods": "GET,POST,OPTIONS",
+  "methods": "GET,POST,DELETE,OPTIONS",
   credentials:true
 }
 const storage = multer.diskStorage({
@@ -4493,6 +4493,46 @@ router.post('/certificados-equipo', cors(corsOptions), async (req, res) => {
 
     })
 
+  } catch (error) {
+    return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
+  }
+});
+
+router.delete('/certificados-equipo/:id', cors(corsOptions), async (req, res) => {
+
+  try {
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "Id de certificado incorrecto" });
+    }
+    else
+    {
+
+      //Get certificado
+      await pool.any('SELECT * FROM certificado_equipo where id = $1', id).then(async data => {
+
+        //Eliminar archivo
+        const url = path.join(__dirname, '../public/formatos-sgm/instrumentos/certificados/',data[0].FileName)
+        if(fs.existsSync(url)){
+          fs.unlink(url, (err => {
+            if (err) console.log(err);
+            else {
+              console.log("Deleted file: " + data[0].FileName);
+            }
+          }));
+        }
+        
+        await pool.query('DELETE FROM certificado_equipo WHERE id= $1',id).then(data=>{
+          return res.status(200).json({ success: true });
+        }).catch(error => {
+          return res.status(200).json({ success: false, error: 'Something failed!' });
+        });
+
+      }).catch(error => {
+        return res.status(200).json({ success: false, error: 'Something failed!' });
+      });
+    }
   } catch (error) {
     return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
   }
