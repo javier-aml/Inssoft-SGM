@@ -28,8 +28,9 @@ const upload = multer({
 })
 
 const storageNatgas = multer.diskStorage({
-  destination:  path.join(__dirname, '../public/TestArchivosMulter'),
+  destination:path.join(__dirname, '../public/formatos-sgm/natgas'),
   filename: function(req,file,cb) {
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
     cb(null,file.originalname )
   }
 })
@@ -42,8 +43,12 @@ const uploadNatgas = multer({
 })
 // const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
 
-router.post('/api/uploadPDF', upload.single('upl'),async function (req, res) {
-res.send('test')
+router.post('/api/uploadPDF', uploadNatgas.single('upl'),async function (req, res) {
+  try {
+    res.send('succes')
+  } catch (error) {
+    res.send(error)
+  }
 });
 
 router.get('/Tareas/:Ubicacion',async function (req,res) {
@@ -211,7 +216,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
   datetext = datetext.replace(':','-')
    name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
    console.log(name);
-   fs.rename(path.join(__dirname, '../public/TestArchivosMulter/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
+   fs.rename(path.join(__dirname, '../public/formatos-sgm/natgas/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
       console.log("\nFile Renamed!\n");
   
     });
