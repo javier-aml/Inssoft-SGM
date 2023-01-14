@@ -51,6 +51,104 @@ router.post('/api/uploadPDF', uploadNatgas.single('upl'),async function (req, re
   }
 });
 
+router.post('/api/uploadPDFNatgas/:fileP/:fileName', uploadNatgas.single('upl'),async function (req, res) {
+  try {
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+   var fileName = req.params.fileP
+   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
+   const fs = require('fs');
+   let name = file[0].dirName.split(' ')
+   name = name.join().replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+   name = name.replace(',','_')
+    name = name.replace(',','_')
+    name = name.replace(',','_')
+   const hora = new Date();
+  let datetext = hora.toTimeString();
+  datetext = datetext.split(' ')[0];
+  datetext = datetext.replace(':','-')
+  datetext = datetext.replace(':','-')
+   name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+   console.log(name);
+   fs.rename(path.join(__dirname, '../public/formatos-sgm/natgas/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
+      console.log("\nFile Renamed!\n");
+  
+    });
+    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
+    let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${positionInsert}';`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name,
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow())
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+
 router.get('/Tareas/:Ubicacion',async function (req,res) {
   try {
     const ubicacion = req.params.Ubicacion;
@@ -222,8 +320,6 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
     });
     const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
     let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
-    console.log(dataP);
-    console.log(position.length);
     let positionInsert = ''
     let tempPsotion
     if (position.length === 0) {
@@ -233,25 +329,18 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
       let index = 0;
       while (position.length !== 0) {
         positionInsert = ''
-        console.log(position.length !== 0);
-        console.log(position);
-        console.log();
         if (index === 0) {
             tempPsotion = dataP
         }
-        console.log(tempPsotion);
         tempPsotion = tempPsotion.split('.')
-        console.log(tempPsotion);
         const lengthPosition = tempPsotion.length;
         const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
         tempPsotion[lengthPosition-1] = lastdigit
-        console.log();
         
         for (let index = 0; index < tempPsotion.length; index++) {
           positionInsert+=`${tempPsotion[index]}.`
         }
         positionInsert = positionInsert.substring(0, positionInsert.length - 1);
-        console.log(positionInsert);
         tempPsotion= positionInsert;
 
         position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${positionInsert}';`);
@@ -259,7 +348,6 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
       }
     }
 
-    console.log(positionInsert);
     await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
       fileName: name,
