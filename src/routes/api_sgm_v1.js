@@ -9,8 +9,8 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 var corsOptions = {
+  "methods": "GET,POST,DELETE,OPTIONS",
   origin: ['http://localhost:3000','http://localhost:4000','http://127.0.0.1:3000','http://127.0.0.1:4000'],
-  "methods": "GET,POST,OPTIONS",
   credentials:true
 }
 const storage = multer.diskStorage({
@@ -4719,6 +4719,46 @@ router.post('/certificados-equipo', cors(corsOptions), async (req, res) => {
   }
 });
 
+router.delete('/certificados-equipo/:id', cors(corsOptions), async (req, res) => {
+
+  try {
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "Id de certificado incorrecto" });
+    }
+    else
+    {
+
+      //Get certificado
+      await pool.any('SELECT * FROM certificado_equipo where id = $1', id).then(async data => {
+
+        //Eliminar archivo
+        const url = path.join(__dirname, '../public/formatos-sgm/instrumentos/certificados/',data[0].FileName)
+        if(fs.existsSync(url)){
+          fs.unlink(url, (err => {
+            if (err) console.log(err);
+            else {
+              console.log("Deleted file: " + data[0].FileName);
+            }
+          }));
+        }
+        
+        await pool.query('DELETE FROM certificado_equipo WHERE id= $1',id).then(data=>{
+          return res.status(200).json({ success: true });
+        }).catch(error => {
+          return res.status(200).json({ success: false, error: 'Something failed!' });
+        });
+
+      }).catch(error => {
+        return res.status(200).json({ success: false, error: 'Something failed!' });
+      });
+    }
+  } catch (error) {
+    return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
+  }
+});
+
 router.get('/documental-equipo/:id',cors(corsOptions), async (req, res) => {
 
   try {
@@ -4816,6 +4856,45 @@ router.post('/documental-equipo', cors(corsOptions), async (req, res) => {
   }
 });
 
+router.delete('/documental-equipo/:id', cors(corsOptions), async (req, res) => {
+
+  try {
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "Id de documento incorrecto" });
+    }
+    else
+    {
+
+      //Get documental
+      await pool.any('SELECT * FROM documental_equipo where id = $1', id).then(async data => {
+
+        //Eliminar archivo
+        const url = path.join(__dirname, '../public/formatos-sgm/instrumentos/documental/',data[0].FileName)
+        if(fs.existsSync(url)){
+          fs.unlink(url, (err => {
+            if (err) console.log(err);
+            else {
+              console.log("Deleted file: " + data[0].FileName);
+            }
+          }));
+        }
+        
+        await pool.query('DELETE FROM documental_equipo WHERE id= $1',id).then( data => {
+          return res.status(200).json({ success: true });
+        }).catch(error => {
+          return res.status(200).json({ success: false, error: 'Something failed!' });
+        });
+
+      }).catch(error => {
+        return res.status(200).json({ success: false, error: 'Something failed!' });
+      });
+    }
+  } catch (error) {
+    return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
+  }
+});
 
 function dateFormat(fecha) {
   const separar = fecha.split("-")
