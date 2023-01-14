@@ -4768,6 +4768,45 @@ router.post('/documental-equipo', cors(corsOptions), async (req, res) => {
   }
 });
 
+router.delete('/documental-equipo/:id', cors(corsOptions), async (req, res) => {
+
+  try {
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "Id de documento incorrecto" });
+    }
+    else
+    {
+
+      //Get documental
+      await pool.any('SELECT * FROM documental_equipo where id = $1', id).then(async data => {
+
+        //Eliminar archivo
+        const url = path.join(__dirname, '../public/formatos-sgm/instrumentos/documental/',data[0].FileName)
+        if(fs.existsSync(url)){
+          fs.unlink(url, (err => {
+            if (err) console.log(err);
+            else {
+              console.log("Deleted file: " + data[0].FileName);
+            }
+          }));
+        }
+        
+        await pool.query('DELETE FROM documental_equipo WHERE id= $1',id).then( data => {
+          return res.status(200).json({ success: true });
+        }).catch(error => {
+          return res.status(200).json({ success: false, error: 'Something failed!' });
+        });
+
+      }).catch(error => {
+        return res.status(200).json({ success: false, error: 'Something failed!' });
+      });
+    }
+  } catch (error) {
+    return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
+  }
+});
 
 function dateFormat(fecha) {
   const separar = fecha.split("-")
