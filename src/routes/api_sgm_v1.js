@@ -30,8 +30,22 @@ const upload = multer({
 const storageNatgas = multer.diskStorage({
   destination:path.join(__dirname, '../public/formatos-sgm/natgas'),
   filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    console.log(name);
     // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
-    cb(null,file.originalname )
+    cb(null,name )
   }
 })
 const uploadNatgas = multer({
@@ -51,8 +65,9 @@ router.post('/api/uploadPDF', uploadNatgas.single('upl'),async function (req, re
   }
 });
 
-router.post('/api/uploadPDFNatgas/:fileP/:fileName', uploadNatgas.single('upl'),async function (req, res) {
+router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async function (req, res) {
   try {
+    console.log(req.file);
     let fileP = req.params.fileP
     if (fileP ==  '1') {
      dataP = '1.1'
@@ -83,28 +98,30 @@ router.post('/api/uploadPDFNatgas/:fileP/:fileName', uploadNatgas.single('upl'),
          }
     }
    }
-   var fileName = req.params.fileP
-   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
-   const fs = require('fs');
-   let name = file[0].dirName.split(' ')
-   name = name.join().replace(',','_')
-   name = name.replace(',','_')
-   name = name.replace(',','_')
-   name = name.replace(',','_')
-   name = name.replace(',','_')
-    name = name.replace(',','_')
-    name = name.replace(',','_')
-   const hora = new Date();
-  let datetext = hora.toTimeString();
-  datetext = datetext.split(' ')[0];
-  datetext = datetext.replace(':','-')
-  datetext = datetext.replace(':','-')
-   name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
-   console.log(name);
-   fs.rename(path.join(__dirname, '../public/formatos-sgm/natgas/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
-      console.log("\nFile Renamed!\n");
+  //  var fileName = req.params.fileP
+  //  var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
+  //  const fs = require('fs');
+  //  let name = file[0].dirName.split(' ')
+  //  name = name.join().replace(',','_')
+  //  name = name.replace(',','_')
+  //  name = name.replace(',','_')
+  //  name = name.replace(',','_')
+  //  name = name.replace(',','_')
+  //   name = name.replace(',','_')
+  //   name = name.replace(',','_')
+  //  const hora = new Date();
+  // let datetext = hora.toTimeString();
+  // datetext = datetext.split(' ')[0];
+  // datetext = datetext.replace(':','-')
+  // datetext = datetext.replace(':','-')
+  //  name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
+  //  console.log(name);
+  //  fs.rename(path.join(__dirname, '../public/formatos-sgm/natgas/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
+  //     console.log("\nFile Renamed!\n");
   
-    });
+  //   });
+  console.log(req.file.filename);
+    const name = req.file.filename;
     const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
     let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
     let positionInsert = ''
