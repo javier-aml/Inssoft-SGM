@@ -43,7 +43,6 @@ const storageNatgas = multer.diskStorage({
     name = name.replace(' ','_')
      name = name.replace(' ','_')
      name = name.replace(' ','_')
-    console.log(name);
     // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
     cb(null,name )
   }
@@ -120,7 +119,6 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
   //     console.log("\nFile Renamed!\n");
   
   //   });
-  console.log(req.file.filename);
     const name = req.file.filename;
     const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
     let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
