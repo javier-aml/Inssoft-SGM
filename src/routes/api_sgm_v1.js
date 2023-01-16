@@ -330,6 +330,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
    name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
    console.log(name);
    fs.rename(path.join(__dirname, '../public/formatos-sgm/natgas/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
+
       console.log("\nFile Renamed!\n");
   
     });
@@ -351,6 +352,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
         const lengthPosition = tempPsotion.length;
         const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
         tempPsotion[lengthPosition-1] = lastdigit
+
         
         for (let index = 0; index < tempPsotion.length; index++) {
           positionInsert+=`${tempPsotion[index]}.`
@@ -362,7 +364,6 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
         index++;
       }
     }
-
     await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
       fileName: name,
