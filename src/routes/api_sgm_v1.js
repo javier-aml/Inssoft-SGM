@@ -119,7 +119,9 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
   //     console.log("\nFile Renamed!\n");
   
   //   });
-    const name = req.file.filename;
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
     const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
     let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
     let positionInsert = ''
