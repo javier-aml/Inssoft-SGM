@@ -434,7 +434,7 @@ router.get('/TestApi',(req,res) => {
   res.send(Prueba)
 })
 //Glencore Inicio
-router.post('/diario-natgas/:fecha', async (req, res) => {
+router.post('/diario-natgas1/:fecha', async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
     var datoCompra;
@@ -1800,7 +1800,7 @@ if (tomorrowsplit[1].length == 1) {
   
   
 });
-router.post('/mensual-natgas/:fecha', async (req, res) => {
+router.post('/mensual-natgas1/:fecha', async (req, res) => {
   console.log("mess");
   const xl = require('excel4node');
 console.log("Empieza");
@@ -3013,7 +3013,7 @@ const datos = {
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
 //Glencore Final
-router.post('/diario-natgasReal/:fecha', async (req, res) => {
+router.post('/diario-natgas/:fecha', async (req, res) => {
  try {
   var request = require('request');
   // let temp;2022-10-25
@@ -3811,7 +3811,7 @@ const datos = {
  }
 
 });
-router.post('/mensual-natgasReal/:fecha', async (req, res) => {
+router.post('/mensual-natgas/:fecha', async (req, res) => {
    try {
     console.log("mess");
     const xl = require('excel4node');
