@@ -563,7 +563,7 @@ if (tomorrowsplit[1].length == 1) {
           
           let temp = JSON.parse(response.body);
           temp = temp['hydra:member']
-          res.send(temp)
+          // res.send(temp)
           console.log("@@@@@@@@@@@");
           ApiLength = temp.length
           for (const key in temp) {
