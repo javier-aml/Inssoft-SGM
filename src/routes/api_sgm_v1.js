@@ -555,7 +555,7 @@ if (tomorrowsplit[1].length == 1) {
         pagIndexCompra++
   
         let fecha3;
-  
+        res.send(options)
         await request(options, function (error, response) {
           if (error) throw new Error(error);
           // console.log(response.body);
