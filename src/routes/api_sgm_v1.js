@@ -525,7 +525,7 @@ router.post('/diario-natgas/:fecha', async (req, res) => {
   }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 3)
+tomorrow.setDate(tomorrow.getDate() + 2)
 // tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 console.log(today);
