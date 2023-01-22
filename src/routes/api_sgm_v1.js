@@ -555,7 +555,6 @@ if (tomorrowsplit[1].length == 1) {
         pagIndexCompra++
   
         let fecha3;
-        res.send(options)
         await request(options, function (error, response) {
           if (error) throw new Error(error);
           // console.log(response.body);
@@ -568,6 +567,7 @@ if (tomorrowsplit[1].length == 1) {
           ApiLength = temp.length
           for (const key in temp) {
             const res = temp[key]
+            res.send(res)
             switch (res.paymentMethod) {
               case 01:
                 metodoPago = 'Efectivo'
