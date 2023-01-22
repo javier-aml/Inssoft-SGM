@@ -71,7 +71,7 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
     if (fileP ==  '1') {
      dataP = '1.1'
    } else {
-    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    max = await pool.query(`SELECT * FROM estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
     let  positions = [];
     const dots = fileP.split(".").length;
   
@@ -98,7 +98,7 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
     }
    }
   //  var fileName = req.params.fileP
-  //  var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
+  //  var file = await pool.query(`SELECT id, "dirName", "position" FROM estructura_directorios_natgas WHERE position = '${fileName}';`);
   //  const fs = require('fs');
   //  let name = file[0].dirName.split(' ')
   //  name = name.join().replace(',','_')
@@ -122,8 +122,8 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
     let name = req.file.filename;
     name = name.split('.')
     name = name[0];
-    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
-    let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos_natgas;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${dataP}';`);
     let positionInsert = ''
     let tempPsotion
     if (position.length === 0) {
@@ -147,14 +147,14 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
         positionInsert = positionInsert.substring(0, positionInsert.length - 1);
         tempPsotion= positionInsert;
 
-        position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${positionInsert}';`);
+        position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${positionInsert}';`);
         index++;
       }
     }
 
-    await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    await pool.query('INSERT INTO estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
-      fileName: name,
+      fileName: name.replace('.pdf',''),
       ext: 'pdf',
       position: positionInsert,
       Avalible:1,
@@ -169,9 +169,9 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
 router.get('/Tareas/:Ubicacion',async function (req,res) {
   try {
     const ubicacion = req.params.Ubicacion;
-    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM schtelemetria.tarea WHERE Tarea = '${ubicacion}';`)
-    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_natgas WHERE "position" = '${ubicacion}';`)
-    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
+    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM tarea WHERE Tarea = '${ubicacion}';`)
+    const ubicacionTarea = await pool.any(`SELECT * FROM estructura_directorios_natgas WHERE "position" = '${ubicacion}';`)
+    const ubicacionHTML = await pool.any(`SELECT * FROM estructura_archivos_natgas WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
     res.send({tarea,ubicacionTarea,ubicacionHTML});
  } catch (error) {
    res.send(error)
@@ -183,7 +183,7 @@ try {
   const position = req.params.position
   const Fecha = req.params.Fecha
 
-  await pool.query('INSERT INTO schtelemetria.tarea("descTarea", tarea,"Fecha", "Id_File", "Finished") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished})', {
+  await pool.query('INSERT INTO tarea("descTarea", tarea,"Fecha", "Id_File", "Finished") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished})', {
     descTarea: nombre,
     tarea: position,
     Fecha: Fecha,
@@ -198,7 +198,7 @@ try {
 router.post('/delete/TaskTomza/:position',async function (req, res) {
   try {
     const position = req.params.position;
-    await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+    await pool.query(`DELETE FROM tarea WHERE id= '${position}';`)
     res.send('test')
   } catch (error) {
     res.send(error)
@@ -207,7 +207,7 @@ router.post('/delete/TaskTomza/:position',async function (req, res) {
 router.post('/delete/Tasknatgas/:position',async function (req, res) {
   try {
     const position = req.params.position;
-    await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+    await pool.query(`DELETE FROM tarea WHERE id= '${position}';`)
     res.send('test')
   } catch (error) {
     res.send(error)
@@ -220,7 +220,7 @@ router.post('/add/FileTomza/:fileP',async function (req, res) {
     if (fileP ==  '1') {
      dataP = '1.1'
    } else {
-    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    max = await pool.query(`SELECT * FROM estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
     let  positions = [];
     const dots = fileP.split(".").length;
   
@@ -247,7 +247,7 @@ router.post('/add/FileTomza/:fileP',async function (req, res) {
     }
    }
    var fileName = req.params.fileP
-   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_tomza WHERE position = '${fileName}';`);
+   var file = await pool.query(`SELECT id, "dirName", "position" FROM estructura_directorios_tomza WHERE position = '${fileName}';`);
    const fs = require('fs');
    let name = file[0].dirName.split(' ')
    name = name.join().replace(',','_')
@@ -267,8 +267,8 @@ router.post('/add/FileTomza/:fileP',async function (req, res) {
       console.log("\nFile Renamed!\n");
   
     });
-    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_tomza;`);
-    await pool.query('INSERT INTO schtelemetria.estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos_tomza;`);
+    await pool.query('INSERT INTO estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
       fileName: name,
       ext: 'pdf',
@@ -287,7 +287,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
     if (fileP ==  '1') {
      dataP = '1.1'
    } else {
-    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    max = await pool.query(`SELECT * FROM estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
     let  positions = [];
     const dots = fileP.split(".").length;
   
@@ -314,7 +314,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
     }
    }
    var fileName = req.params.fileP
-   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
+   var file = await pool.query(`SELECT id, "dirName", "position" FROM estructura_directorios_natgas WHERE position = '${fileName}';`);
    const fs = require('fs');
    let name = file[0].dirName.split(' ')
    name = name.join().replace(',','_')
@@ -336,8 +336,8 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
       console.log("\nFile Renamed!\n");
   
     });
-    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
-    let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos_natgas;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${dataP}';`);
     let positionInsert = ''
     let tempPsotion
     if (position.length === 0) {
@@ -362,11 +362,11 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
         positionInsert = positionInsert.substring(0, positionInsert.length - 1);
         tempPsotion= positionInsert;
 
-        position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${positionInsert}';`);
+        position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${positionInsert}';`);
         index++;
       }
     }
-    await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    await pool.query('INSERT INTO estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
       fileName: name,
       ext: 'pdf',
@@ -394,7 +394,7 @@ router.post('/TestApi',(req,res) => {
 })
 router.get('/Task',async (req,res) => {
   try {
-     const Task = await pool.query('SELECT * FROM schtelemetria.tarea inner join schtelemetria.estructura_directorios_tomza on tarea = "position";')
+     const Task = await pool.query('SELECT * FROM tarea inner join estructura_directorios_natgas on tarea = "position";')
      const fechas = codigoFecha(Task);
      const urgente = sortObject(fechas.urgente);
      const noUrgente = sortObject(fechas.noUrgente);
@@ -4989,8 +4989,8 @@ function acomodarFecha(date) {
     return fecha
   }
   async function arbolArchivosNatgas(){
-    const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_natgas;')
-    const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_natgas;')
+    const directory =  await pool.any('SELECT * from estructura_directorios_natgas;')
+    const file = await pool.any('SELECT * from estructura_archivos_natgas;')
     let root = {};
     for (const key in directory) {
          let directoryname =directory[key].position
@@ -5056,8 +5056,8 @@ function acomodarFecha(date) {
   }
 
   async function arbolArchivosTomza(){
-    const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_tomza;')
-    const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_tomza;')
+    const directory =  await pool.any('SELECT * from estructura_directorios_tomza;')
+    const file = await pool.any('SELECT * from estructura_archivos_tomza;')
     let root = {};
     for (const key in directory) {
          let directoryname =directory[key].position
