@@ -556,14 +556,14 @@ if (tomorrowsplit[1].length == 1) {
   
         let fecha3;
         await request(options, function (error, response) {
-          res.send(response)
           if (error) throw new Error(error);
           // console.log(response.body);
-                      // console.log(diario);
-  
-  
+          // console.log(diario);
+          
+          
           let temp = JSON.parse(response.body);
           temp = temp['hydra:member']
+          res.send(temp)
           console.log("@@@@@@@@@@@");
           ApiLength = temp.length
           for (const key in temp) {
