@@ -387,6 +387,9 @@ let tanque5 =require(path.join(__dirname, '../public/json/glencore/tanque5.json'
 let tanque6 =require(path.join(__dirname, '../public/json/glencore/tanque6.json'))
 let tanque7 =require(path.join(__dirname, '../public/json/glencore/tanque7.json'))
 let tanque8 =require(path.join(__dirname, '../public/json/glencore/tanque8.json'))
+let productoGas87 = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualGas87.json'))    
+let productoGas91 = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualGas91.json'))    
+let productoDisel = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualDisel.json'))
 const delay = ms => new Promise(res => setTimeout(res, ms));
 router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
@@ -430,7 +433,8 @@ router.get('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.post('/DiarioGlencore/:fecha', async (req, res) => {
+//Glencore Inicio
+router.post('/diario-natgas/:fecha', async (req, res) => {
     var request = require('request');
     // let temp;2022-10-25
     var datoCompra;
@@ -520,7 +524,8 @@ router.post('/DiarioGlencore/:fecha', async (req, res) => {
   }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 1)
+tomorrow.setDate(tomorrow.getDate() + 3)
+// tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 console.log(today);
 console.log(tomorrow);
@@ -538,6 +543,7 @@ if (tomorrowsplit[1].length == 1) {
   tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
 }
       while (ApiLength > 0) {
+        console.log(tomorrow,fecha);
         var options = {
           'method': 'GET',
           'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
@@ -626,11 +632,9 @@ if (tomorrowsplit[1].length == 1) {
                 break;
             }
             fecha3 = res.issuedAt.substring(0, 10)
-            console.log(fecha3);
-            console.log("::::::::::::::::::::");
+
             fecha2 = fecha3
-            console.log(fecha2 + "<-----------------");
-            console.log(indexCompra);
+
 
             if (res.items[0] != undefined ) {
               if (res.items[0].unitCode == 'LTR' || res.items[0].unitCode == 'STL') {
@@ -781,6 +785,7 @@ if (tomorrowsplit[1].length == 1) {
                           break;
                       }
                     }
+                  
                     const dataTabla = {
                       "UUID":res.uuid,
                       "RFC Emisor":res.issuer.rfc,
@@ -840,12 +845,16 @@ if (tomorrowsplit[1].length == 1) {
                       Fechacompleta:res.issuedAt.substring(0, 10),
                       TotalMXN:(res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
                     }
-                     TotalMXN += parseFloat(tabla.TotalMXN);
+                    console.log(res.issuedAt.substring(0, 10),fecha);
+                    if (res.issuedAt.substring(0, 10) == fecha) {
+                      TotalMXN += parseFloat(tabla.TotalMXN);
                 
-                     TotalLTS += parseFloat(tabla.Cantidad);
-                     jsonCompra[indexCompra] = tabla
-                     compra[indexCompra] = dataTabla
-                     indexCompra++
+                      TotalLTS += parseFloat(tabla.Cantidad);
+                      jsonCompra[indexCompra] = tabla
+                      compra[indexCompra] = dataTabla
+                      indexCompra++
+                    }
+
                   } else {
                     // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
                     RECEPCION.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
@@ -958,6 +967,7 @@ if (tomorrowsplit[1].length == 1) {
                           break;
                       }
                     }
+                  
                     const dataTabla = {
                       "UUID":res.uuid,
                       "RFC Emisor":res.issuer.rfc,
@@ -1017,12 +1027,15 @@ if (tomorrowsplit[1].length == 1) {
                       Fechacompleta:res.issuedAt.substring(0, 10),
                       TotalMXN:res.total
                     }
-                     TotalMXN += parseFloat(tabla.TotalMXN);
+                    if (res.issuedAt.substring(0, 10) == fecha) {
+                      TotalMXN += parseFloat(tabla.TotalMXN);
                 
-                     TotalLTS += parseFloat(tabla.Cantidad);
-                     jsonCompra[indexCompra] = tabla
-                     compra[indexCompra] = dataTabla
-                     indexCompra++
+                      TotalLTS += parseFloat(tabla.Cantidad);
+                      jsonCompra[indexCompra] = tabla
+                      compra[indexCompra] = dataTabla
+                      indexCompra++
+                    }
+
                   }
                 } else {
                   // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
@@ -1136,6 +1149,7 @@ if (tomorrowsplit[1].length == 1) {
                         break;
                     }
                   }
+                
                   const dataTabla = {
                     "UUID":res.uuid,
                     "RFC Emisor":res.issuer.rfc,
@@ -1195,12 +1209,14 @@ if (tomorrowsplit[1].length == 1) {
                     Fechacompleta:res.issuedAt.substring(0, 10),
                     TotalMXN:(res.total * res.exchangeRate)
                   }
-                   TotalMXN += parseFloat(tabla.TotalMXN);
+                  if (res.issuedAt.substring(0, 10) == fecha) {
+                    TotalMXN += parseFloat(tabla.TotalMXN);
               
-                   TotalLTS += parseFloat(tabla.Cantidad);
-                   jsonCompra[indexCompra] = tabla
-                   compra[indexCompra] = dataTabla
-                   indexCompra++
+                    TotalLTS += parseFloat(tabla.Cantidad);
+                    jsonCompra[indexCompra] = tabla
+                    compra[indexCompra] = dataTabla
+                    indexCompra++
+                  }
                 }
               }
   
@@ -1254,6 +1270,7 @@ if (tomorrowsplit[1].length == 1) {
   ///venta
   let fecha4 = fecha;
   while (ApiLengthVenta > 0) {
+    console.log(tomorrow,fecha);
     var options = {
       'method': 'GET',
       'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
@@ -1276,7 +1293,8 @@ if (tomorrowsplit[1].length == 1) {
       ApiLengthVenta = temp.length
       for (const key in temp) {
         const res = temp[key]
-  
+        console.log('holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
         console.log(fecha5);
         fecha5 = res.issuedAt.substring(0, 10)
         fecha4 = fecha5
@@ -1489,12 +1507,17 @@ if (tomorrowsplit[1].length == 1) {
                 Fechacompleta:res.issuedAt.substring(0, 10),
                 TotalMXN:res.total
               }
+              const realDate = res.items[0].description.split(' ')
+              console.log(fecha, realDate[0]);
+              console.log(fecha == realDate[0]);
+              if (fecha == realDate[0]) {
+                totalMXNVT += parseFloat(tabla.TotalMXN);
+                totalLTSVT += parseFloat(tabla.Cantidad);
+                jsonVenta[indexVenta] = tabla
+                venta[indexVenta] = dataTabla
+                 indexVenta++
+              }
 
-              totalMXNVT += parseFloat(tabla.TotalMXN);
-              totalLTSVT += parseFloat(tabla.Cantidad);
-              jsonVenta[indexVenta] = tabla
-              venta[indexVenta] = dataTabla
-               indexVenta++
             } else {
               // entrega.NumeroDeRegistro = res.NumeroDeRegistro
               entrega.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
@@ -1670,11 +1693,18 @@ if (tomorrowsplit[1].length == 1) {
               if (fecha5!=fecha) {
                 break;
               }
-              totalMXNVT += parseFloat(tabla.TotalMXN);
-              totalLTSVT += parseFloat(tabla.Cantidad);
-              jsonVenta[indexVenta] = tabla
-              venta[indexVenta] = dataTabla
-               indexVenta++
+              
+              const realDate = res.items[0].description.split(' ')
+              console.log(fecha, realDate[0]);
+              console.log(fecha == realDate[0]);
+              if (fecha == realDate[0]) {
+                totalMXNVT += parseFloat(tabla.TotalMXN);
+                totalLTSVT += parseFloat(tabla.Cantidad);
+                jsonVenta[indexVenta] = tabla
+                venta[indexVenta] = dataTabla
+                 indexVenta++
+              }
+
             }
           }
   
@@ -1770,7 +1800,7 @@ if (tomorrowsplit[1].length == 1) {
   
   
 });
-router.post('/MensualGlencore/:fecha', async (req, res) => {
+router.post('/mensual-natgas/:fecha', async (req, res) => {
   console.log("mess");
   const xl = require('excel4node');
 console.log("Empieza");
@@ -1853,8 +1883,8 @@ const jsonCompra = {}
 while (ApiLength > 0 && fecha2.indexOf(fecha) != -1) {
 console.log(fecha2.indexOf(fecha) != -1);
     var options = {
-      'method': 'post',
-      'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+      'method': 'GET',
+      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
       'headers': {
         'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
       }
@@ -1862,7 +1892,6 @@ console.log(fecha2.indexOf(fecha) != -1);
     pagIndexCompra++
 
     let fecha3;
-
   /*
   
   15101505 == DISEL 
@@ -1872,9 +1901,7 @@ console.log(fecha2.indexOf(fecha) != -1);
     await request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log(response.body);
-                  // console.log(diario);
-
-
+                  // console.log(diario);      
       let temp = JSON.parse(response.body);
       temp = temp['hydra:member']
       console.log("@@@@@@@@@@@");
@@ -1882,7 +1909,7 @@ console.log(fecha2.indexOf(fecha) != -1);
 
       for (const key in temp) {
         const res = temp[key]
-        // console.log(res);
+        //
         fecha3 = res.issuedAt.substring(0, 10)
         fecha2 = fecha3
         console.log(fecha3);
@@ -2475,7 +2502,7 @@ while (ApiLengthVenta > 0 && fecha4.indexOf(fecha) != -1) {
 
 var options = {
   'method': 'GET',
-  'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
+  'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
   'headers': {
     'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
   }
@@ -2688,11 +2715,26 @@ await request(options, function (error, response) {
             // if (fecha5!=fecha) {
             //   break;
             // }
-             venta[indexVenta] = dataExcel
-             totalMXNVT += parseFloat(tabla.TotalMXN);
-             totalLTSVT += parseFloat(tabla.Cantidad);
-             jsonVenta[indexVenta] = tabla
-              indexVenta++
+            console.log(res.items[0].description);
+            const realDate = res.items[0].description.split(' ')
+            const dateTime = realDate[0];
+            const parts = dateTime.split(/[- :]/);
+
+            var month = parts[1];
+            var year = parts[0];
+
+            var currentdate = new Date(fecha+"-02");
+            var cur_month = currentdate.getMonth() + 1;
+            var cur_year = currentdate.getFullYear();
+            console.log(currentdate);
+            if (cur_month == month && year == cur_year) {
+              venta[indexVenta] = dataExcel
+              totalMXNVT += parseFloat(tabla.TotalMXN);
+              totalLTSVT += parseFloat(tabla.Cantidad);
+              jsonVenta[indexVenta] = tabla
+               indexVenta++
+            }
+
 
         } else {
             // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
@@ -2862,11 +2904,26 @@ await request(options, function (error, response) {
             // if (fecha5!=fecha) {
             //   break;
             // }
-             venta[indexVenta] = dataExcel
-             totalMXNVT += parseFloat(tabla.TotalMXN);
-             totalLTSVT += parseFloat(tabla.Cantidad);
-             jsonVenta[indexVenta] = tabla
-              indexVenta++
+            console.log(res.items[0].description);
+            const realDate = res.items[0].description.split(' ')
+            const dateTime = realDate[0];
+            const parts = dateTime.split(/[- :]/);
+
+            var month = parts[1];
+            var year = parts[0];
+
+            var currentdate = new Date(fecha+"-02");
+            var cur_month = currentdate.getMonth() + 1;
+            var cur_year = currentdate.getFullYear();
+            console.log(currentdate);
+            if (cur_month == month && year == cur_year) {
+              venta[indexVenta] = dataExcel
+              totalMXNVT += parseFloat(tabla.TotalMXN);
+              totalLTSVT += parseFloat(tabla.Cantidad);
+              jsonVenta[indexVenta] = tabla
+               indexVenta++
+            }
+
         }
       }
 
@@ -2948,12 +3005,15 @@ if (err) return console.log(err);
 
 });
 await delay(2000);
-res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS});
-
+const datos = {
+  tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS
+}
+  res.send(datos)
 
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
-router.post('/diario-natgas/:fecha', async (req, res) => {
+//Glencore Final
+router.post('/diario-natgasReal/:fecha', async (req, res) => {
  try {
   var request = require('request');
   // let temp;2022-10-25
@@ -3751,7 +3811,7 @@ const datos = {
  }
 
 });
-router.post('/mensual-natgas/:fecha', async (req, res) => {
+router.post('/mensual-natgasReal/:fecha', async (req, res) => {
    try {
     console.log("mess");
     const xl = require('excel4node');
@@ -3866,7 +3926,7 @@ router.post('/mensual-natgas/:fecha', async (req, res) => {
   
         for (const key in temp) {
           const res = temp[key]
-          // console.log(res);
+          //
           fecha3 = res.issuedAt.substring(0, 10)
           fecha2 = fecha3
           console.log(fecha3);
