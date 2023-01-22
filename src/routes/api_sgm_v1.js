@@ -556,6 +556,7 @@ if (tomorrowsplit[1].length == 1) {
   
         let fecha3;
         await request(options, function (error, response) {
+          res.send(response)
           if (error) throw new Error(error);
           // console.log(response.body);
                       // console.log(diario);
@@ -567,7 +568,7 @@ if (tomorrowsplit[1].length == 1) {
           ApiLength = temp.length
           for (const key in temp) {
             const res = temp[key]
-            res.send(res)
+
             switch (res.paymentMethod) {
               case 01:
                 metodoPago = 'Efectivo'
