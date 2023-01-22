@@ -434,7 +434,7 @@ router.get('/TestApi',(req,res) => {
   res.send(Prueba)
 })
 //Glencore Inicio
-router.post('/diario-natgas/:fecha', async (req, res) => {
+router.post('/diario-natgas2/:fecha', async (req, res) => {
   try {
     var request = require('request');
     // let temp;2022-10-25
@@ -1796,7 +1796,7 @@ if (tomorrowsplit[1].length == 1) {
     res.send(error)
   }
 });
-router.post('/mensual-natgas/:fecha', async (req, res) => {
+router.post('/mensual-natgas2/:fecha', async (req, res) => {
 try {
   console.log("mess");
   const xl = require('excel4node');
@@ -3129,7 +3129,7 @@ tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
       indexLoopCompra++
       var options = {
         'method': 'GET',
-        'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+        'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
         'headers': {
           'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
         }
