@@ -433,6 +433,108 @@ router.get('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
+
+//Generacion de ZIP
+
+router.get('/Diario/Download/ZipDiario/:fecha', async(req, res) => {
+  const fecha = req.params.fecha
+  const letters = ['a','b','c','d','e','f']
+const mayus = ['A','B','C','D','E','F']
+
+let keyEnvio = ''
+indexletters = 1
+for (let index = 0; index < 32; index++) {
+  // console.log(keyEnvio);
+  if ((index== 8) ||(index== 12) ||(index== 16)||(index== 20) ) {
+      keyEnvio+="-";
+  }
+  switch (Math.floor(Math.random() * 3)) {
+    case 0:
+      keyEnvio+=Math.floor(Math.random() * 10);
+      break;
+      case 1:
+        keyEnvio+=letters[Math.floor(Math.random() * 6)]
+        break;
+        case 2:
+          keyEnvio+=mayus[Math.floor(Math.random() * 6)]
+          break;
+  
+    default:
+      break;
+  }
+  indexletters++;
+}
+let diario =require(path.join(__dirname, '../public/json/glencore/DiarioTemp/DiarioTemp.json'))
+const pathJson = path.join(__dirname, "../public/json/glencoreTest/")
+removeDirDiario(pathJson)
+  let fileNameKey = `D_${keyEnvio}_GEM161104H39_XAX010101000_${fecha}_CMN-0001_CMN_JSON`
+  // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+  //  fs.promises.mkdir(dirpath, { recursive: true })
+  const fileJsonName = path.join(__dirname, `../public/json/glencoreTest/${fileNameKey}.json`);
+  fs.writeFile(fileJsonName, JSON.stringify(diario,null, 2), function writeJSON(err) {
+    if (err) return console.log(err);
+
+  });
+
+  const files = path.join(__dirname, `../public/json/glencoreTest`);
+  const zip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+  await zipDirectory(files,zip)
+  const pathZip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+  res.download(pathZip);
+  // res.send('ok')
+})
+router.get('/Mensual/Download/ZipMensual/:fecha', async(req, res) => {
+  const fecha = req.params.fecha
+  const letters = ['a','b','c','d','e','f']
+  const mayus = ['A','B','C','D','E','F']
+  
+  let keyEnvio = ''
+  indexletters = 1
+  for (let index = 0; index < 32; index++) {
+    // console.log(keyEnvio);
+    if ((index== 8) ||(index== 12) ||(index== 16)||(index== 20) ) {
+        keyEnvio+="-";
+    }
+    switch (Math.floor(Math.random() * 3)) {
+      case 0:
+        keyEnvio+=Math.floor(Math.random() * 10);
+        break;
+        case 1:
+          keyEnvio+=letters[Math.floor(Math.random() * 6)]
+          break;
+          case 2:
+            keyEnvio+=mayus[Math.floor(Math.random() * 6)]
+            break;
+    
+      default:
+        break;
+    }
+    indexletters++;
+  }
+  let Mensual =require(path.join(__dirname, '../public/json/glencore/DiarioTemp/MesTemp.json'))
+
+  const pathJson = path.join(__dirname, "../public/json/glencore/glencoreMensualJson/")
+  removeDirDiario(pathJson)
+  let fechaSplit = fecha.split("-")
+  let lastDayMonth = new Date(fechaSplit[0],fechaSplit[1],0);
+  lastDayMonth = lastDayMonth.toString().split(" ")
+    let fileNameKey = `M_${keyEnvio}_GEM161104H39_XAX010101000_${fecha}-${lastDayMonth[2]}_CMN-0001_CMN_JSON`
+    // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+    //  fs.promises.mkdir(dirpath, { recursive: true })
+    const fileJsonName = path.join(__dirname, `../public/json/glencore/glencoreMensualJson/${fileNameKey}.json`);
+    fs.writeFile(fileJsonName, JSON.stringify(Mensual,null, 2), function writeJSON(err) {
+      if (err) return console.log(err);
+  
+    });
+  
+    const files = path.join(__dirname, `../public/json/glencore/glencoreMensualJson`);
+    const zip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+    await zipDirectory(files,zip)
+    const pathZip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+    res.download(pathZip);
+  // res.send('ok')
+})
+//Generacion de Zip Fin
 //Glencore Inicio
 router.post('/diario-natgas/:fecha', async (req, res) => {
   try {
@@ -525,7 +627,7 @@ router.post('/diario-natgas/:fecha', async (req, res) => {
   }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 2)
+tomorrow.setDate(tomorrow.getDate() + 3)
 // tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 console.log(today);
@@ -556,7 +658,10 @@ if (tomorrowsplit[1].length == 1) {
   
         let fecha3;
         await request(options, function (error, response) {
-          if (error) throw new Error(error);
+          // if (error) throw new Error(error);
+          if (error){
+            console.log(error);
+          } 
           // console.log(response.body);
           // console.log(diario);
           
@@ -1285,7 +1390,10 @@ if (tomorrowsplit[1].length == 1) {
     let fecha5;
   
     await request(options, function (error, response) {
-      if (error) throw new Error(error);
+      // if (error) throw new Error(error);
+      if (error){
+        console.log(error);
+      } 
       // console.log(response.body);
                   // console.log(diario);
   
@@ -5240,5 +5348,55 @@ function sortObject(obj) {
   arr.sort(function(a, b) { return a.value - b.value; });
   //arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
   return arr; // returns array
+}
+const archiver = require('archiver');
+
+function zipDirectory(sourceDir, outPath) {
+  const archive = archiver('zip', { zlib: { level: 9 }});
+  const stream = fs.createWriteStream(outPath);
+
+  return new Promise((resolve, reject) => {
+    archive
+      .directory(sourceDir, false)
+      .on('error', err => reject(err))
+      .pipe(stream)
+    ;;
+    stream.on('close', () => resolve());
+    archive.finalize();
+  });
+}
+
+const removeDirDiario = function(path1) {
+  // console.log(path);
+  if (fs.existsSync(path1)) {
+    const files = fs.readdirSync(path1)
+
+
+    // if (path == 'C:\Users\USER\Desktop\AdrianQR\vistaPrueba\src\public\json\jsonGenerados\Diario\Compra') {
+    //   console.log("nice");
+    // }else{
+    //   console.log("no Nice");
+    // }
+    if (files.length > 0) {
+      files.forEach(function(filename) {
+        if (fs.statSync(path1 + "/" + filename).isDirectory()) {
+          removeDirDiario(path1 + "/" + filename)
+        } else {
+          fs.unlinkSync(path1 + "/" + filename)
+        }
+      })
+      files.forEach(dir => {
+        console.log( path.join(path1,dir));
+        fs.rmdir(path.join(path1,dir), () => {
+          console.log("Folder Deleted!");
+
+        });
+      });
+    } else {
+      console.log("No files found in the directory.")
+    }
+  } else {
+    console.log("Directory path not found.")
+  }
 }
 module.exports = router;
