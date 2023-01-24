@@ -434,6 +434,32 @@ router.get('/TestApi',(req,res) => {
   res.send(Prueba)
 })
 
+//Descargas Excel
+router.get('/Diario/Download/ExcelDiario/:fecha', async(req, res) => {
+  let fecha = req.params.fecha
+  const fechasplit = fecha.split("-")
+  if (fechasplit[2].length == 1) {
+    fecha = `${fechasplit[0]}-${fechasplit[1]}-0${fechasplit[2]}`
+  }
+  if (fechasplit[1].length == 1) {
+
+    fecha = `${fechasplit[0]}-0${fechasplit[1]}-${fechasplit[2]}`
+  }
+  const pathExcel = path.join(__dirname, `../public/excel/Diario_${fecha}.xlsx`);
+  res.download(pathExcel);
+  // res.send('ok')
+})
+
+
+router.get('/Mensual/Download/ExcelMensual/:fecha', async(req, res) => {
+    let fecha = req.params.fecha
+
+    const pathExcel = path.join(__dirname, `../public/excel/Mes_${fecha}.xlsx`);
+    res.download(pathExcel);
+    // res.send('ok')
+  })
+// Fin Descarga Excel
+
 //Generacion de ZIP
 
 router.get('/Diario/Download/ZipDiario/:fecha', async(req, res) => {
