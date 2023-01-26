@@ -54,8 +54,29 @@ const uploadNatgas = multer({
     next(err);
   }
 })
-// const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
+router.get('/estructura/:id',async function(req,res){
+  try {
+    const id = Number(req.params.id);
 
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "companyId incorrecto" });
+    }
+    dirRoot = await arbolArchivos(id)
+    const Prueba = dirRoot
+     res.send(Prueba)
+ } catch (error) {
+   console.log(error);
+   res.send(error)
+ }
+})
+// const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
+router.get('/test/html',function(req,res){
+  console.log(path.join(__dirname, '../public/formatos-sgm/natgas1/19.html'));
+  fs.readFile(path.join(__dirname, '../public/formatos-sgm/natgas1/19.html'), 'utf8', function(err, html){
+    console.log();
+    res.send(html)
+  })
+})
 router.post('/api/uploadPDF', uploadNatgas.single('upl'),async function (req, res) {
   try {
     res.send('succes')
@@ -6334,7 +6355,72 @@ function acomodarFecha(date) {
     // console.log(root);
     return root;
   }
-
+  async function arbolArchivos(id){
+    const directory =  await pool.any('SELECT * from estructura_directorios where "companyId" = $1',id)
+    const file = await pool.any('SELECT * from estructura_archivos where "companyId" = $1',id)
+    let root = {};
+    for (const key in directory) {
+         let directoryname =directory[key].position
+         if (directoryname.indexOf(".") == -1) {
+              root[directory[key].position] = {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+         }else{
+              let position = directoryname.split(".")
+              switch (position.length) {
+                   case 2:
+                        root[position[0]]['dir'][position[1]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                        break;
+                        case 3:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                             break;
+                             case 4:
+                               // console.log(root[position[0]]['dir'][position[1]]['dir']);
+                               // console.log(position);
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                  break;
+                                  case 5:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                       break;
+                                       case 6:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                         break;
+  
+                   default:
+                        break;
+              }
+         }
+    }
+    for (const key in file) {
+         let fileP =file[key].position
+  
+         let position = fileP.split(".")
+  
+         switch (position.length) {
+              case 2:
+                   root[position[0]]['file'][position[1]]= {fileName:file[key].fileName,ext:file[key].ext}
+                   break;
+                   case 3:
+                        root[position[0]]['dir'][position[1]]['file'][position[2]]= {fileName:file[key].fileName,ext:file[key].ext}
+                        break;
+                        case 4:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]['file'][position[3]]= {fileName:file[key].fileName,ext:file[key].ext}
+                             break;
+                             case 5:
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['file'][position[4]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                  break;
+                                  case 6:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['file'][position[5]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                       break;
+                                       case 7:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]['file'][position[6]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                         break;
+  
+              default:
+                   break;
+         }
+    }
+    // console.log(root);
+    return root;
+  }
 function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) } 
 
 restaFechas = function (f1, f2) {
@@ -6394,6 +6480,7 @@ function sortObject(obj) {
   return arr; // returns array
 }
 const archiver = require('archiver');
+const { func } = require('../database');
 
 function zipDirectory(sourceDir, outPath) {
   const archive = archiver('zip', { zlib: { level: 9 }});
