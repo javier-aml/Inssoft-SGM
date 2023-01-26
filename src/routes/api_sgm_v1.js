@@ -583,7 +583,7 @@ router.get('/Mensual/Download/ZipMensual/:fecha', async(req, res) => {
 })
 //Generacion de Zip Fin
 //Glencore Inicio
-router.post('/diario-natgas/:fecha', async (req, res) => {
+router.post('/diario-natgas1/:fecha', async (req, res) => {
   try {
     var request = require('request');
     // let temp;2022-10-25
@@ -1952,7 +1952,7 @@ if (tomorrowsplit[1].length == 1) {
     res.send(error)
   }
 });
-router.post('/mensual-natgas/:fecha', async (req, res) => {
+router.post('/mensual-natgas1/:fecha', async (req, res) => {
 try {
   console.log("mess");
   const xl = require('excel4node');
@@ -3169,7 +3169,7 @@ const datos = {
 });
 let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
 //Glencore Final
-router.post('/diario-natgas1/:fecha', async (req, res) => {
+router.post('/diario-natgas/:fecha', async (req, res) => {
  try {
   var request = require('request');
   // let temp;2022-10-25
@@ -3967,7 +3967,7 @@ const datos = {
  }
 
 });
-router.post('/mensual-natgas1/:fecha', async (req, res) => {
+router.post('/mensual-natgas/:fecha', async (req, res) => {
    try {
     console.log("mess");
     const xl = require('excel4node');
