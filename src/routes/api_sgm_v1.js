@@ -54,6 +54,90 @@ const uploadNatgas = multer({
     next(err);
   }
 })
+
+const storageTomza = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/tomza'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadTomza = multer({
+  storage:storageTomza,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
+
+const storageKansas = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/kansas'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadKansas = multer({
+  storage:storageKansas,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
+
+const storageTogo = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/togo'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadTogo = multer({
+  storage:storageTogo,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
 router.get('/estructura/:id',async function(req,res){
   try {
     const id = Number(req.params.id);
@@ -92,7 +176,7 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
     if (fileP ==  '1') {
      dataP = '1.1'
    } else {
-    max = await pool.query(`SELECT * FROM estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${1};`);
     let  positions = [];
     const dots = fileP.split(".").length;
   
@@ -118,33 +202,11 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
          }
     }
    }
-  //  var fileName = req.params.fileP
-  //  var file = await pool.query(`SELECT id, "dirName", "position" FROM estructura_directorios_natgas WHERE position = '${fileName}';`);
-  //  const fs = require('fs');
-  //  let name = file[0].dirName.split(' ')
-  //  name = name.join().replace(',','_')
-  //  name = name.replace(',','_')
-  //  name = name.replace(',','_')
-  //  name = name.replace(',','_')
-  //  name = name.replace(',','_')
-  //   name = name.replace(',','_')
-  //   name = name.replace(',','_')
-  //  const hora = new Date();
-  // let datetext = hora.toTimeString();
-  // datetext = datetext.split(' ')[0];
-  // datetext = datetext.replace(':','-')
-  // datetext = datetext.replace(':','-')
-  //  name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
-  //  console.log(name);
-  //  fs.rename(path.join(__dirname, '../public/formatos-sgm/natgas/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
-  //     console.log("\nFile Renamed!\n");
-  
-  //   });
     let name = req.file.filename;
     name = name.split('.')
     name = name[0];
-    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos_natgas;`);
-    let position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${dataP}';`);
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 1;`);
     let positionInsert = ''
     let tempPsotion
     if (position.length === 0) {
@@ -168,48 +230,292 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
         positionInsert = positionInsert.substring(0, positionInsert.length - 1);
         tempPsotion= positionInsert;
 
-        position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${positionInsert}';`);
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 1;`);
         index++;
       }
     }
 
-    await pool.query('INSERT INTO estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
       id:maxID[0].max - 1 + 2,
       fileName: name.replace('.pdf',''),
       ext: 'pdf',
       position: positionInsert,
       Avalible:1,
-      date: acomodarFecha(DateNow())
+      date: acomodarFecha(DateNow()),
+      companyId:1
   });
   res.send(positionInsert)
   } catch (error) {
     res.send(error)
   }
 });
+router.post('/api/uploadPDFTomza/:fileP', uploadTomza.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${2};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 2;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
 
-router.get('/Tareas/:Ubicacion',async function (req,res) {
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 2;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:2
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/api/uploadPDFKansas/:fileP', uploadKansas.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${3};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 3;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 3;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:3
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/api/uploadPDFTogo/:fileP', uploadTogo.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${4};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 4;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 4;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:4
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.get('/Tareas/:Ubicacion/:id',async function (req,res) {
   try {
     const ubicacion = req.params.Ubicacion;
-    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM tarea WHERE Tarea = '${ubicacion}';`)
-    const ubicacionTarea = await pool.any(`SELECT * FROM estructura_directorios_natgas WHERE "position" = '${ubicacion}';`)
-    const ubicacionHTML = await pool.any(`SELECT * FROM estructura_archivos_natgas WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
+    const id = req.params.id
+
+    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM tarea WHERE Tarea = '${ubicacion}' AND "companyId" = ${id};`)
+    const ubicacionTarea = await pool.any(`SELECT * FROM estructura_directorios WHERE "companyId" = ${id} AND "position" = '${ubicacion}' ;`)
+    const ubicacionHTML = await pool.any(`SELECT * FROM estructura_archivos WHERE "companyId" = ${id} AND "position" = '${ubicacion}.1' AND "ext" = 'html' ;`)
     res.send({tarea,ubicacionTarea,ubicacionHTML});
  } catch (error) {
    res.send(error)
  }
 })
-router.post('/add/task/:position/:nombre/:Fecha',async function (req, res) {
+router.post('/add/task/:position/:nombre/:Fecha/:id',async function (req, res) {
 try {
   const nombre = req.params.nombre
   const position = req.params.position
   const Fecha = req.params.Fecha
-
-  await pool.query('INSERT INTO tarea("descTarea", tarea,"Fecha", "Id_File", "Finished") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished})', {
+  const id = req.params.id
+  await pool.query('INSERT INTO tarea("descTarea", tarea,"Fecha", "Id_File", "Finished", "companyId", "Estado") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished}, ${companyId}, ${Estado})', {
     descTarea: nombre,
     tarea: position,
     Fecha: Fecha,
     Id_File : 1,
-    "Finished": 1
+    "Finished": 1,
+    companyId: id,
+    Estado:0
   });
   res.send('test')
 } catch (error) {
@@ -219,7 +525,7 @@ try {
 router.post('/delete/TaskTomza/:position',async function (req, res) {
   try {
     const position = req.params.position;
-    await pool.query(`DELETE FROM tarea WHERE id= '${position}';`)
+    // await pool.query(`DELETE FROM tarea WHERE id= '${position}';`)
     res.send('test')
   } catch (error) {
     res.send(error)
@@ -416,9 +722,10 @@ router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.get('/Task',async (req,res) => {
+router.get('/Task/:id',async (req,res) => {
   try {
-     const Task = await pool.query('SELECT * FROM tarea inner join estructura_directorios_natgas on tarea = "position";')
+    const id = req.params.id
+     const Task = await pool.query('SELECT * FROM tarea inner join estructura_directorios on tarea = "position" WHERE  tarea."companyId" = $1',id)
      const fechas = codigoFecha(Task);
      const urgente = sortObject(fechas.urgente);
      const noUrgente = sortObject(fechas.noUrgente);

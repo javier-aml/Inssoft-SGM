@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        @media print {
+            body {
+                width: 21cm;
+                height: 29.7;
+                margin: 30mm 45mm 30mm 45mm;
+                page-break-after: always;
+            }
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        p.saltodepagina {
+            page-break-after: always;
+        }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSM_30</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- Script para la barra de herramientas en textarea  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/inline/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/inline/ckeditor.js"></script>
+<!-- EMPIEZA SRC handlebar -->
+<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+<script src="NatGas handlebar.js"></script>
+<!-- TERMINA SRC handlebar -->
+
+</head>
+<body >
+<!-- EMPIEZA HEADER DE FORMATOS -->
+<script type="text/x-handlebars-template" id="template">
+     
+{{{html}}}
+
+</script>
+<div id="output">
+</div>
+<script>fill_template()</script>
+<br>
+<!-- TERMINA HEADER DE FORMATOS -->
+    <br>
+    <div class="container-fluid">
+        
+            
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-4" style="background-color:rgb(32, 32, 91);color: aliceblue;">Descripción del Requisito</td>
+                <td class="col-2" style="background-color:rgb(32, 32, 91);color: aliceblue;">Documento del Sistema de Gestión que satisface el requisito </td>
+                <td class="col-1" style="background-color:rgb(32, 32, 91);color: aliceblue;">Cumple (C) ó No Cumple (NC) </td>
+                <td style="background-color:rgb(32, 32, 91);color: aliceblue;">Descripción del hallazgo</td>
+            </tr>
+            <tr>
+                <td>Norma ISO/IEC 10012:2003 “Sistema de 
+                    gestión de las mediciones – Requisitos para 
+                    los procesos de medición y los equipos de 
+                    medición”.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>4. Requisitos generales</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>El sistema de gestión de las mediciones debe 
+                    asegurarse de que se satisfacen los requisitos 
+                    metrológicos especificados.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La organización debe especificar los procesos 
+                    de medición y el equipo de medición sujetos a 
+                    las disposiciones de esta Norma Internacional. 
+                    Cuando se decide el alcance y extensión del 
+                    sistema de gestión de las mediciones, debe 
+                    tenerse en cuenta los riesgos y las 
+                    consecuencias del incumplimiento de los 
+                    requisitos metrológicos. El sistema de gestión 
+                    de las mediciones se compone del control de 
+                    los procesos de medición asignados y de la 
+                    confirmación metrológica del equipo de 
+                    medición (véase la figura 2), así como de los 
+                    procesos de soporte necesarios. Deben 
+                    controlarse los procesos de medición dentro 
+                    del sistema de gestión de las mediciones 
+                    (véase 7,2). Debe confirmarse todo el equipo 
+                    de medición dentro del sistema de gestión de 
+                    las mediciones (véase 7.1). Los cambios al 
+                    sistema de gestión de las mediciones deben 
+                    hacerse de acuerdo con los procedimientos de 
+                    la organización.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>5.1 Función metrológica</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>controlarse los procesos de medición dentro 
+                    del sistema de gestión de las mediciones 
+                    (véase 7,2). Debe confirmarse todo el equipo 
+                    de medición dentro del sistema de gestión de 
+                    las mediciones (véase 7.1). Los cambios al 
+                    sistema de gestión de las mediciones deben 
+                    hacerse de acuerdo con los procedimientos de 
+                    la organización.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>5.2 Enfoque al cliente</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La dirección de la función metrológica debe 
+                    asegurarse de que: 
+                    a) los requisitos de medición del cliente se 
+                    determinan y se convierten en requisitos 
+                    metrológicos, 
+                    b) el sistema de gestión de las mediciones 
+                    cumple los requisitos metrológicos de los 
+                    clientes, y 
+                    c) puede demostrarse el cumplimiento de los 
+                    requisitos especificados por el cliente,</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>5.3 Objetivos de la calidad </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La dirección de la función metrológica debe 
+                    definir y establecer objetivos de la calidad 
+                    medibles para el sistema de gestión de las 
+                    mediciones. Deben definirse criterios de 
+                    desempeño objetivos y los procedimientos
+                    para los procesos de medición, así como para 
+                    su control. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>5.4 Revisión por la dirección  </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La alta dirección de la organización debe 
+                    asegurarse de que se lleva a cabo la revisión 
+                    sistemática del sistema de gestión de las 
+                    mediciones a intervalos planificados para 
+                    asegurarse de su continua adecuación, 
+                    eficacia y conveniencia. La alta dirección debe 
+                    asegurarse de que están disponibles los 
+                    recursos necesarios para la revisión del 
+                    sistema de gestión de las mediciones.
+                    Los resultados de la revisión por la dirección 
+                    deben ser utilizados por la dirección de la 
+                    función metrológica para modificar el sistema 
+                    en la medida de lo necesario, incluyendo la 
+                    mejora de los procesos de medición (véase el 
+                    capítulo 8) y la revisión de los objetivos de la 
+                    calidad, Deben registrarse los resultados de 
+                    todas las revisiones y de todas las acciones 
+                    tomadas</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>6 Gestión de los recursos  </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>6.1 Recursos humanos  </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>6.1.1 Responsabilidades del personal</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La dirección de la función metrológica debe 
+                    definir y documentar las responsabilidades de 
+                    todo el personal asignado al sistema de 
+                    gestión de las mediciones. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>6.1.2 Competencia y formación </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La dirección de la función metrológica debe 
+                    asegurarse de que el personal involucrado en 
+                    el sistema de gestión de las mediciones 
+                    demuestre su aptitud para efectuar las tareas 
+                    que se le asignen. Debe especificarse 
+                    cualquier habilidad especial que se requiera. 
+                    La dirección de la función metrológica debe 
+                    asegurarse de que se provea la formación para 
+                    responder a las necesidades identificadas, que 
+                    se mantengan registros de las actividades de 
+                    formación y que su eficacia sea evaluada y 
+                    registrada. Debe hacerse que el personal tome 
+                    conciencia de sus obligaciones y 
+                    responsabilidades, asi como del impacto de 
+                    sus actividades en la eficacia del sistema de 
+                    gestión de las mediciones y en la calidad del 
+                    producto. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>El personal en formación debe ser supervisado 
+                    adecuadamente.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>6.2 Recursos de información </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>6.2.1 Procedimientos</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Los procedimientos del sistema de gestión de 
+                    las mediciones deben documentarse hasta 
+                    donde sea necesario y validarse para asegurar 
+                    su apropiada implementación, la coherencia 
+                    en su aplicación y la validez de los resultados 
+                    de medición.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los procedimientos nuevos o los cambios a los 
+                    procedimientos documentados deben ser 
+                    autorizados y controlados.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los procedimientos deben estar vigentes y 
+                    disponibles y proporcionarse cuando se 
+                    requiera. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>6.2.2 Software </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>El software utilizado en los procesos de 
+                    medición y en los cálculos de resultados se 
+                    debe documentar, identificar y controlar para 
+                    asegurarse de su adecuación para su uso 
+                    continuo. El software y cualquier revisión del mismo debe ser probado o validado antes de 
+                    su uso inicial, aprobado para su uso y 
+                    archivado. Las pruebas deben ser 
+                    suficientemente amplias para asegurar la 
+                    validez de los resultados de las mediciones.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b> 6.2.3 Registros </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Deben mantenerse los registros con la 
+                    información requerida para el funcionamiento 
+                    del sistema de gestión de las mediciones. Los 
+                    procedimientos documentados deben 
+                    asegurar la identificación, el almacenamiento, 
+                    la protección, la recuperación, el tiempo de 
+                    retención y la disposición de los registros. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b> 6.2.4 Identificación</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Los procedimientos técnicos y el equipo de 
+                    medición utilizados en el sistema de gestión 
+                    de las mediciones deben estar claramente 
+                    identificados, individual o colectivamente. 
+                    Debe haber una identificación del estado de la 
+                    confirmación metrológica del equipo. El 
+                    equipo confirmado únicamente para uso en 
+                    uno o varios procesos de medición 
+                    particulares debe estar claramente 
+                    identificado o controlado de alguna forma 
+                    para prevenir su uso no autorizado. El equipo 
+                    utilizado en el sistema de gestión de las 
+                    mediciones debe distinguirse de otros 
+                    equipos.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b> 6.3 Recursos materiales</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Todo el equipo de medición necesario para 
+                    satisfacer los requisitos metrológicos 
+                    especificados debe estar disponible e 
+                    identificado en el sistema de gestión de las 
+                    mediciones. El equipo de medición debe tener 
+                    un estado de calibración válido antes de ser 
+                    confirmado, El equipo de medición debe ser 
+                    utilizado en un ambiente controlado o 
+                    suficientemente conocido para asegurar 
+                    resultados de medición válidos. El equipo de 
+                    medición utilizado para dar seguimiento y 
+                    registrar las magnitudes de influencia debe 
+                    estar incluido en el sistema de gestión de las 
+                    mediciones. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La dirección de la función metrológica debe 
+                    establecer, mantener y utilizar 
+                    procedimientos documentados para recibir, 
+                    manipular, transportar, almacenar y distribuir 
+                    los equipos de medición, con objeto de 
+                    prevenir el abuso, mal uso, daño y cambios de 
+                    sus características metrológicas. Deben existir
+                    procedimientos para incorporar o retirar el 
+                    equipo de medición del sistema de gestión de 
+                    las mediciones</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>6.3.2 Medio ambiente</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Deben documentar las condiciones 
+                    ambientales requeridas para el 
+                    funcionamiento eficaz de los procesos de 
+                    medición cubiertos por el sistema de gestión 
+                    de las mediciones. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Se debe realizar el seguimiento y registrar las 
+                    condiciones ambientales que afecten a las 
+                    mediciones. Las correcciones debidas a las 
+                    condiciones ambientales deben registrarse y 
+                    aplicarse a los resultados de la medición.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b> 6.4 Proveedores externos </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La dirección de la función metrológica debe 
+                    definir y documentar los requisitos para 
+                    productos y servicios que sean provistos por 
+                    proveedores externos para el sistema de 
+                    gestión de las mediciones. Los proveedores 
+                    externos deben ser evaluados y seleccionados 
+                    basándose en su capacidad para cumplir los 
+                    requisitos documentados. Se deben definir y 
+                    documentar los criterios para su selección, 
+                    seguimiento y evaluación, y registrar los 
+                    resultados de la evaluación. Deben 
+                    mantenerse los registros de los productos o 
+                    servicios proporcionados por los proveedores 
+                    externos.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7 Confirmación metrológica y realización de 
+                    los procesos de medición</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b> 7.1 Confirmación metrológica</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>7.1.1 Generalidades </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La confirmación metrológica (véanse la figura 
+                    2 y el anexo A) debe ser diseñada e 
+                    implementada para asegurar que las 
+                    características metrológicas del equipo de 
+                    medición cumplan los requisitos metrológicos 
+                    del proceso de medición.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La confirmación metrológica está compuesta 
+                    por la calibración y verificación del equipo de 
+                    medición.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La información pertinente al estado de 
+                    confirmación metrológica del equipo de 
+                    medición debe ser fácilmente accesible al 
+                    operador, incluyendo cualquier limitación o 
+                    requisito especial.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Las características metrológicas del equipo de 
+                    medición deben ser apropiadas para el uso 
+                    previsto.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.1.2 Intervalos de confirmación metrológica </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Los métodos utilizados para determinar o 
+                    modificar los intervalos de confirmación 
+                    metrológica deben ser descritos en 
+                    procedimientos documentados. Los 
+                    intervalos de confirmación metrológica 
+                    deben revisarse y ajustarse cuando sea 
+                    necesario para asegurar el cumplimiento 
+                    continuo de los requisitos metrológicos 
+                    especificados.
+                    </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Cada vez que un equipo de medición se 
+                    repare, ajuste o modifique, debe revisarse su 
+                    intervalo de confirmación metrológica.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.1.3 Control de ajustes del equipo  </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Los medios y dispositivos de ajuste del equipo 
+                    de medición confirmado, cuyo ajuste afecte al 
+                    desempeño, deben sellarse o salvaguardarse 
+                    para prevenir cambios no autorizados. Los 
+                    sellos o medidas de salvaguarda deben 
+                    diseñarse e implementarse de modo que se
+                    detecte su alteración. 
+                    </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los procedimientos para el proceso de 
+                    confirmación metrológica deben incluir las 
+                    acciones a tomar cuando los sellos 
+                    salvaguardas se hayan dañado, roto, eludido o 
+                    perdido. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.1.4 Registros del proceso de confirmación 
+                    metrológica </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Los registros del proceso de confirmación 
+                    metrológica deben estar fechados y 
+                    aprobados por una persona autorizada para 
+                    atestiguar la veracidad de los resultados, 
+                    según corresponda. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los registros del proceso de confirmación 
+                    metrológica deben mantenerse y estar 
+                    disponibles.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los registros del proceso de confirmación 
+                    metrológica deben demostrar si cada equipo 
+                    de medición cumple los requisitos 
+                    metrológicos especificados. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los registros deben incluir, en la medida de lo 
+                    necesario, lo siguiente: 
+                    a) la descripción e identificación única del 
+                    fabricante del equipo, tipo, número de serie, 
+                    etc.; 
+                    b) la fecha en la cual se completó la 
+                    confirmación metrológica; 
+                    c) el resultado de la confirmación 
+                    metrológica: 
+                    d) el intervalo de confirmación metrológica 
+                    asignado; 
+                    e) la identificación del procedimiento de 
+                    confirmación metrológica (véase 6.2.1); 
+                    f) el error máximo permitido designado; 
+                    o) las condiciones ambientales pertinentes y 
+                    una declaración sobre cualquier corrección 
+                    necesaria; h) las incertidumbres implicadas en 
+                    la calibración del equipo; 
+                    I) los detalles del mantenimiento, tales como 
+                    ajustes, reparaciones y modificaciones 
+                    realizadas; 
+                    J) cualquier limitación de uso; 
+                    k) la identificación de la persona o personas 
+                    que realizaron la confirmación metrológica; 
+                    L) la identificación de la o las personas 
+                    responsables de la veracidad de la 
+                    información registrada; 
+                    M) la identificación única (tal como número de 
+                    serie) de cualquiera de los certificados e 
+                    informes de calibración y de otros 
+                    documentos pertinentes; 
+                    N) la evidencia de la trazabilidad de los 
+                    resultados de calibración; 
+                    O) los requisitos metrológicos para el uso 
+                    previsto;
+                    P) los resultados de calibración obtenidos 
+                    después y, cuando se requiera, antes de 
+                    cualquier ajuste, modificación o reparación.
+                    </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe asegurarse de 
+                    que sólo las personas autorizadas generen, 
+                    modifiquen, emitan o borren registros.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.2 Proceso de medición</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>7.2.1 Generalidades</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Los procesos de medición que son parte del 
+                    sistema de gestión de las mediciones, deben 
+                    ser planificados, validados, implementados, 
+                    documentados y controlados. Las magnitudes 
+                    de influencia que afecten a los procesos de 
+                    medición deben ser identificadas y 
+                    consideradas. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La especificación completa de cada uno de los 
+                    procesos de medición debe incluir la 
+                    identificación de todos los equipos 
+                    pertinentes, procedimientos de medición, 
+                    software para la medición, condiciones de 
+                    uso, aptitud del operador y todos los factores 
+                    que afecten a la fiabilidad del resultado de la 
+                    medición. El control de los procesos de 
+                    medición debe llevarse a cabo de acuerdo con 
+                    procedimientos documentados
+                    </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.2.2 Diseño del proceso de medición </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Los requisitos metrológicos se deben 
+                    determinar basándose en los requisitos del 
+                    cliente, de la organización, y en los requisitos 
+                    legales y reglamentarios. El proceso de 
+                    medición diseñado para cumplir estos 
+                    requisitos especificados debe documentarse, 
+                    validarse si es apropiado y, si es necesario, 
+                    acordarse con el cliente.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Para cada proceso de medición, deben 
+                    identificarse los elementos del proceso y los 
+                    controles pertinentes. La selección de tales 
+                    elementos y límites de control debe ser 
+                    acorde con el riesgo de incumplimiento de los 
+                    requisitos especificados. Estos elementos y 
+                    controles del proceso deben incluir los efectos 
+                    causados por los operadores, el equipo, las 
+                    condiciones ambientales, las magnitudes de 
+                    influencia y los métodos de aplicación.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>El proceso de medición debe diseñarse para 
+                    impedir resultados de medición erróneos, y 
+                    debe asegurar la rápida detección de 
+                    deficiencias y la oportunidad de las acciones 
+                    correctivas. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Deben identificarse y cuantificar las 
+                    características de desempeño requeridas para 
+                    el uso previsto del proceso de medición. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.2.3 Realización del proceso de medición </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>El proceso de medición debe llevarse a cabo 
+                    bajo condiciones controladas diseñadas para 
+                    cumplir los requisitos metrológicos.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Las condiciones a controlar deben incluir:
+                    a) el uso de equipo confirmado, 
+                    b) la aplicación de procedimientos de 
+                    medición validados, 
+                    e) la disponibilidad de recursos de información 
+                    requeridos, 3 
+                    d) el mantenimiento de las condiciones 
+                    ambientales requeridas, 
+                    e) el uso de personal competente, 
+                    f) la transmisión correcta de los resultados, y 
+                    g) la implementación de seguimiento según se 
+                    especifique. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.2.4 Registros de los procesos de medición </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe mantener 
+                    registros para demostrar el cumplimiento de 
+                    los requisitos de los procesos de medición, 
+                    incluyendo lo siguiente: 
+                    a) una descripción completa de los procesos 
+                    de medición implementados, incluyendo 
+                    todos los elementos utilizados (por ejemplo: 
+                    operadores, cualquier equipo de medición o 
+                    patrón de control) y las condiciones de 
+                    operación pertinentes; 
+                    b) los datos pertinentes obtenidos de los 
+                    controles del proceso de medición, incluyendo 
+                    cualquier información pertinente a la 
+                    incertidumbre de la medición; 
+                    c) las acciones tomadas como resultado de los 
+                    datos del control del proceso de medición; 
+                    d) la fecha o fechas en las cuales se llevaron a 
+                    cabo las actividades de control del proceso de 
+                    medición; 
+                    e) la identificación de los documentos de 
+                    verificación pertinentes, 
+                    f) la identificación de la persona responsable 
+                    de proporcionar la información para los 
+                    registros; 
+                    g) las aptitudes (requeridas y logradas) del 
+                    personal. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe asegurarse de 
+                    que solamente se permita a personas 
+                    autorizadas generar, modificar, emitir y borrar 
+                    registros.
+                    </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.3 Incertidumbre de la medición y trazabilidad</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>7.3.1 Incertidumbre de la medición</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La incertidumbre de la medición debe ser 
+                    estimada para cada proceso de medición 
+                    cubierto por el sistema de gestión de las 
+                    mediciones (véase 5.1).</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La estimación de la incertidumbre de la 
+                    medición debe ser registrada. El análisis de la 
+                    incertidumbre de la medición debe 
+                    completarse antes de la confirmación 
+                    metrológica del equipo de medición y de la 
+                    validación del proceso de medición. Deben 
+                    documentarse todas las fuentes conocidas de 
+                    variabilidad de la medición. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>7.3.2 Trazabilidad </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La dirección de la función metrológica debe 
+                    asegurarse de que todos los resultados de 
+                    medición sean trazables a las unidades de 
+                    medida del Sistema Internacional (SI</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>La trazabilidad a las unidades del Sl debe 
+                    lograrse por referencia a un patrón primario 
+                    apropiado o a una constante natural, cuyo 
+                    valor se conozca en términos de las unidades 
+                    Sí pertinentes y esté recomendado por la 
+                    Conferencia General de Pesas y Medidas y el 
+                    Comité Internacional de Pesas y Medidas.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los patrones de consenso solamente deben 
+                    ser utilizados en situaciones contractuales 
+                    cuando no existan las unidades S| 
+                    correspondientes o las constantes naturales 
+                    reconocidas, y así se haya acordado. 
+                    </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Los registros de trazabilidad de los resultados 
+                    de medición deben mantenerse tanto tiempo 
+                    como requiera el sistema de gestión de las 
+                    mediciones, el cliente, o los requisitos legales 
+                    o reglamentarios</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8 Análisis y mejora del sistema de gestión de 
+                    las mediciones </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>8.1 Generalidades </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe planificar e 
+                    implementar el seguimiento, análisis y mejora 
+                    necesarios para: 
+                    a) asegurarse de la conformidad del sistema 
+                    de gestión de las mediciones con esta norma 
+                    mexicana, Y 
+                    b) mejorar continuamente el sistema de 
+                    gestión de las mediciones. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.2 Auditoría y seguimiento  </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>8.2.1 Generalidades 
+                </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe utilizar la 
+                    auditoría, el seguimiento y otras técnicas 
+                    apropiadas para determinar la adecuación y 
+                    eficacia del sistema de gestión de las 
+                    mediciones. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.2.2 Satisfacción del cliente</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe realizar el 
+                    seguimiento de la información relacionada 
+                    con la satisfacción del cliente, para determinar 
+                    si se han cumplido las necesidades 
+                    metrológicas del mismo. Deben especificarse 
+                    los métodos para obtener y utilizar esta 
+                    información.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.2.3 Auditoría del sistema de gestión de las 
+                    mediciones </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe planificar y 
+                    realizar auditorías al sistema de gestión de las 
+                    mediciones para asegurarse de su continua y 
+                    eficaz implementación y cumplimiento de los 
+                    requisitos especificados. Los resultados de la 
+                    auditoría deben comunicarse a las partes 
+                    involucradas dentro de la dirección de la 
+                    organización.
+                    </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Deben registrarse los resultados de todas las 
+                    auditorías del sistema de gestión de las 
+                    mediciones, y todos los cambios al sistema. La 
+                    organización debe asegurarse de que se 
+                    tomen sin tardanza las acciones para eliminar 
+                    las no conformidades detectadas y sus causas.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.24 Seguimiento del sistema de gestión de las 
+                    mediciones 
+                    </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Dentro de los procesos incluidos en el sistema 
+                    de gestión de las mediciones, se debe realizar 
+                    el seguimiento de los procesos de 
+                    confirmación metrológica y de medición. El 
+                    seguimiento debe hacerse de acuerdo a 
+                    procedimientos documentados y a intervalos 
+                    establecidos. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Lo anterior debe incluir la determinación de 
+                    los métodos aplicables, incluyendo las 
+                    técnicas estadísticas y la extensión de su uso.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>El seguimiento del sistema de gestión de las 
+                    mediciones debe prevenir las desviaciones de 
+                    los requisitos mediante la rápida detección de 
+                    deficiencias y las oportunas acciones para su 
+                    corrección. El seguimiento del sistema de 
+                    gestión de las mediciones debe ser acorde con 
+                    el riesgo de incumplimiento de los requisitos 
+                    especificados.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Deben documentar los resultados del 
+                    seguimiento de los procesos de medición y de 
+                    confirmación y cualquier acción correctiva 
+                    resultante con el fin de demostrar que los 
+                    procesos de medición y de confirmación han 
+                    cumplido continuamente los requisitos 
+                    documentados. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.3 Control de las no conformidades </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>8.3.1 Sistemas de gestión de las mediciones 
+                    no conformes </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe asegurarse de la 
+                    detección de cualquier no conformidad y de 
+                    tomar acciones inmediatas.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.32 Procesos de medición no conformes </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Cualquier proceso de medición del cual se 
+                    sepa o se sospeche que genera resultados de 
+                    medición incorrectos, debe ser 
+                    adecuadamente identificado y no debe ser 
+                    utilizado hasta que se hayan tomado las 
+                    acciones apropiadas.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Cuando se identifique un proceso de medición 
+                    no conforme, el usuario del proceso debe 
+                    determinar las consecuencias potenciales, 
+                    hacer la corrección necesaria y tomar las 
+                    acciones correctivas apropiadas.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Un proceso de medición modificado debido a 
+                    una no conformidad debe ser validado antes 
+                    de utilizarlo.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.33 Equipo de medición no conforme</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Cualquier equipo de medición confirmado del 
+                    cual se sepa o se sospeche que: 
+                    a) está dañado, 
+                    b) ha sido sobrecargado, 
+                    c) funciona incorrectamente de modo que 
+                    pueda invalidar su uso previsto, 
+                    d) produce resultados de medición 
+                    incorrectos,
+                    e) está fuera de su intervalo designado de 
+                    confirmación metrológica, 
+                    f) ha sido manipulado incorrectamente, 
+                    g) tiene su sello o salvaguarda roto o dañado, 
+                    h) ha sido expuesto a magnitudes de 
+                    influencia que puedan afectar adversamente 
+                    su uso previsto (por ejemplo: campos 
+                    electromagnéticos, polvo).
+                    debe ser retirado del servicio segregando o 
+                    identificándose mediante una etiqueta o 
+                    marca destacada. Debe verificarse la no 
+                    conformidad y debe prepararse un informe. 
+                    Tal equipo no debe ser reintegrado al servicio 
+                    hasta que se hayan eliminado las razones de la
+                    no conformidad y haya sido confirmado 
+                    nuevamente. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>El equipo no conforme que no pueda 
+                    recuperar sus características metrológicas 
+                    previstas debe marcarse claramente o 
+                    identificarse de alguna manera. La 
+                    confirmación metrológica de tal equipo para 
+                    otros usos debe asegurar que su nuevo estado 
+                    se indica claramente e incluye la identificación 
+                    de sus limitaciones de uso.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Si el resultado de una verificación metrológica 
+                    previa a una reparación o ajuste indica que el 
+                    equipo de medición no cumple los requisitos 
+                    metrológicos, de modo que pueda 
+                    comprometerse la fiabilidad de los resultados 
+                    de la medición, el usuario del equipo debe 
+                    determinar las consecuencias potenciales y 
+                    tomar las acciones necesarias. Esto puede 
+                    implicar una nueva inspección del producto 
+                    que se ha realizado utilizando mediciones 
+                    efectuadas con el equipo de medición no 
+                    conforme.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.4 Mejora  </b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>8.4.1 Generalidades</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe planificar y 
+                    gestionar la mejora continua del sistema de 
+                    gestión de las mediciones basándose en los 
+                    resultados de las auditorías, en las revisiones 
+                    por la dirección y en otros factores 
+                    pertinentes, tales como la retroalimentación 
+                    de los clientes. La función metrológica debe 
+                    revisar e identificar oportunidades 
+                    potenciales para mejorar el sistema de gestión 
+                    de las mediciones y modificarlo en la medida 
+                    de lo necesario.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.4.2 Acción correctiva</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Cuando un elemento del sistema de gestión de 
+                    las mediciones no cumpla los requisitos 
+                    especificados, o cuando los datos pertinentes 
+                    muestran una tendencia inaceptable, debe 
+                    actuarse para identificar la causa y eliminar la 
+                    discrepancia.</td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Las correcciones y el resultado de las acciones 
+                    correctivas deben ser verificados antes de 
+                    utilizar nuevamente el proceso de medición. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td>Deben documentar los criterios para tomar 
+                    acciones correctivas. </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>8.4.3 Acción preventiva</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La función metrológica debe determinar las 
+                    acciones para eliminar las causas de no 
+                    conformidades potenciales de mediciones o 
+                    confirmaciones, con el fin de prevenir su 
+                    ocurrencia. Las acciones preventivas deben 
+                    ser apropiadas a los efectos de los problemas 
+                    potenciales. Debe establecerse un 
+                    procedimiento documentado para definir los 
+                    requisitos para: 
+                    a) determinar las no conformidades 
+                    potenciales y sus causas, 
+                    b) evaluar la necesidad de acciones para 
+                    prevenir la ocurrencia de no conformidades, 
+                    c) determinar e implementar la acción 
+                    necesaria, 
+                    d) registrar los resultados de la acción tomada, 
+                    y 
+                    e) revisar la acción preventiva tomada.
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="(Nombre, Codificación,inciso y página)"></textarea></td>
+                <td style="vertical-align: middle;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Check1"  style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                      C
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" value="" id="Check1" style="box-sizing: unset;">
+                    <label class="form-check-label" for="reverseCheck1">
+                        NC
+                    </label>
+                  </div>
+                </td>
+                <td><textarea cols="20" rows="5" wrap="hard" class="form-control-plaintext" placeholder="Descripción del Hallazgo"></textarea></td>
+            </tr>
+
+
+        </table>
+
+    </div>
+    <br>
+    <div class="container-fluid">
+      <table class="table table-bordered" style="text-align:left;">
+        <tbody>
+            <tr>
+                <td style="background-color:rgb(32, 32, 91);color: aliceblue;"></td>
+                <td style="background-color:rgb(32, 32, 91);color: aliceblue;">CARGO:</td>
+                <td style="background-color:rgb(32, 32, 91);color: aliceblue;">FIRMA:</td>
+                <td style="background-color:rgb(32, 32, 91);color: aliceblue;">FECHA:</td>
+            </tr>
+            <tr>
+                <td class="col-3">ELABORÓ:</td>
+                <td><input type="text" name="Cargo" class="form-control-plaintext" placeholder="Cargo"></td>
+                <td><input type="text" name="Firma" class="form-control-plaintext" placeholder="Firma"></td>
+                <td class="col-2"><input type="date" name="fRevision" class="form-control-plaintext"></td>
+            </tr>
+            <tr>
+                <td class="col-3">REVISÓ:</td>
+                <td><input type="text" name="Cargo" class="form-control-plaintext" placeholder="Cargo"></td>
+                <td><input type="text" name="Firma" class="form-control-plaintext" placeholder="Firma"></td>
+                <td class="col-2"><input type="date" name="fRevision" class="form-control-plaintext"></td>
+            </tr>
+            <tr>
+                <td class="col-3">APROBÓ:</td>
+                <td><input type="text" name="Cargo" class="form-control-plaintext" placeholder="Cargo"></td>
+                <td><input type="text" name="Firma" class="form-control-plaintext" placeholder="Firma"></td>
+                <td class="col-2"><input type="date" name="fRevision" class="form-control-plaintext"></td>
+            </tr>
+    </table>
+  <br>
+  <table class="table table-bordered">
+      <tr>
+          <td style="background-color:rgb(32, 32, 91);color: aliceblue;">No. Version#</td>
+          <td style="background-color:rgb(32, 32, 91);color: aliceblue;">Fecha de Elaboración</td>
+          <td style="background-color:rgb(32, 32, 91);color: aliceblue;">Seccion Revisada</td>
+          <td style="background-color:rgb(32, 32, 91);color: aliceblue;">Lista de Cambios</td>
+      </tr>
+      <tr>
+          <td class="col-2"><input type="text" name="No.Version" class="form-control-plaintext" placeholder="No. Version"></td>
+          <td class="col-2"><input type="date" name="fElaboracion" class="form-control-plaintext"></td>
+          <td class="col-2"><input type="text" name="Seccion " class="form-control-plaintext" placeholder="Seccion Revisada"> </td>
+          <td><input type="text" name="Lista" class="form-control-plaintext" placeholder="Lista de cambios"> </td>
+      </tr>
+  </table>
+</div>
+</div>
+
+<br>
+<br>
+<br>
+<div style="text-align:center;">
+  Prohibida la reproducción total o parcial de este documento propiedad de <br> <b> NATGAS QUERETARO, S. A. P. I. DE C. V. </b>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+ <!-- aqui van otros scripts que conectan con el arbol de documentos, el html del arbol de documentos y lo que hace que funcione la id del titulo con el del handlebar -->
+ <script>document.querySelector('#CLAVE').value=document.querySelector('title').innerHTML</script>
+ <!-- aqui terminan los scripts -->
+   
+</body>
+
+</html>
