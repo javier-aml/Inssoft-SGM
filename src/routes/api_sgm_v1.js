@@ -760,7 +760,7 @@ router.post('/Estructura_tomza',async (req,res) => {
 router.get('/TestApi',async(req,res) => {
   try {
     const Prueba = {Test: 'Prueba'}
-    const test = await pool.query('select * from estructura_directorios;')
+    const test = await pool.query('select * from estructura_directorios_natgas;')
     res.send(Prueba)
   } catch (error) {
     res.send(error)
