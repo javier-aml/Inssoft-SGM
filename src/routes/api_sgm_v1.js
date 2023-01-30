@@ -758,9 +758,13 @@ router.post('/Estructura_tomza',async (req,res) => {
   }
 })
 router.get('/TestApi',async(req,res) => {
-  const Prueba = {Test: 'Prueba'}
-  const test = await pool.query('select * from estructura_directorios;')
-  res.send(Prueba)
+  try {
+    const Prueba = {Test: 'Prueba'}
+    const test = await pool.query('select * from estructura_directorios;')
+    res.send(Prueba)
+  } catch (error) {
+    res.send(error)
+  }
 })
 
 //Descargas Excel
