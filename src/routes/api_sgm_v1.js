@@ -757,8 +757,9 @@ router.post('/Estructura_tomza',async (req,res) => {
     res.send(error)
   }
 })
-router.get('/TestApi',(req,res) => {
+router.get('/TestApi',async(req,res) => {
   const Prueba = {Test: 'Prueba'}
+  const test = await pool.query('select * from estructura_directorios;')
   res.send(Prueba)
 })
 
