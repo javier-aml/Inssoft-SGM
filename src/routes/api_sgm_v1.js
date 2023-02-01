@@ -5188,7 +5188,7 @@ router.post('/mensual-natgasModificado/:fecha', async (req, res) => {
    console.log('asdas');
      var options = {
        'method': 'GET',
-       'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-11-30T23:59:59.000Z&issuedAt[after]=2022-11-01T06:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100`,
+       'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-12-31T23:59:59.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100`,
        'headers': {
          'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
        }
@@ -5220,174 +5220,176 @@ router.post('/mensual-natgasModificado/:fecha', async (req, res) => {
          fecha2 = fecha3
          console.log(fecha3);
          if (res.items[0] != undefined ) {
-             let RECEPCION = {
-               "TipoComplemento": "Expendio",
-               "Nacional": [{
-                   "RfcClienteOProveedor": "PTI151101TE5",
-                   "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
-                   "PermisoClienteOProveedor": "H/09857/COM/2015",
-                   "CFDIs": [{
-                       "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
-                       "TipoCfdi": "Ingreso",
-                       "PrecioVentaOCompraOContrap": 0.0,
-                       "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
-                       "VolumenDocumentado": {
-                           "ValorNumerico": 0.0,
-                           "UnidadDeMedida": "UM03"
-                       }
-                   }]
-               }]
-           }
-             console.log("normal");
-             RECEPCION.Nacional[0].RfcClienteOProveedor = res.receiver.rfc
-             RECEPCION.Nacional[0].NombreClienteOProveedor = res.receiver.name
-             RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
-             RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
-             RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
-             RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
-             RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
-         
-             productoEstructura.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
-             productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
-             productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
-             productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
-             productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+            if (res.items[0].unitCode === 'GV') {
+              let RECEPCION = {
+                "TipoComplemento": "Expendio",
+                "Nacional": [{
+                    "RfcClienteOProveedor": res.receiver.rfc,
+                    "NombreClienteOProveedor": res.receiver.name,
+                    "PermisoClienteOProveedor": "H/09857/COM/2015",
+                    "CFDIs": [{
+                        "Cfdi": res.uuid,
+                        "TipoCfdi": "Egreso",
+                        "PrecioVentaOCompraOContrap":(res.items[0].totalAmount),
+                        "FechaYHoraTransaccion": res.issuedAt,
+                        "VolumenDocumentado": {
+                            "ValorNumerico": res.items[0].quantity,
+                            "UnidadDeMedida": "UM04"
+                        }
+                    }]
+                }]
+            }
+              console.log("normal");
+             //  RECEPCION.Nacional[0].RfcClienteOProveedor = res.receiver.rfc
+             //  RECEPCION.Nacional[0].NombreClienteOProveedor = res.receiver.name
+             //  RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
+             //  RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+             //  RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
+             //  RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+             //  RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+          
+              productoEstructura.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+              productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+              productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+              productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
+              productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+              
+              let metodoPago = ''
+              switch (res.paymentMethod) {
+                case 01:
+                  metodoPago = 'Efectivo'
+                  break;
+                  case 02:
+                    metodoPago = 'Cheque de nómina'
+                    break;
+                    case 03:
+                      metodoPago = 'Transferencia electrónica'
+                      break;
+                      case 04:
+                        metodoPago = 'Tarjeta de crédito'
+                        break;
+                        case 05:
+                          metodoPago = 'Monedero electrónico'
+                          break;
+                          case 06:
+                            metodoPago = 'Dinero digital'
+                            break;
+                            case 08:
+                              metodoPago = 'Vales de despensa'
+                              break;
+                              case 12:
+                                metodoPago = 'Liquidación'
+                                break;
+                                case 13:
+                                  metodoPago = 'Pago por subrogación'
+                                  break;
+                                  case 14:
+                                    metodoPago = 'Pago por consignación'
+                                    break;
+                                    case 15:
+                                      metodoPago = 'Condonación'
+                                      break;
+                                      case 17:
+                                        metodoPago = 'Compensación'
+                                        break;
+                                        case 23:
+                                          metodoPago = 'Novacion'
+                                          break;
+                                          case 24:
+                                            metodoPago = 'Confusión'
+                                            break;
+                                            case 25:
+                                              metodoPago = 'Envío de deuda'
+                                              break;
+                                              case 26:
+                                                metodoPago = 'Prescripción o caducidad'
+                                                break;
+                                                case 27:
+                                                  metodoPago = 'A satisfacción del acreedor'
+                                                  break;
+                                                  case 28:
+                                                    metodoPago = 'Tarjeta de débito'
+                                                    break;
+                                                    case 29:
+                                                      metodoPago = 'Tarjeta de servicio'
+                                                      break;
+                  
+              
+                default:
+                  metodoPago = 'Por definir'
+                  break;
+              }
              
-             let metodoPago = ''
-             switch (res.paymentMethod) {
-               case 01:
-                 metodoPago = 'Efectivo'
-                 break;
-                 case 02:
-                   metodoPago = 'Cheque de nómina'
-                   break;
-                   case 03:
-                     metodoPago = 'Transferencia electrónica'
-                     break;
-                     case 04:
-                       metodoPago = 'Tarjeta de crédito'
-                       break;
-                       case 05:
-                         metodoPago = 'Monedero electrónico'
-                         break;
-                         case 06:
-                           metodoPago = 'Dinero digital'
-                           break;
-                           case 08:
-                             metodoPago = 'Vales de despensa'
-                             break;
-                             case 12:
-                               metodoPago = 'Liquidación'
-                               break;
-                               case 13:
-                                 metodoPago = 'Pago por subrogación'
-                                 break;
-                                 case 14:
-                                   metodoPago = 'Pago por consignación'
-                                   break;
-                                   case 15:
-                                     metodoPago = 'Condonación'
-                                     break;
-                                     case 17:
-                                       metodoPago = 'Compensación'
-                                       break;
-                                       case 23:
-                                         metodoPago = 'Novacion'
-                                         break;
-                                         case 24:
-                                           metodoPago = 'Confusión'
-                                           break;
-                                           case 25:
-                                             metodoPago = 'Envío de deuda'
-                                             break;
-                                             case 26:
-                                               metodoPago = 'Prescripción o caducidad'
-                                               break;
-                                               case 27:
-                                                 metodoPago = 'A satisfacción del acreedor'
-                                                 break;
-                                                 case 28:
-                                                   metodoPago = 'Tarjeta de débito'
-                                                   break;
-                                                   case 29:
-                                                     metodoPago = 'Tarjeta de servicio'
-                                                     break;
-                 
-             
-               default:
-                 metodoPago = 'Por definir'
-                 break;
-             }
-            
-             const dataExcel = {
-               "UUID":res.uuid,
-               "RFC Emisor":res.issuer.rfc,
-               "Nombre del Emisor":res.issuer.name,
-               "RFC Receptor":res.receiver.rfc,
-               "Nombre del Receptor":res.receiver.name,
-               "Tipo":res.type == 'I' ? 'Ingreso':'',
-               "Estatus":res.status,
-               "PAC":res.pac,
-               "Moneda":res.currency,
-               "Fecha de Certificación":res.certifiedAt.substring(0, 10),
-               "Método de Pago":metodoPago,
-               "Fecha de Emisión":res.issuedAt.substring(0, 10),
-               "Condiciones de pago (original)":res.paymentTermsRaw,
-               "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
-               "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
-               "Descripción":res.items[0].description,
-               "Cantidad":res.items[0].quantity.toString(),
-               "Clave de unidad":res.items[0].unitCode,
-               "Valor unitario":res.items[0].unitAmount.toString(),
-               "Descuento":res.discount.toString(),
-               "Impuesto":res.tax,
-               "Subtotal":res.subtotal.toString(),
-               "Total":res.total.toString(),
-               "TotalMXN": (res.items[0].totalAmount).toString()
-             }
-             const tabla = {
-               RFCEmisor:res.issuer.rfc,
-               Emisor:res.issuer.name,
-               RegimenFiscal:res.issuer.taxRegime,
-               RFCReceptor:res.receiver.rfc,
-               Receptor:res.receiver.name,
-               RegimenFiscalReceptor:res.issuer.taxRegime,
-               DomicilioFiscalReceptor:'11560',
-               UsoCFDI:res.usage,
-               Estatus:res.status,
-               FechaEmision:res.issuedAt,
-               FullDate:res.issuedAt.substring(0, 10),
-               Subtotal:res.subtotal,
-               Descuento:res.discount,
-               Impuesto:res.tax,
-               Total:res.total,
-               UUID:res.uuid,
-               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-               Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-               Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-               Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-               Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-               ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-               // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-               // Impuesto:res.items[0] != undefined ? res.tax : '',
-             
-               Moneda:res.currency,
-               VersionCFDI:res.version,
-               Fechacompleta:res.issuedAt.substring(0, 10),
-               TotalMXN:(res.items[0].totalAmount)
-             }
-             // if (fecha3!=fecha) {
-             //   break;
-             // }
-              TotalMXN += parseFloat(tabla.TotalMXN);
-         
-              TotalLTS += parseFloat(tabla.Cantidad);
-              jsonCompra[indexCompra] = tabla
-              compra[indexCompra] = dataExcel
-              indexCompra++
+              const dataExcel = {
+                "UUID":res.uuid,
+                "RFC Emisor":res.issuer.rfc,
+                "Nombre del Emisor":res.issuer.name,
+                "RFC Receptor":res.receiver.rfc,
+                "Nombre del Receptor":res.receiver.name,
+                "Tipo":res.type == 'I' ? 'Ingreso':'',
+                "Estatus":res.status,
+                "PAC":res.pac,
+                "Moneda":res.currency,
+                "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                "Método de Pago":metodoPago,
+                "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                "Condiciones de pago (original)":res.paymentTermsRaw,
+                "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                "Descripción":res.items[0].description,
+                "Cantidad":res.items[0].quantity.toString(),
+                "Clave de unidad":res.items[0].unitCode,
+                "Valor unitario":res.items[0].unitAmount.toString(),
+                "Descuento":res.discount.toString(),
+                "Impuesto":res.tax,
+                "Subtotal":res.subtotal.toString(),
+                "Total":res.total.toString(),
+                "TotalMXN": (res.items[0].totalAmount).toString()
+              }
+              const tabla = {
+                RFCEmisor:res.issuer.rfc,
+                Emisor:res.issuer.name,
+                RegimenFiscal:res.issuer.taxRegime,
+                RFCReceptor:res.receiver.rfc,
+                Receptor:res.receiver.name,
+                RegimenFiscalReceptor:res.issuer.taxRegime,
+                DomicilioFiscalReceptor:'11560',
+                UsoCFDI:res.usage,
+                Estatus:res.status,
+                FechaEmision:res.issuedAt,
+                FullDate:res.issuedAt.substring(0, 10),
+                Subtotal:res.subtotal,
+                Descuento:res.discount,
+                Impuesto:res.tax,
+                Total:res.total,
+                UUID:res.uuid,
+                Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                // Impuesto:res.items[0] != undefined ? res.tax : '',
+              
+                Moneda:res.currency,
+                VersionCFDI:res.version,
+                Fechacompleta:res.issuedAt.substring(0, 10),
+                TotalMXN:(res.items[0].totalAmount)
+              }
+              // if (fecha3!=fecha) {
+              //   break;
+              // }
+               TotalMXN += parseFloat(tabla.TotalMXN);
+          
+               TotalLTS += parseFloat(tabla.Cantidad);
+               jsonCompra[indexCompra] = tabla
+               compra[indexCompra] = dataExcel
+               indexCompra++
+            }
            
            
  
@@ -5431,7 +5433,7 @@ router.post('/mensual-natgasModificado/:fecha', async (req, res) => {
  while (ApiLengthVenta > 0) {
  var options = {
    'method': 'GET',
-   'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-11-30T23:59:59.000Z&issuedAt[after]=2022-11-01T06:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100`,
+   'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-12-31T23:59:59.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100`,
    'headers': {
      'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
    }
@@ -5453,533 +5455,379 @@ router.post('/mensual-natgasModificado/:fecha', async (req, res) => {
      fecha4 = fecha5
  
      if (res.items[0] != undefined ) {
-       let entregaGeneral = {
+  //      let entregaGeneral = {
          
-           "NombreClienteOProveedor": "PUBLICO EN GENERAL",
-           "RfcClienteOProveedor": "XAXX010101000",
-             "CFDIs": []
+  //          "NombreClienteOProveedor": "PUBLICO EN GENERAL",
+  //          "RfcClienteOProveedor": "XAXX010101000",
+  //            "CFDIs": []
        
-     }
-     let entregaCFDI = {
-       "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
-       "TipoCfdi": "Ingreso",
-       "PrecioVentaOCompraOContrap": 0.0,
-       "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
-       "VolumenDocumentado": {
-           "ValorNumerico": 0.0,
-           "UnidadDeMedida": "UM04"
-       }
-   }
+  //    }
+  //    let entregaCFDI = {
+  //      "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
+  //      "TipoCfdi": "Ingreso",
+  //      "PrecioVentaOCompraOContrap": 0.0,
+  //      "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
+  //      "VolumenDocumentado": {
+  //          "ValorNumerico": 0.0,
+  //          "UnidadDeMedida": "UM04"
+  //      }
+  //  }
 
-     let entrega = {
-         "NombreClienteOProveedor": "",
-         "RfcClienteOProveedor": "",
-           "CFDIs": [{
-               "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
-               "TipoCfdi": "Ingreso",
-               "PrecioVentaOCompraOContrap": 0.0,
-               "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
-               "VolumenDocumentado": {
-                   "ValorNumerico": 0.0,
-                   "UnidadDeMedida": "UM04"
-               }
-           }]
-   }
-       if (res.receiver.rfc == "XAXX010101000") {
-         for (const key in res.items) {
-             const identificationNumber = res.items[key].identificationNumber
-             if (identificationNumber != null) {
-                try {
-                  if (identificationNumber.includes('G/21188/EXP/ES/FE/2018')) {
-                    entregaCFDI.Cfdi = res.uuid
-                    entregaCFDI.TipoCfdi = 'Ingreso'
-                    entregaCFDI.PrecioVentaOCompraOContrap = (res.items[key].totalAmount)
-                    entregaCFDI.FechaYHoraTransaccion = res.issuedAt
-                    entregaCFDI.VolumenDocumentado.ValorNumerico = res.items[key].quantity
-                   
-                      entregaGeneral.CFDIs.push(entregaCFDI)
-                      productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
-                      productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[key].quantity//ltr
-                      productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
-                      productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[key].totalAmount)//mxn
-                      
-                      let metodoPago = ''
-                      switch (res.paymentMethod) {
-                        case 01:
-                          metodoPago = 'Efectivo'
-                          break;
-                          case 02:
-                            metodoPago = 'Cheque de nómina'
-                            break;
-                            case 03:
-                              metodoPago = 'Transferencia electrónica'
-                              break;
-                              case 04:
-                                metodoPago = 'Tarjeta de crédito'
-                                break;
-                                case 05:
-                                  metodoPago = 'Monedero electrónico'
-                                  break;
-                                  case 06:
-                                    metodoPago = 'Dinero digital'
-                                    break;
-                                    case 08:
-                                      metodoPago = 'Vales de despensa'
-                                      break;
-                                      case 12:
-                                        metodoPago = 'Liquidación'
-                                        break;
-                                        case 13:
-                                          metodoPago = 'Pago por subrogación'
-                                          break;
-                                          case 14:
-                                            metodoPago = 'Pago por consignación'
-                                            break;
-                                            case 15:
-                                              metodoPago = 'Condonación'
-                                              break;
-                                              case 17:
-                                                metodoPago = 'Compensación'
-                                                break;
-                                                case 23:
-                                                  metodoPago = 'Novacion'
-                                                  break;
-                                                  case 24:
-                                                    metodoPago = 'Confusión'
-                                                    break;
-                                                    case 25:
-                                                      metodoPago = 'Envío de deuda'
-                                                      break;
-                                                      case 26:
-                                                        metodoPago = 'Prescripción o caducidad'
-                                                        break;
-                                                        case 27:
-                                                          metodoPago = 'A satisfacción del acreedor'
-                                                          break;
-                                                          case 28:
-                                                            metodoPago = 'Tarjeta de débito'
-                                                            break;
-                                                            case 29:
-                                                              metodoPago = 'Tarjeta de servicio'
-                                                              break;
-                          
-                      
-                        default:
-                          metodoPago = 'Por definir'
-                          break;
-                      }
-                      const dataExcel = {
-                        "UUID":res.uuid,
-                        "RFC Emisor":res.issuer.rfc,
-                        "Nombre del Emisor":res.issuer.name,
-                        "RFC Receptor":res.receiver.rfc,
-                        "Nombre del Receptor":res.receiver.name,
-                        "Tipo":res.type == 'I' ? 'Ingreso':'',
-                        "Estatus":res.status,
-                        "PAC":res.pac,
-                        "Moneda":res.currency,
-                        "Fecha de Certificación":res.certifiedAt,
-                        "Método de Pago":metodoPago,
-                        "Fecha de Emisión":res.issuedAt,
-                        "Condiciones de pago (original)":res.paymentTermsRaw,
-                        "No. Identificación":res.items[key].identificationNumber != null ? res.items[key].identificationNumber.toString() : '',
-                        "Clave del producto y/o servicio":res.items[key].productIdentification.toString(),
-                        "Descripción":res.items[key].description,
-                        "Cantidad":res.items[key].quantity.toString(),
-                        "Clave de unidad":res.items[key].unitCode,
-                        "Valor unitario":res.items[key].unitAmount.toString(),
-                        "Descuento":res.discount.toString(),
-                        "Impuesto":'',
-                        "Subtotal":res.subtotal.toString(),
-                        "Total":res.total.toString(),
-                        "TotalMXN": (res.items[key].totalAmount).toString()
-                       }
-                      const tabla = {
-                        RFCEmisor:res.issuer.rfc,
-                        Emisor:res.issuer.name,
-                        RegimenFiscal:res.issuer.taxRegime,
-                        RFCReceptor:res.receiver.rfc,
-                        Receptor:res.receiver.name,
-                        RegimenFiscalReceptor:res.issuer.taxRegime,
-                        DomicilioFiscalReceptor:'11560',
-                        UsoCFDI:res.usage,
-                        Estatus:res.status,
-                        FechaEmision:res.issuedAt,
-                        FullDate:res.issuedAt.substring(0, 10),
-                        Subtotal:res.subtotal,
-                        Descuento:res.discount,
-                        Impuesto:res.tax,
-                        Total:res.total,
-                        UUID:res.uuid,
-                        Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                        Unidad:res.items[key] != undefined ? res.items[key].unitCode : 'LTR',
-                        Cantidad:res.items[key] != undefined ? res.items[key].quantity : '0.00',
-                        Descripcion:res.items[key] != undefined ? res.items[key].description : '',
-                        Valorunitario:res.items[key] != undefined ? res.items[key].unitAmount : '',
-                        ImporteConcepto:res.items[key] != undefined ? res.items[key].totalAmount : '',
-                        DescuentoConcepto:res.items[key] != undefined ? res.items[key].discountAmount : '',
-                        NoIdentificacion:res.items[key] != undefined ? res.items[key].identificationNumber : '',
-                        ClaveSAT:res.items[key] != undefined ? res.items[key].productIdentification : '',
-                        ImporteImpuesto:res.items[key] != undefined ? res.tax : '',
-                        Impuesto:res.items[key] != undefined ? res.tax : '',
-                        Moneda:res.currency,
-                        VersionCFDI:res.version,
-                        Fechacompleta:res.issuedAt.substring(0, 10),
-                        TotalMXN:(res.items[key].totalAmount)
-                      }
-                    venta[indexVenta] = dataExcel
-                    totalMXNVT += parseFloat(tabla.TotalMXN);
-                    totalLTSVT += parseFloat(tabla.Cantidad);
-                    jsonVenta[indexVenta] = tabla
-                    indexVenta++
-                   
+
+   if (res.items.length>2) {
+    const identificationNumber = res.items[0].identificationNumber
+    if (identificationNumber !== null) {
+      try {
+        console.log(identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true);
+        if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true) {
+          let entrega = {
+            "NombreClienteOProveedor": res.receiver.rfc,
+            "RfcClienteOProveedor": res.receiver.name,
+              "CFDIs": [{
+                  "Cfdi": res.uuid,
+                  "TipoCfdi": "Ingreso",
+                  "PrecioVentaOCompraOContrap": (res.items[0].totalAmount),
+                  "FechaYHoraTransaccion": res.issuedAt,
+                  "VolumenDocumentado": {
+                      "ValorNumerico": res.items[0].quantity,
+                      "UnidadDeMedida": "UM04"
                   }
-                } catch (error) {
-                  console.log(error);
-                }
-
-             }
-         }
-         productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entregaGeneral)
-       } else {
-        if (res.items.length>2) {
-            const identificationNumber = res.items[0].identificationNumber
-            if (identificationNumber !== null) {
-              try {
-                if (identificationNumber.includes('G/21188/EXP/ES/FE/2018')) {
-                  entrega.RfcClienteOProveedor = res.receiver.rfc
-                  entrega.NombreClienteOProveedor = res.receiver.name
-                  entrega.CFDIs[0].Cfdi = res.uuid
-                  entrega.CFDIs[0].TipoCfdi = 'Ingreso'
-                  entrega.CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
-                  entrega.CFDIs[0].FechaYHoraTransaccion = res.issuedAt
-                  entrega.CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
-                 
-                    productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entrega)
-                    productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
-                    productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
-                    productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
-                    productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[0].totalAmount)//mxn
-                    
-                    let metodoPago = ''
-                    switch (res.paymentMethod) {
-                      case 01:
-                        metodoPago = 'Efectivo'
-                        break;
-                        case 02:
-                          metodoPago = 'Cheque de nómina'
-                          break;
-                          case 03:
-                            metodoPago = 'Transferencia electrónica'
-                            break;
-                            case 04:
-                              metodoPago = 'Tarjeta de crédito'
-                              break;
-                              case 05:
-                                metodoPago = 'Monedero electrónico'
-                                break;
-                                case 06:
-                                  metodoPago = 'Dinero digital'
-                                  break;
-                                  case 08:
-                                    metodoPago = 'Vales de despensa'
-                                    break;
-                                    case 12:
-                                      metodoPago = 'Liquidación'
-                                      break;
-                                      case 13:
-                                        metodoPago = 'Pago por subrogación'
-                                        break;
-                                        case 14:
-                                          metodoPago = 'Pago por consignación'
-                                          break;
-                                          case 15:
-                                            metodoPago = 'Condonación'
-                                            break;
-                                            case 17:
-                                              metodoPago = 'Compensación'
-                                              break;
-                                              case 23:
-                                                metodoPago = 'Novacion'
-                                                break;
-                                                case 24:
-                                                  metodoPago = 'Confusión'
-                                                  break;
-                                                  case 25:
-                                                    metodoPago = 'Envío de deuda'
-                                                    break;
-                                                    case 26:
-                                                      metodoPago = 'Prescripción o caducidad'
-                                                      break;
-                                                      case 27:
-                                                        metodoPago = 'A satisfacción del acreedor'
-                                                        break;
-                                                        case 28:
-                                                          metodoPago = 'Tarjeta de débito'
-                                                          break;
-                                                          case 29:
-                                                            metodoPago = 'Tarjeta de servicio'
-                                                            break;
-                        
-                    
-                      default:
-                        metodoPago = 'Por definir'
-                        break;
-                    }
-                    const dataExcel = {
-                      "UUID":res.uuid,
-                      "RFC Emisor":res.issuer.rfc,
-                      "Nombre del Emisor":res.issuer.name,
-                      "RFC Receptor":res.receiver.rfc,
-                      "Nombre del Receptor":res.receiver.name,
-                      "Tipo":res.type == 'I' ? 'Ingreso':'',
-                      "Estatus":res.status,
-                      "PAC":res.pac,
-                      "Moneda":res.currency,
-                      "Fecha de Certificación":res.certifiedAt,
-                      "Método de Pago":metodoPago,
-                      "Fecha de Emisión":res.issuedAt,
-                      "Condiciones de pago (original)":res.paymentTermsRaw,
-                      "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
-                      "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
-                      "Descripción":res.items[0].description,
-                      "Cantidad":res.items[0].quantity.toString(),
-                      "Clave de unidad":res.items[0].unitCode,
-                      "Valor unitario":res.items[0].unitAmount.toString(),
-                      "Descuento":res.discount.toString(),
-                      "Impuesto":'',
-                      "Subtotal":res.subtotal.toString(),
-                      "Total":res.total.toString(),
-                      "TotalMXN": (res.items[0].totalAmount).toString()
-                     }
-                    const tabla = {
-                      RFCEmisor:res.issuer.rfc,
-                      Emisor:res.issuer.name,
-                      RegimenFiscal:res.issuer.taxRegime,
-                      RFCReceptor:res.receiver.rfc,
-                      Receptor:res.receiver.name,
-                      RegimenFiscalReceptor:res.issuer.taxRegime,
-                      DomicilioFiscalReceptor:'11560',
-                      UsoCFDI:res.usage,
-                      Estatus:res.status,
-                      FechaEmision:res.issuedAt,
-                      FullDate:res.issuedAt.substring(0, 10),
-                      Subtotal:res.subtotal,
-                      Descuento:res.discount,
-                      Impuesto:res.tax,
-                      Total:res.total,
-                      UUID:res.uuid,
-                      Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                      Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                      Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                      Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                      Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                      ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                      DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                      NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                      ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                      // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                      // Impuesto:res.items[0] != undefined ? res.tax : '',
-                    
-                      Moneda:res.currency,
-                      VersionCFDI:res.version,
-                      Fechacompleta:res.issuedAt.substring(0, 10),
-                      TotalMXN:(res.items[0].totalAmount)
-                    }
-                  venta[indexVenta] = dataExcel
-                  totalMXNVT += parseFloat(tabla.TotalMXN);
-                  totalLTSVT += parseFloat(tabla.Cantidad);
-                  jsonVenta[indexVenta] = tabla
-                  indexVenta++
-                  
-                 }
-              } catch (error) {
-                console.log(error);
-              }
-
-
-            }
-        } else {
-
-          let entregaNoGeneral = {
+              }]
+      }
+          // entrega.RfcClienteOProveedor = 
+          // entrega.NombreClienteOProveedor = 
+          // entrega.CFDIs[0].Cfdi = 
+          // entrega.CFDIs[0].TipoCfdi = 'Ingreso'
+          // entrega.CFDIs[0].PrecioVentaOCompraOContrap = 
+          // entrega.CFDIs[0].FechaYHoraTransaccion = 
+          // entrega.CFDIs[0].VolumenDocumentado.ValorNumerico = 
          
-            "NombreClienteOProveedor": res.receiver.name,
-            "RfcClienteOProveedor": res.receiver.rfc,
-              "CFDIs": []
-        
-            }
-              let entregaCFDINoGeneral = {
-                "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
-                "TipoCfdi": "Ingreso",
-                "PrecioVentaOCompraOContrap": 0.0,
-                "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
-                "VolumenDocumentado": {
-                    "ValorNumerico": 0.0,
-                    "UnidadDeMedida": "UM04"
-                }
-              }
-          
-              for (const key in res.items) {
-
-
-                  const identificationNumber = res.items[key].identificationNumber
-                  if (identificationNumber != null) {
-                    try {
-                      if (identificationNumber.includes('G/21188/EXP/ES/FE/2018')) {
-                        entregaCFDINoGeneral.Cfdi = res.uuid
-                        entregaCFDINoGeneral.TipoCfdi = 'Ingreso'
-                        entregaCFDINoGeneral.PrecioVentaOCompraOContrap = (res.items[key].totalAmount)
-                        entregaCFDINoGeneral.FechaYHoraTransaccion = res.issuedAt
-                        entregaCFDINoGeneral.VolumenDocumentado.ValorNumerico = res.items[key].quantity
-                       
-                        entregaNoGeneral.CFDIs.push(entregaCFDINoGeneral)
-                          productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
-                          productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[key].quantity//ltr
-                          productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
-                          productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[key].totalAmount)//mxn
-                          
-                          let metodoPago = ''
-                          switch (res.paymentMethod) {
-                            case 01:
-                              metodoPago = 'Efectivo'
+            productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entrega)
+            productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+            productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+            productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+            productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[0].totalAmount)//mxn
+            
+            let metodoPago = ''
+            switch (res.paymentMethod) {
+              case 01:
+                metodoPago = 'Efectivo'
+                break;
+                case 02:
+                  metodoPago = 'Cheque de nómina'
+                  break;
+                  case 03:
+                    metodoPago = 'Transferencia electrónica'
+                    break;
+                    case 04:
+                      metodoPago = 'Tarjeta de crédito'
+                      break;
+                      case 05:
+                        metodoPago = 'Monedero electrónico'
+                        break;
+                        case 06:
+                          metodoPago = 'Dinero digital'
+                          break;
+                          case 08:
+                            metodoPago = 'Vales de despensa'
+                            break;
+                            case 12:
+                              metodoPago = 'Liquidación'
                               break;
-                              case 02:
-                                metodoPago = 'Cheque de nómina'
+                              case 13:
+                                metodoPago = 'Pago por subrogación'
                                 break;
-                                case 03:
-                                  metodoPago = 'Transferencia electrónica'
+                                case 14:
+                                  metodoPago = 'Pago por consignación'
                                   break;
-                                  case 04:
-                                    metodoPago = 'Tarjeta de crédito'
+                                  case 15:
+                                    metodoPago = 'Condonación'
                                     break;
-                                    case 05:
-                                      metodoPago = 'Monedero electrónico'
+                                    case 17:
+                                      metodoPago = 'Compensación'
                                       break;
-                                      case 06:
-                                        metodoPago = 'Dinero digital'
+                                      case 23:
+                                        metodoPago = 'Novacion'
                                         break;
-                                        case 08:
-                                          metodoPago = 'Vales de despensa'
+                                        case 24:
+                                          metodoPago = 'Confusión'
                                           break;
-                                          case 12:
-                                            metodoPago = 'Liquidación'
+                                          case 25:
+                                            metodoPago = 'Envío de deuda'
                                             break;
-                                            case 13:
-                                              metodoPago = 'Pago por subrogación'
+                                            case 26:
+                                              metodoPago = 'Prescripción o caducidad'
                                               break;
-                                              case 14:
-                                                metodoPago = 'Pago por consignación'
+                                              case 27:
+                                                metodoPago = 'A satisfacción del acreedor'
                                                 break;
-                                                case 15:
-                                                  metodoPago = 'Condonación'
+                                                case 28:
+                                                  metodoPago = 'Tarjeta de débito'
                                                   break;
-                                                  case 17:
-                                                    metodoPago = 'Compensación'
+                                                  case 29:
+                                                    metodoPago = 'Tarjeta de servicio'
                                                     break;
-                                                    case 23:
-                                                      metodoPago = 'Novacion'
-                                                      break;
-                                                      case 24:
-                                                        metodoPago = 'Confusión'
-                                                        break;
-                                                        case 25:
-                                                          metodoPago = 'Envío de deuda'
-                                                          break;
-                                                          case 26:
-                                                            metodoPago = 'Prescripción o caducidad'
-                                                            break;
-                                                            case 27:
-                                                              metodoPago = 'A satisfacción del acreedor'
-                                                              break;
-                                                              case 28:
-                                                                metodoPago = 'Tarjeta de débito'
-                                                                break;
-                                                                case 29:
-                                                                  metodoPago = 'Tarjeta de servicio'
-                                                                  break;
-                              
-                          
-                            default:
-                              metodoPago = 'Por definir'
-                              break;
-                          }
-                          const dataExcel = {
-                            "UUID":res.uuid,
-                            "RFC Emisor":res.issuer.rfc,
-                            "Nombre del Emisor":res.issuer.name,
-                            "RFC Receptor":res.receiver.rfc,
-                            "Nombre del Receptor":res.receiver.name,
-                            "Tipo":res.type == 'I' ? 'Ingreso':'',
-                            "Estatus":res.status,
-                            "PAC":res.pac,
-                            "Moneda":res.currency,
-                            "Fecha de Certificación":res.certifiedAt,
-                            "Método de Pago":metodoPago,
-                            "Fecha de Emisión":res.issuedAt,
-                            "Condiciones de pago (original)":res.paymentTermsRaw,
-                            "No. Identificación":res.items[key].identificationNumber != null ? res.items[key].identificationNumber.toString() : '',
-                            "Clave del producto y/o servicio":res.items[key].productIdentification.toString(),
-                            "Descripción":res.items[key].description,
-                            "Cantidad":res.items[key].quantity.toString(),
-                            "Clave de unidad":res.items[key].unitCode,
-                            "Valor unitario":res.items[key].unitAmount.toString(),
-                            "Descuento":res.discount.toString(),
-                            "Impuesto":'',
-                            "Subtotal":res.subtotal.toString(),
-                            "Total":res.total.toString(),
-                            "TotalMXN": (res.items[key].totalAmount).toString()
-                           }
-                          const tabla = {
-                            RFCEmisor:res.issuer.rfc,
-                            Emisor:res.issuer.name,
-                            RegimenFiscal:res.issuer.taxRegime,
-                            RFCReceptor:res.receiver.rfc,
-                            Receptor:res.receiver.name,
-                            RegimenFiscalReceptor:res.issuer.taxRegime,
-                            DomicilioFiscalReceptor:'11560',
-                            UsoCFDI:res.usage,
-                            Estatus:res.status,
-                            FechaEmision:res.issuedAt,
-                            FullDate:res.issuedAt.substring(0, 10),
-                            Subtotal:res.subtotal,
-                            Descuento:res.discount,
-                            Impuesto:res.tax,
-                            Total:res.total,
-                            UUID:res.uuid,
-                            Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                            Unidad:res.items[key] != undefined ? res.items[key].unitCode : 'LTR',
-                            Cantidad:res.items[key] != undefined ? res.items[key].quantity : '0.00',
-                            Descripcion:res.items[key] != undefined ? res.items[key].description : '',
-                            Valorunitario:res.items[key] != undefined ? res.items[key].unitAmount : '',
-                            ImporteConcepto:res.items[key] != undefined ? res.items[key].totalAmount : '',
-                            DescuentoConcepto:res.items[key] != undefined ? res.items[key].discountAmount : '',
-                            NoIdentificacion:res.items[key] != undefined ? res.items[key].identificationNumber : '',
-                            ClaveSAT:res.items[key] != undefined ? res.items[key].productIdentification : '',
-                            // ImporteImpuesto:res.items[key] != undefined ? res.tax : '',
-                            // Impuesto:res.items[key] != undefined ? res.tax : '',
-                          
-                            Moneda:res.currency,
-                            VersionCFDI:res.version,
-                            Fechacompleta:res.issuedAt.substring(0, 10),
-                            TotalMXN:(res.items[key].totalAmount)
-                          }
-                        venta[indexVenta] = dataExcel
-                        totalMXNVT += parseFloat(tabla.TotalMXN);
-                        totalLTSVT += parseFloat(tabla.Cantidad);
-                        jsonVenta[indexVenta] = tabla
-                        indexVenta++
-                        
-                       }
-                    } catch (error) {
-                      console.log(error);
-                    }
-                    
-                  }
-              }
-              productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entregaCFDINoGeneral)
-        }
+                
+            
+              default:
+                metodoPago = 'Por definir'
+                break;
+            }
+            const dataExcel = {
+              "UUID":res.uuid,
+              "RFC Emisor":res.issuer.rfc,
+              "Nombre del Emisor":res.issuer.name,
+              "RFC Receptor":res.receiver.rfc,
+              "Nombre del Receptor":res.receiver.name,
+              "Tipo":res.type == 'I' ? 'Ingreso':'',
+              "Estatus":res.status,
+              "PAC":res.pac,
+              "Moneda":res.currency,
+              "Fecha de Certificación":res.certifiedAt,
+              "Método de Pago":metodoPago,
+              "Fecha de Emisión":res.issuedAt,
+              "Condiciones de pago (original)":res.paymentTermsRaw,
+              "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+              "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+              "Descripción":res.items[0].description,
+              "Cantidad":res.items[0].quantity.toString(),
+              "Clave de unidad":res.items[0].unitCode,
+              "Valor unitario":res.items[0].unitAmount.toString(),
+              "Descuento":res.discount.toString(),
+              "Impuesto":'',
+              "Subtotal":res.subtotal.toString(),
+              "Total":res.total.toString(),
+              "TotalMXN": (res.items[0].totalAmount).toString()
+             }
+            const tabla = {
+              RFCEmisor:res.issuer.rfc,
+              Emisor:res.issuer.name,
+              RegimenFiscal:res.issuer.taxRegime,
+              RFCReceptor:res.receiver.rfc,
+              Receptor:res.receiver.name,
+              RegimenFiscalReceptor:res.issuer.taxRegime,
+              DomicilioFiscalReceptor:'11560',
+              UsoCFDI:res.usage,
+              Estatus:res.status,
+              FechaEmision:res.issuedAt,
+              FullDate:res.issuedAt.substring(0, 10),
+              Subtotal:res.subtotal,
+              Descuento:res.discount,
+              Impuesto:res.tax,
+              Total:res.total,
+              UUID:res.uuid,
+              Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+              Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+              Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+              Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+              Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+              ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+              DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+              NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+              ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+              // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+              // Impuesto:res.items[0] != undefined ? res.tax : '',
+            
+              Moneda:res.currency,
+              VersionCFDI:res.version,
+              Fechacompleta:res.issuedAt.substring(0, 10),
+              TotalMXN:(res.items[0].totalAmount)
+            }
+          venta[indexVenta] = dataExcel
+          totalMXNVT += parseFloat(tabla.TotalMXN);
+          totalLTSVT += parseFloat(tabla.Cantidad);
+          jsonVenta[indexVenta] = tabla
+          indexVenta++
+          
+         }
+      } catch (error) {
+        console.log(error);
+      }
 
-       }
+
+    }
+} else {
+
+  let entregaNoGeneral = {
+ 
+    "NombreClienteOProveedor": res.receiver.name,
+    "RfcClienteOProveedor": res.receiver.rfc,
+      "CFDIs": []
+
+    }
+  
+      for (const key in res.items) {
+
+
+          const identificationNumber = res.items[key].identificationNumber
+          if (identificationNumber != null) {
+            try {
+              console.log(identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true);
+              if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true) {
+                let entregaCFDINoGeneral = {
+                  "Cfdi": res.uuid,
+                  "TipoCfdi": "Ingreso",
+                  "PrecioVentaOCompraOContrap": (res.items[key].totalAmount),
+                  "FechaYHoraTransaccion": res.issuedAt,
+                  "VolumenDocumentado": {
+                      "ValorNumerico": res.items[key].quantity,
+                      "UnidadDeMedida": "UM04"
+                  }
+                }
+                // entregaCFDINoGeneral.Cfdi = res.uuid
+                // entregaCFDINoGeneral.TipoCfdi = 'Ingreso'
+                // entregaCFDINoGeneral.PrecioVentaOCompraOContrap = 
+                // entregaCFDINoGeneral.FechaYHoraTransaccion = 
+                // entregaCFDINoGeneral.VolumenDocumentado.ValorNumerico = 
+               
+                entregaNoGeneral.CFDIs.push(entregaCFDINoGeneral)
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[key].quantity//ltr
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[key].totalAmount)//mxn
+                  
+                  let metodoPago = ''
+                  switch (res.paymentMethod) {
+                    case 01:
+                      metodoPago = 'Efectivo'
+                      break;
+                      case 02:
+                        metodoPago = 'Cheque de nómina'
+                        break;
+                        case 03:
+                          metodoPago = 'Transferencia electrónica'
+                          break;
+                          case 04:
+                            metodoPago = 'Tarjeta de crédito'
+                            break;
+                            case 05:
+                              metodoPago = 'Monedero electrónico'
+                              break;
+                              case 06:
+                                metodoPago = 'Dinero digital'
+                                break;
+                                case 08:
+                                  metodoPago = 'Vales de despensa'
+                                  break;
+                                  case 12:
+                                    metodoPago = 'Liquidación'
+                                    break;
+                                    case 13:
+                                      metodoPago = 'Pago por subrogación'
+                                      break;
+                                      case 14:
+                                        metodoPago = 'Pago por consignación'
+                                        break;
+                                        case 15:
+                                          metodoPago = 'Condonación'
+                                          break;
+                                          case 17:
+                                            metodoPago = 'Compensación'
+                                            break;
+                                            case 23:
+                                              metodoPago = 'Novacion'
+                                              break;
+                                              case 24:
+                                                metodoPago = 'Confusión'
+                                                break;
+                                                case 25:
+                                                  metodoPago = 'Envío de deuda'
+                                                  break;
+                                                  case 26:
+                                                    metodoPago = 'Prescripción o caducidad'
+                                                    break;
+                                                    case 27:
+                                                      metodoPago = 'A satisfacción del acreedor'
+                                                      break;
+                                                      case 28:
+                                                        metodoPago = 'Tarjeta de débito'
+                                                        break;
+                                                        case 29:
+                                                          metodoPago = 'Tarjeta de servicio'
+                                                          break;
+                      
+                  
+                    default:
+                      metodoPago = 'Por definir'
+                      break;
+                  }
+                  const dataExcel = {
+                    "UUID":res.uuid,
+                    "RFC Emisor":res.issuer.rfc,
+                    "Nombre del Emisor":res.issuer.name,
+                    "RFC Receptor":res.receiver.rfc,
+                    "Nombre del Receptor":res.receiver.name,
+                    "Tipo":res.type == 'I' ? 'Ingreso':'',
+                    "Estatus":res.status,
+                    "PAC":res.pac,
+                    "Moneda":res.currency,
+                    "Fecha de Certificación":res.certifiedAt,
+                    "Método de Pago":metodoPago,
+                    "Fecha de Emisión":res.issuedAt,
+                    "Condiciones de pago (original)":res.paymentTermsRaw,
+                    "No. Identificación":res.items[key].identificationNumber != null ? res.items[key].identificationNumber.toString() : '',
+                    "Clave del producto y/o servicio":res.items[key].productIdentification.toString(),
+                    "Descripción":res.items[key].description,
+                    "Cantidad":res.items[key].quantity.toString(),
+                    "Clave de unidad":res.items[key].unitCode,
+                    "Valor unitario":res.items[key].unitAmount.toString(),
+                    "Descuento":res.discount.toString(),
+                    "Impuesto":'',
+                    "Subtotal":res.subtotal.toString(),
+                    "Total":res.total.toString(),
+                    "TotalMXN": (res.items[key].totalAmount).toString()
+                   }
+                  const tabla = {
+                    RFCEmisor:res.issuer.rfc,
+                    Emisor:res.issuer.name,
+                    RegimenFiscal:res.issuer.taxRegime,
+                    RFCReceptor:res.receiver.rfc,
+                    Receptor:res.receiver.name,
+                    RegimenFiscalReceptor:res.issuer.taxRegime,
+                    DomicilioFiscalReceptor:'11560',
+                    UsoCFDI:res.usage,
+                    Estatus:res.status,
+                    FechaEmision:res.issuedAt,
+                    FullDate:res.issuedAt.substring(0, 10),
+                    Subtotal:res.subtotal,
+                    Descuento:res.discount,
+                    Impuesto:res.tax,
+                    Total:res.total,
+                    UUID:res.uuid,
+                    Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                    Unidad:res.items[key] != undefined ? res.items[key].unitCode : 'LTR',
+                    Cantidad:res.items[key] != undefined ? res.items[key].quantity : '0.00',
+                    Descripcion:res.items[key] != undefined ? res.items[key].description : '',
+                    Valorunitario:res.items[key] != undefined ? res.items[key].unitAmount : '',
+                    ImporteConcepto:res.items[key] != undefined ? res.items[key].totalAmount : '',
+                    DescuentoConcepto:res.items[key] != undefined ? res.items[key].discountAmount : '',
+                    NoIdentificacion:res.items[key] != undefined ? res.items[key].identificationNumber : '',
+                    ClaveSAT:res.items[key] != undefined ? res.items[key].productIdentification : '',
+                    // ImporteImpuesto:res.items[key] != undefined ? res.tax : '',
+                    // Impuesto:res.items[key] != undefined ? res.tax : '',
+                  
+                    Moneda:res.currency,
+                    VersionCFDI:res.version,
+                    Fechacompleta:res.issuedAt.substring(0, 10),
+                    TotalMXN:(res.items[key].totalAmount)
+                  }
+                venta[indexVenta] = dataExcel
+                totalMXNVT += parseFloat(tabla.TotalMXN);
+                totalLTSVT += parseFloat(tabla.Cantidad);
+                jsonVenta[indexVenta] = tabla
+                indexVenta++
+                
+               }
+            } catch (error) {
+              console.log(error);
+            }
+            
+          }
+      }
+      if (entregaNoGeneral.CFDIs.length != 0) {
+        productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entregaNoGeneral)
+      }
+}
      }
  
  
