@@ -8,6 +8,8 @@ const pool = require('../database');
 // const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
+const BalanceController = require('../controllers/balance.controller');
+
 var corsOptions = {
   "methods": "GET,POST,DELETE,OPTIONS",
   origin: ['http://localhost:3000','http://localhost:4000','http://127.0.0.1:3000','http://127.0.0.1:4000'],
@@ -4704,7 +4706,7 @@ router.post('/mensual-natgas/:fecha', async (req, res) => {
             "ValorNumerico": 0.0,
             "UnidadDeMedida": "UM03"
         }
-    }
+      }
       let entrega = {
           "NombreClienteOProveedor": "",
           "RfcClienteOProveedor": "",
@@ -6459,6 +6461,8 @@ router.delete('/documental-equipo/:id', cors(corsOptions), async (req, res) => {
     return res.status(200).json({ success: false, error: '¡Intenta nuevamente!' });
   }
 });
+
+router.post('/balance',BalanceController.balance);
 
 function dateFormat(fecha) {
   const separar = fecha.split("-")
