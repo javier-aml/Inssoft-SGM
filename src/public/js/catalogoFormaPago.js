@@ -1,0 +1,23 @@
+const catalogoFormaPago = {
+    '01': 'Efectivo',
+    '02': 'Cheque de nómina',
+    '03': 'Transferencia electrónica',
+    '04': 'Tarjeta de crédito',
+    '05': 'Monedero electrónico',
+    '06': 'Dinero digital',
+    '08': 'Vales de despensa',
+    '12': 'Liquidación',
+    '13': 'Pago por subrogación',
+    '14': 'Pago por consignación',
+    '15': 'Condonación',
+    '17': 'Compensación',
+    '23': 'Novacion',
+    '24': 'Confusión',
+    '25': 'Envío de deuda',
+    '26': 'Prescripción o caducidad',
+    '27': 'A satisfacción del acreedor',
+    '28': 'Tarjeta de débito',
+    '29': 'Tarjeta de servicio',
+    '99': 'Por definir',
+};
+module.exports = catalogoFormaPago;
