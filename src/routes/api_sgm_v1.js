@@ -508,8 +508,10 @@ router.post('/add/task/:position/:nombre/:Fecha/:id',async function (req, res) {
 try {
   const nombre = req.params.nombre
   const position = req.params.position
-  const Fecha = req.params.Fecha
+  let Fecha = req.params.Fecha
   const id = req.params.id
+  Fecha = Fecha.split('-')
+  Fecha = `${Fecha[1]}-${Fecha[0]}-${Fecha[2]}`
   await pool.query('INSERT INTO tarea("descTarea", tarea,"Fecha", "Id_File", "Finished", "companyId", "Estado") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished}, ${companyId}, ${Estado})', {
     descTarea: nombre,
     tarea: position,
