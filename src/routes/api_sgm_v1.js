@@ -5223,6 +5223,31 @@ router.post('/mensual-natgasModificado/:fecha', async (req, res) => {
 'B1BF6D3F-751C-11ED-BA9A-3D2FDFD87BEC',
 '2633D36A-8946-11ED-8981-C5C06711E7B2',
 'E2E72D57-7CD6-11ED-9260-C14F15393A8A',
+'08ff0573-8946-11ed-9bf4-3187ebe0eb40',
+'0b059bb6-8927-11ed-b463-1560a327bdf4',
+'0e5c4f0e-8946-11ed-935b-831fad6c9b6e',
+'0f31b8a4-8927-11ed-84cb-4b4439e333aa',
+'0f8d7cc5-8946-11ed-9cfd-1f0786c65da3',
+'13f66d11-8927-11ed-a5fb-d1642edce03a',
+'1658c6fd-8927-11ed-a3c3-43dfeb2e9314',
+'18228a67-8927-11ed-a6a8-67f8b7601f22',
+'1f4998a3-8927-11ed-a4bd-2b849c173643',
+'3186fed6-8946-11ed-93d4-c54734b2f1d0',
+'34bec213-8927-11ed-8fa7-a5631bd83b50',
+'37211c51-8927-11ed-a8a7-7f01a7be4447',
+'3a1c0ccd-8927-11ed-8706-e9ca1970dbe2',
+'af9dd2b9-8953-11ed-9570-29d0898f08a4',
+'b46286f9-8953-11ed-aaeb-2f8973b5c738',
+'c0474c62-8945-11ed-9613-575f3c03a7f0',
+'c17878ff-8945-11ed-98ed-bf71c8668ce9',
+'c806f08c-8945-11ed-8fef-2558ff660dcb',
+'d2c185d4-8945-11ed-a8f7-1717042dbf88',
+'da812987-8945-11ed-a340-610d349e6d8a',
+'e371fbff-8945-11ed-9cf6-2f12d74b1de8',
+'ed35536c-6d53-4d19-92b0-20a011345c09',
+'ef0ff320-8942-11ed-9e94-554d2a57b5f5',
+'f7682da5-8942-11ed-8f15-6f8e87d66a2b',
+'ff19d90c-8926-11ed-a4b6-a7e2c2de6ebc',
 
  ]
 //  while (ApiLength > 0) {
@@ -5472,21 +5497,21 @@ router.post('/mensual-natgasModificado/:fecha', async (req, res) => {
  let indexLoopVenta = 0
 try {
   while (ApiLengthVenta > 0) {
-    // var options = {
-    //   'method': 'GET',
-    //   'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-12-31T23:59:59.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&`,
-    //   'headers': {
-    //     'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
-    //   }
-    // };
     var options = {
       'method': 'GET',
-      'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-12-31T23:59:59.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&receiver.rfc=TCA980629FC6`,
+      'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2023-01-01T06:00:00.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&`,
       'headers': {
         'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
       }
     };
-    TCA980629FC6
+    // var options = {
+    //   'method': 'GET',
+    //   'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-12-31T23:59:59.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&receiver.rfc=TCA980629FC6`,
+    //   'headers': {
+    //     'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+    //   }
+    // };
+    // TCA980629FC6
     pagIndexVenta++
     console.log(options.url);
     let fecha5;
@@ -5510,7 +5535,7 @@ try {
          const identificationNumber = res.items[0].identificationNumber
          if (identificationNumber !== null) {
            try {
-             if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true) {
+             if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
               console.log(res.receiver.rfc);
                const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
                console.log(alredyinJson);
@@ -5727,7 +5752,7 @@ try {
                const identificationNumber = res.items[key].identificationNumber
                if (identificationNumber != null) {
                  try {
-                   if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true) {
+                   if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
                      noEmpty = 1
                      let entregaCFDINoGeneral = {
                        "Cfdi": res.uuid,
@@ -6010,7 +6035,7 @@ dic.forEach(async element => {
      const identificationNumber = res.items[0].identificationNumber
      if (identificationNumber !== null) {
        try {
-         if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true) {
+         if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
           console.log(res.receiver.rfc);
            const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
            console.log(alredyinJson);
@@ -6227,7 +6252,7 @@ dic.forEach(async element => {
            const identificationNumber = res.items[key].identificationNumber
            if (identificationNumber != null) {
              try {
-               if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true) {
+               if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
                  noEmpty = 1
                  let entregaCFDINoGeneral = {
                    "Cfdi": res.uuid,
