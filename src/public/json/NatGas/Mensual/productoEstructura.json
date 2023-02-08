@@ -61,17 +61,17 @@
             "TipoComplemento": "Expendio"
           }
         ],
-        "ImporteTotalEntregasMes": 590114.33,
+        "ImporteTotalEntregasMes": 0,
         "PoderCalorifico": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 36.133
+          "ValorNumerico": 0
         },
         "SumaVolumenEntregadoMes": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 604622.53
+          "ValorNumerico": 0
         },
-        "TotalDocumentosMes": 8261,
-        "TotalEntregasMes": 43550
+        "TotalDocumentosMes": 0,
+        "TotalEntregasMes": 0
       },
       "Recepciones": {
         "Complemento": [
@@ -80,17 +80,17 @@
             "TipoComplemento": "Expendio"
           }
         ],
-        "ImporteTotalRecepcionesMensual": 4725099.26,
+        "ImporteTotalRecepcionesMensual": 0,
         "PoderCalorifico": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 36.133
+          "ValorNumerico": 0
         },
         "SumaVolumenRecepcionMes": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 597985.78
+          "ValorNumerico": 0
         },
-        "TotalDocumentosMes": 1,
-        "TotalRecepcionesMes": 30
+        "TotalDocumentosMes": 0,
+        "TotalRecepcionesMes": 0
       }
     }
   }
