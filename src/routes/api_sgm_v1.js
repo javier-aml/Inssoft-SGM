@@ -510,8 +510,8 @@ try {
   const position = req.params.position
   let Fecha = req.params.Fecha
   const id = req.params.id
-  Fecha = Fecha.split('-')
-  Fecha = `${Fecha[1]}-${Fecha[0]}-${Fecha[2]}`
+  // // Fecha = Fecha.split('-')
+  // // Fecha = `${Fecha[1]}-${Fecha[0]}-${Fecha[2]}`
   await pool.query('INSERT INTO tarea("descTarea", tarea,"Fecha", "Id_File", "Finished", "companyId", "Estado") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished}, ${companyId}, ${Estado})', {
     descTarea: nombre,
     tarea: position,
@@ -5797,7 +5797,7 @@ try {
                      // entregaCFDINoGeneral.Cfdi = res.uuid
                      // entregaCFDINoGeneral.TipoCfdi = 'Ingreso'
                      // entregaCFDINoGeneral.PrecioVentaOCompraOContrap = 
-                     // entregaCFDINoGeneral.FechaYHoraTransaccion = 
+                 // entregaCFDINoGeneral.FechaYHoraTransaccion = 
                      // entregaCFDINoGeneral.VolumenDocumentado.ValorNumerico = 
                      const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
                      console.log(alredyinJson);
@@ -6061,7 +6061,7 @@ dic.forEach(async element => {
      const identificationNumber = res.items[0].identificationNumber
      if (identificationNumber !== null) {
        try {
-         if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
+         if (identificationNumber.includes('G/11779/EXP/ES/FE/2015') == true && res.items[0].productIdentification == '15111512') {
           console.log(res.receiver.rfc);
            const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
            console.log(alredyinJson);
@@ -6278,7 +6278,7 @@ dic.forEach(async element => {
            const identificationNumber = res.items[key].identificationNumber
            if (identificationNumber != null) {
              try {
-               if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
+               if (identificationNumber.includes('G/11779/EXP/ES/FE/2015') == true && res.items[0].productIdentification == '15111512') {
                  noEmpty = 1
                  let entregaCFDINoGeneral = {
                    "Cfdi": res.uuid,
