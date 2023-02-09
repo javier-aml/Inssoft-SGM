@@ -73,7 +73,11 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
                     versionCFDI:res.version,
                     fechaCompleta:res.issuedAt.substring(0, 10),
                     totalMXN: invoiceTotalMXN.toFixed(2),
-                    tipoFactura: type == 'C' ? 'Compra' : 'Venta'
+                    tipoFactura: type == 'C' ? 'Compra' : 'Venta',
+                    inBalance: false,
+                    fechaNuevaAplicacion: '',
+                    horaNuevaAplicacion: '',
+                    jstificacionCambio: ''
                   }
 
                   acumuladoMXN += parseFloat(invoice.totalMXN);

@@ -510,8 +510,8 @@ try {
   const position = req.params.position
   let Fecha = req.params.Fecha
   const id = req.params.id
-  // Fecha = Fecha.split('-')
-  // Fecha = `${Fecha[1]}-${Fecha[0]}-${Fecha[2]}`
+  // // Fecha = Fecha.split('-')
+  // // Fecha = `${Fecha[1]}-${Fecha[0]}-${Fecha[2]}`
   await pool.query('INSERT INTO tarea("descTarea", tarea,"Fecha", "Id_File", "Finished", "companyId", "Estado") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished}, ${companyId}, ${Estado})', {
     descTarea: nombre,
     tarea: position,
