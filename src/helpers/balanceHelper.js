@@ -9,7 +9,7 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
         let acumuladoMXN = 0;
         let acumuladoLTS = 0;
 
-        while (length > 0) {
+        while (length < 4) {
             const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
                 ${fechaFin}T06:00:00.000Z&issuedAt[after]=
                 ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=
@@ -91,7 +91,8 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
             }//for
 
             pageIndexCompra++;
-            length = invoices.length
+            //length = invoices.length
+            length++
         }
         return {allInvoices, acumuladoMXN, acumuladoLTS}
     } catch(error){

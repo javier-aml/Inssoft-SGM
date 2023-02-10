@@ -9,7 +9,7 @@ class BalanceController {
       let { tipoBalance, fechaDesde, fechaHasta, rfc } = req.body;
       
       if(tipoBalance == 'Diario'){
-        const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+        const tomorrow = moment(fechaDesde).add(1, 'days').format('YYYY-MM-DD');
         fechaHasta = tomorrow;
       }
 
