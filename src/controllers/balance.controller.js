@@ -13,8 +13,8 @@ class BalanceController {
         fechaHasta = tomorrow;
       }
 
-      const invoicesCompra = await balanceHelper.getInvoices(rfc,fechaDesde,fechaHasta,'C');
-      const invoicesVenta = await balanceHelper.getInvoices(rfc,fechaDesde,fechaHasta,'V');
+      const invoicesCompra = await balanceHelper.getInvoices('GEM161104H39',fechaDesde,fechaHasta,'C');
+      const invoicesVenta = await balanceHelper.getInvoices('GEM161104H39',fechaDesde,fechaHasta,'V');
 
       const diferenciaMXN = (invoicesCompra.acumuladoMXN - invoicesVenta.acumuladoMXN).toFixed(2)
       const diferenciaLTS = (invoicesCompra.acumuladoLTS - invoicesVenta.acumuladoLTS).toFixed(2)
