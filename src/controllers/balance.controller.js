@@ -9,12 +9,12 @@ class BalanceController {
       let { tipoBalance, fechaDesde, fechaHasta, rfc } = req.body;
       
       if(tipoBalance == 'Diario'){
-        const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+        const tomorrow = moment(fechaDesde).add(1, 'days').format('YYYY-MM-DD');
         fechaHasta = tomorrow;
       }
 
-      const invoicesCompra = await balanceHelper.getInvoices(rfc,fechaDesde,fechaHasta,'C');
-      const invoicesVenta = await balanceHelper.getInvoices(rfc,fechaDesde,fechaHasta,'V');
+      const invoicesCompra = await balanceHelper.getInvoices('GEM161104H39',fechaDesde,fechaHasta,'C');
+      const invoicesVenta = await balanceHelper.getInvoices('GEM161104H39',fechaDesde,fechaHasta,'V');
 
       const diferenciaMXN = (invoicesCompra.acumuladoMXN - invoicesVenta.acumuladoMXN).toFixed(2)
       const diferenciaLTS = (invoicesCompra.acumuladoLTS - invoicesVenta.acumuladoLTS).toFixed(2)

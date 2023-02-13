@@ -741,6 +741,18 @@ router.get('/Task/:id',async (req,res) => {
     res.send(error)
   }
 })
+router.get('/Taskprueba',async (req,res) => {
+  try {
+    const id = req.params.id
+     const Tasks = await pool.query('SELECT * FROM tarea WHERE "Estado"= 0;')
+     console.log(Tasks);
+     const fechas = codigoFecha(Tasks);
+    return  res.send(Tasks)
+  } catch (error) {
+    console.log(error);
+     return res.send(error)
+  }
+})
 router.post('/Estructura_natgas',async (req,res) => {
   try {
      dirRoot = await arbolArchivosNatgas()
@@ -7232,6 +7244,8 @@ function codigoFecha(data) {
   datoFecha["urgente"] = {};
   datoFecha["noUrgente"] = {};
   datoFecha["retraso"] = {};
+  datoFecha["realizada"] = {};
+  
   // proveedor = proveedor.toLocaleLowerCase();
     for (const key in data) {
         var dateObj = new Date();
