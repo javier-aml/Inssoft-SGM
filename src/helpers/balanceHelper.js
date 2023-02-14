@@ -64,6 +64,7 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
                     folio: res.internalIdentifier,
                     tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
                     unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                    claveUnidad: res.items[0] != undefined ? res.items[0].unitCode : 'Litros',
                     cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
                     descripcion:res.items[0] != undefined ? res.items[0].description : '',
                     valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
