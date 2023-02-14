@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
     let allInvoices = [];
 
@@ -58,8 +60,11 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
                     impuesto:res.tax,
                     total:res.total,
                     uuid:res.uuid,
+                    serie: res.reference,
+                    folio: res.internalIdentifier,
                     tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
                     unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                    claveUnidad: res.items[0] != undefined ? res.items[0].unitCode : 'Litros',
                     cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
                     descripcion:res.items[0] != undefined ? res.items[0].description : '',
                     valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
@@ -70,6 +75,7 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
                     importeImpuesto:res.items[0] != undefined ? res.tax : '',
                     impuesto:res.items[0] != undefined ? res.tax : '',
                     moneda:res.currency,
+                    exchangeRate: res.currency == 'MXN' ? 1 : res.exchangeRate,
                     versionCFDI:res.version,
                     fechaCompleta:res.issuedAt.substring(0, 10),
                     totalMXN: invoiceTotalMXN.toFixed(2),
@@ -77,7 +83,7 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
                     inBalance: true,
                     fechaNuevaAplicacion: '',
                     horaNuevaAplicacion: '',
-                    jstificacionCambio: ''
+                    justificacionCambio: ''
                   }
 
                   acumuladoMXN += parseFloat(invoice.totalMXN);
@@ -99,353 +105,147 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
         console.log(error)
         return [];
     }
-}//encryptPassword
+}//getInvoices
 
-/*example('/MensualGlencore/:fecha', async (req, res) => {
+module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
 
-  
-  var pagIndexCompra = 1
-  var pagIndexVenta = 1
-  const compra = []
-  const venta = []
- 
-  
-  var request = require('request');
-  // let temp;2022-10-25
-  
-  let fecha = req.params.fecha
-  const fechasplit = fecha.split("-")
-  if (fechasplit[1].length == 1) {
-  
-    fecha = `${fechasplit[0]}-0${fechasplit[1]}`
-  }
-  
-  
-  let tabla
-  let totalMXNC
-  let totalLTSC
-  let fecha2 =fecha
-  var pagIndexCompra =1
-  let TotalMXN = 0.00;
-  let TotalLTS = 0.00;
-  let ApiLength= 10
-  let indexCompra = 0;
-  const jsonCompra = {}
-  while (ApiLength > 0 && fecha2.indexOf(fecha) != -1) {
-  console.log(fecha2.indexOf(fecha) != -1);
-      var options = {
-        'method': 'post',
-        'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
-        'headers': {
-          'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
-        }
-      };
-      pagIndexCompra++
-  
-      let fecha3;
-      
-    //15101505 == DISEL 
-    //15101514 == 87 OCTANOS
-    //15101515 == 91 OCTANOS
-    
-      await request(options, function (error, response) {
-        if (error) throw new Error(error);
-    
-        let temp = JSON.parse(response.body);
-        temp = temp['hydra:member']
-        ApiLength = temp.length
-  
-        for (const key in temp) {
-          const res = temp[key]
-          
-          if (res.items[0] != undefined ) {
-            if (res.items[0].unitCode == 'LTR') {
-              
-              if (res.currency == 'MXN') {
-                if (res.issuer.rfc == 'PTI151101TE5') {
-                  
-                  const tabla = {
-                    RFCEmisor:res.issuer.rfc,
-                    Emisor:res.issuer.name,
-                    RegimenFiscal:res.issuer.taxRegime,
-                    RFCReceptor:res.receiver.rfc,
-                    Receptor:res.receiver.name,
-                    RegimenFiscalReceptor:res.issuer.taxRegime,
-                    DomicilioFiscalReceptor:'11560',
-                    UsoCFDI:res.usage,
-                    Estatus:res.status,
-                    FechaEmision:res.issuedAt,
-                    FullDate:res.issuedAt.substring(0, 10),
-                    Subtotal:res.subtotal,
-                    Descuento:res.discount,
-                    Impuesto:res.tax,
-                    Total:res.total,
-                    UUID:res.uuid,
-                    Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                    Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                    Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                    Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                    Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                    ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                    DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                    NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                    ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                    ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                    Impuesto:res.items[0] != undefined ? res.tax : '',
-                    Moneda:res.currency,
-                    VersionCFDI:res.version,
-                    Fechacompleta:res.issuedAt.substring(0, 10),
-                    TotalMXN:(res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
-                  }
-                TotalMXN += parseFloat(tabla.TotalMXN);
-            
-                TotalLTS += parseFloat(tabla.Cantidad);
-                jsonCompra[indexCompra] = tabla
-                compra[indexCompra] = dataExcel
-                indexCompra++
-                } else {
-                
-                  const tabla = {
-                    RFCEmisor:res.issuer.rfc,
-                    Emisor:res.issuer.name,
-                    RegimenFiscal:res.issuer.taxRegime,
-                    RFCReceptor:res.receiver.rfc,
-                    Receptor:res.receiver.name,
-                    RegimenFiscalReceptor:res.issuer.taxRegime,
-                    DomicilioFiscalReceptor:'11560',
-                    UsoCFDI:res.usage,
-                    Estatus:res.status,
-                    FechaEmision:res.issuedAt,
-                    FullDate:res.issuedAt.substring(0, 10),
-                    Subtotal:res.subtotal,
-                    Descuento:res.discount,
-                    Impuesto:res.tax,
-                    Total:res.total,
-                    UUID:res.uuid,
-                    Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                    Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                    Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                    Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                    Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                    ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                    DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                    NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                    ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                    ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                    Impuesto:res.items[0] != undefined ? res.tax : '',
-                    Moneda:res.currency,
-                    VersionCFDI:res.version,
-                    Fechacompleta:res.issuedAt.substring(0, 10),
-                    TotalMXN:(res.items[0].totalAmount)
-                  }
-                  // if (fecha3!=fecha) {
-                  //   break;
-                  // }
-                   TotalMXN += parseFloat(tabla.TotalMXN);
-              
-                   TotalLTS += parseFloat(tabla.Cantidad);
-                   jsonCompra[indexCompra] = tabla
-                   compra[indexCompra] = dataExcel
-                   indexCompra++
-                }
-              } else {
-               
-                const tabla = {
-                  RFCEmisor:res.issuer.rfc,
-                  Emisor:res.issuer.name,
-                  RegimenFiscal:res.issuer.taxRegime,
-                  RFCReceptor:res.receiver.rfc,
-                  Receptor:res.receiver.name,
-                  RegimenFiscalReceptor:res.issuer.taxRegime,
-                  DomicilioFiscalReceptor:'11560',
-                  UsoCFDI:res.usage,
-                  Estatus:res.status,
-                  FechaEmision:res.issuedAt,
-                  FullDate:res.issuedAt.substring(0, 10),
-                  Subtotal:res.subtotal,
-                  Descuento:res.discount,
-                  Impuesto:res.tax,
-                  Total:res.total,
-                  UUID:res.uuid,
-                  Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                  Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                  Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                  Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                  Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                  ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                  DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                  NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                  ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                  ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                  Impuesto:res.items[0] != undefined ? res.tax : '',
-                  Moneda:res.currency,
-                  VersionCFDI:res.version,
-                  Fechacompleta:res.issuedAt.substring(0, 10),
-                  TotalMXN:(res.items[0].totalAmount * res.exchangeRate)
-                }
-               
-                 TotalMXN += parseFloat(tabla.TotalMXN);
-            
-                 TotalLTS += parseFloat(tabla.Cantidad);
-                 jsonCompra[indexCompra] = tabla
-                 indexCompra++
-              }
-            }
-  
-          }
-        }//for
-  
+  let allInvoices = [];
+  let datosInvoices = [];
+  let acumuladoMXN = 0;
+  let acumuladoLTS = 0;
+
+  try{
+    let pageIndexCompra = 1
+
+
+    const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
+
+    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
+                  ${fechaFin}T06:00:00.000Z&issuedAt[after]=
+                  ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=
+                  ${pageIndexCompra}&itemsPerPage=1000&type=I`;
+
+    const firstPromise = axios({ 
+      method: 'get', 
+      url: url, 
+      headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
     });
-  }
 
-//End While compra
-     tabla = jsonCompra
-     totalMXNC = TotalMXN
-     totalLTSC = TotalLTS
-  
-     let tablaVenta
-  let totalMXNVT = 0.0
-  let totalLTSVT = 0.0
-  let totalMXNV= 0.0
-  let totalLTSV= 0.0
-  
-  var pagIndexVenta =1
-  
-  let ApiLengthVenta= 10
-  let indexVenta = 0;
-  const jsonVenta = {}
-  
-  ///venta
-  let fecha4 = fecha;
-  while (ApiLengthVenta > 0 && fecha4.indexOf(fecha) != -1) {
-  
-  var options = {
-    'method': 'GET',
-    'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
-    'headers': {
-      'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
-    }
-  };
-  pagIndexVenta++
-  
-  let fecha5;
-  
-  await request(options, function (error, response) {
-    if (error) throw new Error(error);
-  
-  
-    let temp = JSON.parse(response.body);
-    temp = temp['hydra:member']
-    console.log("@@@@@@@@@@@");
-    ApiLengthVenta = temp.length
-    for (const key in temp) {
-      const res = temp[key]
-  
-      fecha5 = res.issuedAt.substring(0, 10)
-      fecha4 = fecha5
-      console.log(fecha5);
-  
+
+    await Promise.all([firstPromise]).then(async (response) => {
+      const datos =  response[0].data;
+
+      const lastView = datos['hydra:view']['hydra:last'];
+      const lastViewParts = lastView.split("=");
+      const totalPages = lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const invoices = datos['hydra:member']
+      allInvoices = [...allInvoices,...invoices];
+      const promises = [];
+
+      console.log("Total pages = " + totalPages + " items = " + datos['hydra:totalItems']);
+
+      for(let i = 2; i <= totalPages; i++){
+
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
+                    ${fechaFin}T06:00:00.000Z&issuedAt[after]=
+                    ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=
+                    ${i}&itemsPerPage=1000&type=I`;
+
+        const promise =  axios({ 
+          method: 'get', 
+          url: url, 
+          headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+        });
+
+        promises.push(promise);
+      } 
+
+      await Promise.all(promises).then(function (response) {
+        console.log("RESPONSE__")
+        
+        for(const key in response){
+          const datos = response[key];
+          const invoices = datos.data['hydra:member']
+
+          allInvoices = [...allInvoices,...invoices];
+
+        }   
+      }); 
+    });
+
+    for (const key in allInvoices) {
+      const res = allInvoices[key]
+      
       if (res.items[0] != undefined ) {
         if (res.items[0].unitCode == 'LTR') {
-          if (res.currency == 'MXN') {
-            
-              const tabla = {
-                RFCEmisor:res.issuer.rfc,
-                Emisor:res.issuer.name,
-                RegimenFiscal:res.issuer.taxRegime,
-                RFCReceptor:res.receiver.rfc,
-                Receptor:res.receiver.name,
-                RegimenFiscalReceptor:res.issuer.taxRegime,
-                DomicilioFiscalReceptor:'11560',
-                UsoCFDI:res.usage,
-                Estatus:res.status,
-                FechaEmision:res.issuedAt,
-                FullDate:res.issuedAt.substring(0, 10),
-                Subtotal:res.subtotal,
-                Descuento:res.discount,
-                Impuesto:res.tax,
-                Total:res.total,
-                UUID:res.uuid,
-                Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                Impuesto:res.items[0] != undefined ? res.tax : '',
-                Moneda:res.currency,
-                VersionCFDI:res.version,
-                Fechacompleta:res.issuedAt.substring(0, 10),
-                TotalMXN:(res.items[0].totalAmount)
-              }
-             
-               venta[indexVenta] = dataExcel
-               totalMXNVT += parseFloat(tabla.TotalMXN);
-               totalLTSVT += parseFloat(tabla.Cantidad);
-               jsonVenta[indexVenta] = tabla
-                indexVenta++
-  
-          } else {
-             
-              const tabla = {
-                RFCEmisor:res.issuer.rfc,
-                Emisor:res.issuer.name,
-                RegimenFiscal:res.issuer.taxRegime,
-                RFCReceptor:res.receiver.rfc,
-                Receptor:res.receiver.name,
-                RegimenFiscalReceptor:res.issuer.taxRegime,
-                DomicilioFiscalReceptor:'11560',
-                UsoCFDI:res.usage,
-                Estatus:res.status,
-                FechaEmision:res.issuedAt,
-                FullDate:res.issuedAt.substring(0, 10),
-                Subtotal:res.subtotal,
-                Descuento:res.discount,
-                Impuesto:res.tax,
-                Total:res.total,
-                UUID:res.uuid,
-                Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                Impuesto:res.items[0] != undefined ? res.tax : '',
-                Moneda:res.currency,
-                VersionCFDI:res.version,
-                Fechacompleta:res.issuedAt.substring(0, 10),
-                TotalMXN:(res.total * res.exchangeRate)
-              }
-              
-               venta[indexVenta] = dataExcel
-               totalMXNVT += parseFloat(tabla.TotalMXN);
-               totalLTSVT += parseFloat(tabla.Cantidad);
-               jsonVenta[indexVenta] = tabla
-                indexVenta++
+          let invoiceTotalMXN = 0;
+          if(res.currency == 'MXN'){
+            invoiceTotalMXN = res.issuer.rfc == 'PTI151101TE5' ? 
+            (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) : 
+            res.items[0].totalAmount
           }
-        }
-      }
-    }
-  });// await request
-  
-  }
- 
-  tablaVenta = jsonVenta
-  totalMXNV = totalMXNVT
-  totalLTSV = totalLTSVT
-  
-  const diferenciaMXN = (totalMXNC - totalMXNV).toFixed(2)
-  const diferenciaLTS = (totalLTSC - totalLTSV).toFixed(2)
+          else
+          {
+            invoiceTotalMXN = (res.items[0].totalAmount * res.exchangeRate)
+          }
 
-  res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS});
+          const invoice = {
+            rfcEmisor:res.issuer.rfc,
+            emisor:res.issuer.name,
+            regimenFiscal:res.issuer.taxRegime,
+            rfcReceptor:res.receiver.rfc,
+            receptor:res.receiver.name,
+            regimenFiscalReceptor:res.issuer.taxRegime,
+            domicilioFiscalReceptor:'11560',
+            usoCFDI:res.usage,
+            estatus:res.status,
+            fechaEmision:res.issuedAt,
+            subtotal:res.subtotal,
+            descuento:res.discount,
+            impuesto:res.tax,
+            total:res.total,
+            uuid:res.uuid,
+            serie: res.reference,
+            folio: res.internalIdentifier,
+            tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+            unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+            claveUnidad: res.items[0] != undefined ? res.items[0].unitCode : 'Litros',
+            cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+            descripcion:res.items[0] != undefined ? res.items[0].description : '',
+            valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+            importeConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+            descuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+            noIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+            claveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+            importeImpuesto:res.items[0] != undefined ? res.tax : '',
+            impuesto:res.items[0] != undefined ? res.tax : '',
+            moneda:res.currency,
+            exchangeRate: res.currency == 'MXN' ? 1 : res.exchangeRate,
+            versionCFDI:res.version,
+            fechaCompleta:res.issuedAt.substring(0, 10),
+            totalMXN: invoiceTotalMXN.toFixed(2),
+            tipoFactura: type == 'C' ? 'Compra' : 'Venta',
+            inBalance: true,
+            fechaNuevaAplicacion: '',
+            horaNuevaAplicacion: '',
+            justificacionCambio: ''
+          }
+
+          acumuladoMXN += parseFloat(invoice.totalMXN);
+          acumuladoLTS += parseFloat(invoice.cantidad);
+          datosInvoices.push(invoice)
+          
+        }//if unitcode == LTR
+
+      }//if items != undefined
+      
+    }//for
+
+    return {allInvoices: datosInvoices, acumuladoMXN, acumuladoLTS}
   
-  
-  });*/
+  } catch(error){
+    console.log(error)
+    return {allInvoices: datosInvoices, acumuladoMXN, acumuladoLTS}
+  }
+
+}//getInvoice
