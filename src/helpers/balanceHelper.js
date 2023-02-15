@@ -64,7 +64,7 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
                     folio: res.internalIdentifier,
                     tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
                     unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                    claveUnidad: res.items[0] != undefined ? res.items[0].unitCode : 'Litros',
+                    claveUnidad: res.items[0] != undefined && res.items[0].unitCode == 'LTR' ? 'Litros' : res.items[0].unitCode,
                     cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
                     descripcion:res.items[0] != undefined ? res.items[0].description : '',
                     valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
@@ -136,7 +136,7 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
       const datos =  response[0].data;
 
       const lastView = datos['hydra:view']['hydra:last'];
-      const lastViewParts = lastView.split("=");
+      const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
       const totalPages = lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
       const invoices = datos['hydra:member']
       allInvoices = [...allInvoices,...invoices];
@@ -144,7 +144,7 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
 
       console.log("Total pages = " + totalPages + " items = " + datos['hydra:totalItems']);
 
-      for(let i = 2; i <= totalPages; i++){
+      /*for(let i = 2; i <= totalPages; i++){
 
         const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
                     ${fechaFin}T06:00:00.000Z&issuedAt[after]=
@@ -170,7 +170,7 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
           allInvoices = [...allInvoices,...invoices];
 
         }   
-      }); 
+      }); */
     });
 
     for (const key in allInvoices) {
@@ -209,7 +209,7 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
             folio: res.internalIdentifier,
             tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
             unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-            claveUnidad: res.items[0] != undefined ? res.items[0].unitCode : 'Litros',
+            claveUnidad: res.items[0] != undefined && res.items[0].unitCode == 'LTR' ? 'Litros' : res.items[0].unitCode,
             cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
             descripcion:res.items[0] != undefined ? res.items[0].description : '',
             valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
