@@ -110,9 +110,6 @@ module.exports.getInvoices = async (rfc, fechaInicio, fechaFin, type = 'C') => {
 module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
 
   let allInvoices = [];
-  let datosInvoices = [];
-  let acumuladoMXN = 0;
-  let acumuladoLTS = 0;
 
   try{
     let pageIndexCompra = 1
@@ -142,9 +139,7 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
       allInvoices = [...allInvoices,...invoices];
       const promises = [];
 
-      console.log("Total pages = " + totalPages + " items = " + datos['hydra:totalItems']);
-
-      /*for(let i = 2; i <= totalPages; i++){
+      for(let i = 2; i <= totalPages; i++){
 
         const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
                     ${fechaFin}T06:00:00.000Z&issuedAt[after]=
@@ -161,7 +156,6 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
       } 
 
       await Promise.all(promises).then(function (response) {
-        console.log("RESPONSE__")
         
         for(const key in response){
           const datos = response[key];
@@ -170,82 +164,87 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
           allInvoices = [...allInvoices,...invoices];
 
         }   
-      }); */
+      });
     });
 
-    for (const key in allInvoices) {
-      const res = allInvoices[key]
-      
-      if (res.items[0] != undefined ) {
-        if (res.items[0].unitCode == 'LTR') {
-          let invoiceTotalMXN = 0;
-          if(res.currency == 'MXN'){
-            invoiceTotalMXN = res.issuer.rfc == 'PTI151101TE5' ? 
-            (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) : 
-            res.items[0].totalAmount
-          }
-          else
-          {
-            invoiceTotalMXN = (res.items[0].totalAmount * res.exchangeRate)
-          }
-
-          const invoice = {
-            rfcEmisor:res.issuer.rfc,
-            emisor:res.issuer.name,
-            regimenFiscal:res.issuer.taxRegime,
-            rfcReceptor:res.receiver.rfc,
-            receptor:res.receiver.name,
-            regimenFiscalReceptor:res.issuer.taxRegime,
-            domicilioFiscalReceptor:'11560',
-            usoCFDI:res.usage,
-            estatus:res.status,
-            fechaEmision:res.issuedAt,
-            subtotal:res.subtotal,
-            descuento:res.discount,
-            impuesto:res.tax,
-            total:res.total,
-            uuid:res.uuid,
-            serie: res.reference,
-            folio: res.internalIdentifier,
-            tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-            unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-            claveUnidad: res.items[0] != undefined && res.items[0].unitCode == 'LTR' ? 'Litros' : res.items[0].unitCode,
-            cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-            descripcion:res.items[0] != undefined ? res.items[0].description : '',
-            valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-            importeConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-            descuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-            noIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-            claveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-            importeImpuesto:res.items[0] != undefined ? res.tax : '',
-            impuesto:res.items[0] != undefined ? res.tax : '',
-            moneda:res.currency,
-            exchangeRate: res.currency == 'MXN' ? 1 : res.exchangeRate,
-            versionCFDI:res.version,
-            fechaCompleta:res.issuedAt.substring(0, 10),
-            totalMXN: invoiceTotalMXN.toFixed(2),
-            tipoFactura: type == 'C' ? 'Compra' : 'Venta',
-            inBalance: true,
-            fechaNuevaAplicacion: '',
-            horaNuevaAplicacion: '',
-            justificacionCambio: ''
-          }
-
-          acumuladoMXN += parseFloat(invoice.totalMXN);
-          acumuladoLTS += parseFloat(invoice.cantidad);
-          datosInvoices.push(invoice)
-          
-        }//if unitcode == LTR
-
-      }//if items != undefined
-      
-    }//for
-
-    return {allInvoices: datosInvoices, acumuladoMXN, acumuladoLTS}
-  
+    return allInvoices;
   } catch(error){
     console.log(error)
-    return {allInvoices: datosInvoices, acumuladoMXN, acumuladoLTS}
+    return allInvoices;
   }
 
 }//getInvoice
+
+module.exports.validationsGlencore = (invoices, type) => {
+  let allInvoices = [];
+  let acumuladoMXN = 0;
+  let acumuladoLTS = 0;
+
+  for (const key in invoices) {
+    const res = invoices[key]
+    
+    if (res.items[0] != undefined ) {
+      if (res.items[0].unitCode == 'LTR') {
+        let invoiceTotalMXN = 0;
+        if(res.currency == 'MXN'){
+          invoiceTotalMXN = res.issuer.rfc == 'PTI151101TE5' ? 
+          (res.items[0].discountAmount-res.tax+res.items[0].totalAmount) : 
+          res.items[0].totalAmount
+        }
+        else
+        {
+          invoiceTotalMXN = (res.items[0].totalAmount * res.exchangeRate)
+        }
+
+        const invoice = {
+          rfcEmisor:res.issuer.rfc,
+          emisor:res.issuer.name,
+          regimenFiscal:res.issuer.taxRegime,
+          rfcReceptor:res.receiver.rfc,
+          receptor:res.receiver.name,
+          regimenFiscalReceptor:res.issuer.taxRegime,
+          domicilioFiscalReceptor:'11560',
+          usoCFDI:res.usage,
+          estatus:res.status,
+          fechaEmision:res.issuedAt,
+          subtotal:res.subtotal,
+          descuento:res.discount,
+          impuesto:res.tax,
+          total:res.total,
+          uuid:res.uuid,
+          serie: res.reference,
+          folio: res.internalIdentifier,
+          tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+          unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+          claveUnidad: res.items[0] != undefined && res.items[0].unitCode == 'LTR' ? 'Litros' : res.items[0].unitCode,
+          cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+          descripcion:res.items[0] != undefined ? res.items[0].description : '',
+          valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+          importeConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+          descuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+          noIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+          claveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+          importeImpuesto:res.items[0] != undefined ? res.tax : '',
+          impuesto:res.items[0] != undefined ? res.tax : '',
+          moneda:res.currency,
+          exchangeRate: res.currency == 'MXN' ? 1 : res.exchangeRate,
+          versionCFDI:res.version,
+          fechaCompleta:res.issuedAt.substring(0, 10),
+          totalMXN: invoiceTotalMXN.toFixed(2),
+          tipoFactura: type == 'C' ? 'Compra' : 'Venta',
+          inBalance: true,
+          fechaNuevaAplicacion: '',
+          horaNuevaAplicacion: '',
+          justificacionCambio: ''
+        }
+
+        acumuladoMXN += parseFloat(invoice.totalMXN);
+        acumuladoLTS += parseFloat(invoice.cantidad);
+        allInvoices.push(invoice)
+        
+      }//if unitcode == LTR
+    }//if items != undefined
+  }//for
+
+  return {allInvoices, acumuladoMXN, acumuladoLTS}
+}//validationsGlencore
