@@ -9,6 +9,7 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 const BalanceController = require('../controllers/balance.controller');
+const moment = require('moment');
 
 var corsOptions = {
   "methods": "GET,POST,DELETE,OPTIONS",
@@ -6563,29 +6564,30 @@ dic.forEach(async element => {
  
  
 });
-router.post('/calendar', async (req,res) =>{
-  // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
-  let index = 0
-  // console.log(data);
-  let eventos = [];
+router.get('/calendar', async (req,res) =>{
+  try{
+    const id = req.params.id
+      const data = await pool.query('SELECT tarea,"descTarea" , "Fecha", id FROM schtelemetria.tarea WHERE "Estado" = 1');
+      let index = 0
+      let eventos = [];
+      console.log(data)
   for (const key in data) {
-    const split = data[key].date.split("T")
-    const fecha2 = acomodarFecha(split[0]);
-    const fecha = dateFormat(fecha2);
     const event = {
       id: index, //Event's ID (required)
-       name: `${data[key].tarea}`, //Event name (required)
-      date: fecha, //Event date (required)
+       title: `${data[key].tarea} ${data[key].descTarea}`, //Event name (required)
+      date: moment(data[key].Fecha).format('YYYY-MM-DD'), //Event date (required)
        description: data[key].descTarea, //Event description (optional)
-      type: "event",
-      color: "#63d867"// Event custom color (optional)
 
     }
     eventos.push(event)
     index++
   }
-  res.send(eventos)
+  return res.send(eventos)
 
+  } catch (error){
+  console.log(error);
+  return res.send(error)
+}
 });
 
 
