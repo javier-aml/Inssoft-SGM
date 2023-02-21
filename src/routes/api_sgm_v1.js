@@ -172,6 +172,49 @@ router.post('/api/uploadPDF', uploadNatgas.single('upl'),async function (req, re
   }
 });
 
+// FETCHES HTML CUSTOMER SGM FORMATS
+router.get('/api/getFormats/:companyId/:fileName', async function(req, res){
+  try{
+    const companyId = req.params.companyId
+    let fileName = req.params.fileName
+
+    const fileExtSql = `
+      SELECT ext
+      FROM schtelemetria.estructura_archivos
+      WHERE "companyId" = ${companyId}
+      AND "fileName" = '${fileName}'
+      FETCH FIRST 1 ROWS ONLY;    
+    `
+    // VALIDATES THAT THE FILE EXISTS IN THE DB
+    let fileExt = await pool.any(fileExtSql)
+
+    if(!fileExt.length) throw new Error('Database resouce not found')
+    
+    fileExt = fileExt[0].ext
+
+    // SELECTS THE FILE REPOSITORY
+    let filePath = [
+      {id:1, path:'natgas'},
+      {id:2, path:'tomza'},
+      {id:3, path:'kansas'},
+      {id:4, path:'togo'}
+    ].find((item) => item.id === +companyId)
+
+    filePath = filePath ? filePath.path : null
+
+    if(!filePath) throw new Error('File path not found')
+
+    filePath = `../public/formatos-sgm/${filePath}/${fileName}.${fileExt}`
+
+    // VALIDATES THAT THE FILE EXISTS
+    if(!fs.existsSync(path.join(__dirname, filePath))) throw new Error('File not found')  
+
+    res.sendFile(path.join(__dirname, filePath))
+  } catch (error){
+    res.send(new Error(error))
+  }
+})
+
 router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async function (req, res) {
   try {
     console.log(req.file);
