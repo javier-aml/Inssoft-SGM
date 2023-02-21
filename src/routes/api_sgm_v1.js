@@ -7062,6 +7062,10 @@ router.delete('/documental-equipo/:id', cors(corsOptions), async (req, res) => {
 
 router.post('/balance',BalanceController.balance);
 
+//router.post('/balance-pagination',BalanceController.balancePagination);
+
+router.get('/createBalanceJSON',BalanceController.createBalanceJSON);
+
 function dateFormat(fecha) {
   const separar = fecha.split("-")
   let fechaformat = ""
