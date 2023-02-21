@@ -9,6 +9,7 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 const BalanceController = require('../controllers/balance.controller');
+const moment = require('moment');
 
 var corsOptions = {
   "methods": "GET,POST,DELETE,OPTIONS",
@@ -5526,11 +5527,15 @@ try {
     // };
     // TCA980629FC6
     pagIndexVenta++
-    console.log(options.url);
+    // console.log(options.url);
     let fecha5;
     
     await request(options, function (error, response) {
+      if (error) {
+        res.send(response)
+      }
       if (error) throw new Error(error);
+      console.log(options);
       let temp = JSON.parse(response.body);
       temp = temp['hydra:member']
       console.log("@@@@@@@@@@@");
@@ -5684,11 +5689,11 @@ try {
                   'Fecha': res.issuedAt,	
                   'NombreEmisor': res.issuer.name,	
                   'RfcEmisor': res.issuer.rfc,	
-                  'NombreReceptor': res.res.receiver.name,	
-                  'RfcReceptor': res.res.receiver.rfc,	
+                  'NombreReceptor': res.receiver.name,	
+                  'RfcReceptor': res.receiver.rfc,	
                   'ClaveProdServ': res.items[0].productIdentification,	
                   'NoIdentificacion': res.items[0].identificationNumber,	
-                  'EDS': PRZ,	
+                  'EDS': 'PRZ',	
                   'Descripcion': res.items[0].description,	
                   'Unidad': res.items[0].unitAmount,	
                   'ClaveUnidad': res.items[0].unitCode,	
@@ -5895,11 +5900,11 @@ try {
                         'Fecha': res.issuedAt,	
                         'NombreEmisor': res.issuer.name,	
                         'RfcEmisor': res.issuer.rfc,	
-                        'NombreReceptor': res.res.receiver.name,	
-                        'RfcReceptor': res.res.receiver.rfc,	
+                        'NombreReceptor': res.receiver.name,	
+                        'RfcReceptor': res.receiver.rfc,	
                         'ClaveProdServ': res.items[key].productIdentification,	
                         'NoIdentificacion': res.items[key].identificationNumber,	
-                        'EDS': PRZ,	
+                        'EDS': 'PRZ',	
                         'Descripcion': res.items[key].description,	
                         'Unidad': res.items[key].unitAmount,	
                         'ClaveUnidad': res.items[key].unitCode,	
@@ -6073,7 +6078,7 @@ dic.forEach(async element => {
      const identificationNumber = res.items[0].identificationNumber
      if (identificationNumber !== null) {
        try {
-         if (identificationNumber.includes('G/11779/EXP/ES/FE/2015') == true && res.items[0].productIdentification == '15111512') {
+         if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
           console.log(res.receiver.rfc);
            const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
            console.log(alredyinJson);
@@ -6201,31 +6206,30 @@ dic.forEach(async element => {
                  break;
              }
              const dataExcel = {
-               "UUID":res.uuid,
-               "RFC Emisor":res.issuer.rfc,
-               "Nombre del Emisor":res.issuer.name,
-               "RFC Receptor":res.receiver.rfc,
-               "Nombre del Receptor":res.receiver.name,
-               "Tipo":res.type == 'I' ? 'Ingreso':'',
-               "Estatus":res.status,
-               "PAC":res.pac,
-               "Moneda":res.currency,
-               "Fecha de Certificación":res.certifiedAt,
-               "Método de Pago":metodoPago,
-               "Fecha de Emisión":res.issuedAt,
-               "Condiciones de pago (original)":res.paymentTermsRaw,
-               "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
-               "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
-               "Descripción":res.items[0].description,
-               "Cantidad":res.items[0].quantity.toString(),
-               "Clave de unidad":res.items[0].unitCode,
-               "Valor unitario":res.items[0].unitAmount.toString(),
-               "Descuento":res.discount.toString(),
-               "Impuesto":'',
-               "Subtotal":res.subtotal.toString(),
-               "Total":res.total.toString(),
-               "TotalMXN": (res.items[0].totalAmount).toString()
-              }
+              'EstadoSAT': res.status,	
+              'UUID': res.uuid,	
+              'Serie': res.reference,	//reference
+              'Folio': res.internalIdentifier,	
+              'Fecha': res.issuedAt,	
+              'NombreEmisor': res.issuer.name,	
+              'RfcEmisor': res.issuer.rfc,	
+              'NombreReceptor': res.receiver.name,	
+              'RfcReceptor': res.receiver.rfc,	
+              'ClaveProdServ': res.items[0].productIdentification,	
+              'NoIdentificacion': res.items[0].identificationNumber,	
+              'EDS': 'PRZ',	
+              'Descripcion': res.items[0].description,	
+              'Unidad': res.items[0].unitAmount,	
+              'ClaveUnidad': res.items[0].unitCode,	
+              'Cantidad': res.items[0].quantity,	
+              'PrecioUnitario': res.items[0].unitAmount,	
+              'Importe': res.items[0].quantity * res.items[0].unitAmount,	
+              'Descuento': res.items[0].discountAmount,	
+              'TipoCambio': 1,
+              'Moneda': res.currency,	
+              'Version': res.version,	
+              'TipoCFDI':res.type == 'I' ? 'Ingreso':''
+             }
              const tabla = {
                RFCEmisor:res.issuer.rfc,
                Emisor:res.issuer.name,
@@ -6290,7 +6294,7 @@ dic.forEach(async element => {
            const identificationNumber = res.items[key].identificationNumber
            if (identificationNumber != null) {
              try {
-               if (identificationNumber.includes('G/11779/EXP/ES/FE/2015') == true && res.items[0].productIdentification == '15111512') {
+               if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
                  noEmpty = 1
                  let entregaCFDINoGeneral = {
                    "Cfdi": res.uuid,
@@ -6387,31 +6391,30 @@ dic.forEach(async element => {
                        break;
                    }
                    const dataExcel = {
-                     "UUID":res.uuid,
-                     "RFC Emisor":res.issuer.rfc,
-                     "Nombre del Emisor":res.issuer.name,
-                     "RFC Receptor":res.receiver.rfc,
-                     "Nombre del Receptor":res.receiver.name,
-                     "Tipo":res.type == 'I' ? 'Ingreso':'',
-                     "Estatus":res.status,
-                     "PAC":res.pac,
-                     "Moneda":res.currency,
-                     "Fecha de Certificación":res.certifiedAt,
-                     "Método de Pago":metodoPago,
-                     "Fecha de Emisión":res.issuedAt,
-                     "Condiciones de pago (original)":res.paymentTermsRaw,
-                     "No. Identificación":res.items[key].identificationNumber != null ? res.items[key].identificationNumber.toString() : '',
-                     "Clave del producto y/o servicio":res.items[key].productIdentification.toString(),
-                     "Descripción":res.items[key].description,
-                     "Cantidad":res.items[key].quantity.toString(),
-                     "Clave de unidad":res.items[key].unitCode,
-                     "Valor unitario":res.items[key].unitAmount.toString(),
-                     "Descuento":res.discount.toString(),
-                     "Impuesto":'',
-                     "Subtotal":res.subtotal.toString(),
-                     "Total":res.total.toString(),
-                     "TotalMXN": (res.items[key].totalAmount).toString()
-                    }
+                    'EstadoSAT': res.status,	
+                    'UUID': res.uuid,	
+                    'Serie': res.reference,	//reference
+                    'Folio': res.internalIdentifier,	
+                    'Fecha': res.issuedAt,	
+                    'NombreEmisor': res.issuer.name,	
+                    'RfcEmisor': res.issuer.rfc,	
+                    'NombreReceptor': res.receiver.name,	
+                    'RfcReceptor': res.receiver.rfc,	
+                    'ClaveProdServ': res.items[key].productIdentification,	
+                    'NoIdentificacion': res.items[key].identificationNumber,	
+                    'EDS': 'PRZ',	
+                    'Descripcion': res.items[key].description,	
+                    'Unidad': res.items[key].unitAmount,	
+                    'ClaveUnidad': res.items[key].unitCode,	
+                    'Cantidad': res.items[key].quantity,	
+                    'PrecioUnitario': res.items[key].unitAmount,	
+                    'Importe': res.items[key].quantity * res.items[key].unitAmount,	
+                    'Descuento': res.items[key].discountAmount,	
+                    'TipoCambio': 1,
+                    'Moneda': res.currency,	
+                    'Version': res.version,	
+                    'TipoCFDI':res.type == 'I' ? 'Ingreso':''
+                   }
                    const tabla = {
                      RFCEmisor:res.issuer.rfc,
                      Emisor:res.issuer.name,
@@ -6561,29 +6564,30 @@ dic.forEach(async element => {
  
  
 });
-router.post('/calendar', async (req,res) =>{
-  // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
-  let index = 0
-  // console.log(data);
-  let eventos = [];
+router.get('/calendar', async (req,res) =>{
+  try{
+    const id = req.params.id
+      const data = await pool.query('SELECT tarea,"descTarea" , "Fecha", id FROM schtelemetria.tarea WHERE "Estado" = 1');
+      let index = 0
+      let eventos = [];
+      console.log(data)
   for (const key in data) {
-    const split = data[key].date.split("T")
-    const fecha2 = acomodarFecha(split[0]);
-    const fecha = dateFormat(fecha2);
     const event = {
       id: index, //Event's ID (required)
-       name: `${data[key].tarea}`, //Event name (required)
-      date: fecha, //Event date (required)
+       title: `${data[key].tarea} ${data[key].descTarea}`, //Event name (required)
+      date: moment(data[key].Fecha).format('YYYY-MM-DD'), //Event date (required)
        description: data[key].descTarea, //Event description (optional)
-      type: "event",
-      color: "#63d867"// Event custom color (optional)
 
     }
     eventos.push(event)
     index++
   }
-  res.send(eventos)
+  return res.send(eventos)
 
+  } catch (error){
+  console.log(error);
+  return res.send(error)
+}
 });
 
 
