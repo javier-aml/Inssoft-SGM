@@ -7064,7 +7064,7 @@ router.post('/balance',BalanceController.balance);
 
 //router.post('/balance-pagination',BalanceController.balancePagination);
 
-router.get('/createBalanceJSON',BalanceController.createBalanceJSON);
+router.post('/createBalanceJSON',BalanceController.createBalanceJSON);
 
 function dateFormat(fecha) {
   const separar = fecha.split("-")
