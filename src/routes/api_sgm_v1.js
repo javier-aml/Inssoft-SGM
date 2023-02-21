@@ -56,7 +56,33 @@ const uploadNatgas = multer({
     next(err);
   }
 })
-
+const storageSoftoil = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/softoil'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadSoftoil = multer({
+  storage:storageSoftoil,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
 const storageTomza = multer.diskStorage({
   destination:path.join(__dirname, '../public/formatos-sgm/tomza'),
   filename: function(req,file,cb) {
@@ -245,6 +271,86 @@ router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async func
       Avalible:1,
       date: acomodarFecha(DateNow()),
       companyId:1
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/api/uploadSoftoil/:fileP', uploadSoftoil.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${6};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 6;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 6;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:6
   });
   res.send(positionInsert)
   } catch (error) {
@@ -7199,7 +7305,7 @@ function acomodarFecha(date) {
          let fileP =file[key].position
   
          let position = fileP.split(".")
-  
+          // console.log(file[key]);
          switch (position.length) {
               case 2:
                    root[position[0]]['file'][position[1]]= {fileName:file[key].fileName,ext:file[key].ext}
