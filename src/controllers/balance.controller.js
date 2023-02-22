@@ -15,7 +15,7 @@ class BalanceController {
       let purchaseLTS = 0;
       let salesMXN = 0;
       let salesLTS = 0;
-      rfc = 'FTO930506CA7';
+      rfc = 'NQU120510QZ7';
         
       if(tipoBalance == 'Diario'){
         const tomorrow = moment(fechaDesde).add(1, 'days').format('YYYY-MM-DD');
