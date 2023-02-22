@@ -272,8 +272,8 @@ module.exports.validationsNatgas = (invoices) => {
   for (const key in invoices) {
     const res = invoices[key]
 
-    fecha5 = res.issuedAt.substring(0, 10)
-    fecha4 = fecha5
+    //fecha5 = res.issuedAt.substring(0, 10)
+    //fecha4 = fecha5
 
     if (res.items[0] != undefined ) {
       if (res.items.length<2) {
@@ -502,7 +502,7 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
       if (err)
         return '';
     });
-    return fileNameKey;
+    return estructura;
   } catch (error){
     console.log(error)
     return '';
