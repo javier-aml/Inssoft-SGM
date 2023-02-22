@@ -197,8 +197,8 @@ class BalanceController {
       let { invoices } = req.body;
 
       //const invoices = await balanceHelper.getInvoicesByUIID(); 
-      const validatedInvoices = balanceHelper.validationsNatgas(invoices);
-      const filename = balanceHelper.createJsonNatgasStation('PRZ', validatedInvoices);
+      //const validatedInvoices = balanceHelper.validationsNatgas(invoices);
+      const filename = balanceHelper.createJsonNatgasStation('PRZ', invoices);
       const response = filename != '' ? true : false;
 
       return res.status(200).json({ success: response, filename });
