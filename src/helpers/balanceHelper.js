@@ -262,83 +262,33 @@ module.exports.validationsGlencore = (invoices, type) => {
 }//validationsGlencore
 
 module.exports.validationsNatgas = (invoices) => {
+
   const allInvoices = []
   let acumuladoMXN = 0;
   let acumuladoLTS = 0;
 
-  const station = getDataByNatgasStation('PRZ');
-  const permisoEstacion = station.permisoEstacion
-  
-  for (const key in invoices) {
-    const res = invoices[key]
+  try {
+    
+    const station = getDataByNatgasStation('PRZ');
+    const permisoEstacion = station.permisoEstacion
+    
+    for (const key in invoices) {
+      const res = invoices[key]
 
-    //fecha5 = res.issuedAt.substring(0, 10)
-    //fecha4 = fecha5
+      //fecha5 = res.issuedAt.substring(0, 10)
+      //fecha4 = fecha5
 
-    if (res.items[0] != undefined ) {
-      if (res.items.length<2) {
-        const identificationNumber = res.items[0].identificationNumber
-        if (identificationNumber !== null) {
-          try {
-            if (identificationNumber.includes(permisoEstacion) == true && res.items[0].productIdentification == '15111512') {
-              
-              const invoice = {
-                rfcEmisor:res.issuer.rfc,
-                emisor:res.issuer.name,
-                regimenFiscal:res.issuer.taxRegime,
-                rfcReceptor:res.receiver.rfc,
-                receptor:res.receiver.name,
-                regimenFiscalReceptor:res.issuer.taxRegime,
-                domicilioFiscalReceptor:'11560',
-                usoCFDI:res.usage,
-                estatus:res.status,
-                fechaEmision:res.issuedAt,
-                subtotal:res.subtotal,
-                descuento:res.discount,
-                impuesto:res.tax,
-                total:res.total,
-                uuid:res.uuid,
-                serie: res.reference,
-                folio: res.internalIdentifier,
-                tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                claveUnidad: res.items[0] != undefined && res.items[0].unitCode == 'LTR' ? 'Litros' : res.items[0].unitCode,
-                cantidad:res.items[0] != undefined ? res.items[0].quantity : 0.00,
-                descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                importeConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                descuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                noIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                claveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                importeImpuesto:res.items[0] != undefined ? res.tax : '',
-                impuesto:res.items[0] != undefined ? res.tax : '',
-                moneda:res.currency,
-                exchangeRate: res.currency == 'MXN' ? 1 : res.exchangeRate,
-                versionCFDI:res.version,
-                fechaCompleta:res.issuedAt.substring(0, 10),
-                totalMXN: res.items[0].totalAmount.toFixed(2),
-                tipoFactura: 'Venta',
-                inBalance: true,
-                fechaNuevaAplicacion: '',
-                horaNuevaAplicacion: '',
-                justificacionCambio: '',
-                identificationNumber: identificationNumber
-                
-              }
-          
-              acumuladoMXN += parseFloat(invoice.totalMXN);
-              acumuladoLTS += parseFloat(invoice.cantidad);
-              allInvoices.push(invoice)
+      if (res.items[0] != undefined ) {
+        let rfcNombre = res.receiver.name
+        if (rfcNombre.length < 10) {
+            for (let index = rfcNombre.length; index < 11; index++) {
+              rfcNombre= rfcNombre + ' '
             }
-          } catch (error) {
-            console.log(error);
-          }
-        }//if
-      } else {
-        
-        for (const key in res.items) {
-          const identificationNumber = res.items[key].identificationNumber
-          if (identificationNumber != null) {
+        }
+
+        if (res.items.length<2) {
+          const identificationNumber = res.items[0].identificationNumber
+          if (identificationNumber !== null) {
             try {
               if (identificationNumber.includes(permisoEstacion) == true && res.items[0].productIdentification == '15111512') {
                 
@@ -385,20 +335,84 @@ module.exports.validationsNatgas = (invoices) => {
                   identificationNumber: identificationNumber
                   
                 }
+            
                 acumuladoMXN += parseFloat(invoice.totalMXN);
                 acumuladoLTS += parseFloat(invoice.cantidad);
-                allInvoices.push(invoice)             
+                allInvoices.push(invoice)
               }
             } catch (error) {
               console.log(error);
-            }//try catch
+            }
           }//if
-        }//for
+        } else {
+          
+          for (const key in res.items) {
+            const identificationNumber = res.items[key].identificationNumber
+            if (identificationNumber != null) {
+              try {
+                if (identificationNumber.includes(permisoEstacion) == true && res.items[0].productIdentification == '15111512') {
+                  
+                  const invoice = {
+                    rfcEmisor:res.issuer.rfc,
+                    emisor:res.issuer.name,
+                    regimenFiscal:res.issuer.taxRegime,
+                    rfcReceptor:res.receiver.rfc,
+                    receptor:res.receiver.name,
+                    regimenFiscalReceptor:res.issuer.taxRegime,
+                    domicilioFiscalReceptor:'11560',
+                    usoCFDI:res.usage,
+                    estatus:res.status,
+                    fechaEmision:res.issuedAt,
+                    subtotal:res.subtotal,
+                    descuento:res.discount,
+                    impuesto:res.tax,
+                    total:res.total,
+                    uuid:res.uuid,
+                    serie: res.reference,
+                    folio: res.internalIdentifier,
+                    tipoComprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                    unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                    claveUnidad: res.items[0] != undefined && res.items[0].unitCode == 'LTR' ? 'Litros' : res.items[0].unitCode,
+                    cantidad:res.items[0] != undefined ? res.items[0].quantity : 0.00,
+                    descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                    valorUnitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                    importeConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                    descuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                    noIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                    claveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                    importeImpuesto:res.items[0] != undefined ? res.tax : '',
+                    impuesto:res.items[0] != undefined ? res.tax : '',
+                    moneda:res.currency,
+                    exchangeRate: res.currency == 'MXN' ? 1 : res.exchangeRate,
+                    versionCFDI:res.version,
+                    fechaCompleta:res.issuedAt.substring(0, 10),
+                    totalMXN: res.items[0].totalAmount.toFixed(2),
+                    tipoFactura: 'Venta',
+                    inBalance: true,
+                    fechaNuevaAplicacion: '',
+                    horaNuevaAplicacion: '',
+                    justificacionCambio: '',
+                    identificationNumber: identificationNumber
+                    
+                  }
+                  acumuladoMXN += parseFloat(invoice.totalMXN);
+                  acumuladoLTS += parseFloat(invoice.cantidad);
+                  allInvoices.push(invoice)             
+                }
+              } catch (error) {
+                console.log(error);
+              }//try catch
+            }//if
+          }//for
+        }//if
       }//if
-    }//if
-  }//for
-  
-  return { allInvoices , acumuladoMXN, acumuladoLTS}
+    }//for
+    
+    return { allInvoices , acumuladoMXN, acumuladoLTS}
+  } catch(error){
+    console.log(error)
+    return { allInvoices , acumuladoMXN, acumuladoLTS}
+  }
 }//validationsNatgas
 
 module.exports.createJsonNatgasStation = (station, invoices) => {
@@ -409,6 +423,7 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
   let ClaveInstalacion = dataStation.claveInstalacion
   let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
 
+
   try{
 
     let noEmpty = 0;
@@ -416,65 +431,78 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
       const res = invoices[key]
 
       if(res.inBalance){
-        let entregaNoGeneral = {
-          "NombreClienteOProveedor": res.receptor,
-          "RfcClienteOProveedor": res.rfcReceptor,
-          "CFDIs": []
-        }
-
-        
-        const identificationNumber = res.identificationNumber
-        if (identificationNumber != null) {
-          try {
-            if (identificationNumber.includes(permisoEstacion) == true && res.productIdentification == '15111512') {
-              noEmpty = 1
-              let entregaCFDINoGeneral = {
-                "Cfdi": res.uuid,
-                "TipoCfdi": "Ingreso",
-                "PrecioCompra": res.unitAmount,
-                "PrecioDeVentaAlPublico": res.unitAmount,
-                "PrecioVenta": res.totalAmount,
-                "PrecioVentaOCompraOContrap": (res.totalAmount),
-                "FechaYHoraTransaccion": res.issuedAt,
-                "VolumenDocumentado": {
-                    "ValorNumerico": res.quantity,
-                    "UnidadDeMedida": "UM04"
-                }
+        let FechaYHoraTransaccion = new Date(res.fechaEmision)
+        FechaYHoraTransaccion= FechaYHoraTransaccion.toISOString().slice(0,-5) + '-06:00' 
+          
+        if (nov.indexOf(res.uuid) == -1) {
+          
+          let rfcNombre = res.receptor
+          if (rfcNombre.length < 10) {
+              for (let index = rfcNombre.length; index < 11; index++) {
+                rfcNombre= rfcNombre + ' '
               }
-              // entregaCFDINoGeneral.Cfdi = res.uuid
-              // entregaCFDINoGeneral.TipoCfdi = 'Ingreso'
-              // entregaCFDINoGeneral.PrecioVentaOCompraOContrap = 
-              // entregaCFDINoGeneral.FechaYHoraTransaccion = 
-              // entregaCFDINoGeneral.VolumenDocumentado.ValorNumerico = 
-              const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
-              if (alredyinJson == true) {
-                ifExist =1
-              }
-              entregaNoGeneral.CFDIs.push(entregaCFDINoGeneral)
-                productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
-                productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[key].quantity//ltr
-                productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
-                productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[key].totalAmount)//mxn
-              }
-          } catch (error) {
-            console.log(error);
           }
           
-        }
-    
-        if (noEmpty != 0) {
-          if (ifExist == 1) {
-            productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.forEach(element => {
-              if (element.RfcClienteOProveedor  == res.receiver.rfc) {
-                entregaNoGeneral.CFDIs.forEach(element2 => {
-                  element.CFDIs.push(element2)
-                });
+          const identificationNumber = res.identificationNumber
+        
+          if (identificationNumber !== null) {
+            try {
+              if (identificationNumber.includes(permisoEstacion) == true && res.productIdentification == '15111512') {
+  
+                const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.rfcReceptor)
+                  if (alredyinJson == false) {
+  
+                    let entrega = {
+                      "NombreClienteOProveedor": rfcNombre,
+                      "RfcClienteOProveedor": res.rfcReceptor,
+                        "CFDIs": [{
+                            "Cfdi": res.uuid,
+                            "TipoCfdi": "Ingreso",
+                            "PrecioCompra": parseFloat(res.valorUnitario.toFixed(2)),
+                            "PrecioDeVentaAlPublico": parseFloat(res.valorUnitario.toFixed(2)),
+                            "PrecioVentaOCompraOContrap": parseFloat(res.importeConcepto.toFixed(2)),
+                            "PrecioVenta": parseFloat(res.importeConcepto.toFixed(2)),
+                            "FechaYHoraTransaccion": FechaYHoraTransaccion,
+                            "VolumenDocumentado": {
+                                "ValorNumerico": parseFloat(res.cantidad.toFixed(2)),
+                                "UnidadDeMedida": "UM04"
+                            }
+                        }]
+                        }
+                    
+                    
+                      productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entrega)
+                  } else {
+                    let entrega = {
+                            "Cfdi": res.uuid,
+                            "TipoCfdi": "Ingreso",
+                            "PrecioCompra": parseFloat(res.valorUnitario.toFixed(2)),
+                            "PrecioDeVentaAlPublico": parseFloat(res.valorUnitario.toFixed(2)),
+                            "PrecioVentaOCompraOContrap": parseFloat(res.importeConcepto.toFixed(2)),
+                            "PrecioVenta": parseFloat(res.importeConcepto.toFixed(2)),
+                            "FechaYHoraTransaccion": FechaYHoraTransaccion,
+                            "VolumenDocumentado": {
+                                "ValorNumerico": parseFloat(res.cantidad.toFixed(2)),
+                                "UnidadDeMedida": "UM04"
+                            }
+                        }
+                    productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.forEach(element => {
+                      if (element.RfcClienteOProveedor  == res.rfcReceptor) {
+                        element.CFDIs.push(entrega)
+                      }
+                    });
+                  }
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.cantidad//ltr
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+                  productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = parseFloat(productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.importeConcepto))//mxn
               }
-            });
-          }else{
-            productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entregaNoGeneral)
+            } catch (error) {
+              console.log(error);
+            }
+      
           }
-        }
+        }//if
       }//if in balance
     }//for
 
@@ -483,10 +511,13 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
     estructura.NumeroDispensarios = numDisp
     estructura.ClaveInstalacion = ClaveInstalacion
     const event = new Date();
-    //  estructura.BitacoraMensual[0].NumeroRegistro = indexCompra + indexCompra
-    //  estructura.BitacoraMensual[0].FechaYHoraEvento = event.toISOString().slice(0,-1)
-    estructura.FechaYHoraReporteMes = event.toISOString().slice(0,-1)
-    
+    estructura.FechaYHoraReporteMes = event.toISOString().slice(0,-5) + '-06:00' 
+    const importeMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes
+    const volumenMes = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico
+   
+   
+    productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = parseFloat( volumenMes.toFixed(2))
+    productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = parseFloat(importeMes.toFixed(2))
     estructura.Producto.push(productoEstructura)
     
     let fileNameKey = `MesTempNatGas_${estacion}.json`
