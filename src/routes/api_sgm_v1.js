@@ -2400,7 +2400,129 @@ console.log("Empieza");
 const wb = new xl.Workbook();
 const ws = wb.addWorksheet('Compra');
 const ws2 = wb.addWorksheet('Venta');
-
+const canceladasCompra = [
+  '5e0aa035-98d7-4ca2-aed4-bf7e192a4e2e',
+  '6761ef54-f9e3-47be-a98c-1711f7cc8473',
+  '54581dea-b75c-468f-b4ce-87160579460f',
+  '1392bba0-5efb-44b2-a3e2-cc10cd88fc54',
+  '38bed66e-aa7f-438d-8274-1bdc61f8d7c2',
+  '7154eb17-e58e-4685-a27e-911c2e14a1d7',
+  '27ee892f-5740-4825-9c68-85628d1f8b63',
+  'ce94f379-4089-4e6f-8172-5ebf45824c42',
+  '76243767-2442-4e69-b5dc-770c9c266216',
+  'c2f644e4-7ad3-4371-9857-40993f7f4cdd',
+  'fc0632e1-7edb-4270-9cbb-f8f19f9be209',
+  '4c867654-5d7c-407a-b5a6-62620ef2c007',
+  '1204397a-c8b7-45cf-97dc-db2f8260b3dd',
+  '1c8600d1-62d9-4eb5-ae06-577fba16ab26',
+  'c56a6b62-14ae-42df-82cd-b8c576b225e6',
+  '1efcaff9-0b97-483b-974b-cb387be754fe',
+  '6bc31f3a-6e3a-4e52-8407-4e468f699249',
+  'd87a0a45-f1d1-4789-92c3-5a00d8592f83',
+  '4ebf9633-2cb4-4675-8063-375f84300e54',
+  '8e9266cd-a656-4238-8f10-3113d7f892f2',
+  'fc0cf0e5-937f-4f56-90bd-d4a694dfc048',
+  '7daeefab-2f22-4d47-88c6-f628f5f73ab7',
+  'c5156808-ecbb-4fe3-97f4-a8257b50a645',
+  'c07c5ae3-ce8e-425c-abb5-98e6a4be52fe',
+  '0f831755-084e-4fdb-a8f2-ea6bc61f2d07',
+  '68eefc03-1475-4395-93de-7d09947476e8',
+  '67eb14a0-affd-4c60-8412-eb4c6161c695',
+  'ea46371c-9349-4046-97b2-ffc3403f20f1',
+  '34bcb15a-871b-4771-b0ca-5c904d18477c',
+  'c1e88097-b581-4756-945d-512384328137',
+  '10dc94db-5203-45b4-b6db-4ca34fbcdc7b',
+  'bf7aef87-79af-4cac-8605-9283b707d768',
+  '465409b5-7c26-4a32-8e9f-48e4df68e3b9',
+  '11e878de-57ed-4c43-beb6-6b48bcc2c1e8',
+  '489331eb-8af6-4d4e-bf33-e0fbe3aab9dc',
+  'cf61afa9-72b3-4f00-92b9-b1932e9bb5f5',
+  'f6b42265-862f-4367-bd60-012c646e8d83',
+  '883174fa-442a-450d-8fc1-952debb032ae',
+  '364251a9-a85e-4d53-97a8-d3c350802737',
+  '32c7fdf9-ce05-4298-be3a-23edf81b9e2e',
+  'f219eba5-a754-4f26-8771-bb7f7fc1372d',
+  '2c0716f3-2fa7-4537-9f32-a7776bb22a80',
+  '2b848b35-00c9-4c1a-9983-00bfa23cb3b4',
+  '173b7280-f759-46d4-9f81-80681df369c1',
+  '5df16efc-231a-4d66-a656-d5ef2ddea73e',
+  '599b70b7-5358-4728-83d8-fcebbf34e6f1',
+  'afee81a8-d97e-46bd-b269-998c0b2d391e',
+  '58b7f931-4aed-4d85-bd4a-8458fae38056',
+  'df6a3d73-327f-4700-8795-f97681ea5510',
+  '0e40b779-b9bb-4d00-84fe-fffdcc03530d',
+  'c799e029-e0e2-4aba-8718-83d1573ea77a',
+  'f6048c70-6a35-4188-88a1-3c5bf3c67785',
+  'dbae80cd-7659-4cbc-8c5a-90727ad93cf2',
+  '036b381a-75e7-4eec-a0ec-2a8f4b5ff2e9',
+  'd3ab1876-ef91-4095-a104-98837e9ef98d',
+  '09fff310-bc6e-4d52-a3da-5e4ffc8ea29e',
+  '1e55b483-4a8f-45fa-b894-c6d694fb629c',
+  'ded7ca87-6198-4b98-b210-b81a4e2746c7',
+  'c7c362de-64cd-44fb-add7-5c10364ce95c',
+  'e0ab1dab-7924-4c5b-9f70-83af18467e68',
+  '7e8ad45d-2839-4603-9743-b2c8beba7e9c',
+  '7d0c6d20-9680-4204-a38c-d7a7d7c60070',
+  '118c7b92-da4d-4633-8350-ce7e6030100f',
+  '7cb3fa7c-513a-4309-a3bf-6daccb3890db',
+  'e0baf555-ffc3-4bc4-9c86-be8697ea4257',
+  '84296e20-b021-4046-b76d-a3161ecd119d',
+  '5ac565bc-3d2a-4da9-a3ec-6a9b1903d16c',
+  'dd798f55-cee6-40b2-9b72-a96e9dced91b',
+  'ad8f3df8-52b6-4452-a426-3c14aca969d4',
+  'e6d954ed-7539-4efe-a56b-124f8172f577',
+  '0c585914-8daf-4842-9b6e-20302271c626',
+  'c4a592e2-9788-4122-8807-a01e89f89642',
+  '54d9e5f6-2d3b-4284-9871-adac82af0a72',
+  'a0160730-0c85-45a7-917a-198efe1e7925',
+  '65d31a92-71ad-4421-abe6-0078548e9f25',
+  'b20a43e2-0a6c-4737-a22f-e752c786534f',
+  '4c2c1542-15af-482c-b7dc-8076a6861f65',
+  '7f90a760-a418-482b-959d-e76ad617cd03',
+  '1c39924e-39a9-442f-92ea-0f8acaa3c676',
+  '6281d5ee-a03b-43c2-be74-94e398242c68',
+  '265efa32-d3b7-4111-8c04-48ad58c04db2',
+  'd7bc4c32-3f4d-4cda-8dfb-8fa27a597aec',
+  'a0b7075e-139b-4868-9a99-ff784188b907',
+  '4c463b56-50d5-4428-870a-a21da86817fa',
+  '98ff47de-5b66-4c6b-ae1b-9e260c26664d',
+  'd294dd4b-e05b-417c-843a-76cf4ee73ad2',
+  'fd3eb67b-bb2d-4ab2-b127-a3b327558391',
+  'be525d5a-63fe-4006-8774-93af762fffc4',
+  'c50155ec-0d66-49b1-bfe6-3a48f055a828',
+  'abe2d6bd-6cd4-4a0b-a25e-be0c5d600159',
+  'b3268237-4f6f-4fed-85c9-46e245966646',
+  '2a546524-258c-4db1-8713-a9d5627c8e91',
+  'ce34658f-86e1-442d-b69c-e6e7a375da59',
+  '49936917-7837-4b06-b073-cd85b1fe2974',
+  '6f36a2f8-0422-4aa8-92ba-0df6acc66859',
+  'b6b77cc6-fb11-4a20-87e4-ae375cd5ab7f',
+  '7d67f6e3-2e1e-4838-be19-dd04dbf8ac92',
+  'f71d5e68-6544-443c-a5d5-2a622690a497',
+  '59f87b94-5aa0-474a-916a-1d041f9becbf',
+  '6595a68f-0c01-4afb-bfd9-8f85585d2a0e',
+  '4145da39-2b25-4210-9357-ea79dce23f2c',
+  '72dee65d-b707-43b0-8b9b-f8a105770a40',
+  '2a5ec4b1-4ddf-4ee0-b869-9cf032d85316',
+  '56834a60-6ecf-4398-b9cc-a62423194a9d',
+  '21219dbb-7160-43f0-9c19-63a320a2358e',
+  '9a940cdc-90ad-4b90-a05d-de665c5758b7',
+  '71617beb-1db0-461d-b725-5d149dc0fde7',
+  '8f0c0d3f-adab-469f-ba50-3fc22f9471b9',
+  '0b3206fc-a4f2-44d8-bef6-8e019701df04',
+  '64f99afb-0275-4d5e-a250-29fffdf95c84',
+  '87a91327-7a5f-4cc0-9ce9-34d092ed48fe',
+  'd437a81c-0836-4781-bcc9-45c7949827f5',
+  '5cd06ec6-a858-4bc1-8abe-f87b53920523',
+  'b6d02466-f892-48e2-b361-0b8bc8387303',
+  '11bb9b9b-93a1-4476-9b81-7d5f1873feb1',
+  'a3c208ad-faac-4041-83cd-95d609aa6087',
+  '504ea2ce-1c65-4765-9ec1-7fca7737f1c5',
+  '4750f64c-c54f-487a-b471-c4cecea7af80',
+  'a5b4c6b1-b30b-49c1-9ed3-3435ba4d6fe7',
+  '9ffbc6d7-f98f-4adf-9d90-caa816a9a766',
+  'd3575d1a-c00f-4210-b0a4-8187b7c9b4eb'
+]
 const headingColumnNames = [
   "UUID",
   "RFC Emisor",
@@ -2477,7 +2599,7 @@ while (ApiLength > 0) {
 console.log(fecha2.indexOf(fecha) != -1);
     var options = {
       'method': 'GET',
-      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-02-01T06:00:00.000Z&issuedAt[after]=${fecha}-01T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-02-01T06:00:00.000Z&issuedAt[after]=${fecha}-01T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=1000&type=I`,
       'headers': {
         'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
       }
@@ -2506,233 +2628,422 @@ console.log(fecha2.indexOf(fecha) != -1);
         fecha3 = res.issuedAt.substring(0, 10)
         fecha2 = fecha3
         console.log(fecha3);
-        if (res.items[0] != undefined ) {
-          if (res.items[0].unitCode == 'LTR'|| res.items[0].unitCode == 'STL') {
-            let RECEPCION = {
-              "TipoComplemento": "Comercializacion",
-              "Nacional": [{
-                  "RfcClienteOProveedor": "PTI151101TE5",
-                  "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
-                  "PermisoClienteOProveedor": "H/09857/COM/2015",
-                  "CFDIs": [{
-                      "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
-                      "TipoCfdi": "Ingreso",
-                      "PrecioVentaOCompraOContrap": 0.0,
-                      "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
-                      "VolumenDocumentado": {
-                          "ValorNumerico": 0.0,
-                          "UnidadDeMedida": "UM03"
-                      }
-                  }]
-              }]
-          }
-            if (res.currency == 'MXN') {
-              if (res.issuer.rfc == 'PTI151101TE5') {
-                console.log("pemex");
-                // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
-                RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
-                RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
-                RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
-                RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
-                RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
-                RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
-                RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
-                RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
-               
-              // console.log(tabla);
-                if (res.items[0].productIdentification == '15101514') {
-
-                  productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
-                  productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
-                  productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
-                  productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
-                  productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
-                  
-                  productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-                }
-                if (res.items[0].productIdentification == '15101515') {
-                  productoGas91.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
-                  productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
-                  productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
-                  productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                  productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
-
-                  productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-
-                }
-                if (res.items[0].productIdentification == '15101505') {
-                  productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
-                  productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
-                  productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
-                  productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                  productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
-                  productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-
-                }
-                let metodoPago = ''
-                switch (res.paymentMethod) {
-                  case 01:
-                    metodoPago = 'Efectivo'
-                    break;
-                    case 02:
-                      metodoPago = 'Cheque de nómina'
-                      break;
-                      case 03:
-                        metodoPago = 'Transferencia electrónica'
-                        break;
-                        case 04:
-                          metodoPago = 'Tarjeta de crédito'
-                          break;
-                          case 05:
-                            metodoPago = 'Monedero electrónico'
-                            break;
-                            case 06:
-                              metodoPago = 'Dinero digital'
-                              break;
-                              case 08:
-                                metodoPago = 'Vales de despensa'
-                                break;
-                                case 12:
-                                  metodoPago = 'Liquidación'
-                                  break;
-                                  case 13:
-                                    metodoPago = 'Pago por subrogación'
-                                    break;
-                                    case 14:
-                                      metodoPago = 'Pago por consignación'
-                                      break;
-                                      case 15:
-                                        metodoPago = 'Condonación'
-                                        break;
-                                        case 17:
-                                          metodoPago = 'Compensación'
-                                          break;
-                                          case 23:
-                                            metodoPago = 'Novacion'
-                                            break;
-                                            case 24:
-                                              metodoPago = 'Confusión'
-                                              break;
-                                              case 25:
-                                                metodoPago = 'Envío de deuda'
-                                                break;
-                                                case 26:
-                                                  metodoPago = 'Prescripción o caducidad'
-                                                  break;
-                                                  case 27:
-                                                    metodoPago = 'A satisfacción del acreedor'
-                                                    break;
-                                                    case 28:
-                                                      metodoPago = 'Tarjeta de débito'
-                                                      break;
-                                                      case 29:
-                                                        metodoPago = 'Tarjeta de servicio'
-                                                        break;
+        if (canceladasCompra.indexOf(res.uuid) == -1) {
+          if (res.items[0] != undefined) {
+            if (res.items[0].unitCode == 'LTR'|| res.items[0].unitCode == 'STL') {
+              let RECEPCION = {
+                "TipoComplemento": "Comercializacion",
+                "Nacional": [{
+                    "RfcClienteOProveedor": "PTI151101TE5",
+                    "NombreClienteOProveedor": "PEMEX TRANSFORMACION INDUSTRIAL",
+                    "PermisoClienteOProveedor": "H/09857/COM/2015",
+                    "CFDIs": [{
+                        "Cfdi": "3eece402-580f-4e3d-a973-ca47dfdb6ae0",
+                        "TipoCfdi": "Ingreso",
+                        "PrecioVentaOCompraOContrap": 0.0,
+                        "FechaYHoraTransaccion": "2022-08-22T19:27:31-06:00",
+                        "VolumenDocumentado": {
+                            "ValorNumerico": 0.0,
+                            "UnidadDeMedida": "UM03"
+                        }
+                    }]
+                }]
+            }
+              if (res.currency == 'MXN') {
+                if (res.issuer.rfc == 'PTI151101TE5') {
+                  console.log("pemex");
+                  // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
+                  RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
+                  RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
+                  RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+                  RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
+                  RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+                  RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+                 
+                // console.log(tabla);
+                  if (res.items[0].productIdentification == '15101514') {
+  
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
                     
-                
-                  default:
-                    metodoPago = 'Por definir'
-                    break;
-                }
-                const dataExcel = {
-                  "UUID":res.uuid,
-                  "RFC Emisor":res.issuer.rfc,
-                  "Nombre del Emisor":res.issuer.name,
-                  "RFC Receptor":res.receiver.rfc,
-                  "Nombre del Receptor":res.receiver.name,
-                  "Tipo":res.type == 'I' ? 'Ingreso':'',
-                  "Estatus":res.status,
-                  "PAC":res.pac,
-                  "Moneda":res.currency,
-                  "Fecha de Certificación":res.certifiedAt.substring(0, 10),
-                  "Método de Pago":metodoPago,
-                  "Fecha de Emisión":res.issuedAt.substring(0, 10),
-                  "Condiciones de pago (original)":res.paymentTermsRaw,
-                  "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
-                  "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
-                  "Descripción":res.items[0].description,
-                  "Cantidad":res.items[0].quantity.toString(),
-                  "Clave de unidad":res.items[0].unitCode,
-                  "Valor unitario":res.items[0].unitAmount.toString(),
-                  "Descuento":res.discount.toString(),
-                  "Impuesto":res.tax.toString(),
-                  "Subtotal":res.items[0].totalAmount.toString(),
-                  "Total":(res.items[0].discountAmount-res.tax+res.items[0].totalAmount).toString(),
-                  "TotalMXN": (res.items[0].discountAmount-res.tax+res.items[0].totalAmount).toString()
-                 }
-                const tabla = {
-                  RFCEmisor:res.issuer.rfc,
-                  Emisor:res.issuer.name,
-                  RegimenFiscal:res.issuer.taxRegime,
-                  RFCReceptor:res.receiver.rfc,
-                  Receptor:res.receiver.name,
-                  RegimenFiscalReceptor:res.issuer.taxRegime,
-                  DomicilioFiscalReceptor:'11560',
-                  UsoCFDI:res.usage,
-                  Estatus:res.status,
-                  FechaEmision:res.issuedAt,
-                  FullDate:res.issuedAt.substring(0, 10),
-                  Subtotal:res.subtotal,
-                  Descuento:res.discount,
-                  Impuesto:res.tax,
-                  Total:res.total,
-                  UUID:res.uuid,
-                  Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                  Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                  Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                  Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                  Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                  ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                  DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                  NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                  ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                  ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                  Impuesto:res.items[0] != undefined ? res.tax : '',
-                  Moneda:res.currency,
-                  VersionCFDI:res.version,
-                  Fechacompleta:res.issuedAt.substring(0, 10),
-                  TotalMXN:(res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
-                }
-                // if (fecha3!=fecha) {
-                //   break;
-                // }
-                const realDate = res.issuedAt.substring(0, 10)
-                const dateTime = realDate;
-                const parts = dateTime.split(/[- :]/);
-                console.log(dateTime);
-                var month = parts[1];
-                var year = parts[0];
-    
-                var currentdate = new Date(fecha+"-02");
-                var cur_month = currentdate.getMonth() + 1;
-                var cur_year = currentdate.getFullYear();
-                console.log(currentdate);
-                if (cur_month == month && year == cur_year) {
-                  TotalMXN += parseFloat(tabla.TotalMXN);
-                  TotalLTS += parseFloat(tabla.Cantidad);
-                  jsonCompra[indexCompra] = tabla
-                  compra[indexCompra] = dataExcel
-                  indexCompra++
+                    productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+                  }
+                  if (res.items[0].productIdentification == '15101515') {
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
+  
+                    productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+  
+                  }
+                  if (res.items[0].productIdentification == '15101505') {
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].discountAmount-res.tax+res.items[0].totalAmount)//mxn
+                    productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+  
+                  }
+                  let metodoPago = ''
+                  switch (res.paymentMethod) {
+                    case 01:
+                      metodoPago = 'Efectivo'
+                      break;
+                      case 02:
+                        metodoPago = 'Cheque de nómina'
+                        break;
+                        case 03:
+                          metodoPago = 'Transferencia electrónica'
+                          break;
+                          case 04:
+                            metodoPago = 'Tarjeta de crédito'
+                            break;
+                            case 05:
+                              metodoPago = 'Monedero electrónico'
+                              break;
+                              case 06:
+                                metodoPago = 'Dinero digital'
+                                break;
+                                case 08:
+                                  metodoPago = 'Vales de despensa'
+                                  break;
+                                  case 12:
+                                    metodoPago = 'Liquidación'
+                                    break;
+                                    case 13:
+                                      metodoPago = 'Pago por subrogación'
+                                      break;
+                                      case 14:
+                                        metodoPago = 'Pago por consignación'
+                                        break;
+                                        case 15:
+                                          metodoPago = 'Condonación'
+                                          break;
+                                          case 17:
+                                            metodoPago = 'Compensación'
+                                            break;
+                                            case 23:
+                                              metodoPago = 'Novacion'
+                                              break;
+                                              case 24:
+                                                metodoPago = 'Confusión'
+                                                break;
+                                                case 25:
+                                                  metodoPago = 'Envío de deuda'
+                                                  break;
+                                                  case 26:
+                                                    metodoPago = 'Prescripción o caducidad'
+                                                    break;
+                                                    case 27:
+                                                      metodoPago = 'A satisfacción del acreedor'
+                                                      break;
+                                                      case 28:
+                                                        metodoPago = 'Tarjeta de débito'
+                                                        break;
+                                                        case 29:
+                                                          metodoPago = 'Tarjeta de servicio'
+                                                          break;
+                      
+                  
+                    default:
+                      metodoPago = 'Por definir'
+                      break;
+                  }
+                  const dataExcel = {
+                    "UUID":res.uuid,
+                    "RFC Emisor":res.issuer.rfc,
+                    "Nombre del Emisor":res.issuer.name,
+                    "RFC Receptor":res.receiver.rfc,
+                    "Nombre del Receptor":res.receiver.name,
+                    "Tipo":res.type == 'I' ? 'Ingreso':'',
+                    "Estatus":res.status,
+                    "PAC":res.pac,
+                    "Moneda":res.currency,
+                    "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                    "Método de Pago":metodoPago,
+                    "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                    "Condiciones de pago (original)":res.paymentTermsRaw,
+                    "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                    "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                    "Descripción":res.items[0].description,
+                    "Cantidad":res.items[0].quantity.toString(),
+                    "Clave de unidad":res.items[0].unitCode,
+                    "Valor unitario":res.items[0].unitAmount.toString(),
+                    "Descuento":res.discount.toString(),
+                    "Impuesto":res.tax.toString(),
+                    "Subtotal":res.items[0].totalAmount.toString(),
+                    "Total":(res.items[0].discountAmount-res.tax+res.items[0].totalAmount).toString(),
+                    "TotalMXN": (res.items[0].discountAmount-res.tax+res.items[0].totalAmount).toString()
+                   }
+                  const tabla = {
+                    RFCEmisor:res.issuer.rfc,
+                    Emisor:res.issuer.name,
+                    RegimenFiscal:res.issuer.taxRegime,
+                    RFCReceptor:res.receiver.rfc,
+                    Receptor:res.receiver.name,
+                    RegimenFiscalReceptor:res.issuer.taxRegime,
+                    DomicilioFiscalReceptor:'11560',
+                    UsoCFDI:res.usage,
+                    Estatus:res.status,
+                    FechaEmision:res.issuedAt,
+                    FullDate:res.issuedAt.substring(0, 10),
+                    Subtotal:res.subtotal,
+                    Descuento:res.discount,
+                    Impuesto:res.tax,
+                    Total:res.total,
+                    UUID:res.uuid,
+                    Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                    Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                    Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                    Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                    Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                    ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                    DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                    NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                    ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                    ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                    Impuesto:res.items[0] != undefined ? res.tax : '',
+                    Moneda:res.currency,
+                    VersionCFDI:res.version,
+                    Fechacompleta:res.issuedAt.substring(0, 10),
+                    TotalMXN:(res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
+                  }
+                  // if (fecha3!=fecha) {
+                  //   break;
+                  // }
+                  const realDate = res.issuedAt.substring(0, 10)
+                  const dateTime = realDate;
+                  const parts = dateTime.split(/[- :]/);
+                  console.log(dateTime);
+                  var month = parts[1];
+                  var year = parts[0];
+      
+                  var currentdate = new Date(fecha+"-02");
+                  var cur_month = currentdate.getMonth() + 1;
+                  var cur_year = currentdate.getFullYear();
+                  console.log(currentdate);
+                  if (cur_month == month && year == cur_year) {
+                    TotalMXN += parseFloat(tabla.TotalMXN);
+                    TotalLTS += parseFloat(tabla.Cantidad);
+                    jsonCompra[indexCompra] = tabla
+                    compra[indexCompra] = dataExcel
+                    indexCompra++
+                  }
+                } else {
+                  console.log("normal");
+                  RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
+                  RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
+                  RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
+                  RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+                  RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
+                  RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+                  RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+                 
+                // console.log(tabla);
+                  if (res.items[0].productIdentification == '15101514') {
+  
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
+                    productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+                    
+                    productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+                  }
+                  if (res.items[0].productIdentification == '15101515') {
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                    productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+  
+                    productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+  
+                  }
+                  if (res.items[0].productIdentification == '15101505') {
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
+                    productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+                    productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
+  
+                  }
+                  let metodoPago = ''
+                  switch (res.paymentMethod) {
+                    case 01:
+                      metodoPago = 'Efectivo'
+                      break;
+                      case 02:
+                        metodoPago = 'Cheque de nómina'
+                        break;
+                        case 03:
+                          metodoPago = 'Transferencia electrónica'
+                          break;
+                          case 04:
+                            metodoPago = 'Tarjeta de crédito'
+                            break;
+                            case 05:
+                              metodoPago = 'Monedero electrónico'
+                              break;
+                              case 06:
+                                metodoPago = 'Dinero digital'
+                                break;
+                                case 08:
+                                  metodoPago = 'Vales de despensa'
+                                  break;
+                                  case 12:
+                                    metodoPago = 'Liquidación'
+                                    break;
+                                    case 13:
+                                      metodoPago = 'Pago por subrogación'
+                                      break;
+                                      case 14:
+                                        metodoPago = 'Pago por consignación'
+                                        break;
+                                        case 15:
+                                          metodoPago = 'Condonación'
+                                          break;
+                                          case 17:
+                                            metodoPago = 'Compensación'
+                                            break;
+                                            case 23:
+                                              metodoPago = 'Novacion'
+                                              break;
+                                              case 24:
+                                                metodoPago = 'Confusión'
+                                                break;
+                                                case 25:
+                                                  metodoPago = 'Envío de deuda'
+                                                  break;
+                                                  case 26:
+                                                    metodoPago = 'Prescripción o caducidad'
+                                                    break;
+                                                    case 27:
+                                                      metodoPago = 'A satisfacción del acreedor'
+                                                      break;
+                                                      case 28:
+                                                        metodoPago = 'Tarjeta de débito'
+                                                        break;
+                                                        case 29:
+                                                          metodoPago = 'Tarjeta de servicio'
+                                                          break;
+                      
+                  
+                    default:
+                      metodoPago = 'Por definir'
+                      break;
+                  }
+                 
+                  const dataExcel = {
+                    "UUID":res.uuid,
+                    "RFC Emisor":res.issuer.rfc,
+                    "Nombre del Emisor":res.issuer.name,
+                    "RFC Receptor":res.receiver.rfc,
+                    "Nombre del Receptor":res.receiver.name,
+                    "Tipo":res.type == 'I' ? 'Ingreso':'',
+                    "Estatus":res.status,
+                    "PAC":res.pac,
+                    "Moneda":res.currency,
+                    "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+                    "Método de Pago":metodoPago,
+                    "Fecha de Emisión":res.issuedAt.substring(0, 10),
+                    "Condiciones de pago (original)":res.paymentTermsRaw,
+                    "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                    "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                    "Descripción":res.items[0].description,
+                    "Cantidad":res.items[0].quantity.toString(),
+                    "Clave de unidad":res.items[0].unitCode,
+                    "Valor unitario":res.items[0].unitAmount.toString(),
+                    "Descuento":res.discount.toString(),
+                    "Impuesto":res.tax.toString(),
+                    "Subtotal":res.subtotal.toString(),
+                    "Total":res.total.toString(),
+                    "TotalMXN": (res.items[0].totalAmount).toString()
+                   }
+                  const tabla = {
+                    RFCEmisor:res.issuer.rfc,
+                    Emisor:res.issuer.name,
+                    RegimenFiscal:res.issuer.taxRegime,
+                    RFCReceptor:res.receiver.rfc,
+                    Receptor:res.receiver.name,
+                    RegimenFiscalReceptor:res.issuer.taxRegime,
+                    DomicilioFiscalReceptor:'11560',
+                    UsoCFDI:res.usage,
+                    Estatus:res.status,
+                    FechaEmision:res.issuedAt,
+                    FullDate:res.issuedAt.substring(0, 10),
+                    Subtotal:res.subtotal,
+                    Descuento:res.discount,
+                    Impuesto:res.tax,
+                    Total:res.total,
+                    UUID:res.uuid,
+                    Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                    Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                    Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                    Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                    Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                    ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                    DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                    NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                    ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                    ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                    Impuesto:res.items[0] != undefined ? res.tax : '',
+                    Moneda:res.currency,
+                    VersionCFDI:res.version,
+                    Fechacompleta:res.issuedAt.substring(0, 10),
+                    TotalMXN:(res.items[0].totalAmount)
+                  }
+                  // if (fecha3!=fecha) {
+                  //   break;
+                  // }
+                  const realDate = res.issuedAt.substring(0, 10)
+                  const dateTime = realDate;
+                  const parts = dateTime.split(/[- :]/);
+                  console.log(dateTime);
+                  var month = parts[1];
+                  var year = parts[0];
+      
+                  var currentdate = new Date(fecha+"-02");
+                  var cur_month = currentdate.getMonth() + 1;
+                  var cur_year = currentdate.getFullYear();
+                  console.log(currentdate);
+                  if (cur_month == month && year == cur_year) {
+                    TotalMXN += parseFloat(tabla.TotalMXN);
+                    TotalLTS += parseFloat(tabla.Cantidad);
+                    jsonCompra[indexCompra] = tabla
+                    compra[indexCompra] = dataExcel
+                    indexCompra++
+                  }
                 }
               } else {
-                console.log("normal");
+                console.log("usd");
                 RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
                 RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
                 RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
                 RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
                 RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
-                RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
+                RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount * res.exchangeRate)
                 RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
                 RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
                
               // console.log(tabla);
                 if (res.items[0].productIdentification == '15101514') {
-
+  
                   productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
                   productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
                   productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
                   productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
-                  productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+                  productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
                   
                   productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
                 }
@@ -2741,19 +3052,19 @@ console.log(fecha2.indexOf(fecha) != -1);
                   productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
                   productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
                   productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                  productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
-
+                  productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
+  
                   productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-
+  
                 }
                 if (res.items[0].productIdentification == '15101505') {
                   productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
                   productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
                   productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
                   productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                  productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+                  productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
                   productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-
+  
                 }
                 let metodoPago = ''
                 switch (res.paymentMethod) {
@@ -2820,7 +3131,6 @@ console.log(fecha2.indexOf(fecha) != -1);
                     metodoPago = 'Por definir'
                     break;
                 }
-               
                 const dataExcel = {
                   "UUID":res.uuid,
                   "RFC Emisor":res.issuer.rfc,
@@ -2845,7 +3155,7 @@ console.log(fecha2.indexOf(fecha) != -1);
                   "Impuesto":res.tax.toString(),
                   "Subtotal":res.subtotal.toString(),
                   "Total":res.total.toString(),
-                  "TotalMXN": (res.items[0].totalAmount).toString()
+                  "TotalMXN": (res.items[0].totalAmount * res.exchangeRate).toString()
                  }
                 const tabla = {
                   RFCEmisor:res.issuer.rfc,
@@ -2878,15 +3188,16 @@ console.log(fecha2.indexOf(fecha) != -1);
                   Moneda:res.currency,
                   VersionCFDI:res.version,
                   Fechacompleta:res.issuedAt.substring(0, 10),
-                  TotalMXN:(res.items[0].totalAmount)
+                  TotalMXN:(res.items[0].totalAmount * res.exchangeRate)
                 }
                 // if (fecha3!=fecha) {
                 //   break;
                 // }
                 const realDate = res.issuedAt.substring(0, 10)
                 const dateTime = realDate;
-                const parts = dateTime.split(/[- :]/);
                 console.log(dateTime);
+                const parts = dateTime.split(/[- :]/);
+    
                 var month = parts[1];
                 var year = parts[0];
     
@@ -2902,196 +3213,10 @@ console.log(fecha2.indexOf(fecha) != -1);
                   indexCompra++
                 }
               }
-            } else {
-              console.log("usd");
-              RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
-              RECEPCION.Nacional[0].NombreClienteOProveedor = res.issuer.rfc
-              RECEPCION.Nacional[0].PermisoClienteOProveedor = res.name
-              RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
-              RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
-              RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount * res.exchangeRate)
-              RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
-              RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
-             
-            // console.log(tabla);
-              if (res.items[0].productIdentification == '15101514') {
-
-                productoGas87.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
-                productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas87.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
-                productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas87.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
-                productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoGas87.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
-                productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas87.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
-                
-                productoGas87.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-              }
-              if (res.items[0].productIdentification == '15101515') {
-                productoGas91.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
-                productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoGas91.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
-                productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoGas91.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
-                productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoGas91.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoGas91.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
-
-                productoGas91.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-
-              }
-              if (res.items[0].productIdentification == '15101505') {
-                productoDisel.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
-                productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoDisel.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
-                productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoDisel.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
-                productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos = productoDisel.ReporteDeVolumenMensual.Recepciones.TotalDocumentos + 1
-                productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoDisel.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount * res.exchangeRate)//mxn
-                productoDisel.ReporteDeVolumenMensual.ControlDeExistencias.FechaYHoraEstaMedicionMes = new Date().toISOString().slice(0,-1)
-
-              }
-              let metodoPago = ''
-              switch (res.paymentMethod) {
-                case 01:
-                  metodoPago = 'Efectivo'
-                  break;
-                  case 02:
-                    metodoPago = 'Cheque de nómina'
-                    break;
-                    case 03:
-                      metodoPago = 'Transferencia electrónica'
-                      break;
-                      case 04:
-                        metodoPago = 'Tarjeta de crédito'
-                        break;
-                        case 05:
-                          metodoPago = 'Monedero electrónico'
-                          break;
-                          case 06:
-                            metodoPago = 'Dinero digital'
-                            break;
-                            case 08:
-                              metodoPago = 'Vales de despensa'
-                              break;
-                              case 12:
-                                metodoPago = 'Liquidación'
-                                break;
-                                case 13:
-                                  metodoPago = 'Pago por subrogación'
-                                  break;
-                                  case 14:
-                                    metodoPago = 'Pago por consignación'
-                                    break;
-                                    case 15:
-                                      metodoPago = 'Condonación'
-                                      break;
-                                      case 17:
-                                        metodoPago = 'Compensación'
-                                        break;
-                                        case 23:
-                                          metodoPago = 'Novacion'
-                                          break;
-                                          case 24:
-                                            metodoPago = 'Confusión'
-                                            break;
-                                            case 25:
-                                              metodoPago = 'Envío de deuda'
-                                              break;
-                                              case 26:
-                                                metodoPago = 'Prescripción o caducidad'
-                                                break;
-                                                case 27:
-                                                  metodoPago = 'A satisfacción del acreedor'
-                                                  break;
-                                                  case 28:
-                                                    metodoPago = 'Tarjeta de débito'
-                                                    break;
-                                                    case 29:
-                                                      metodoPago = 'Tarjeta de servicio'
-                                                      break;
-                  
-              
-                default:
-                  metodoPago = 'Por definir'
-                  break;
-              }
-              const dataExcel = {
-                "UUID":res.uuid,
-                "RFC Emisor":res.issuer.rfc,
-                "Nombre del Emisor":res.issuer.name,
-                "RFC Receptor":res.receiver.rfc,
-                "Nombre del Receptor":res.receiver.name,
-                "Tipo":res.type == 'I' ? 'Ingreso':'',
-                "Estatus":res.status,
-                "PAC":res.pac,
-                "Moneda":res.currency,
-                "Fecha de Certificación":res.certifiedAt.substring(0, 10),
-                "Método de Pago":metodoPago,
-                "Fecha de Emisión":res.issuedAt.substring(0, 10),
-                "Condiciones de pago (original)":res.paymentTermsRaw,
-                "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
-                "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
-                "Descripción":res.items[0].description,
-                "Cantidad":res.items[0].quantity.toString(),
-                "Clave de unidad":res.items[0].unitCode,
-                "Valor unitario":res.items[0].unitAmount.toString(),
-                "Descuento":res.discount.toString(),
-                "Impuesto":res.tax.toString(),
-                "Subtotal":res.subtotal.toString(),
-                "Total":res.total.toString(),
-                "TotalMXN": (res.items[0].totalAmount * res.exchangeRate).toString()
-               }
-              const tabla = {
-                RFCEmisor:res.issuer.rfc,
-                Emisor:res.issuer.name,
-                RegimenFiscal:res.issuer.taxRegime,
-                RFCReceptor:res.receiver.rfc,
-                Receptor:res.receiver.name,
-                RegimenFiscalReceptor:res.issuer.taxRegime,
-                DomicilioFiscalReceptor:'11560',
-                UsoCFDI:res.usage,
-                Estatus:res.status,
-                FechaEmision:res.issuedAt,
-                FullDate:res.issuedAt.substring(0, 10),
-                Subtotal:res.subtotal,
-                Descuento:res.discount,
-                Impuesto:res.tax,
-                Total:res.total,
-                UUID:res.uuid,
-                Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
-                Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
-                Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
-                Descripcion:res.items[0] != undefined ? res.items[0].description : '',
-                Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
-                ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
-                DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
-                NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
-                ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
-                ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
-                Impuesto:res.items[0] != undefined ? res.tax : '',
-                Moneda:res.currency,
-                VersionCFDI:res.version,
-                Fechacompleta:res.issuedAt.substring(0, 10),
-                TotalMXN:(res.items[0].totalAmount * res.exchangeRate)
-              }
-              // if (fecha3!=fecha) {
-              //   break;
-              // }
-              const realDate = res.issuedAt.substring(0, 10)
-              const dateTime = realDate;
-              console.log(dateTime);
-              const parts = dateTime.split(/[- :]/);
-  
-              var month = parts[1];
-              var year = parts[0];
-  
-              var currentdate = new Date(fecha+"-02");
-              var cur_month = currentdate.getMonth() + 1;
-              var cur_year = currentdate.getFullYear();
-              console.log(currentdate);
-              if (cur_month == month && year == cur_year) {
-                TotalMXN += parseFloat(tabla.TotalMXN);
-                TotalLTS += parseFloat(tabla.Cantidad);
-                jsonCompra[indexCompra] = tabla
-                compra[indexCompra] = dataExcel
-                indexCompra++
-              }
             }
+  
           }
-
+          
         }
 
 
