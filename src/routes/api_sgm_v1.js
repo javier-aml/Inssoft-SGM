@@ -2477,7 +2477,7 @@ while (ApiLength > 0) {
 console.log(fecha2.indexOf(fecha) != -1);
     var options = {
       'method': 'GET',
-      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-01-03T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-02-01T06:00:00.000Z&issuedAt[after]=${fecha}-01T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
       'headers': {
         'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
       }
@@ -2507,7 +2507,7 @@ console.log(fecha2.indexOf(fecha) != -1);
         fecha2 = fecha3
         console.log(fecha3);
         if (res.items[0] != undefined ) {
-          if (res.items[0].unitCode == 'LTR') {
+          if (res.items[0].unitCode == 'LTR'|| res.items[0].unitCode == 'STL') {
             let RECEPCION = {
               "TipoComplemento": "Comercializacion",
               "Nacional": [{
@@ -3132,7 +3132,7 @@ while (ApiLengthVenta > 0) {
 
 var options = {
   'method': 'GET',
-  'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-01-03T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
+  'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-02-02T06:00:00.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
   'headers': {
     'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
   }
@@ -3159,7 +3159,7 @@ await request(options, function (error, response) {
     console.log(fecha5);
 
     if (res.items[0] != undefined ) {
-      if (res.items[0].unitCode == 'LTR') {
+      if (res.items[0].unitCode == 'LTR' || res.items[0].unitCode == 'STL') {
         let entrega = {
           "TipoComplemento": "Comercializacion",
           "Nacional": [{
