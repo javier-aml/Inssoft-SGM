@@ -4,53 +4,53 @@
     "GasNaturalOCondensados": [
       {
         "ComposGasNaturalOCondensados": "GNC01",
-        "FraccionMolar": 0.949,
-        "PoderCalorifico": 36.133
+        "FraccionMolar": 0.955,
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC02",
-        "FraccionMolar": 0.03,
-        "PoderCalorifico": 36.133
+        "FraccionMolar": 0.023,
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC03",
         "FraccionMolar": 0.001,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC04",
         "FraccionMolar": 0.0,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC05",
         "FraccionMolar": 0.0,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC06",
         "FraccionMolar": 0.0,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC07",
         "FraccionMolar": 0.0,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC08",
         "FraccionMolar": 0.0,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC09",
         "FraccionMolar": 0.0,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       },
       {
         "ComposGasNaturalOCondensados": "GNC10",
         "FraccionMolar": 0.02,
-        "PoderCalorifico": 36.133
+        "PoderCalorifico": 35.907
       }
     ],
     "ReporteDeVolumenMensual": {
@@ -61,36 +61,54 @@
             "TipoComplemento": "Expendio"
           }
         ],
-        "ImporteTotalEntregasMes": 590114.33,
+        "ImporteTotalEntregasMes": 0,
         "PoderCalorifico": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 36.133
+          "ValorNumerico": 0
         },
         "SumaVolumenEntregadoMes": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 604622.53
+          "ValorNumerico": 0
         },
-        "TotalDocumentosMes": 8261,
-        "TotalEntregasMes": 43550
+        "TotalDocumentosMes": 0,
+        "TotalEntregasMes": 0
       },
       "Recepciones": {
         "Complemento": [
           {
-            "Nacional": [],
+            "Nacional": [
+              {
+                "CFDIs": [
+                  {
+                    "Cfdi": "85806E4B-8DB4-42DB-9E50-C7246FFCF110",
+                    "FechaYHoraTransaccion": "2023-01-10T21:22:22-06:00",
+                    "PrecioCompra": 5.84,
+                    "TipoCfdi": "Egreso",
+                    "VolumenDocumentado": {
+                      "UnidadDeMedida": "UM04",
+                      "ValorNumerico": 577838.12
+                    }
+                  }
+                ],
+                "NombreClienteOProveedor": "GDF SUEZ MEXICO COMERCIALIZADORA",
+                "PermisoProveedor": "G/089/DIS/2000",
+                "RfcClienteOProveedor": "TRA0002119W1"
+              }
+            ],
             "TipoComplemento": "Expendio"
           }
         ],
-        "ImporteTotalRecepcionesMensual": 4725099.26,
+        "ImporteTotalRecepcionesMensual": 3375029.45,
         "PoderCalorifico": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 36.133
+          "ValorNumerico": 35.907
         },
         "SumaVolumenRecepcionMes": {
           "UnidadDeMedida": "UM04",
-          "ValorNumerico": 597985.78
+          "ValorNumerico": 577838.12
         },
         "TotalDocumentosMes": 1,
-        "TotalRecepcionesMes": 30
+        "TotalRecepcionesMes": 31
       }
     }
   }
