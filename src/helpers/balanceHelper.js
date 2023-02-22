@@ -502,7 +502,7 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
       if (err)
         return '';
     });
-    return fileNameKey;
+    return estructura;
   } catch (error){
     console.log(error)
     return '';
