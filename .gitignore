@@ -68,7 +68,7 @@ node_modules/
 #public
 src/public/Excel/*
 src/public/json/*
-src/public/formatos-sgm/*
+# src/public/formatos-sgm/*
 src/public/TestArchivosMulter/*
 
 src/index.js

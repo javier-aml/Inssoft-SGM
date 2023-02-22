@@ -9,6 +9,7 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 const BalanceController = require('../controllers/balance.controller');
+const moment = require('moment');
 
 var corsOptions = {
   "methods": "GET,POST,DELETE,OPTIONS",
@@ -32,8 +33,21 @@ const upload = multer({
 const storageNatgas = multer.diskStorage({
   destination:path.join(__dirname, '../public/formatos-sgm/natgas'),
   filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
     // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
-    cb(null,file.originalname )
+    cb(null,name )
   }
 })
 const uploadNatgas = multer({
@@ -43,8 +57,139 @@ const uploadNatgas = multer({
     next(err);
   }
 })
-// const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
+const storageSoftoil = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/softoil'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadSoftoil = multer({
+  storage:storageSoftoil,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
+const storageTomza = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/tomza'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadTomza = multer({
+  storage:storageTomza,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
 
+const storageKansas = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/kansas'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadKansas = multer({
+  storage:storageKansas,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
+
+const storageTogo = multer.diskStorage({
+  destination:path.join(__dirname, '../public/formatos-sgm/togo'),
+  filename: function(req,file,cb) {
+    const hora = new Date();
+    let datetext = hora.toTimeString();
+    datetext = datetext.split(' ')[0];
+    datetext = datetext.replace(':','-')
+    datetext = datetext.replace(':','-')
+    let name = acomodarFecha(DateNow())+`-${datetext}`+'-'+file.originalname
+    // name = name.join().replace(',','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+    name = name.replace(' ','_')
+     name = name.replace(' ','_')
+     name = name.replace(' ','_')
+    // const ext = file.mimetype == 'application/pdf' ? '.pdf' : '';
+    cb(null,name )
+  }
+})
+const uploadTogo = multer({
+  storage:storageTogo,
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
+  }
+})
+router.get('/estructura/:id',async function(req,res){
+  try {
+    const id = Number(req.params.id);
+
+    if(isNaN(id)){
+      return res.status(200).json({ success: false, msg: "companyId incorrecto" });
+    }
+    dirRoot = await arbolArchivos(id)
+    const Prueba = dirRoot
+     res.send(Prueba)
+ } catch (error) {
+   console.log(error);
+   res.send(error)
+ }
+})
+// const upload = multer({dest: path.join(__dirname, '../public/TestArchivosMulter')})
+router.get('/test/html',function(req,res){
+  console.log(path.join(__dirname, '../public/formatos-sgm/natgas1/19.html'));
+  fs.readFile(path.join(__dirname, '../public/formatos-sgm/natgas1/19.html'), 'utf8', function(err, html){
+    console.log();
+    res.send(html)
+  })
+})
 router.post('/api/uploadPDF', uploadNatgas.single('upl'),async function (req, res) {
   try {
     res.send('succes')
@@ -53,29 +198,435 @@ router.post('/api/uploadPDF', uploadNatgas.single('upl'),async function (req, re
   }
 });
 
-router.get('/Tareas/:Ubicacion',async function (req,res) {
+router.post('/api/uploadPDFNatgas/:fileP', uploadNatgas.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${1};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 1;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 1;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:1
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/api/uploadSoftoil/:fileP', uploadSoftoil.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${6};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 6;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 6;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:6
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/api/uploadPDFTomza/:fileP', uploadTomza.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${2};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 2;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 2;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:2
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/api/uploadPDFKansas/:fileP', uploadKansas.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${3};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 3;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 3;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:3
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.post('/api/uploadPDFTogo/:fileP', uploadTogo.single('upl'),async function (req, res) {
+  try {
+    console.log(req.file);
+    let fileP = req.params.fileP
+    if (fileP ==  '1') {
+     dataP = '1.1'
+   } else {
+    max = await pool.query(`SELECT * FROM estructura_archivos WHERE position LIKE '${fileP}.%' AND "companyId" = ${4};`);
+    let  positions = [];
+    const dots = fileP.split(".").length;
+  
+    let max1 = null;
+    if (max == null) {
+         dataP = fileP + '.1'
+    }else{
+         for (const key in max) {
+              const temp =max[key].position
+              if (temp.split(".").length - 1 == dots) {
+  
+                   positions.push(temp.substr(temp.length - 1) - 1 + 1)
+                   max1 = max[key].position
+              }
+         }
+         const maxP = Math.max(...positions) + 1
+         console.log(max1);
+         if (max1==null) {
+              dataP = fileP + '.1'
+         } else {
+  
+              dataP = max1.replace(/.$/,`${maxP}`)
+         }
+    }
+   }
+    let name = req.file.filename;
+    name = name.split('.')
+    name = name[0];
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${dataP}'  AND "companyId" = 4;`);
+    let positionInsert = ''
+    let tempPsotion
+    if (position.length === 0) {
+      positionInsert = dataP
+    }
+    else{
+      let index = 0;
+      while (position.length !== 0) {
+        positionInsert = ''
+        if (index === 0) {
+            tempPsotion = dataP
+        }
+        tempPsotion = tempPsotion.split('.')
+        const lengthPosition = tempPsotion.length;
+        const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
+        tempPsotion[lengthPosition-1] = lastdigit
+        
+        for (let index = 0; index < tempPsotion.length; index++) {
+          positionInsert+=`${tempPsotion[index]}.`
+        }
+        positionInsert = positionInsert.substring(0, positionInsert.length - 1);
+        tempPsotion= positionInsert;
+
+        position = await pool.query(`SELECT * FROM estructura_archivos WHERE position = '${positionInsert}'  AND "companyId" = 4;`);
+        index++;
+      }
+    }
+
+    await pool.query('INSERT INTO estructura_archivos(id, "fileName", ext, "position", "Avalible", date,"companyId") VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date},${companyId})', {
+      id:maxID[0].max - 1 + 2,
+      fileName: name.replace('.pdf',''),
+      ext: 'pdf',
+      position: positionInsert,
+      Avalible:1,
+      date: acomodarFecha(DateNow()),
+      companyId:4
+  });
+  res.send(positionInsert)
+  } catch (error) {
+    res.send(error)
+  }
+});
+router.get('/Tareas/:Ubicacion/:id',async function (req,res) {
   try {
     const ubicacion = req.params.Ubicacion;
-    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM schtelemetria.tarea WHERE Tarea = '${ubicacion}';`)
-    const ubicacionTarea = await pool.any(`SELECT * FROM schtelemetria.estructura_directorios_natgas WHERE "position" = '${ubicacion}';`)
-    const ubicacionHTML = await pool.any(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE "position" = '${ubicacion}.1' AND "ext" = 'html';`)
+    const id = req.params.id
+
+    const tarea = await pool.any(`SELECT id, "descTarea", tarea, "Id_File", "Finished", to_char("Fecha", 'DD-MM-YYYY') as Fecha FROM tarea WHERE Tarea = '${ubicacion}' AND "companyId" = ${id};`)
+    const ubicacionTarea = await pool.any(`SELECT * FROM estructura_directorios WHERE "companyId" = ${id} AND "position" = '${ubicacion}' ;`)
+    const ubicacionHTML = await pool.any(`SELECT * FROM estructura_archivos WHERE "companyId" = ${id} AND "position" = '${ubicacion}.1' AND "ext" = 'html' ;`)
     res.send({tarea,ubicacionTarea,ubicacionHTML});
  } catch (error) {
    res.send(error)
  }
 })
-router.post('/add/task/:position/:nombre/:Fecha',async function (req, res) {
+router.post('/add/task/:position/:nombre/:Fecha/:id',async function (req, res) {
 try {
   const nombre = req.params.nombre
   const position = req.params.position
-  const Fecha = req.params.Fecha
-
-  await pool.query('INSERT INTO schtelemetria.tarea("descTarea", tarea,"Fecha", "Id_File", "Finished") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished})', {
+  let Fecha = req.params.Fecha
+  const id = req.params.id
+  // // Fecha = Fecha.split('-')
+  // // Fecha = `${Fecha[1]}-${Fecha[0]}-${Fecha[2]}`
+  await pool.query('INSERT INTO tarea("descTarea", tarea,"Fecha", "Id_File", "Finished", "companyId", "Estado") VALUES(${descTarea},${tarea}, ${Fecha}, ${Id_File}, ${Finished}, ${companyId}, ${Estado})', {
     descTarea: nombre,
     tarea: position,
     Fecha: Fecha,
     Id_File : 1,
-    "Finished": 1
+    "Finished": 1,
+    companyId: id,
+    Estado:0
   });
   res.send('test')
 } catch (error) {
@@ -85,7 +636,7 @@ try {
 router.post('/delete/TaskTomza/:position',async function (req, res) {
   try {
     const position = req.params.position;
-    await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+    // await pool.query(`DELETE FROM tarea WHERE id= '${position}';`)
     res.send('test')
   } catch (error) {
     res.send(error)
@@ -94,7 +645,7 @@ router.post('/delete/TaskTomza/:position',async function (req, res) {
 router.post('/delete/Tasknatgas/:position',async function (req, res) {
   try {
     const position = req.params.position;
-    await pool.query(`DELETE FROM schtelemetria.tarea WHERE id= '${position}';`)
+    await pool.query(`DELETE FROM tarea WHERE id= '${position}';`)
     res.send('test')
   } catch (error) {
     res.send(error)
@@ -107,7 +658,7 @@ router.post('/add/FileTomza/:fileP',async function (req, res) {
     if (fileP ==  '1') {
      dataP = '1.1'
    } else {
-    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    max = await pool.query(`SELECT * FROM estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
     let  positions = [];
     const dots = fileP.split(".").length;
   
@@ -134,7 +685,7 @@ router.post('/add/FileTomza/:fileP',async function (req, res) {
     }
    }
    var fileName = req.params.fileP
-   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_tomza WHERE position = '${fileName}';`);
+   var file = await pool.query(`SELECT id, "dirName", "position" FROM estructura_directorios_tomza WHERE position = '${fileName}';`);
    const fs = require('fs');
    let name = file[0].dirName.split(' ')
    name = name.join().replace(',','_')
@@ -154,8 +705,8 @@ router.post('/add/FileTomza/:fileP',async function (req, res) {
       console.log("\nFile Renamed!\n");
   
     });
-    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_tomza;`);
-    await pool.query('INSERT INTO schtelemetria.estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos_tomza;`);
+    await pool.query('INSERT INTO estructura_archivos_tomza(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
       fileName: name,
       ext: 'pdf',
@@ -174,7 +725,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
     if (fileP ==  '1') {
      dataP = '1.1'
    } else {
-    max = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
+    max = await pool.query(`SELECT * FROM estructura_archivos_tomza WHERE position LIKE '${fileP}.%';`);
     let  positions = [];
     const dots = fileP.split(".").length;
   
@@ -201,7 +752,7 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
     }
    }
    var fileName = req.params.fileP
-   var file = await pool.query(`SELECT id, "dirName", "position" FROM schtelemetria.estructura_directorios_natgas WHERE position = '${fileName}';`);
+   var file = await pool.query(`SELECT id, "dirName", "position" FROM estructura_directorios_natgas WHERE position = '${fileName}';`);
    const fs = require('fs');
    let name = file[0].dirName.split(' ')
    name = name.join().replace(',','_')
@@ -219,13 +770,12 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
    name = acomodarFecha(DateNow())+`-${datetext}`+'-'+name
    console.log(name);
    fs.rename(path.join(__dirname, '../public/formatos-sgm/natgas/file.pdf'), path.join(__dirname, '../public/formatos-sgm/natgas/', name + '.pdf'), () => {
+
       console.log("\nFile Renamed!\n");
   
     });
-    const maxID = await pool.query(`SELECT max(id) as max FROM schtelemetria.estructura_archivos_natgas;`);
-    let position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${dataP}';`);
-    console.log(dataP);
-    console.log(position.length);
+    const maxID = await pool.query(`SELECT max(id) as max FROM estructura_archivos_natgas;`);
+    let position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${dataP}';`);
     let positionInsert = ''
     let tempPsotion
     if (position.length === 0) {
@@ -235,34 +785,26 @@ router.post('/add/Filenatgas/:fileP',async function (req, res) {
       let index = 0;
       while (position.length !== 0) {
         positionInsert = ''
-        console.log(position.length !== 0);
-        console.log(position);
-        console.log();
         if (index === 0) {
             tempPsotion = dataP
         }
-        console.log(tempPsotion);
         tempPsotion = tempPsotion.split('.')
-        console.log(tempPsotion);
         const lengthPosition = tempPsotion.length;
         const lastdigit= parseInt(tempPsotion[lengthPosition-1]) + position.length
         tempPsotion[lengthPosition-1] = lastdigit
-        console.log();
+
         
         for (let index = 0; index < tempPsotion.length; index++) {
           positionInsert+=`${tempPsotion[index]}.`
         }
         positionInsert = positionInsert.substring(0, positionInsert.length - 1);
-        console.log(positionInsert);
         tempPsotion= positionInsert;
 
-        position = await pool.query(`SELECT * FROM schtelemetria.estructura_archivos_natgas WHERE position = '${positionInsert}';`);
+        position = await pool.query(`SELECT * FROM estructura_archivos_natgas WHERE position = '${positionInsert}';`);
         index++;
       }
     }
-
-    console.log(positionInsert);
-    await pool.query('INSERT INTO schtelemetria.estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
+    await pool.query('INSERT INTO estructura_archivos_natgas(id, "fileName", ext, "position", "Avalible", date) VALUES(${id},${fileName},${ext}, ${position}, ${Avalible},${date})', {
       id:maxID[0].max - 1 + 2,
       fileName: name,
       ext: 'pdf',
@@ -283,14 +825,18 @@ let tanque5 =require(path.join(__dirname, '../public/json/glencore/tanque5.json'
 let tanque6 =require(path.join(__dirname, '../public/json/glencore/tanque6.json'))
 let tanque7 =require(path.join(__dirname, '../public/json/glencore/tanque7.json'))
 let tanque8 =require(path.join(__dirname, '../public/json/glencore/tanque8.json'))
+let productoGas87 = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualGas87.json'))    
+let productoGas91 = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualGas91.json'))    
+let productoDisel = require(path.join(__dirname, '../public/json/glencore/Mensual/mensualDisel.json'))
 const delay = ms => new Promise(res => setTimeout(res, ms));
 router.post('/TestApi',(req,res) => {
   const Prueba = {Test: 'Prueba'}
   res.send(Prueba)
 })
-router.get('/Task',async (req,res) => {
+router.get('/Task/:id',async (req,res) => {
   try {
-     const Task = await pool.query('SELECT * FROM schtelemetria.tarea inner join schtelemetria.estructura_directorios_tomza on tarea = "position";')
+    const id = req.params.id
+     const Task = await pool.query('SELECT * FROM tarea inner join estructura_directorios on tarea = "position" WHERE  tarea."companyId" = $1',id)
      const fechas = codigoFecha(Task);
      const urgente = sortObject(fechas.urgente);
      const noUrgente = sortObject(fechas.noUrgente);
@@ -300,6 +846,18 @@ router.get('/Task',async (req,res) => {
   } catch (error) {
     console.log(error);
     res.send(error)
+  }
+})
+router.get('/Taskprueba',async (req,res) => {
+  try {
+    const id = req.params.id
+     const Tasks = await pool.query('SELECT * FROM tarea WHERE "Estado"= 0;')
+     console.log(Tasks);
+     const fechas = codigoFecha(Tasks);
+    return  res.send(Tasks)
+  } catch (error) {
+    console.log(error);
+     return res.send(error)
   }
 })
 router.post('/Estructura_natgas',async (req,res) => {
@@ -322,11 +880,146 @@ router.post('/Estructura_tomza',async (req,res) => {
     res.send(error)
   }
 })
-router.get('/TestApi',(req,res) => {
-  const Prueba = {Test: 'Prueba'}
-  res.send(Prueba)
+router.get('/TestApi',async(req,res) => {
+  try {
+    const Prueba = {Test: 'Prueba'}
+    const test = await pool.query('select * from estructura_directorios_natgas;')
+    res.send(Prueba)
+  } catch (error) {
+    res.send(error)
+  }
 })
-router.post('/DiarioGlencore/:fecha', async (req, res) => {
+
+//Descargas Excel
+router.get('/Diario/Download/ExcelDiario/:fecha', async(req, res) => {
+  let fecha = req.params.fecha
+  const fechasplit = fecha.split("-")
+  if (fechasplit[2].length == 1) {
+    fecha = `${fechasplit[0]}-${fechasplit[1]}-0${fechasplit[2]}`
+  }
+  if (fechasplit[1].length == 1) {
+
+    fecha = `${fechasplit[0]}-0${fechasplit[1]}-${fechasplit[2]}`
+  }
+  const pathExcel = path.join(__dirname, `../public/excel/Diario_${fecha}.xlsx`);
+  res.download(pathExcel);
+  // res.send('ok')
+})
+
+
+router.get('/Mensual/Download/ExcelMensual/:fecha', async(req, res) => {
+    let fecha = req.params.fecha
+
+    const pathExcel = path.join(__dirname, `../public/excel/Mes_${fecha}.xlsx`);
+    res.download(pathExcel);
+    // res.send('ok')
+  })
+// Fin Descarga Excel
+
+//Generacion de ZIP
+
+router.get('/Diario/Download/ZipDiario/:fecha', async(req, res) => {
+  const fecha = req.params.fecha
+  const letters = ['a','b','c','d','e','f']
+const mayus = ['A','B','C','D','E','F']
+
+let keyEnvio = ''
+indexletters = 1
+for (let index = 0; index < 32; index++) {
+  // console.log(keyEnvio);
+  if ((index== 8) ||(index== 12) ||(index== 16)||(index== 20) ) {
+      keyEnvio+="-";
+  }
+  switch (Math.floor(Math.random() * 3)) {
+    case 0:
+      keyEnvio+=Math.floor(Math.random() * 10);
+      break;
+      case 1:
+        keyEnvio+=letters[Math.floor(Math.random() * 6)]
+        break;
+        case 2:
+          keyEnvio+=mayus[Math.floor(Math.random() * 6)]
+          break;
+  
+    default:
+      break;
+  }
+  indexletters++;
+}
+let diario =require(path.join(__dirname, '../public/json/glencore/DiarioTemp/DiarioTemp.json'))
+const pathJson = path.join(__dirname, "../public/json/glencoreTest/")
+removeDirDiario(pathJson)
+  let fileNameKey = `D_${keyEnvio}_GEM161104H39_XAX010101000_${fecha}_CMN-0001_CMN_JSON`
+  // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+  //  fs.promises.mkdir(dirpath, { recursive: true })
+  const fileJsonName = path.join(__dirname, `../public/json/glencoreTest/${fileNameKey}.json`);
+  fs.writeFile(fileJsonName, JSON.stringify(diario,null, 2), function writeJSON(err) {
+    if (err) return console.log(err);
+
+  });
+
+  const files = path.join(__dirname, `../public/json/glencoreTest`);
+  const zip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+  await zipDirectory(files,zip)
+  const pathZip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+  res.download(pathZip);
+  // res.send('ok')
+})
+router.get('/Mensual/Download/ZipMensual/:fecha', async(req, res) => {
+  const fecha = req.params.fecha
+  const letters = ['a','b','c','d','e','f']
+  const mayus = ['A','B','C','D','E','F']
+  
+  let keyEnvio = ''
+  indexletters = 1
+  for (let index = 0; index < 32; index++) {
+    // console.log(keyEnvio);
+    if ((index== 8) ||(index== 12) ||(index== 16)||(index== 20) ) {
+        keyEnvio+="-";
+    }
+    switch (Math.floor(Math.random() * 3)) {
+      case 0:
+        keyEnvio+=Math.floor(Math.random() * 10);
+        break;
+        case 1:
+          keyEnvio+=letters[Math.floor(Math.random() * 6)]
+          break;
+          case 2:
+            keyEnvio+=mayus[Math.floor(Math.random() * 6)]
+            break;
+    
+      default:
+        break;
+    }
+    indexletters++;
+  }
+  let Mensual =require(path.join(__dirname, '../public/json/glencore/DiarioTemp/MesTemp.json'))
+
+  const pathJson = path.join(__dirname, "../public/json/glencore/glencoreMensualJson/")
+  removeDirDiario(pathJson)
+  let fechaSplit = fecha.split("-")
+  let lastDayMonth = new Date(fechaSplit[0],fechaSplit[1],0);
+  lastDayMonth = lastDayMonth.toString().split(" ")
+    let fileNameKey = `M_${keyEnvio}_GEM161104H39_XAX010101000_${fecha}-${lastDayMonth[2]}_CMN-0001_CMN_JSON`
+    // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+    //  fs.promises.mkdir(dirpath, { recursive: true })
+    const fileJsonName = path.join(__dirname, `../public/json/glencore/glencoreMensualJson/${fileNameKey}.json`);
+    fs.writeFile(fileJsonName, JSON.stringify(Mensual,null, 2), function writeJSON(err) {
+      if (err) return console.log(err);
+  
+    });
+  
+    const files = path.join(__dirname, `../public/json/glencore/glencoreMensualJson`);
+    const zip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+    await zipDirectory(files,zip)
+    const pathZip = path.join(__dirname, `../public/json/${fileNameKey}.zip`);
+    res.download(pathZip);
+  // res.send('ok')
+})
+//Generacion de Zip Fin
+//Glencore Inicio
+router.post('/diario-glencore/:fecha', async (req, res) => {
+  try {
     var request = require('request');
     // let temp;2022-10-25
     var datoCompra;
@@ -416,7 +1109,8 @@ router.post('/DiarioGlencore/:fecha', async (req, res) => {
   }
 const today = new Date(fecha)
 let tomorrow = new Date(today)
-tomorrow.setDate(tomorrow.getDate() + 1)
+tomorrow.setDate(tomorrow.getDate() + 3)
+// tomorrow.setDate(tomorrow.getDate() + 1)
 tomorrow = tomorrow.toLocaleDateString().replace("/", "-").replace("/", "-")
 console.log(today);
 console.log(tomorrow);
@@ -434,6 +1128,7 @@ if (tomorrowsplit[1].length == 1) {
   tomorrow = `${tomorrowsplit[0]}-0${tomorrowsplit[1]}-${tomorrowsplit[2]}`
 }
       while (ApiLength > 0) {
+        console.log(tomorrow,fecha);
         var options = {
           'method': 'GET',
           'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
@@ -444,19 +1139,23 @@ if (tomorrowsplit[1].length == 1) {
         pagIndexCompra++
   
         let fecha3;
-  
         await request(options, function (error, response) {
-          if (error) throw new Error(error);
+          // if (error) throw new Error(error);
+          if (error){
+            console.log(error);
+          } 
           // console.log(response.body);
-                      // console.log(diario);
-  
-  
+          // console.log(diario);
+          
+          
           let temp = JSON.parse(response.body);
           temp = temp['hydra:member']
+          // res.send(temp)
           console.log("@@@@@@@@@@@");
           ApiLength = temp.length
           for (const key in temp) {
             const res = temp[key]
+
             switch (res.paymentMethod) {
               case 01:
                 metodoPago = 'Efectivo'
@@ -522,11 +1221,9 @@ if (tomorrowsplit[1].length == 1) {
                 break;
             }
             fecha3 = res.issuedAt.substring(0, 10)
-            console.log(fecha3);
-            console.log("::::::::::::::::::::");
+
             fecha2 = fecha3
-            console.log(fecha2 + "<-----------------");
-            console.log(indexCompra);
+
 
             if (res.items[0] != undefined ) {
               if (res.items[0].unitCode == 'LTR' || res.items[0].unitCode == 'STL') {
@@ -677,6 +1374,7 @@ if (tomorrowsplit[1].length == 1) {
                           break;
                       }
                     }
+                  
                     const dataTabla = {
                       "UUID":res.uuid,
                       "RFC Emisor":res.issuer.rfc,
@@ -736,12 +1434,16 @@ if (tomorrowsplit[1].length == 1) {
                       Fechacompleta:res.issuedAt.substring(0, 10),
                       TotalMXN:(res.items[0].discountAmount-res.tax+res.items[0].totalAmount)
                     }
-                     TotalMXN += parseFloat(tabla.TotalMXN);
+                    console.log(res.issuedAt.substring(0, 10),fecha);
+                    if (res.issuedAt.substring(0, 10) == fecha) {
+                      TotalMXN += parseFloat(tabla.TotalMXN);
                 
-                     TotalLTS += parseFloat(tabla.Cantidad);
-                     jsonCompra[indexCompra] = tabla
-                     compra[indexCompra] = dataTabla
-                     indexCompra++
+                      TotalLTS += parseFloat(tabla.Cantidad);
+                      jsonCompra[indexCompra] = tabla
+                      compra[indexCompra] = dataTabla
+                      indexCompra++
+                    }
+
                   } else {
                     // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
                     RECEPCION.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
@@ -854,6 +1556,7 @@ if (tomorrowsplit[1].length == 1) {
                           break;
                       }
                     }
+                  
                     const dataTabla = {
                       "UUID":res.uuid,
                       "RFC Emisor":res.issuer.rfc,
@@ -913,12 +1616,20 @@ if (tomorrowsplit[1].length == 1) {
                       Fechacompleta:res.issuedAt.substring(0, 10),
                       TotalMXN:res.total
                     }
-                     TotalMXN += parseFloat(tabla.TotalMXN);
+                    var fechaInicio = new Date(fecha).getTime();
+                    var fechaFin    = new Date('2022-12-15').getTime();
+
+                    var diff = fechaFin - fechaInicio;
+                    diff = diff/(1000*60*60*24)
+                    if (res.issuedAt.substring(0, 10) == fecha) {
+                      TotalMXN += parseFloat(tabla.TotalMXN);
                 
-                     TotalLTS += parseFloat(tabla.Cantidad);
-                     jsonCompra[indexCompra] = tabla
-                     compra[indexCompra] = dataTabla
-                     indexCompra++
+                      TotalLTS += parseFloat(tabla.Cantidad);
+                      jsonCompra[indexCompra] = tabla
+                      compra[indexCompra] = dataTabla
+                      indexCompra++
+                    }
+
                   }
                 } else {
                   // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
@@ -1032,6 +1743,7 @@ if (tomorrowsplit[1].length == 1) {
                         break;
                     }
                   }
+                
                   const dataTabla = {
                     "UUID":res.uuid,
                     "RFC Emisor":res.issuer.rfc,
@@ -1091,12 +1803,14 @@ if (tomorrowsplit[1].length == 1) {
                     Fechacompleta:res.issuedAt.substring(0, 10),
                     TotalMXN:(res.total * res.exchangeRate)
                   }
-                   TotalMXN += parseFloat(tabla.TotalMXN);
+                  if (res.issuedAt.substring(0, 10) == fecha) {
+                    TotalMXN += parseFloat(tabla.TotalMXN);
               
-                   TotalLTS += parseFloat(tabla.Cantidad);
-                   jsonCompra[indexCompra] = tabla
-                   compra[indexCompra] = dataTabla
-                   indexCompra++
+                    TotalLTS += parseFloat(tabla.Cantidad);
+                    jsonCompra[indexCompra] = tabla
+                    compra[indexCompra] = dataTabla
+                    indexCompra++
+                  }
                 }
               }
   
@@ -1150,6 +1864,7 @@ if (tomorrowsplit[1].length == 1) {
   ///venta
   let fecha4 = fecha;
   while (ApiLengthVenta > 0) {
+    console.log(tomorrow,fecha);
     var options = {
       'method': 'GET',
       'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=${tomorrow}T06:00:00.000Z&issuedAt[after]=${fecha}T06:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
@@ -1162,7 +1877,10 @@ if (tomorrowsplit[1].length == 1) {
     let fecha5;
   
     await request(options, function (error, response) {
-      if (error) throw new Error(error);
+      // if (error) throw new Error(error);
+      if (error){
+        console.log(error);
+      } 
       // console.log(response.body);
                   // console.log(diario);
   
@@ -1172,7 +1890,8 @@ if (tomorrowsplit[1].length == 1) {
       ApiLengthVenta = temp.length
       for (const key in temp) {
         const res = temp[key]
-  
+        console.log('holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
         console.log(fecha5);
         fecha5 = res.issuedAt.substring(0, 10)
         fecha4 = fecha5
@@ -1385,12 +2104,17 @@ if (tomorrowsplit[1].length == 1) {
                 Fechacompleta:res.issuedAt.substring(0, 10),
                 TotalMXN:res.total
               }
+              const realDate = res.items[0].description.split(' ')
+              console.log(fecha, realDate[0]);
+              console.log(fecha == realDate[0]);
+              if (fecha == realDate[0]) {
+                totalMXNVT += parseFloat(tabla.TotalMXN);
+                totalLTSVT += parseFloat(tabla.Cantidad);
+                jsonVenta[indexVenta] = tabla
+                venta[indexVenta] = dataTabla
+                 indexVenta++
+              }
 
-              totalMXNVT += parseFloat(tabla.TotalMXN);
-              totalLTSVT += parseFloat(tabla.Cantidad);
-              jsonVenta[indexVenta] = tabla
-              venta[indexVenta] = dataTabla
-               indexVenta++
             } else {
               // entrega.NumeroDeRegistro = res.NumeroDeRegistro
               entrega.Complemento.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
@@ -1566,11 +2290,18 @@ if (tomorrowsplit[1].length == 1) {
               if (fecha5!=fecha) {
                 break;
               }
-              totalMXNVT += parseFloat(tabla.TotalMXN);
-              totalLTSVT += parseFloat(tabla.Cantidad);
-              jsonVenta[indexVenta] = tabla
-              venta[indexVenta] = dataTabla
-               indexVenta++
+              
+              const realDate = res.items[0].description.split(' ')
+              console.log(fecha, realDate[0]);
+              console.log(fecha == realDate[0]);
+              if (fecha == realDate[0]) {
+                totalMXNVT += parseFloat(tabla.TotalMXN);
+                totalLTSVT += parseFloat(tabla.Cantidad);
+                jsonVenta[indexVenta] = tabla
+                venta[indexVenta] = dataTabla
+                 indexVenta++
+              }
+
             }
           }
   
@@ -1657,16 +2388,12 @@ if (tomorrowsplit[1].length == 1) {
     tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS
   }
     res.send(datos)
-  
-  
-  
-  
-  
-  
-  
-  
+  } catch (error) {
+    res.send(error)
+  }
 });
-router.post('/MensualGlencore/:fecha', async (req, res) => {
+router.post('/mensual-glencore/:fecha', async (req, res) => {
+try {
   console.log("mess");
   const xl = require('excel4node');
 console.log("Empieza");
@@ -1746,11 +2473,11 @@ let TotalLTS = 0.00;
 let ApiLength= 10
 let indexCompra = 0;
 const jsonCompra = {}
-while (ApiLength > 0 && fecha2.indexOf(fecha) != -1) {
+while (ApiLength > 0) {
 console.log(fecha2.indexOf(fecha) != -1);
     var options = {
-      'method': 'post',
-      'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
+      'method': 'GET',
+      'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-02-01T06:00:00.000Z&issuedAt[after]=${fecha}-01T06:00:00.000Z&receiver.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100&type=I`,
       'headers': {
         'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
       }
@@ -1758,7 +2485,6 @@ console.log(fecha2.indexOf(fecha) != -1);
     pagIndexCompra++
 
     let fecha3;
-
   /*
   
   15101505 == DISEL 
@@ -1768,9 +2494,7 @@ console.log(fecha2.indexOf(fecha) != -1);
     await request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log(response.body);
-                  // console.log(diario);
-
-
+                  // console.log(diario);      
       let temp = JSON.parse(response.body);
       temp = temp['hydra:member']
       console.log("@@@@@@@@@@@");
@@ -1778,12 +2502,12 @@ console.log(fecha2.indexOf(fecha) != -1);
 
       for (const key in temp) {
         const res = temp[key]
-        // console.log(res);
+        //
         fecha3 = res.issuedAt.substring(0, 10)
         fecha2 = fecha3
         console.log(fecha3);
         if (res.items[0] != undefined ) {
-          if (res.items[0].unitCode == 'LTR') {
+          if (res.items[0].unitCode == 'LTR'|| res.items[0].unitCode == 'STL') {
             let RECEPCION = {
               "TipoComplemento": "Comercializacion",
               "Nacional": [{
@@ -1972,12 +2696,24 @@ console.log(fecha2.indexOf(fecha) != -1);
                 // if (fecha3!=fecha) {
                 //   break;
                 // }
-                 TotalMXN += parseFloat(tabla.TotalMXN);
-            
-                 TotalLTS += parseFloat(tabla.Cantidad);
-                 jsonCompra[indexCompra] = tabla
-                 compra[indexCompra] = dataExcel
-                 indexCompra++
+                const realDate = res.issuedAt.substring(0, 10)
+                const dateTime = realDate;
+                const parts = dateTime.split(/[- :]/);
+                console.log(dateTime);
+                var month = parts[1];
+                var year = parts[0];
+    
+                var currentdate = new Date(fecha+"-02");
+                var cur_month = currentdate.getMonth() + 1;
+                var cur_year = currentdate.getFullYear();
+                console.log(currentdate);
+                if (cur_month == month && year == cur_year) {
+                  TotalMXN += parseFloat(tabla.TotalMXN);
+                  TotalLTS += parseFloat(tabla.Cantidad);
+                  jsonCompra[indexCompra] = tabla
+                  compra[indexCompra] = dataExcel
+                  indexCompra++
+                }
               } else {
                 console.log("normal");
                 RECEPCION.Nacional[0].RfcClienteOProveedor = res.issuer.rfc
@@ -2147,12 +2883,24 @@ console.log(fecha2.indexOf(fecha) != -1);
                 // if (fecha3!=fecha) {
                 //   break;
                 // }
-                 TotalMXN += parseFloat(tabla.TotalMXN);
-            
-                 TotalLTS += parseFloat(tabla.Cantidad);
-                 jsonCompra[indexCompra] = tabla
-                 compra[indexCompra] = dataExcel
-                 indexCompra++
+                const realDate = res.issuedAt.substring(0, 10)
+                const dateTime = realDate;
+                const parts = dateTime.split(/[- :]/);
+                console.log(dateTime);
+                var month = parts[1];
+                var year = parts[0];
+    
+                var currentdate = new Date(fecha+"-02");
+                var cur_month = currentdate.getMonth() + 1;
+                var cur_year = currentdate.getFullYear();
+                console.log(currentdate);
+                if (cur_month == month && year == cur_year) {
+                  TotalMXN += parseFloat(tabla.TotalMXN);
+                  TotalLTS += parseFloat(tabla.Cantidad);
+                  jsonCompra[indexCompra] = tabla
+                  compra[indexCompra] = dataExcel
+                  indexCompra++
+                }
               }
             } else {
               console.log("usd");
@@ -2322,12 +3070,25 @@ console.log(fecha2.indexOf(fecha) != -1);
               // if (fecha3!=fecha) {
               //   break;
               // }
-               TotalMXN += parseFloat(tabla.TotalMXN);
-          
-               TotalLTS += parseFloat(tabla.Cantidad);
-               jsonCompra[indexCompra] = tabla
-               compra[indexCompra] = dataExcel
-               indexCompra++
+              const realDate = res.issuedAt.substring(0, 10)
+              const dateTime = realDate;
+              console.log(dateTime);
+              const parts = dateTime.split(/[- :]/);
+  
+              var month = parts[1];
+              var year = parts[0];
+  
+              var currentdate = new Date(fecha+"-02");
+              var cur_month = currentdate.getMonth() + 1;
+              var cur_year = currentdate.getFullYear();
+              console.log(currentdate);
+              if (cur_month == month && year == cur_year) {
+                TotalMXN += parseFloat(tabla.TotalMXN);
+                TotalLTS += parseFloat(tabla.Cantidad);
+                jsonCompra[indexCompra] = tabla
+                compra[indexCompra] = dataExcel
+                indexCompra++
+              }
             }
           }
 
@@ -2367,11 +3128,11 @@ const jsonVenta = {}
 
 ///venta
 let fecha4 = fecha;
-while (ApiLengthVenta > 0 && fecha4.indexOf(fecha) != -1) {
+while (ApiLengthVenta > 0) {
 
 var options = {
   'method': 'GET',
-  'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=${fecha}-30T23:59:59.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
+  'url': `https://api.satws.com/taxpayers/GEM161104H39/invoices?issuedAt[before]=2023-02-02T06:00:00.000Z&issuedAt[after]=${fecha}-01T00:00:00.000Z&issuer.rfc=GEM161104H39&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&type=I`,
   'headers': {
     'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
   }
@@ -2398,7 +3159,7 @@ await request(options, function (error, response) {
     console.log(fecha5);
 
     if (res.items[0] != undefined ) {
-      if (res.items[0].unitCode == 'LTR') {
+      if (res.items[0].unitCode == 'LTR' || res.items[0].unitCode == 'STL') {
         let entrega = {
           "TipoComplemento": "Comercializacion",
           "Nacional": [{
@@ -2584,11 +3345,32 @@ await request(options, function (error, response) {
             // if (fecha5!=fecha) {
             //   break;
             // }
-             venta[indexVenta] = dataExcel
-             totalMXNVT += parseFloat(tabla.TotalMXN);
-             totalLTSVT += parseFloat(tabla.Cantidad);
-             jsonVenta[indexVenta] = tabla
-              indexVenta++
+            console.log(res.items[0].description);
+            const realDate = res.items[0].description.split(' ')
+            const dateTime = realDate[0];
+            const parts = dateTime.split(/[- :]/);
+
+            var month = parts[1];
+            var year = parts[0];
+
+            var currentdate = new Date(fecha+"-02");
+            var cur_month = currentdate.getMonth() + 1;
+            var cur_year = currentdate.getFullYear();
+
+            var fechaInicio = new Date(res.issuedAt.substring(0, 10)).getTime();
+            var fechaFin    = new Date('2022-12-19').getTime();
+
+            var diff = fechaFin - fechaInicio;
+            diff = diff/(1000*60*60*24)
+            console.log(currentdate);
+            if (cur_month == month && year == cur_year || ((diff>= 0 && diff<18))) {
+              venta[indexVenta] = dataExcel
+              totalMXNVT += parseFloat(tabla.TotalMXN);
+              totalLTSVT += parseFloat(tabla.Cantidad);
+              jsonVenta[indexVenta] = tabla
+               indexVenta++
+            }
+
 
         } else {
             // RECEPCION.NumeroDeRegistro = res.NumeroDeRegistro
@@ -2758,11 +3540,32 @@ await request(options, function (error, response) {
             // if (fecha5!=fecha) {
             //   break;
             // }
-             venta[indexVenta] = dataExcel
-             totalMXNVT += parseFloat(tabla.TotalMXN);
-             totalLTSVT += parseFloat(tabla.Cantidad);
-             jsonVenta[indexVenta] = tabla
-              indexVenta++
+            console.log(res.items[0].description);
+            const realDate = res.items[0].description.split(' ')
+            const dateTime = realDate[0];
+            const parts = dateTime.split(/[- :]/);
+
+            var month = parts[1];
+            var year = parts[0];
+
+            var currentdate = new Date(fecha+"-02");
+            var cur_month = currentdate.getMonth() + 1;
+            var cur_year = currentdate.getFullYear();
+
+            var fechaInicio = new Date(res.issuedAt.substring(0, 10)).getTime();
+            var fechaFin    = new Date('2022-12-19').getTime();
+
+            var diff = fechaFin - fechaInicio;
+            diff = diff/(1000*60*60*24)
+            console.log(currentdate);
+            if (cur_month == month && year == cur_year || ((diff>= 0 && diff<19))) {
+              venta[indexVenta] = dataExcel
+              totalMXNVT += parseFloat(tabla.TotalMXN);
+              totalLTSVT += parseFloat(tabla.Cantidad);
+              jsonVenta[indexVenta] = tabla
+               indexVenta++
+            }
+
         }
       }
 
@@ -2844,11 +3647,16 @@ if (err) return console.log(err);
 
 });
 await delay(2000);
-res.render('VistaPrueba/Mensual',{tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS});
-
+const datos = {
+  tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS
+}
+  res.send(datos)
+} catch (error) {
+  res.send(error)
+}
 
 });
-let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
+//Glencore Final
 router.post('/diario-natgas/:fecha', async (req, res) => {
  try {
   var request = require('request');
@@ -3762,7 +4570,7 @@ router.post('/mensual-natgas/:fecha', async (req, res) => {
   
         for (const key in temp) {
           const res = temp[key]
-          // console.log(res);
+          //
           fecha3 = res.issuedAt.substring(0, 10)
           fecha2 = fecha3
           console.log(fecha3);
@@ -4421,29 +5229,1471 @@ router.post('/mensual-natgas/:fecha', async (req, res) => {
   
   
 });
-router.post('/calendar', async (req,res) =>{
-  // const data = await pool.query("select *,DATE_FORMAT(Fecha,'%d-%m-%Y') AS date from tarea");
-  let index = 0
-  // console.log(data);
-  let eventos = [];
+router.post('/mensual-natgasModificado/:fecha', async (req, res) => {
+  try {
+    let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
+
+   console.log("mess");
+   const xl = require('excel4node');
+ console.log("Empieza");
+ const wb = new xl.Workbook();
+ const ws = wb.addWorksheet('Compra');
+ const ws2 = wb.addWorksheet('Venta');
+
+ const headingColumnNames = [ 
+  'EstadoSAT',	
+ 'UUID',	
+ 'Serie',	//reference
+ 'Folio',	
+ 'Fecha',	
+ 'NombreEmisor',	
+ 'RfcEmisor',	
+ 'NombreReceptor',	
+ 'RfcReceptor',	
+ 'ClaveProdServ',	
+ 'NoIdentificacion',	
+ 'EDS',	
+ 'Descripcion',	
+ 'Unidad',	
+ 'ClaveUnidad',	
+ 'Cantidad',	
+ 'PrecioUnitario',	
+ 'Importe',	
+ 'Descuento',	
+ 'TipoCambio',
+ 'Moneda',	
+ 'Version',	
+ 'TipoCFDI'
+]
+
+//  const headingColumnNames = [
+//    "UUID",
+//    "RFC Emisor",
+//    "Nombre del Emisor",
+//    "RFC Receptor",
+//    "Nombre del Receptor",
+//    "Tipo",
+//    "Estatus",
+//    "PAC",
+//    "Moneda",
+//    "Fecha de Certificación",
+//    "Método de Pago",
+//    "Fecha de Emisión",
+//    "Condiciones de pago (original)",
+//    "No. Identificación",
+//    "Clave del producto y/o servicio",
+//    "Descripción",
+//    "Cantidad",
+//    "Clave de unidad",
+//    "Valor unitario",
+//    "Descuento",
+//    "Impuesto",
+//    "Subtotal",
+//    "Total",
+//    "TotalMXN"
+//  ]//Write Column Title in Excel file
+ 
+ var pagIndexCompra = 1
+ var pagIndexVenta = 1
+ let headingColumnIndex = 1;
+ let headingColumnIndex2 = 1;
+ let rowIndex = 2;
+ const compra = [
+ 
+ ]
+ let rowIndex2 = 2;
+ //  let index2 = 0
+ const venta = [
+ 
+ ]
+ headingColumnNames.forEach(heading => {
+ ws.cell(1, headingColumnIndex++)
+     .string(heading)
+ });//Write Data in Excel file headingColumnIndex = 1;
+ headingColumnNames.forEach(heading => {
+ ws2.cell(1, headingColumnIndex2++)
+     .string(heading)
+ });//Write Data in Excel file
+ 
+ var request = require('request');
+ // let temp;2022-10-25
+ var datoCompra;
+ 
+ let fecha = req.params.fecha
+ const fechasplit = fecha.split("-")
+ if (fechasplit[1].length == 1) {
+ 
+   fecha = `${fechasplit[0]}-0${fechasplit[1]}`
+ }
+ console.log(fecha)
+ 
+ 
+ let tabla
+ let totalMXNC
+ let totalLTSC
+ let fecha2 =fecha
+ var pagIndexCompra =1
+ let TotalMXN = 0.00;
+ let TotalLTS = 0.00;
+ let ApiLength= 10
+ let indexCompra = 0;
+ const jsonCompra = {}
+ console.log(ApiLength);
+ const nov =[
+  'B5B0D408-7671-11ED-822D-BDE83B1B2B56',
+'87D95CAF-74C2-11ED-A002-E5B00C2E5FDA',
+'0A422963-896A-11ED-8ABE-A1EAABC586BF',
+'07912557-75B0-11ED-A4CD-79741F910A9C',
+'03FD9E3F-75B0-11ED-9A70-CD318E6B658A',
+'9A0C02CB-772F-11ED-8C8D-D1DB0F71A04F',
+'6EB19573-7D79-11ED-9C6F-717862C1372B',
+'ECFE82AF-7596-11ED-A046-17D4172A3019',
+'712F3308-7685-11ED-9EE2-17CCACDE5971',
+'EF60DC11-7596-11ED-8524-1D7FB1C4EAF4',
+'2AC50A60-7826-11ED-9AD7-0548B97B728D',
+'1719A396-7826-11ED-BFE0-036F92C89A17',
+'5F38C661-7826-11ED-A6C2-21F21770A258',
+'3CA6AD9D-7826-11ED-AF5C-CBC595120E8D',
+'5183408D-7826-11ED-8442-7FCF3E93BFB5',
+'1BDE581C-7826-11ED-AE25-A92AD6F423E6',
+'12ED869D-7826-11ED-8D9C-E3EB970B47E1',
+'1A149446-7826-11ED-B72E-1B51303CC06A',
+'200A7537-7826-11ED-B88F-D12801702F9E',
+'59DB7C18-7826-11ED-9ADC-2BF03625C0CF',
+'2567C017-7826-11ED-A3A7-B993E0F4C63F',
+'40D910E1-7B2F-11ED-BA48-CB11D3CFB6A6',
+'94F64C5D-74C2-11ED-9662-27A6E625BCAB',
+'AF5D13DD-751C-11ED-B128-5FC19EEE59BC',
+'AE2BE6A0-751C-11ED-AA2D-E95EE35FA989',
+'B1BF6D3F-751C-11ED-BA9A-3D2FDFD87BEC',
+'2633D36A-8946-11ED-8981-C5C06711E7B2',
+'E2E72D57-7CD6-11ED-9260-C14F15393A8A'
+
+ ]
+//  while (ApiLength > 0) {
+//    console.log('asdas');
+//      var options = {
+//        'method': 'GET',
+//        'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-12-31T23:59:59.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&receiver.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexCompra}&itemsPerPage=100`,
+//        'headers': {
+//          'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+//        }
+//      };
+//      pagIndexCompra++
+ 
+//      let fecha3;
+ 
+//    /*
+   
+//    15101505 == DISEL 
+//    15101514 == 87 OCTANOS
+//    15101515 == 91 OCTANOS
+//    */
+//      await request(options, function (error, response) {
+//        if (error) throw new Error(error);
+//        // console.log(response.body);
+//                    // console.log(diario);
+ 
+          
+//        let temp = JSON.parse(response.body);
+//        temp = temp['hydra:member']
+//        console.log("@@@@@@@@@@@");
+//        ApiLength = temp.length
+//        for (const key in temp) {
+//          const res = temp[key]
+//          //
+//          fecha3 = res.issuedAt.substring(0, 10)
+//          fecha2 = fecha3
+//          console.log(fecha3);
+//         if (res.items[0] != undefined ) {
+//           if (res.items[0].unitCode === 'GV') {
+//             let RECEPCION = {
+//               "TipoComplemento": "Expendio",
+//               "Nacional": [{
+//                   "RfcClienteOProveedor": res.receiver.rfc,
+//                   "NombreClienteOProveedor": res.receiver.name,
+//                   "PermisoClienteOProveedor": "H/09857/COM/2015",
+//                   "CFDIs": [{
+//                       "Cfdi": res.uuid,
+//                       "TipoCfdi": "Egreso",
+//                       "PrecioVentaOCompraOContrap":(res.items[0].totalAmount),
+//                       "FechaYHoraTransaccion": res.issuedAt,
+//                       "VolumenDocumentado": {
+//                           "ValorNumerico": res.items[0].quantity,
+//                           "UnidadDeMedida": "UM04"
+//                       }
+//                   }]
+//               }]
+//           }
+//             console.log("normal");
+//            //  RECEPCION.Nacional[0].RfcClienteOProveedor = res.receiver.rfc
+//            //  RECEPCION.Nacional[0].NombreClienteOProveedor = res.receiver.name
+//            //  RECEPCION.Nacional[0].CFDIs[0].Cfdi = res.uuid
+//            //  RECEPCION.Nacional[0].CFDIs[0].TipoCfdi = 'Ingreso'
+//            //  RECEPCION.Nacional[0].CFDIs[0].PrecioVentaOCompraOContrap = (res.items[0].totalAmount)
+//            //  RECEPCION.Nacional[0].CFDIs[0].FechaYHoraTransaccion = res.issuedAt
+//            //  RECEPCION.Nacional[0].CFDIs[0].VolumenDocumentado.ValorNumerico = res.items[0].quantity
+        
+//             productoEstructura.ReporteDeVolumenMensual.Recepciones.Complemento.push(RECEPCION)
+//             productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes= productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalRecepcionesMes + 1
+//             productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Recepciones.SumaVolumenRecepcionMes.ValorNumerico + res.items[0].quantity//ltr
+//             productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Recepciones.TotalDocumentosMes + 1
+//             productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual = productoEstructura.ReporteDeVolumenMensual.Recepciones.ImporteTotalRecepcionesMensual +  (res.items[0].totalAmount)//mxn
+            
+//             let metodoPago = ''
+//             switch (res.paymentMethod) {
+//               case 01:
+//                 metodoPago = 'Efectivo'
+//                 break;
+//                 case 02:
+//                   metodoPago = 'Cheque de nómina'
+//                   break;
+//                   case 03:
+//                     metodoPago = 'Transferencia electrónica'
+//                     break;
+//                     case 04:
+//                       metodoPago = 'Tarjeta de crédito'
+//                       break;
+//                       case 05:
+//                         metodoPago = 'Monedero electrónico'
+//                         break;
+//                         case 06:
+//                           metodoPago = 'Dinero digital'
+//                           break;
+//                           case 08:
+//                             metodoPago = 'Vales de despensa'
+//                             break;
+//                             case 12:
+//                               metodoPago = 'Liquidación'
+//                               break;
+//                               case 13:
+//                                 metodoPago = 'Pago por subrogación'
+//                                 break;
+//                                 case 14:
+//                                   metodoPago = 'Pago por consignación'
+//                                   break;
+//                                   case 15:
+//                                     metodoPago = 'Condonación'
+//                                     break;
+//                                     case 17:
+//                                       metodoPago = 'Compensación'
+//                                       break;
+//                                       case 23:
+//                                         metodoPago = 'Novacion'
+//                                         break;
+//                                         case 24:
+//                                           metodoPago = 'Confusión'
+//                                           break;
+//                                           case 25:
+//                                             metodoPago = 'Envío de deuda'
+//                                             break;
+//                                             case 26:
+//                                               metodoPago = 'Prescripción o caducidad'
+//                                               break;
+//                                               case 27:
+//                                                 metodoPago = 'A satisfacción del acreedor'
+//                                                 break;
+//                                                 case 28:
+//                                                   metodoPago = 'Tarjeta de débito'
+//                                                   break;
+//                                                   case 29:
+//                                                     metodoPago = 'Tarjeta de servicio'
+//                                                     break;
+                
+            
+//               default:
+//                 metodoPago = 'Por definir'
+//                 break;
+//             }
+           
+//             const dataExcel = {
+//               "UUID":res.uuid,
+//               "RFC Emisor":res.issuer.rfc,
+//               "Nombre del Emisor":res.issuer.name,
+//               "RFC Receptor":res.receiver.rfc,
+//               "Nombre del Receptor":res.receiver.name,
+//               "Tipo":res.type == 'I' ? 'Ingreso':'',
+//               "Estatus":res.status,
+//               "PAC":res.pac,
+//               "Moneda":res.currency,
+//               "Fecha de Certificación":res.certifiedAt.substring(0, 10),
+//               "Método de Pago":metodoPago,
+//               "Fecha de Emisión":res.issuedAt.substring(0, 10),
+//               "Condiciones de pago (original)":res.paymentTermsRaw,
+//               "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+//               "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+//               "Descripción":res.items[0].description,
+//               "Cantidad":res.items[0].quantity.toString(),
+//               "Clave de unidad":res.items[0].unitCode,
+//               "Valor unitario":res.items[0].unitAmount.toString(),
+//               "Descuento":res.discount.toString(),
+//               "Impuesto":res.tax,
+//               "Subtotal":res.subtotal.toString(),
+//               "Total":res.total.toString(),
+//               "TotalMXN": (res.items[0].totalAmount).toString()
+//             }
+//             const tabla = {
+//               RFCEmisor:res.issuer.rfc,
+//               Emisor:res.issuer.name,
+//               RegimenFiscal:res.issuer.taxRegime,
+//               RFCReceptor:res.receiver.rfc,
+//               Receptor:res.receiver.name,
+//               RegimenFiscalReceptor:res.issuer.taxRegime,
+//               DomicilioFiscalReceptor:'11560',
+//               UsoCFDI:res.usage,
+//               Estatus:res.status,
+//               FechaEmision:res.issuedAt,
+//               FullDate:res.issuedAt.substring(0, 10),
+//               Subtotal:res.subtotal,
+//               Descuento:res.discount,
+//               Impuesto:res.tax,
+//               Total:res.total,
+//               UUID:res.uuid,
+//               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+//               Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+//               Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+//               Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+//               Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+//               ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+//               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+//               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+//               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+//               // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+//               // Impuesto:res.items[0] != undefined ? res.tax : '',
+            
+//               Moneda:res.currency,
+//               VersionCFDI:res.version,
+//               Fechacompleta:res.issuedAt.substring(0, 10),
+//               TotalMXN:(res.items[0].totalAmount)
+//             }
+//             // if (fecha3!=fecha) {
+//             //   break;
+//             // }
+//              TotalMXN += parseFloat(tabla.TotalMXN);
+        
+//              TotalLTS += parseFloat(tabla.Cantidad);
+//              jsonCompra[indexCompra] = tabla
+//              compra[indexCompra] = dataExcel
+//              indexCompra++
+//           }
+         
+         
+
+//        }
+ 
+//        // console.log(tabla);
+//        }
+ 
+//    });
+//    await delay(3300);
+//    }
+   console.log("paso");
+    datoCompra = {
+     data:jsonCompra,
+     totalMXN:TotalMXN,
+     totalLTS:TotalLTS
+   }
+   datoCompraMensual = {
+     data:datoCompra.data
+   }
+    tabla = datoCompra.data
+    totalMXNC = datoCompra.totalMXN
+    totalLTSC = datoCompra.totalLTS
+ 
+    let tablaVenta
+ let totalMXNVT = 0.0
+ let totalLTSVT = 0.0
+ let totalMXNV= 0.0
+ let totalLTSV= 0.0
+ 
+ var pagIndexVenta =1
+ 
+ let ApiLengthVenta= 10
+ let indexVenta = 0;
+ const jsonVenta = {}
+ 
+ ///venta
+ let fecha4 = fecha;
+ let indexLoopVenta = 0
+try {
+  while (ApiLengthVenta > 0) {
+    var options = {
+      'method': 'GET',
+      'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2023-01-01T06:00:00.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&issuer.rfc=NQU120510QZ7&status=VIGENTE&page=${pagIndexVenta}&itemsPerPage=100&`,
+      'headers': {
+        'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+      }
+    };
+    // var options = {
+    //   'method': 'GET',
+    //   'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?issuedAt[before]=2022-12-31T23:59:59.000Z&issuedAt[after]=2022-12-01T06:00:00.000Z&receiver.rfc=TCA980629FC6`,
+    //   'headers': {
+    //     'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+    //   }
+    // };
+    // TCA980629FC6
+    pagIndexVenta++
+    // console.log(options.url);
+    let fecha5;
+    
+    await request(options, function (error, response) {
+      if (error) {
+        res.send(response)
+      }
+      if (error) throw new Error(error);
+      console.log(options);
+      let temp = JSON.parse(response.body);
+      temp = temp['hydra:member']
+      console.log("@@@@@@@@@@@");
+      ApiLengthVenta = temp.length
+    //  ApiLengthVenta = 0
+      for (const key in temp) {
+        const res = temp[key]
+    
+        fecha5 = res.issuedAt.substring(0, 10)
+        fecha4 = fecha5
+        if (nov.indexOf(res.uuid) == -1) {
+          if (res.items[0] != undefined ) {
+            console.log(res.items.length, '    <======================');
+        if (res.items.length<2) {
+         const identificationNumber = res.items[0].identificationNumber
+         if (identificationNumber !== null) {
+           try {
+             if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
+              console.log(res.receiver.rfc);
+               const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
+               console.log(alredyinJson);
+               console.log('^^^^^^^^^^^^^');
+                 if (alredyinJson == false) {
+                  console.log('no exite');
+                   let entrega = {
+                     "NombreClienteOProveedor": res.receiver.name,
+                     "RfcClienteOProveedor": res.receiver.rfc,
+                       "CFDIs": [{
+                           "Cfdi": res.uuid,
+                           "TipoCfdi": "Ingreso",
+                           "PrecioCompra": res.items[0].unitAmount,
+                           "PrecioDeVentaAlPublico": res.items[0].unitAmount,
+                           "PrecioVentaOCompraOContrap": (res.items[0].totalAmount),
+                           "PrecioVenta": res.items[0].totalAmount,
+                           "FechaYHoraTransaccion": res.issuedAt,
+                           "VolumenDocumentado": {
+                               "ValorNumerico": res.items[0].quantity,
+                               "UnidadDeMedida": "UM04"
+                           }
+                       }]
+               }
+                   // entrega.RfcClienteOProveedor = 
+                   // entrega.NombreClienteOProveedor = 
+                   // entrega.CFDIs[0].Cfdi = 
+                   // entrega.CFDIs[0].TipoCfdi = 'Ingreso'
+                   // entrega.CFDIs[0].PrecioVentaOCompraOContrap = 
+                   // entrega.CFDIs[0].FechaYHoraTransaccion = 
+                   // entrega.CFDIs[0].VolumenDocumentado.ValorNumerico = 
+                  
+                     productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entrega)
+                 } else {
+                  console.log('si existe');
+                   let entrega = {
+                           "Cfdi": res.uuid,
+                           "TipoCfdi": "Ingreso",
+                           "PrecioCompra": res.items[0].unitAmount,
+                           "PrecioDeVentaAlPublico": res.items[0].unitAmount,
+                           "PrecioVentaOCompraOContrap": (res.items[0].totalAmount),
+                           "PrecioVenta": res.items[0].totalAmount,
+                           "FechaYHoraTransaccion": res.issuedAt,
+                           "VolumenDocumentado": {
+                               "ValorNumerico": res.items[0].quantity,
+                               "UnidadDeMedida": "UM04"
+                           }
+                       }
+                   productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.forEach(element => {
+                     console.log(element.RfcClienteOProveedor,'-------------------------',res.receiver.rfc, res.uuid);
+                     console.log(element.RfcClienteOProveedor  == res.receiver.rfc);
+                     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                     if (element.RfcClienteOProveedor  == res.receiver.rfc) {
+                       element.CFDIs.push(entrega)
+                     }
+                   });
+                 }
+                 productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+                 productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+                 productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+                 productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[0].totalAmount)//mxn
+                 
+                 let metodoPago = ''
+                 switch (res.paymentMethod) {
+                   case 01:
+                     metodoPago = 'Efectivo'
+                     break;
+                     case 02:
+                       metodoPago = 'Cheque de nómina'
+                       break;
+                       case 03:
+                         metodoPago = 'Transferencia electrónica'
+                         break;
+                         case 04:
+                           metodoPago = 'Tarjeta de crédito'
+                           break;
+                           case 05:
+                             metodoPago = 'Monedero electrónico'
+                             break;
+                             case 06:
+                               metodoPago = 'Dinero digital'
+                               break;
+                               case 08:
+                                 metodoPago = 'Vales de despensa'
+                                 break;
+                                 case 12:
+                                   metodoPago = 'Liquidación'
+                                   break;
+                                   case 13:
+                                     metodoPago = 'Pago por subrogación'
+                                     break;
+                                     case 14:
+                                       metodoPago = 'Pago por consignación'
+                                       break;
+                                       case 15:
+                                         metodoPago = 'Condonación'
+                                         break;
+                                         case 17:
+                                           metodoPago = 'Compensación'
+                                           break;
+                                           case 23:
+                                             metodoPago = 'Novacion'
+                                             break;
+                                             case 24:
+                                               metodoPago = 'Confusión'
+                                               break;
+                                               case 25:
+                                                 metodoPago = 'Envío de deuda'
+                                                 break;
+                                                 case 26:
+                                                   metodoPago = 'Prescripción o caducidad'
+                                                   break;
+                                                   case 27:
+                                                     metodoPago = 'A satisfacción del acreedor'
+                                                     break;
+                                                     case 28:
+                                                       metodoPago = 'Tarjeta de débito'
+                                                       break;
+                                                       case 29:
+                                                         metodoPago = 'Tarjeta de servicio'
+                                                         break;
+                     
+                 
+                   default:
+                     metodoPago = 'Por definir'
+                     break;
+                 }
+
+                 const dataExcel = {
+                  'EstadoSAT': res.status,	
+                  'UUID': res.uuid,	
+                  'Serie': res.reference,	//reference
+                  'Folio': res.internalIdentifier,	
+                  'Fecha': res.issuedAt,	
+                  'NombreEmisor': res.issuer.name,	
+                  'RfcEmisor': res.issuer.rfc,	
+                  'NombreReceptor': res.receiver.name,	
+                  'RfcReceptor': res.receiver.rfc,	
+                  'ClaveProdServ': res.items[0].productIdentification,	
+                  'NoIdentificacion': res.items[0].identificationNumber,	
+                  'EDS': 'PRZ',	
+                  'Descripcion': res.items[0].description,	
+                  'Unidad': res.items[0].unitAmount,	
+                  'ClaveUnidad': res.items[0].unitCode,	
+                  'Cantidad': res.items[0].quantity,	
+                  'PrecioUnitario': res.items[0].unitAmount,	
+                  'Importe': res.items[0].quantity * res.items[0].unitAmount,	
+                  'Descuento': res.items[0].discountAmount,	
+                  'TipoCambio': 1,
+                  'Moneda': res.currency,	
+                  'Version': res.version,	
+                  'TipoCFDI':res.type == 'I' ? 'Ingreso':''
+                 }
+                //  const dataExcel = {
+                //    "UUID":res.uuid,
+                //    "RFC Emisor":res.issuer.rfc,
+                //    "Nombre del Emisor":res.issuer.name,
+                //    "RFC Receptor":res.receiver.rfc,
+                //    "Nombre del Receptor":res.receiver.name,
+                //    "Tipo":res.type == 'I' ? 'Ingreso':'',
+                //    "Estatus":res.status,
+                //    "PAC":res.pac,
+                //    "Moneda":res.currency,
+                //    "Fecha de Certificación":res.certifiedAt,
+                //    "Método de Pago":metodoPago,
+                //    "Fecha de Emisión":res.issuedAt,
+                //    "Condiciones de pago (original)":res.paymentTermsRaw,
+                //    "No. Identificación":res.items[0].identificationNumber != null ? res.items[0].identificationNumber.toString() : '',
+                //    "Clave del producto y/o servicio":res.items[0].productIdentification.toString(),
+                //    "Descripción":res.items[0].description,
+                //    "Cantidad":res.items[0].quantity.toString(),
+                //    "Clave de unidad":res.items[0].unitCode,
+                //    "Valor unitario":res.items[0].unitAmount.toString(),
+                //    "Descuento":res.discount.toString(),
+                //    "Impuesto":'',
+                //    "Subtotal":res.subtotal.toString(),
+                //    "Total":res.total.toString(),
+                //    "TotalMXN": (res.items[0].totalAmount).toString()
+                //   }
+                 const tabla = {
+                   RFCEmisor:res.issuer.rfc,
+                   Emisor:res.issuer.name,
+                   RegimenFiscal:res.issuer.taxRegime,
+                   RFCReceptor:res.receiver.rfc,
+                   Receptor:res.receiver.name,
+                   RegimenFiscalReceptor:res.issuer.taxRegime,
+                   DomicilioFiscalReceptor:'11560',
+                   UsoCFDI:res.usage,
+                   Estatus:res.status,
+                   FechaEmision:res.issuedAt,
+                   FullDate:res.issuedAt.substring(0, 10),
+                   Subtotal:res.subtotal,
+                   Descuento:res.discount,
+                   Impuesto:res.tax,
+                   Total:res.total,
+                   UUID:res.uuid,
+                   Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                   Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+                   Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+                   Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+                   Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+                   ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+                   DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+                   NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+                   ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+                   // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+                   // Impuesto:res.items[0] != undefined ? res.tax : '',
+                 
+                   Moneda:res.currency,
+                   VersionCFDI:res.version,
+                   Fechacompleta:res.issuedAt.substring(0, 10),
+                   TotalMXN:(res.items[0].totalAmount)
+                 }
+               venta[indexVenta] = dataExcel
+               totalMXNVT += parseFloat(tabla.TotalMXN);
+               totalLTSVT += parseFloat(tabla.Cantidad);
+               jsonVenta[indexVenta] = tabla
+               indexVenta++
+               
+              }
+           } catch (error) {
+             console.log(error);
+           }
+     
+     
+         }
+     } else {
+       console.log(res.receiver.rfc);
+       let entregaNoGeneral = {
+      
+         "NombreClienteOProveedor": res.receiver.name,
+         "RfcClienteOProveedor": res.receiver.rfc,
+           "CFDIs": []
+     
+         }
+       let noEmpty = 0
+       let ifExist = 0
+           for (const key in res.items) {
+     
+     
+               const identificationNumber = res.items[key].identificationNumber
+               if (identificationNumber != null) {
+                 try {
+                   if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
+                     noEmpty = 1
+                     let entregaCFDINoGeneral = {
+                       "Cfdi": res.uuid,
+                       "TipoCfdi": "Ingreso",
+                       "PrecioCompra": res.items[key].unitAmount,
+                       "PrecioDeVentaAlPublico": res.items[key].unitAmount,
+                       "PrecioVenta": res.items[key].totalAmount,
+                       "PrecioVentaOCompraOContrap": (res.items[key].totalAmount),
+                       "FechaYHoraTransaccion": res.issuedAt,
+                       "VolumenDocumentado": {
+                           "ValorNumerico": res.items[key].quantity,
+                           "UnidadDeMedida": "UM04"
+                       }
+                     }
+                     // entregaCFDINoGeneral.Cfdi = res.uuid
+                     // entregaCFDINoGeneral.TipoCfdi = 'Ingreso'
+                     // entregaCFDINoGeneral.PrecioVentaOCompraOContrap = 
+                 // entregaCFDINoGeneral.FechaYHoraTransaccion = 
+                     // entregaCFDINoGeneral.VolumenDocumentado.ValorNumerico = 
+                     const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
+                     console.log(alredyinJson);
+                     if (alredyinJson == true) {
+                       ifExist =1
+                     }
+                     entregaNoGeneral.CFDIs.push(entregaCFDINoGeneral)
+                       productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+                       productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[key].quantity//ltr
+                       productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+                       productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[key].totalAmount)//mxn
+                       
+                       let metodoPago = ''
+                       switch (res.paymentMethod) {
+                         case 01:
+                           metodoPago = 'Efectivo'
+                           break;
+                           case 02:
+                             metodoPago = 'Cheque de nómina'
+                             break;
+                             case 03:
+                               metodoPago = 'Transferencia electrónica'
+                               break;
+                               case 04:
+                                 metodoPago = 'Tarjeta de crédito'
+                                 break;
+                                 case 05:
+                                   metodoPago = 'Monedero electrónico'
+                                   break;
+                                   case 06:
+                                     metodoPago = 'Dinero digital'
+                                     break;
+                                     case 08:
+                                       metodoPago = 'Vales de despensa'
+                                       break;
+                                       case 12:
+                                         metodoPago = 'Liquidación'
+                                         break;
+                                         case 13:
+                                           metodoPago = 'Pago por subrogación'
+                                           break;
+                                           case 14:
+                                             metodoPago = 'Pago por consignación'
+                                             break;
+                                             case 15:
+                                               metodoPago = 'Condonación'
+                                               break;
+                                               case 17:
+                                                 metodoPago = 'Compensación'
+                                                 break;
+                                                 case 23:
+                                                   metodoPago = 'Novacion'
+                                                   break;
+                                                   case 24:
+                                                     metodoPago = 'Confusión'
+                                                     break;
+                                                     case 25:
+                                                       metodoPago = 'Envío de deuda'
+                                                       break;
+                                                       case 26:
+                                                         metodoPago = 'Prescripción o caducidad'
+                                                         break;
+                                                         case 27:
+                                                           metodoPago = 'A satisfacción del acreedor'
+                                                           break;
+                                                           case 28:
+                                                             metodoPago = 'Tarjeta de débito'
+                                                             break;
+                                                             case 29:
+                                                               metodoPago = 'Tarjeta de servicio'
+                                                               break;
+                           
+                       
+                         default:
+                           metodoPago = 'Por definir'
+                           break;
+                       }
+                       const dataExcel = {
+                        'EstadoSAT': res.status,	
+                        'UUID': res.uuid,	
+                        'Serie': res.reference,	//reference
+                        'Folio': res.internalIdentifier,	
+                        'Fecha': res.issuedAt,	
+                        'NombreEmisor': res.issuer.name,	
+                        'RfcEmisor': res.issuer.rfc,	
+                        'NombreReceptor': res.receiver.name,	
+                        'RfcReceptor': res.receiver.rfc,	
+                        'ClaveProdServ': res.items[key].productIdentification,	
+                        'NoIdentificacion': res.items[key].identificationNumber,	
+                        'EDS': 'PRZ',	
+                        'Descripcion': res.items[key].description,	
+                        'Unidad': res.items[key].unitAmount,	
+                        'ClaveUnidad': res.items[key].unitCode,	
+                        'Cantidad': res.items[key].quantity,	
+                        'PrecioUnitario': res.items[key].unitAmount,	
+                        'Importe': res.items[key].quantity * res.items[key].unitAmount,	
+                        'Descuento': res.items[key].discountAmount,	
+                        'TipoCambio': 1,
+                        'Moneda': res.currency,	
+                        'Version': res.version,	
+                        'TipoCFDI':res.type == 'I' ? 'Ingreso':''
+                       }
+                       const tabla = {
+                         RFCEmisor:res.issuer.rfc,
+                         Emisor:res.issuer.name,
+                         RegimenFiscal:res.issuer.taxRegime,
+                         RFCReceptor:res.receiver.rfc,
+                         Receptor:res.receiver.name,
+                         RegimenFiscalReceptor:res.issuer.taxRegime,
+                         DomicilioFiscalReceptor:'11560',
+                         UsoCFDI:res.usage,
+                         Estatus:res.status,
+                         FechaEmision:res.issuedAt,
+                         FullDate:res.issuedAt.substring(0, 10),
+                         Subtotal:res.subtotal,
+                         Descuento:res.discount,
+                         Impuesto:res.tax,
+                         Total:res.total,
+                         UUID:res.uuid,
+                         Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                         Unidad:res.items[key] != undefined ? res.items[key].unitCode : 'LTR',
+                         Cantidad:res.items[key] != undefined ? res.items[key].quantity : '0.00',
+                         Descripcion:res.items[key] != undefined ? res.items[key].description : '',
+                         Valorunitario:res.items[key] != undefined ? res.items[key].unitAmount : '',
+                         ImporteConcepto:res.items[key] != undefined ? res.items[key].totalAmount : '',
+                         DescuentoConcepto:res.items[key] != undefined ? res.items[key].discountAmount : '',
+                         NoIdentificacion:res.items[key] != undefined ? res.items[key].identificationNumber : '',
+                         ClaveSAT:res.items[key] != undefined ? res.items[key].productIdentification : '',
+                         // ImporteImpuesto:res.items[key] != undefined ? res.tax : '',
+                         // Impuesto:res.items[key] != undefined ? res.tax : '',
+                       
+                         Moneda:res.currency,
+                         VersionCFDI:res.version,
+                         Fechacompleta:res.issuedAt.substring(0, 10),
+                         TotalMXN:(res.items[key].totalAmount)
+                       }
+                     venta[indexVenta] = dataExcel
+                     totalMXNVT += parseFloat(tabla.TotalMXN);
+                     totalLTSVT += parseFloat(tabla.Cantidad);
+                     jsonVenta[indexVenta] = tabla
+                     indexVenta++
+                     
+                    }
+                 } catch (error) {
+                   console.log(error);
+                 }
+                 
+               }
+           }
+           if (noEmpty != 0) {
+            console.log(ifExist, '<<<<<<<<<<<<<<<<');
+             if (ifExist == 1) {
+               console.log('ya estas');
+               productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.forEach(element => {
+                 console.log(element.RfcClienteOProveedor );
+                 if (element.RfcClienteOProveedor  == res.receiver.rfc) {
+                   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                   entregaNoGeneral.CFDIs.forEach(element2 => {
+                     element.CFDIs.push(element2)
+                   });
+                 }
+               });
+             }else{
+     
+               productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entregaNoGeneral)
+             }
+           }
+     }
+          }
+        }
+
+
+      // console.log(tabla);
+      }
+    
+    });
+    await delay(4300);
+    
+    }
+} catch (error) {
+  console.log(error);
+}
+
+const dic = [
+  'D19A9C70-8C56-11ED-B1A0-63422FE357BC',
+'FBB00920-91D6-11ED-86C7-5BD3894DE868',
+'FCE13599-91D6-11ED-AC12-8527605341A3',
+'7E4BB619-9C24-11ED-8E12-65FEA27C95FC',
+'FC489F52-91D6-11ED-A50A-65168B9B9AF4',
+'FD79CCAF-91D6-11ED-BF38-97DDFCD0ED48',
+'2BA65C4B-8C6D-11ED-88F8-1F8559D3086A',
+'6784F5CA-8C5C-11ED-9AD9-A989126F446A',
+'69E74F19-8C5C-11ED-BD4E-65FE1F09CCB6',
+'6D7AD64B-8C5C-11ED-91DF-CDC4E441FD78',
+'68B62233-8C5C-11ED-879B-816E1CEF0705',
+'6B187C22-8C5C-11ED-BB1F-A9644C3ECADD',
+'6CE23FF4-8C5C-11ED-AF66-2772512840B4',
+'694EB91D-8C5C-11ED-B514-9FA22E9DFF9C',
+'6A7FE657-8C5C-11ED-9342-25F8F6F7D9FB',
+'6BB112FF-8C5C-11ED-832E-8BCB596EE617',
+'33F79AB4-8C5F-11ED-AEF1-E9AE82C3415E',
+'065923FC-8C54-11ED-B1F7-CD9A109075EA',
+'08BB7E73-8C54-11ED-9FED-6B5D3A8E234B',
+'09541499-8C54-11ED-BB9B-074EF10AF95B',
+'714CCFA4-92D2-11ED-8518-BB5801888487',
+'3B17ABE8-8C51-11ED-A1EB-176B7CD70406',
+'3C48D975-8C51-11ED-991C-D7D275973EF6',
+'3BB04230-8C51-11ED-A8E0-79471FE01228',
+'F483FDB1-91CC-11ED-BAFB-41F603862387',
+'F8B01B7F-91CC-11ED-8AD8-17DBC9228832',
+'F81784CE-91CC-11ED-9BDA-C30C3AAE9BCB',
+'F77EEE18-91CC-11ED-BDBC-496E51BB0052',
+'197E6D1C-91D9-11ED-A5CE-C559E62EC722',
+'F352D0DA-91CC-11ED-977E-197C352B66E8',
+'F6E6573B-91CC-11ED-8761-DF072CA80873',
+'F5B52A9A-91CC-11ED-952E-475195F46BAF',
+'408B6D8E-91DE-11ED-BDA5-7BC823B09924',
+'F51C939E-91CC-11ED-B734-D97734C99125',
+'F483FDBE-91CC-11ED-B914-270AED910C74',
+'2E29FCA8-9045-11ED-8A94-EF9746D250AA',
+'0822E7CD-8C54-11ED-ADBB-05FC58BA5F7A',
+'08BB7E02-8C54-11ED-8D5C-F31F38E1C583',
+'6FD633FB-8C4E-11ED-81AE-7585EC259C10',
+'706ECAEA-8C4E-11ED-B8D4-BDB915836A76',
+'3E4FD574-9061-11ED-BD55-8B8BCC69CE3D',
+'A5C5E88F-8C4B-11ED-AED6-4D6E80716525',
+'08BB7E50-8C54-11ED-A763-83E88FB6FCB1',
+'0822E7E3-8C54-11ED-8A0E-E1425F0699A3',
+'2432B44D-98F7-11ED-BD2D-E182C0929791',
+
+]
+
+dic.forEach(async element => {
+  var options = {
+    'method': 'GET',
+    'url': `https://api.satws.com/taxpayers/NQU120510QZ7/invoices?uuid=${element}&itemsPerPage=100&`,
+    'headers': {
+      'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb'
+    }
+  };
+  pagIndexVenta++
+  console.log(options.url);
+  let fecha5;
+  
+  await request(options, function (error, response) {
+    if (error) throw new Error(error);
+    let temp = JSON.parse(response.body);
+    temp = temp['hydra:member']
+    console.log("@@@@@@@@@@@");
+    ApiLengthVenta = temp.length
+  //  ApiLengthVenta = 0
+    for (const key in temp) {
+      const res = temp[key]
+  
+      fecha5 = res.issuedAt.substring(0, 10)
+      fecha4 = fecha5
+  
+      if (res.items[0] != undefined ) {
+        console.log(res.items.length, '    <======================');
+    if (res.items.length<2) {
+     const identificationNumber = res.items[0].identificationNumber
+     if (identificationNumber !== null) {
+       try {
+         if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
+          console.log(res.receiver.rfc);
+           const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
+           console.log(alredyinJson);
+           console.log('^^^^^^^^^^^^^');
+             if (alredyinJson == false) {
+              console.log('no exite');
+               let entrega = {
+                 "NombreClienteOProveedor": res.receiver.name,
+                 "RfcClienteOProveedor": res.receiver.rfc,
+                   "CFDIs": [{
+                       "Cfdi": res.uuid,
+                       "TipoCfdi": "Ingreso",
+                       "PrecioCompra": res.items[0].unitAmount,
+                       "PrecioDeVentaAlPublico": res.items[0].unitAmount,
+                       "PrecioVentaOCompraOContrap": (res.items[0].totalAmount),
+                       "PrecioVenta": res.items[0].totalAmount,
+                       "FechaYHoraTransaccion": res.issuedAt,
+                       "VolumenDocumentado": {
+                           "ValorNumerico": res.items[0].quantity,
+                           "UnidadDeMedida": "UM04"
+                       }
+                   }]
+           }
+               // entrega.RfcClienteOProveedor = 
+               // entrega.NombreClienteOProveedor = 
+               // entrega.CFDIs[0].Cfdi = 
+               // entrega.CFDIs[0].TipoCfdi = 'Ingreso'
+               // entrega.CFDIs[0].PrecioVentaOCompraOContrap = 
+               // entrega.CFDIs[0].FechaYHoraTransaccion = 
+               // entrega.CFDIs[0].VolumenDocumentado.ValorNumerico = 
+              
+                 productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entrega)
+             } else {
+              console.log('si existe');
+               let entrega = {
+                       "Cfdi": res.uuid,
+                       "TipoCfdi": "Ingreso",
+                       "PrecioCompra": res.items[0].unitAmount,
+                       "PrecioDeVentaAlPublico": res.items[0].unitAmount,
+                       "PrecioVentaOCompraOContrap": (res.items[0].totalAmount),
+                       "PrecioVenta": res.items[0].totalAmount,
+                       "FechaYHoraTransaccion": res.issuedAt,
+                       "VolumenDocumentado": {
+                           "ValorNumerico": res.items[0].quantity,
+                           "UnidadDeMedida": "UM04"
+                       }
+                   }
+               productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.forEach(element => {
+                 console.log(element.RfcClienteOProveedor,'-------------------------',res.receiver.rfc, res.uuid);
+                 console.log(element.RfcClienteOProveedor  == res.receiver.rfc);
+                 console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                 if (element.RfcClienteOProveedor  == res.receiver.rfc) {
+                   element.CFDIs.push(entrega)
+                 }
+               });
+             }
+             productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+             productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[0].quantity//ltr
+             productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+             productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[0].totalAmount)//mxn
+             
+             let metodoPago = ''
+             switch (res.paymentMethod) {
+               case 01:
+                 metodoPago = 'Efectivo'
+                 break;
+                 case 02:
+                   metodoPago = 'Cheque de nómina'
+                   break;
+                   case 03:
+                     metodoPago = 'Transferencia electrónica'
+                     break;
+                     case 04:
+                       metodoPago = 'Tarjeta de crédito'
+                       break;
+                       case 05:
+                         metodoPago = 'Monedero electrónico'
+                         break;
+                         case 06:
+                           metodoPago = 'Dinero digital'
+                           break;
+                           case 08:
+                             metodoPago = 'Vales de despensa'
+                             break;
+                             case 12:
+                               metodoPago = 'Liquidación'
+                               break;
+                               case 13:
+                                 metodoPago = 'Pago por subrogación'
+                                 break;
+                                 case 14:
+                                   metodoPago = 'Pago por consignación'
+                                   break;
+                                   case 15:
+                                     metodoPago = 'Condonación'
+                                     break;
+                                     case 17:
+                                       metodoPago = 'Compensación'
+                                       break;
+                                       case 23:
+                                         metodoPago = 'Novacion'
+                                         break;
+                                         case 24:
+                                           metodoPago = 'Confusión'
+                                           break;
+                                           case 25:
+                                             metodoPago = 'Envío de deuda'
+                                             break;
+                                             case 26:
+                                               metodoPago = 'Prescripción o caducidad'
+                                               break;
+                                               case 27:
+                                                 metodoPago = 'A satisfacción del acreedor'
+                                                 break;
+                                                 case 28:
+                                                   metodoPago = 'Tarjeta de débito'
+                                                   break;
+                                                   case 29:
+                                                     metodoPago = 'Tarjeta de servicio'
+                                                     break;
+                 
+             
+               default:
+                 metodoPago = 'Por definir'
+                 break;
+             }
+             const dataExcel = {
+              'EstadoSAT': res.status,	
+              'UUID': res.uuid,	
+              'Serie': res.reference,	//reference
+              'Folio': res.internalIdentifier,	
+              'Fecha': res.issuedAt,	
+              'NombreEmisor': res.issuer.name,	
+              'RfcEmisor': res.issuer.rfc,	
+              'NombreReceptor': res.receiver.name,	
+              'RfcReceptor': res.receiver.rfc,	
+              'ClaveProdServ': res.items[0].productIdentification,	
+              'NoIdentificacion': res.items[0].identificationNumber,	
+              'EDS': 'PRZ',	
+              'Descripcion': res.items[0].description,	
+              'Unidad': res.items[0].unitAmount,	
+              'ClaveUnidad': res.items[0].unitCode,	
+              'Cantidad': res.items[0].quantity,	
+              'PrecioUnitario': res.items[0].unitAmount,	
+              'Importe': res.items[0].quantity * res.items[0].unitAmount,	
+              'Descuento': res.items[0].discountAmount,	
+              'TipoCambio': 1,
+              'Moneda': res.currency,	
+              'Version': res.version,	
+              'TipoCFDI':res.type == 'I' ? 'Ingreso':''
+             }
+             const tabla = {
+               RFCEmisor:res.issuer.rfc,
+               Emisor:res.issuer.name,
+               RegimenFiscal:res.issuer.taxRegime,
+               RFCReceptor:res.receiver.rfc,
+               Receptor:res.receiver.name,
+               RegimenFiscalReceptor:res.issuer.taxRegime,
+               DomicilioFiscalReceptor:'11560',
+               UsoCFDI:res.usage,
+               Estatus:res.status,
+               FechaEmision:res.issuedAt,
+               FullDate:res.issuedAt.substring(0, 10),
+               Subtotal:res.subtotal,
+               Descuento:res.discount,
+               Impuesto:res.tax,
+               Total:res.total,
+               UUID:res.uuid,
+               Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+               Unidad:res.items[0] != undefined ? res.items[0].unitCode : 'LTR',
+               Cantidad:res.items[0] != undefined ? res.items[0].quantity : '0.00',
+               Descripcion:res.items[0] != undefined ? res.items[0].description : '',
+               Valorunitario:res.items[0] != undefined ? res.items[0].unitAmount : '',
+               ImporteConcepto:res.items[0] != undefined ? res.items[0].totalAmount : '',
+               DescuentoConcepto:res.items[0] != undefined ? res.items[0].discountAmount : '',
+               NoIdentificacion:res.items[0] != undefined ? res.items[0].identificationNumber : '',
+               ClaveSAT:res.items[0] != undefined ? res.items[0].productIdentification : '',
+               // ImporteImpuesto:res.items[0] != undefined ? res.tax : '',
+               // Impuesto:res.items[0] != undefined ? res.tax : '',
+             
+               Moneda:res.currency,
+               VersionCFDI:res.version,
+               Fechacompleta:res.issuedAt.substring(0, 10),
+               TotalMXN:(res.items[0].totalAmount)
+             }
+           venta[indexVenta] = dataExcel
+           totalMXNVT += parseFloat(tabla.TotalMXN);
+           totalLTSVT += parseFloat(tabla.Cantidad);
+           jsonVenta[indexVenta] = tabla
+           indexVenta++
+           
+          }
+       } catch (error) {
+         console.log(error);
+       }
+ 
+ 
+     }
+ } else {
+   console.log(res.receiver.rfc);
+   let entregaNoGeneral = {
+  
+     "NombreClienteOProveedor": res.receiver.name,
+     "RfcClienteOProveedor": res.receiver.rfc,
+       "CFDIs": []
+ 
+     }
+   let noEmpty = 0
+   let ifExist = 0
+       for (const key in res.items) {
+ 
+ 
+           const identificationNumber = res.items[key].identificationNumber
+           if (identificationNumber != null) {
+             try {
+               if (identificationNumber.includes('G/18923/EXP/ES/FE/2016') == true && res.items[0].productIdentification == '15111512') {
+                 noEmpty = 1
+                 let entregaCFDINoGeneral = {
+                   "Cfdi": res.uuid,
+                   "TipoCfdi": "Ingreso",
+                   "PrecioCompra": res.items[key].unitAmount,
+                   "PrecioDeVentaAlPublico": res.items[key].unitAmount,
+                   "PrecioVenta": res.items[key].totalAmount,
+                   "PrecioVentaOCompraOContrap": (res.items[key].totalAmount),
+                   "FechaYHoraTransaccion": res.issuedAt,
+                   "VolumenDocumentado": {
+                       "ValorNumerico": res.items[key].quantity,
+                       "UnidadDeMedida": "UM04"
+                   }
+                 }
+                 // entregaCFDINoGeneral.Cfdi = res.uuid
+                 // entregaCFDINoGeneral.TipoCfdi = 'Ingreso'
+                 // entregaCFDINoGeneral.PrecioVentaOCompraOContrap = 
+                 // entregaCFDINoGeneral.FechaYHoraTransaccion = 
+                 // entregaCFDINoGeneral.VolumenDocumentado.ValorNumerico = 
+                 const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.receiver.rfc)
+                 console.log(alredyinJson);
+                 if (alredyinJson == true) {
+                   ifExist =1
+                 }
+                 entregaNoGeneral.CFDIs.push(entregaCFDINoGeneral)
+                   productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes= productoEstructura.ReporteDeVolumenMensual.Entregas.TotalEntregasMes + 1
+                   productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico = productoEstructura.ReporteDeVolumenMensual.Entregas.SumaVolumenEntregadoMes.ValorNumerico + res.items[key].quantity//ltr
+                   productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes = productoEstructura.ReporteDeVolumenMensual.Entregas.TotalDocumentosMes + 1
+                   productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes = productoEstructura.ReporteDeVolumenMensual.Entregas.ImporteTotalEntregasMes +  (res.items[key].totalAmount)//mxn
+                   
+                   let metodoPago = ''
+                   switch (res.paymentMethod) {
+                     case 01:
+                       metodoPago = 'Efectivo'
+                       break;
+                       case 02:
+                         metodoPago = 'Cheque de nómina'
+                         break;
+                         case 03:
+                           metodoPago = 'Transferencia electrónica'
+                           break;
+                           case 04:
+                             metodoPago = 'Tarjeta de crédito'
+                             break;
+                             case 05:
+                               metodoPago = 'Monedero electrónico'
+                               break;
+                               case 06:
+                                 metodoPago = 'Dinero digital'
+                                 break;
+                                 case 08:
+                                   metodoPago = 'Vales de despensa'
+                                   break;
+                                   case 12:
+                                     metodoPago = 'Liquidación'
+                                     break;
+                                     case 13:
+                                       metodoPago = 'Pago por subrogación'
+                                       break;
+                                       case 14:
+                                         metodoPago = 'Pago por consignación'
+                                         break;
+                                         case 15:
+                                           metodoPago = 'Condonación'
+                                           break;
+                                           case 17:
+                                             metodoPago = 'Compensación'
+                                             break;
+                                             case 23:
+                                               metodoPago = 'Novacion'
+                                               break;
+                                               case 24:
+                                                 metodoPago = 'Confusión'
+                                                 break;
+                                                 case 25:
+                                                   metodoPago = 'Envío de deuda'
+                                                   break;
+                                                   case 26:
+                                                     metodoPago = 'Prescripción o caducidad'
+                                                     break;
+                                                     case 27:
+                                                       metodoPago = 'A satisfacción del acreedor'
+                                                       break;
+                                                       case 28:
+                                                         metodoPago = 'Tarjeta de débito'
+                                                         break;
+                                                         case 29:
+                                                           metodoPago = 'Tarjeta de servicio'
+                                                           break;
+                       
+                   
+                     default:
+                       metodoPago = 'Por definir'
+                       break;
+                   }
+                   const dataExcel = {
+                    'EstadoSAT': res.status,	
+                    'UUID': res.uuid,	
+                    'Serie': res.reference,	//reference
+                    'Folio': res.internalIdentifier,	
+                    'Fecha': res.issuedAt,	
+                    'NombreEmisor': res.issuer.name,	
+                    'RfcEmisor': res.issuer.rfc,	
+                    'NombreReceptor': res.receiver.name,	
+                    'RfcReceptor': res.receiver.rfc,	
+                    'ClaveProdServ': res.items[key].productIdentification,	
+                    'NoIdentificacion': res.items[key].identificationNumber,	
+                    'EDS': 'PRZ',	
+                    'Descripcion': res.items[key].description,	
+                    'Unidad': res.items[key].unitAmount,	
+                    'ClaveUnidad': res.items[key].unitCode,	
+                    'Cantidad': res.items[key].quantity,	
+                    'PrecioUnitario': res.items[key].unitAmount,	
+                    'Importe': res.items[key].quantity * res.items[key].unitAmount,	
+                    'Descuento': res.items[key].discountAmount,	
+                    'TipoCambio': 1,
+                    'Moneda': res.currency,	
+                    'Version': res.version,	
+                    'TipoCFDI':res.type == 'I' ? 'Ingreso':''
+                   }
+                   const tabla = {
+                     RFCEmisor:res.issuer.rfc,
+                     Emisor:res.issuer.name,
+                     RegimenFiscal:res.issuer.taxRegime,
+                     RFCReceptor:res.receiver.rfc,
+                     Receptor:res.receiver.name,
+                     RegimenFiscalReceptor:res.issuer.taxRegime,
+                     DomicilioFiscalReceptor:'11560',
+                     UsoCFDI:res.usage,
+                     Estatus:res.status,
+                     FechaEmision:res.issuedAt,
+                     FullDate:res.issuedAt.substring(0, 10),
+                     Subtotal:res.subtotal,
+                     Descuento:res.discount,
+                     Impuesto:res.tax,
+                     Total:res.total,
+                     UUID:res.uuid,
+                     Tipocomprobante:(res.type == 'I') ? 'Ingreso' : 'Otro',
+                     Unidad:res.items[key] != undefined ? res.items[key].unitCode : 'LTR',
+                     Cantidad:res.items[key] != undefined ? res.items[key].quantity : '0.00',
+                     Descripcion:res.items[key] != undefined ? res.items[key].description : '',
+                     Valorunitario:res.items[key] != undefined ? res.items[key].unitAmount : '',
+                     ImporteConcepto:res.items[key] != undefined ? res.items[key].totalAmount : '',
+                     DescuentoConcepto:res.items[key] != undefined ? res.items[key].discountAmount : '',
+                     NoIdentificacion:res.items[key] != undefined ? res.items[key].identificationNumber : '',
+                     ClaveSAT:res.items[key] != undefined ? res.items[key].productIdentification : '',
+                     // ImporteImpuesto:res.items[key] != undefined ? res.tax : '',
+                     // Impuesto:res.items[key] != undefined ? res.tax : '',
+                   
+                     Moneda:res.currency,
+                     VersionCFDI:res.version,
+                     Fechacompleta:res.issuedAt.substring(0, 10),
+                     TotalMXN:(res.items[key].totalAmount)
+                   }
+                 venta[indexVenta] = dataExcel
+                 totalMXNVT += parseFloat(tabla.TotalMXN);
+                 totalLTSVT += parseFloat(tabla.Cantidad);
+                 jsonVenta[indexVenta] = tabla
+                 indexVenta++
+                 
+                }
+             } catch (error) {
+               console.log(error);
+             }
+             
+           }
+       }
+       if (noEmpty != 0) {
+        console.log(ifExist, '<<<<<<<<<<<<<<<<');
+         if (ifExist == 1) {
+           console.log('ya estas');
+           productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.forEach(element => {
+             console.log(element.RfcClienteOProveedor );
+             if (element.RfcClienteOProveedor  == res.receiver.rfc) {
+               console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+               entregaNoGeneral.CFDIs.forEach(element2 => {
+                 element.CFDIs.push(element2)
+               });
+             }
+           });
+         }else{
+          console.log(ifExist, '<<<<<<<<<<<<<<<<');
+           productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entregaNoGeneral)
+         }
+       }
+ }
+      }
+
+    // console.log(tabla);
+    }
+  
+  });
+});
+ const datoVenta = {
+ data:jsonVenta,
+ totalMXN:totalMXNVT,
+ totalLTS:totalLTSVT
+ }
+ datoVentaMensual = {
+   data:datoVenta.data
+ }
+ // console.log(data);
+ tablaVenta = datoVenta.data
+ totalMXNV = datoVenta.totalMXN
+ totalLTSV = datoVenta.totalLTS
+ 
+ const diferenciaMXN = (totalMXNC - totalMXNV).toFixed(2)
+ const diferenciaLTS = (totalLTSC - totalLTSV).toFixed(2)
+ await delay(1000);
+ 
+ 
+ let estructura =require(path.join(__dirname, '../public/json/NatGas/Mensual/estructura.json'))
+ const event = new Date();
+ estructura.BitacoraMensual[0].NumeroRegistro = indexCompra + indexCompra
+ estructura.BitacoraMensual[0].FechaYHoraEvento = event.toISOString().slice(0,-1)
+ estructura.FechaYHoraReporteMes = event.toISOString().slice(0,-1)
+ 
+ estructura.Producto.push(productoEstructura)
+ compra.forEach( record => {
+ let columnIndex= 1;
+ Object.keys(record ).forEach(columnName =>{
+   if (isNumber(record [columnName])) {
+     ws.cell(rowIndex,columnIndex++)
+     .number(parseFloat(record [columnName]))
+   } else {
+     
+     ws.cell(rowIndex,columnIndex++)
+         .string(record [columnName])
+   }
+ });
+ rowIndex++;
+ }); 
+ await delay(1000);
+ console.log("Venta");
+ venta.forEach( record => {
+     let columnIndex2= 1;
+     Object.keys(record ).forEach(columnName =>{
+       if (isNumber(record [columnName])) {
+         ws2.cell(rowIndex2,columnIndex2++)
+         .number(parseFloat(record [columnName]))
+       } else {
+         
+         ws2.cell(rowIndex2,columnIndex2++)
+             .string(record [columnName])
+       }
+     });
+     rowIndex2++;
+   }); 
+ wb.write(path.join(__dirname, `../public/Excel/Mes_${fecha}.xlsx`));
+ let fileNameKey = `MesTempNatGas`
+ 
+ // const dirpath = path.join(__dirname, `../public/json/jsonGenerados/Diario/Compra/${tabla[key].Folio}`);
+ //  fs.promises.mkdir(dirpath, { recursive: true })
+ const fileJsonName = path.join(__dirname, `../public/json/glencore/DiarioTemp/${fileNameKey}.json`);
+ fs.writeFile(fileJsonName, JSON.stringify(estructura,null, 2), function writeJSON(err) {
+ if (err) return console.log(err);
+ 
+ });
+ await delay(2000);
+ const datos = {
+   tabla,tablaVenta,totalMXNC,totalLTSC,totalMXNV,totalLTSV,diferenciaMXN,diferenciaLTS
+ }
+   res.send(datos)
+  } catch (error) {
+   res.send(error)
+  }
+ 
+ 
+});
+router.get('/calendar', async (req,res) =>{
+  try{
+    const id = req.params.id
+      const data = await pool.query('SELECT tarea,"descTarea" , "Fecha", id FROM schtelemetria.tarea WHERE "Estado" = 1');
+      let index = 0
+      let eventos = [];
+      console.log(data)
   for (const key in data) {
-    const split = data[key].date.split("T")
-    const fecha2 = acomodarFecha(split[0]);
-    const fecha = dateFormat(fecha2);
     const event = {
       id: index, //Event's ID (required)
-       name: `${data[key].tarea}`, //Event name (required)
-      date: fecha, //Event date (required)
+       title: `${data[key].tarea} ${data[key].descTarea}`, //Event name (required)
+      date: moment(data[key].Fecha).format('YYYY-MM-DD'), //Event date (required)
        description: data[key].descTarea, //Event description (optional)
-      type: "event",
-      color: "#63d867"// Event custom color (optional)
 
     }
     eventos.push(event)
     index++
   }
-  res.send(eventos)
+  return res.send(eventos)
 
+  } catch (error){
+  console.log(error);
+  return res.send(error)
+}
 });
 
 
@@ -4891,8 +7141,8 @@ function acomodarFecha(date) {
     return fecha
   }
   async function arbolArchivosNatgas(){
-    const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_natgas;')
-    const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_natgas;')
+    const directory =  await pool.any('SELECT * from estructura_directorios_natgas;')
+    const file = await pool.any('SELECT * from estructura_archivos_natgas;')
     let root = {};
     for (const key in directory) {
          let directoryname =directory[key].position
@@ -4958,8 +7208,8 @@ function acomodarFecha(date) {
   }
 
   async function arbolArchivosTomza(){
-    const directory =  await pool.any('SELECT * from schtelemetria.estructura_directorios_tomza;')
-    const file = await pool.any('SELECT * from schtelemetria.estructura_archivos_tomza;')
+    const directory =  await pool.any('SELECT * from estructura_directorios_tomza;')
+    const file = await pool.any('SELECT * from estructura_archivos_tomza;')
     let root = {};
     for (const key in directory) {
          let directoryname =directory[key].position
@@ -5023,7 +7273,72 @@ function acomodarFecha(date) {
     // console.log(root);
     return root;
   }
-
+  async function arbolArchivos(id){
+    const directory =  await pool.any('SELECT * from estructura_directorios where "companyId" = $1',id)
+    const file = await pool.any('SELECT * from estructura_archivos where "companyId" = $1',id)
+    let root = {};
+    for (const key in directory) {
+         let directoryname =directory[key].position
+         if (directoryname.indexOf(".") == -1) {
+              root[directory[key].position] = {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+         }else{
+              let position = directoryname.split(".")
+              switch (position.length) {
+                   case 2:
+                        root[position[0]]['dir'][position[1]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                        break;
+                        case 3:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                             break;
+                             case 4:
+                               // console.log(root[position[0]]['dir'][position[1]]['dir']);
+                               // console.log(position);
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                  break;
+                                  case 5:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                       break;
+                                       case 6:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]= {dirName:directory[key].dirName,file:{},dir:{},position:directoryname}
+                                         break;
+  
+                   default:
+                        break;
+              }
+         }
+    }
+    for (const key in file) {
+         let fileP =file[key].position
+  
+         let position = fileP.split(".")
+          // console.log(file[key]);
+         switch (position.length) {
+              case 2:
+                   root[position[0]]['file'][position[1]]= {fileName:file[key].fileName,ext:file[key].ext}
+                   break;
+                   case 3:
+                        root[position[0]]['dir'][position[1]]['file'][position[2]]= {fileName:file[key].fileName,ext:file[key].ext}
+                        break;
+                        case 4:
+                             root[position[0]]['dir'][position[1]]['dir'][position[2]]['file'][position[3]]= {fileName:file[key].fileName,ext:file[key].ext}
+                             break;
+                             case 5:
+                                  root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['file'][position[4]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                  break;
+                                  case 6:
+                                       root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['file'][position[5]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                       break;
+                                       case 7:
+                                         root[position[0]]['dir'][position[1]]['dir'][position[2]]['dir'][position[3]]['dir'][position[4]]['dir'][position[5]]['file'][position[6]]= {fileName:file[key].fileName,ext:file[key].ext}
+                                         break;
+  
+              default:
+                   break;
+         }
+    }
+    // console.log(root);
+    return root;
+  }
 function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) } 
 
 restaFechas = function (f1, f2) {
@@ -5041,6 +7356,8 @@ function codigoFecha(data) {
   datoFecha["urgente"] = {};
   datoFecha["noUrgente"] = {};
   datoFecha["retraso"] = {};
+  datoFecha["realizada"] = {};
+  
   // proveedor = proveedor.toLocaleLowerCase();
     for (const key in data) {
         var dateObj = new Date();
@@ -5081,5 +7398,56 @@ function sortObject(obj) {
   arr.sort(function(a, b) { return a.value - b.value; });
   //arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
   return arr; // returns array
+}
+const archiver = require('archiver');
+const { func, each } = require('../database');
+
+function zipDirectory(sourceDir, outPath) {
+  const archive = archiver('zip', { zlib: { level: 9 }});
+  const stream = fs.createWriteStream(outPath);
+
+  return new Promise((resolve, reject) => {
+    archive
+      .directory(sourceDir, false)
+      .on('error', err => reject(err))
+      .pipe(stream)
+    ;;
+    stream.on('close', () => resolve());
+    archive.finalize();
+  });
+}
+
+const removeDirDiario = function(path1) {
+  // console.log(path);
+  if (fs.existsSync(path1)) {
+    const files = fs.readdirSync(path1)
+
+
+    // if (path == 'C:\Users\USER\Desktop\AdrianQR\vistaPrueba\src\public\json\jsonGenerados\Diario\Compra') {
+    //   console.log("nice");
+    // }else{
+    //   console.log("no Nice");
+    // }
+    if (files.length > 0) {
+      files.forEach(function(filename) {
+        if (fs.statSync(path1 + "/" + filename).isDirectory()) {
+          removeDirDiario(path1 + "/" + filename)
+        } else {
+          fs.unlinkSync(path1 + "/" + filename)
+        }
+      })
+      files.forEach(dir => {
+        console.log( path.join(path1,dir));
+        fs.rmdir(path.join(path1,dir), () => {
+          console.log("Folder Deleted!");
+
+        });
+      });
+    } else {
+      console.log("No files found in the directory.")
+    }
+  } else {
+    console.log("Directory path not found.")
+  }
 }
 module.exports = router;

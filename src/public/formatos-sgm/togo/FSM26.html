@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        @media print {
+            body {
+                width: 21cm;
+                height: 29.7;
+                margin: 30mm 45mm 30mm 45mm;
+                page-break-after: always;
+            }
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        p.saltodepagina {
+            page-break-after: always;
+        }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F-SM-26</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- Script para la barra de herramientas en textarea  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/inline/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/inline/ckeditor.js"></script>
+<!-- EMPIEZA SRC handlebar -->
+<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+<script src="Togo Fecha.js"></script>
+<!-- TERMINA SRC handlebar -->
+
+</head>
+<body>
+        <!-- EMPIEZA HEADER DE FORMATOS -->
+		<script type="text/x-handlebars-template" id="template">
+         
+            {{{html}}}
+         
+        </script>
+        <div id="output">
+        </div>
+        <script>fill_template()</script>
+        <br>
+          <!-- TERMINA HEADER DE FORMATOS -->
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col input-group">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="background-color: lightgray;">Informe No.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="No. de Revisión" class="form-control-plaintext"
+                                placeholder="Informe No."></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: lightgray;">No. de Revisión.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="date" name="No. de Revisión" class="form-control-plaintext"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+        <h5>1. Objetivo</h5>
+        <div id="textObjetivo">
+            <textarea class="form-control" rows="8" name="textObjetivo" id="textObjetivo"></textarea>
+        </div>
+        <br>
+        <br>
+        <h5>2. Alcance</h5>
+        <div id="textAlcance">
+            <textarea class="form-control" rows="8" style="resize: none;" name="textAlcance"
+                id="textAlcance"></textarea>
+        </div>
+        <br>
+        <br>
+        <h5>3. Revisión del FSM-16 SEGUIMIENTO DE MEDICIONES Y DIFERENCIA VOLUMÉTRICAS.</h5>
+        <table class="table table-bordered">
+            <tr>
+                <td style="background-color: lightgray;text-align: center; vertical-align: middle;">Mes</td>
+                <td style="background-color: lightgray;">Observaciones</td>
+                <td style="background-color: lightgray;text-align: center; vertical-align: middle;">Mes</td>
+                <td style="background-color: lightgray;">Observaciones</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">Enero</td>
+                <td><input type="text" name="No. de Revisión" class="form-control-plaintext"
+                        placeholder="Observaciones"></td>
+                <td style="text-align: center; vertical-align: middle;">Julio</td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Observaciones"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">Febrero</td>
+                <td><input type="text" name="No. de Revisión" class="form-control-plaintext"
+                        placeholder="Observaciones"></td>
+                <td style="text-align: center; vertical-align: middle;">Agosto</td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Observaciones"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">Marzo</td>
+                <td><input type="text" name="No. de Revisión" class="form-control-plaintext"
+                        placeholder="Observaciones"></td>
+                <td style="text-align: center; vertical-align: middle;">Septiembre</td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Observaciones"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">Abril</td>
+                <td><input type="text" name="No. de Revisión" class="form-control-plaintext"
+                        placeholder="Observaciones"></td>
+                <td style="text-align: center; vertical-align: middle;">Octubre</td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Observaciones"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">Mayo</td>
+                <td><input type="text" name="No. de Revisión" class="form-control-plaintext"
+                        placeholder="Observaciones"></td>
+                <td style="text-align: center; vertical-align: middle;">Noviembre</td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext " placeholder="Observaciones"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">Enero</td>
+                <td><input type="text" name="No. de Revisión" class="form-control-plaintext"
+                        placeholder="Observaciones"></td>
+                <td style="text-align: center; vertical-align: middle;">Diciembre</td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Observaciones"></td>
+            </tr>
+        </table>
+        <h5>4. Informes de auditorías internas / externas.</h5>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-1" style="background-color: lightgray;text-align: center; vertical-align: middle;" rowspan="2">No.
+                    Auditoria </td>
+                <td style="background-color: lightgray;text-align: center; vertical-align: middle;" rowspan="2">Fecha
+                </td>
+                <td style="background-color: lightgray;text-align: center; vertical-align: middle;" colspan="2">
+                    Hallazgos</td>
+                <td style="background-color: lightgray;text-align: center; vertical-align: middle;" rowspan="2">
+                    Observaciones</td>
+            </tr>
+            <tr>
+
+                <td style="background-color: lightgray;text-align: center; vertical-align: middle;">Cerrados</td>
+                <td style="background-color: lightgray;text-align: center; vertical-align: middle;">Abiertos o
+                    pendientes</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="No.Auditoria"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="date" name="fRevision"
+                        class="form-control-plaintext"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Cerrados"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Abiertos"></td>
+                <td style="text-align: center; vertical-align: middle;"><textarea cols="" rows="2" wrap="hard"
+                        class="form-control-plaintext" placeholder="Observaciones"></textarea></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="No.Auditoria"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="date" name="fRevision"
+                        class="form-control-plaintext"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Cerrados"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Abiertos"></td>
+                <td style="text-align: center; vertical-align: middle;"><textarea cols="" rows="2" wrap="hard"
+                        class="form-control-plaintext" placeholder="Observaciones"></textarea></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="No.Auditoria"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="date" name="fRevision"
+                        class="form-control-plaintext"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Cerrados"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Abiertos"></td>
+                <td style="text-align: center; vertical-align: middle;"><textarea cols="" rows="2" wrap="hard"
+                        class="form-control-plaintext" placeholder="Observaciones"></textarea></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="No.Auditoria"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="date" name="fRevision"
+                        class="form-control-plaintext"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Cerrados"></td>
+                <td style="text-align: center; vertical-align: middle;"><input type="text" name="No. de Revisión"
+                        class="form-control-plaintext" placeholder="Abiertos"></td>
+                <td style="text-align: center; vertical-align: middle;"><textarea cols="" rows="2" wrap="hard"
+                        class="form-control-plaintext" placeholder="Observaciones"></textarea></td>
+            </tr>
+        </table>
+        <h5>5. Presentación y evaluación de no conformidades, acciones preventivas / correctivas durante el periodo.
+        </h5>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-1" style="background-color: lightgray;">No.</td>
+                <td style="background-color: lightgray;">Hallazgos</td>
+                <td style="background-color: lightgray;">Acciones</td>
+                <td style="background-color: lightgray;">Responsable</td>
+                <td style="background-color: lightgray;">Fecha Compromiso</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No" class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Hallazgos" class="form-control-plaintext" placeholder="Hallazgos"></td>
+                <td><input type="text" name="acciones" class="form-control-plaintext" placeholder="Acciones"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="Fecha" class="form-control-plaintext"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No" class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Hallazgos" class="form-control-plaintext" placeholder="Hallazgos"></td>
+                <td><input type="text" name="acciones" class="form-control-plaintext" placeholder="Acciones"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="Fecha" class="form-control-plaintext"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No" class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Hallazgos" class="form-control-plaintext" placeholder="Hallazgos"></td>
+                <td><input type="text" name="acciones" class="form-control-plaintext" placeholder="Acciones"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="Fecha" class="form-control-plaintext"></td>
+            </tr>
+        </table>
+        <br>
+        <h5>6. Estado del equipo de medición, cumplimiento de programas de calibración – verificación.</h5>
+        <table class="table table-bordered">
+            <tr>
+                <td style="background-color: lightgray;"></td>
+                <td style="background-color: lightgray;">Calibración</td>
+                <td style="background-color: lightgray;">Verificación</td>
+                <td style="background-color: lightgray;">Observaciones</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle;">Equipos de Medición</td>
+                <td><input type="text" name="Calibración" class="form-control-plaintext" placeholder="Calibración"></td>
+                <td><input type="text" name="Verificación" class="form-control-plaintext" placeholder="Verificación">
+                </td>
+                <td><input type="text" name="Observaciones" class="form-control-plaintext" placeholder="Observaciones">
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle;">Patrones</td>
+                <td><input type="text" name="Calibración" class="form-control-plaintext" placeholder="Calibración"></td>
+                <td><input type="text" name="Verificación" class="form-control-plaintext" placeholder="Verificación">
+                </td>
+                <td><input type="text" name="Observaciones" class="form-control-plaintext" placeholder="Observaciones">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <h5>7. Cumplimiento de programa de capacitación. </h5>
+        <table class="table table-bordered">
+            <tr>
+                <td style="background-color: lightgray;">Cursos</td>
+                <td style="background-color: lightgray;">Realizado(s) </td>
+                <td style="background-color: lightgray;">Personal (Participantes)</td>
+                <td style="background-color: lightgray;">Fecha</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="Cursos" class="form-control-plaintext" placeholder="Cursos"></td>
+                <td><input type="text" name="Realizado" class="form-control-plaintext" placeholder="Realizado"></td>
+                <td><input type="text" name="Participantes" class="form-control-plaintext" placeholder="Participantes"></td>
+                <td><input type="date" name="fRevision" class="form-control-plaintext"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="Cursos" class="form-control-plaintext" placeholder="Cursos"></td>
+                <td><input type="text" name="Realizado" class="form-control-plaintext" placeholder="Realizado"></td>
+                <td><input type="text" name="Participantes" class="form-control-plaintext" placeholder="Participantes"></td>
+                <td><input type="date" name="fRevision" class="form-control-plaintext"></td>
+            </tr>
+        </table>
+        <h5>8. Quejas – sugerencias del cliente relacionadas con el SGM. </h5>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-1" style="background-color: lightgray;vertical-align: middle;">No.</td>
+                <td style="background-color: lightgray;vertical-align: middle;">Comunicaciónes</td>
+                <td style="background-color: lightgray;vertical-align: middle;">Total,recibidas</td>
+                <td style="background-color: lightgray;vertical-align: middle;">Atendidas</td>
+                <td style="background-color: lightgray;vertical-align: middle;">No Atendidas</td>
+                <td style="background-color: lightgray;vertical-align: middle;">Porcentaje <br>de Atención</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No" class="form-control-plaintext" placeholder="No."></td>
+                <td style="vertical-align: middle;" >Quejas</td>
+                <td><input type="text" name="Recibidas" class="form-control-plaintext" placeholder="Recibidas"></td>
+                <td><input type="text" name="Atendidas" class="form-control-plaintext" placeholder="Atendidas"></td>
+                <td><input type="text" name="No Atendidas" class="form-control-plaintext" placeholder="No Atendidas"></td>
+                <td><input type="text" name="Porcentaje" class="form-control-plaintext" placeholder="%"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No" class="form-control-plaintext" placeholder="No."></td>
+                <td style="vertical-align: middle;" >Sugerencias</td>
+                <td><input type="text" name="Recibidas" class="form-control-plaintext" placeholder="Recibidas"></td>
+                <td><input type="text" name="Atendidas" class="form-control-plaintext" placeholder="Atendidas"></td>
+                <td><input type="text" name="No Atendidas" class="form-control-plaintext" placeholder="No Atendidas"></td>
+                <td><input type="text" name="Porcentaje" class="form-control-plaintext" placeholder="%"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No" class="form-control-plaintext" placeholder="No."></td>
+                <td style="vertical-align: middle;" >Otros</td>
+                <td><input type="text" name="Recibidas" class="form-control-plaintext" placeholder="Recibidas"></td>
+                <td><input type="text" name="Atendidas" class="form-control-plaintext" placeholder="Atendidas"></td>
+                <td><input type="text" name="No Atendidas" class="form-control-plaintext" placeholder="No Atendidas"></td>
+                <td><input type="text" name="Porcentaje" class="form-control-plaintext" placeholder="%"></td>
+            </tr>
+        </table>
+        <h5>9. Requerimientos y asignación de recursos para el adecuado cumplimiento de los requisitos del SGM.</h5>
+        <table class="table table-bordered">
+            
+            <tr>
+                <td class="col-1" style="background-color: lightgray;vertical-align: middle;text-align: center;">No.</td>
+                <td class="col-5" style="background-color: lightgray;vertical-align: middle; text-align: center;">Requerimiento</td>
+                <td style="background-color: lightgray;vertical-align: middle; text-align: center;">Recursos <br>necesarios </td>
+                <td style="background-color: lightgray; vertical-align: middle; text-align: center;">Fecha de <br> Asignación de <br> Recursos</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Requerimiento" class="form-control-plaintext" placeholder="Requerimiento"></td>
+                <td><input type="text" name="Recursos" class="form-control-plaintext" placeholder="Recursos necesarios"></td>
+                <td><input type="date" name="Fecha de A" class="form-control-plaintext"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Requerimiento" class="form-control-plaintext" placeholder="Requerimiento"></td>
+                <td><input type="text" name="Recursos" class="form-control-plaintext" placeholder="Recursos necesarios"></td>
+                <td><input type="date" name="Fecha de A" class="form-control-plaintext"></td>
+            </tr>
+        </table>
+        <h5>10. Acciones de mejora en los procesos del SGM.</h5>
+        <table class="table table-bordered">
+            
+            <tr>
+                <td class="col-1" style="background-color: lightgray;vertical-align: middle;text-align: center;">No.</td>
+                <td style="background-color: lightgray;vertical-align: middle; text-align: center;">Mejora</td>
+                <td style="background-color: lightgray;vertical-align: middle; text-align: center;">Area </td>
+                <td style="background-color: lightgray; vertical-align: middle; text-align: center;">Actividades Realizadas</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Mejora" class="form-control-plaintext" placeholder="Mejora"></td>
+                <td><input type="text" name="Area" class="form-control-plaintext" placeholder="Area"></td>
+                <td><input type="text" name="Actividades Realizadas" class="form-control-plaintext" placeholder="Actividades Realizadas"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Mejora" class="form-control-plaintext" placeholder="Mejora"></td>
+                <td><input type="text" name="Area" class="form-control-plaintext" placeholder="Area"></td>
+                <td><input type="text" name="Actividades Realizadas" class="form-control-plaintext" placeholder="Actividades Realizadas"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Mejora" class="form-control-plaintext" placeholder="Mejora"></td>
+                <td><input type="text" name="Area" class="form-control-plaintext" placeholder="Area"></td>
+                <td><input type="text" name="Actividades Realizadas" class="form-control-plaintext" placeholder="Actividades Realizadas"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Mejora" class="form-control-plaintext" placeholder="Mejora"></td>
+                <td><input type="text" name="Area" class="form-control-plaintext" placeholder="Area"></td>
+                <td><input type="text" name="Actividades Realizadas" class="form-control-plaintext" placeholder="Actividades Realizadas"></td>
+            </tr>
+        </table>
+        <h5>11. Resultados de la gestión de riesgos.</h5>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-1" style="background-color: lightgray;vertical-align: middle;text-align: center;">No.</td>
+                <td class="col-2" style="background-color: lightgray;vertical-align: middle; text-align: center;">Riesgo</td>
+                <td class="col-3" style="background-color: lightgray;vertical-align: middle; text-align: center;">Plan de Respuesta</td>
+                <td class="col-2" style="background-color: lightgray; vertical-align: middle; text-align: center;">Responsable</td>
+                <td class="col-1" style="background-color: lightgray;vertical-align: middle; text-align: center;">Fecha Compromiso</td>
+                <td class="col-2" style="background-color: lightgray; vertical-align: middle; text-align: center;">Seguimiento</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Riesgo" class="form-control-plaintext" placeholder="Riesgo"></td>
+                <td><input type="text" name="Plan de Respuesta" class="form-control-plaintext" placeholder="Plan de Respuesta"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="fRevision" class="form-control-plaintext"></td>
+                <td><input type="text" name="Seguimiento" class="form-control-plaintext" placeholder="Seguimiento"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Riesgo" class="form-control-plaintext" placeholder="Riesgo"></td>
+                <td><input type="text" name="Plan de Respuesta" class="form-control-plaintext" placeholder="Plan de Respuesta"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="fRevision" class="form-control-plaintext"></td>
+                <td><input type="text" name="Seguimiento" class="form-control-plaintext" placeholder="Seguimiento"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Riesgo" class="form-control-plaintext" placeholder="Riesgo"></td>
+                <td><input type="text" name="Plan de Respuesta" class="form-control-plaintext" placeholder="Plan de Respuesta"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="fRevision" class="form-control-plaintext"></td>
+                <td><input type="text" name="Seguimiento" class="form-control-plaintext" placeholder="Seguimiento"></td>
+            </tr>
+        </table>  
+        <h5>12. Cambios en el SGM.</h5>
+        <table class="table table-bordered">
+            
+            <tr>
+                <td class="col-1" style="background-color: lightgray;vertical-align: middle;text-align: center;">No.</td>
+                <td style="background-color: lightgray;vertical-align: middle; text-align: center;">Elemento del Sistema</td>
+                <td style="background-color: lightgray;vertical-align: middle; text-align: center;">Cambio a Realizar</td>
+                <td style="background-color: lightgray; vertical-align: middle; text-align: center;">Responsable</td>
+                <td style="background-color: lightgray; vertical-align: middle; text-align: center;">Fecha Compromiso</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-5"><input type="text" name="Cambio a Realizar" class="form-control-plaintext" placeholder="Cambio a Realizar"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="fCompromiso" class="form-control-plaintext"></td>
+            </tr> 
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-5"><input type="text" name="Cambio a Realizar" class="form-control-plaintext" placeholder="Cambio a Realizar"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="fCompromiso" class="form-control-plaintext"></td>
+            </tr> 
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-5"><input type="text" name="Cambio a Realizar" class="form-control-plaintext" placeholder="Cambio a Realizar"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="fCompromiso" class="form-control-plaintext"></td>
+            </tr> 
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-5"><input type="text" name="Cambio a Realizar" class="form-control-plaintext" placeholder="Cambio a Realizar"></td>
+                <td><input type="text" name="Responsable" class="form-control-plaintext" placeholder="Responsable"></td>
+                <td><input type="date" name="fCompromiso" class="form-control-plaintext"></td>
+            </tr>
+            </table>
+            <h5>13. Revisión de los objetivos del SGC.</h5>
+        <table class="table table-bordered">
+            
+            <tr>
+                <td class="col-1" style="background-color: lightgray;vertical-align: middle;text-align: center;">No.</td>
+                <td style="background-color: lightgray;vertical-align: middle; text-align: center;">Elemento del Sistema</td>
+                <td style="background-color: lightgray;vertical-align: middle; text-align: center;">Cumplimiento</td>
+            </tr> 
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-8"><input type="text" name="Cumplimiento" class="form-control-plaintext" placeholder="Cumplimiento"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-8"><input type="text" name="Cumplimiento" class="form-control-plaintext" placeholder="Cumplimiento"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-8"><input type="text" name="Cumplimiento" class="form-control-plaintext" placeholder="Cumplimiento"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="No." class="form-control-plaintext" placeholder="No."></td>
+                <td><input type="text" name="Elemento del Sistema" class="form-control-plaintext" placeholder="Elemento del Sistema"></td>
+                <td class="col-8"><input type="text" name="Cumplimiento" class="form-control-plaintext" placeholder="Cumplimiento"></td>
+            </tr>
+        </table>
+        <h5>14. Estado de las acciones de revisiones por la dirección anteriores.</h5>
+        <div id="text14">
+            <textarea class="form-control" rows="8" style="resize: none;" name="text14"
+                id="text14"></textarea>
+        </div>
+
+    <br>
+        <h5>15. Evaluaciones por organismos externos.</h5>
+        <div id="text15">
+            <textarea class="form-control" rows="8" style="resize: none;" name="text15"
+                id="text15"></textarea>
+        </div>
+    <br>
+        <h4>SALIDA DE LA REVISIÓN POR LA DIRECCIÓN</h4>
+    <br>
+        <h5>16. Conclusiones de eficacia del SGM</h5>
+        <div id="text16">
+            <textarea class="form-control" rows="8" style="resize: none;" name="text16"
+                id="text16"></textarea>
+        </div>
+    <br>   
+        <h5>17. Recomendaciones es relativas a las oportunidades de actividades relacionadas con el cumplimiento de los requisitos de este 
+            documento.</h5>
+            <div id="text17">
+                <textarea class="form-control" rows="8" style="resize: none;" name="text17"
+                    id="text17"></textarea>
+            </div> 
+    <br>   
+        <h5>18. Cambios en el SGM que se han aplicado.</h5> 
+        <div id="text18">
+            <textarea class="form-control" rows="8" style="resize: none;" name="text18"
+                id="text18"></textarea>
+        </div> 
+    <br>
+        <h5>19. Acciones que se han determinado realizar en caso de incumplimiento de objetivos:</h5>
+         <p>• La provisión de los recursos requeridos. <br>
+            • Cualquier necesidad de cambio </p>    
+    </div>
+    <br>
+    <div class="container">
+        <table class="table table-bordered" style="text-align:center;">
+          <thead>
+            
+          </thead>
+          <tbody>
+            <tr>
+              <td style="background-color: lightgray;">
+                Revisado por:
+                <br>
+                <br>
+                
+                <input type="text" name="nombreResponsable" class="form-control" placeholder="INGRESE NOMBRE"> 
+                <br>
+                Responsable del SGM
+              </td>
+              <td>
+                <td style="background-color: lightgray;">
+                Aprobado por:
+                <br>
+                <br>
+              
+                <input type="text" name="nombreAprueba" class="form-control" placeholder="INGRESE NOMBRE"> 
+                <br>
+                Dirección
+              </td>
+            </tr>
+          </tbody>
+        </table>
+          <table class="table table-bordered">
+              <tr>
+                  <td style="background-color: lightgray;">No. Version#</td>
+                  <td style="background-color: lightgray;">Fecha de Elaboración</td>
+                  <td style="background-color: lightgray;">Seccion Revisada</td>
+                  <td style="background-color: lightgray;">Lista de Cambios</td>
+              </tr>
+              <tr>
+                  <td class="col-2"><input type="text" name="No.Version" class="form-control-plaintext" placeholder="No. Version"></td>
+                  <td class="col-2"><input type="date" name="fElaboracion" class="form-control-plaintext"></td>
+                  <td class="col-2"><input type="text" name="Seccion " class="form-control-plaintext" placeholder="Seccion Revisada"> </td>
+                  <td><input type="text" name="Lista" class="form-control-plaintext" placeholder="Lista de cambios"> </td>
+              </tr>
+          </table>
+      </div>
+  </div>
+    <br>
+    <br>
+    <div style="text-align:center;">
+        Prohibida la reproducción total o parcial de este documento propiedad de <br> <b>  FLETES TOGO S.A. DE C.V.</b>
+    </div>
+    <br>
+    <br>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+<!-- aqui van otros scripts que conectan con el arbol de documentos, y lo que hace que funcione la id del titulo con el del handlebar -->
+<script>document.querySelector('#CLAVE').value=document.querySelector('title').innerHTML</script>
+<script src="titulo.js"></script>
+<script>document.querySelector('#TITULO').value=titulo.Formato26</script>
+    <script>
+        InlineEditor
+            .create(document.querySelector('#textObjetivo'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        InlineEditor
+            .create(document.querySelector('#textAlcance'))
+            .catch(error => {
+                console.error(error);
+            });
+        InlineEditor
+            .create(document.querySelector('#text14'))
+            .catch(error => {
+               console.error(error);
+            });
+            InlineEditor
+            .create(document.querySelector('#text15'))
+            .catch(error => {
+               console.error(error);
+            });
+            InlineEditor
+            .create(document.querySelector('#text16'))
+            .catch(error => {
+               console.error(error);
+            });
+            InlineEditor
+            .create(document.querySelector('#text17'))
+            .catch(error => {
+               console.error(error);
+            });
+            InlineEditor
+            .create(document.querySelector('#text18'))
+            .catch(error => {
+               console.error(error);
+            });
+    </script>
+</body>
+
+</html>
