@@ -476,7 +476,7 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
         
           if (identificationNumber !== null) {
             try {
-              if (identificationNumber.includes(permisoEstacion) == true && res.productIdentification == '15111512') {
+              if (identificationNumber.includes(permisoEstacion) == true && res.claveSAT == '15111512') {
   
                 const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.rfcReceptor)
                   if (alredyinJson == false) {
@@ -498,8 +498,6 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
                             }
                         }]
                         }
-                    
-                    
                       productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entrega)
                   } else {
                     let entrega = {
