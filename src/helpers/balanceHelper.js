@@ -148,44 +148,6 @@ module.exports.getInvoicesByUIID= async() => {
   return allInvoices;
 }
 
-/*module.exports.getInvoicePagination = async (rfc, fechaInicio, fechaFin, type = 'C', page = 1) => {
-
-  let allInvoices = [];
-
-  try{
-
-
-    const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
-
-    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
-                  ${fechaFin}T06:00:00.000Z&issuedAt[after]=
-                  ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=
-                  ${page}&itemsPerPage=50&type=I`;
-
-    const firstPromise = axios({ 
-      method: 'get', 
-      url: url, 
-      headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
-    });
-
-
-    await Promise.all([firstPromise]).then(async (response) => {
-      const datos =  response[0].data;
-
-      const lastView = datos['hydra:view']['hydra:last'];
-      const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
-      const totalPages = lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
-      const invoices = datos['hydra:member']
-      allInvoices = invoices;
-    });
-
-    return allInvoices;
-  } catch(error){
-    console.log(error)
-    return allInvoices;
-  }
-
-}//getInvoicePagination*/
 
 module.exports.validationsGlencore = (invoices, type) => {
   let allInvoices = [];
@@ -284,7 +246,7 @@ module.exports.validationsNatgas = (invoices) => {
             for (let index = rfcNombre.length; index < 11; index++) {
               rfcNombre= rfcNombre + ' '
             }
-        }
+        }//if
 
         if (res.items.length<2) {
           const identificationNumber = res.items[0].identificationNumber
@@ -391,7 +353,7 @@ module.exports.validationsNatgas = (invoices) => {
                     inBalance: true,
                     fechaNuevaAplicacion: '',
                     horaNuevaAplicacion: '',
-                    justificacionCambio: '',
+                    justificacionCambio: '',                    
                     identificationNumber: identificationNumber
                     
                   }
@@ -472,7 +434,7 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
               }
           }
           
-          const identificationNumber = res.identificationNumber
+          const identificationNumber = res.noIdentificacion
         
           if (identificationNumber !== null) {
             try {
