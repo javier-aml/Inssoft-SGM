@@ -17,7 +17,7 @@ function fill_template () {
     </thead>
     <tbody>
         <tr>
-        <td rowspan="5"><img src="Togoimg.jpg" class="img-fluid"></td>
+        <td rowspan="5" class="col-2"><img src="Togoimg.jpg" class="img-fluid"></td>
             <td rowspan="3"><h1>FLETES TOGO S.A. DE C.V.</h1></td>
             <td style="background-color: lightgray;">
                 <label for="permiso">PERMISO:</label>
@@ -27,28 +27,28 @@ function fill_template () {
             </td>						
         </tr>
         <tr>
-            <td style="background-color: lightgray;">
-                <label for="permiso">CLAVE:</label>
-            </td>
-            <td style="background-color:lightgray;"><input type="text" class="form-control" name="permiso" placeholder="G/XXXX/EXP/ES/FE/XXXX"></td>
-        </tr>
+        <td style="background-color: lightgray;">
+            <label for="permiso">CLAVE:</label>
+        </td>
+        <td style="background-color:lightgray;"><input type="text" class="form-control" id="CLAVE"></td>
+    </tr>
         <tr>
             <td>FECHA DE EMISIÓN:</td>
-            <td><input type="date" name="fEmision" class="form-control"></td>
+            <td><input type="date" name="fEmision" class="form-control-plaintext"></td>
         </tr>
         <tr>
-            <td rowspan="2"><h1><input type="text" class="form-control input-lg" name="NombreEstacion" placeholder="Nombre de la Estación"></h1>
+            <td rowspan="2"><h3><input type="text" class="form-control-plaintext" name="NombreEstacion" placeholder="Nombre de la Estación"></h3>
             </td>						
             <td>REVISIÓN: 0</td>
-            <td><input type="date" name="fRevision" class="form-control"></td>
+            <td><input type="date" name="fRevision" class="form-control-plaintext"></td>
         </tr>
         <td>PRÓXIMA REVISIÓN:</td>
-        <td><input type="date" name="fProxRevision" class="form-control"></td>
+        <td><input type="date" name="fProxRevision" class="form-control-plaintext"></td>
         <tr style="text-align: center;">
-            <td colspan="4">Sistema de Gestión de Medición</td>
+            <td colspan="4"><b>Sistema de Gestión de Medición</b></td>
         </tr>
         <tr style="font-weight:bold; text-align: center; background-color: lightgray;">
-            <td colspan="4">MANUAL DEL SGM</td>
+        <b> <td colspan="4"><input type="text" id="TITULO" class="form-control-plaintext" placeholder="Titulo" style="text-align:center";"></td> </b>
         </tr>
     </tbody>
 </table>

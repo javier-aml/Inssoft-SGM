@@ -41,6 +41,8 @@ app.engine('.hbs',exphbs({
 }));
 app.set('view engine','.hbs');
 // middleware
+app.use(express.urlencoded({extended: false,limit: '50mb'}));
+app.use(express.json({limit: '50mb'}));
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());

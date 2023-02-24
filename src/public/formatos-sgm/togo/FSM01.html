@@ -17,17 +17,19 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>FSM-01</title>
+	<title>F-SM-01</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
-	<script src="Togo Fecha.js"></script>
+
 	<!-- Script para la barra de herramientas en textarea  -->
 	<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/inline/ckeditor.js"></script>
+<!-- EMPIEZA SRC handlebar -->
+<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+<script src="Togo Fecha.js"></script>
+<!-- TERMINA SRC handlebar -->
+
 </head>
 <body>
-	<form>
-
-		<!-- EMPIEZA HEADER DE FORMATOS -->
+        <!-- EMPIEZA HEADER DE FORMATOS -->
 		<script type="text/x-handlebars-template" id="template">
          
             {{{html}}}
@@ -36,8 +38,8 @@
         <div id="output">
         </div>
         <script>fill_template()</script>
-
-		<!-- TERMINA HEADER DE FORMATOS -->
+        <br>
+          <!-- TERMINA HEADER DE FORMATOS -->
 
 		<br>
 		<br>
@@ -55,7 +57,7 @@
 		<br>
 
 		<div class="container" style="text-align:center;">
-			<input type="text" name="" class="form-control" placeholder="NOMBRE DEL MANUAL, PROCEDIMIENTO O ANEXO">
+			<h3>FORMATO DE MANUALES, PROCEDIMIENTOS Y ANEXOS</h3>
 		</div>
 
 		<br>
@@ -97,7 +99,7 @@
 			</table>
 		</div>
 		<p class="saltodepagina"></p>
-		
+		<div class="container">
 		<h4>CONTENIDO:</h4>
 		<br>
 		<div class="list-group">
@@ -151,26 +153,27 @@
 		<br>
 		<br>
 		<h5>CONTROL DE CAMBIOS</h5>
-		<table class="table table-bordered">
-			<tr>
-				<td style="background-color: lightgray;">No. de Revisión.</td>
-				<td style="background-color: lightgray;">Fecha de Revisión</td>
-				<td style="background-color: lightgray;">Concepto o parte del documento que ha sido modificado sobre la anterior revisión.</td>
-			</tr>
-			<tr>
-				<td><input type="text" name="No. de Revisión" class="form-control" placeholder="No.revisión"></td>
-				<td><input type="date" name="fRevision" class="form-control"></td>
-				<td><input type="text" name="Concepto o parte del documento" class="form-control" placeholder="INGRESE CONCEPTO DE"> </td>
-			</tr>
-		</table>
-
-		<br>
-		<br>
-		<br>
+		<div class="container">
+        <table class="table table-bordered">
+            <tr>
+                <td style="background-color: lightgray;">No. Version#</td>
+                <td style="background-color: lightgray;">Fecha de Elaboración</td>
+                <td style="background-color: lightgray;">Seccion Revisada</td>
+                <td style="background-color: lightgray;">Lista de Cambios</td>
+            </tr>
+            <tr>
+                <td class="col-2"><input type="text" name="No.Version" class="form-control-plaintext" placeholder="No. Version"></td>
+                <td class="col-2"><input type="date" name="fElaboracion" class="form-control-plaintext"></td>
+                <td class="col-2"><input type="text" name="Seccion " class="form-control-plaintext" placeholder="Seccion Revisada"> </td>
+                <td><input type="text" name="Lista" class="form-control-plaintext" placeholder="Lista de cambios"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
 		<br>
 		<br>
 		<div style="text-align:center;">
-			Prohibida la reproducción total o parcial de este documento propiedad de <b><< Nombre del cliente >></b>
+			Prohibida la reproducción total o parcial de este documento propiedad de <br> <b>  FLETES TOGO S.A. DE C.V.</b>
 		</div>
 		<br>
 		<br>
@@ -179,7 +182,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-
+ <!-- aqui van otros scripts que conectan con el arbol de documentos, y lo que hace que funcione la id del titulo con el del handlebar -->
+ <script>document.querySelector('#CLAVE').value=document.querySelector('title').innerHTML</script>
+ <script src="titulo.js"></script>
+ <script>document.querySelector('#TITULO').value=titulo.Formato1</script>
 
 	<script>
 		InlineEditor
