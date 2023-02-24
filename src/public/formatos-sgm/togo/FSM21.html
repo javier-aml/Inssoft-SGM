@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+         @media print {
+         body{
+        width: 21cm;
+        height: 29.7;
+        margin: 30mm 45mm 30mm 45mm; 
+        page-break-after: always;  
+             } 
+            }
+            textarea {
+        resize: none;
+            }
+            p.saltodepagina
+        {
+           page-break-after: always;
+        }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F-SM-21</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+	<!-- Script para la barra de herramientas en textarea  -->
+	<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/inline/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/inline/ckeditor.js"></script>
+<!-- EMPIEZA SRC handlebar -->
+<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+<script src="Togo Fecha.js"></script>
+<!-- TERMINA SRC handlebar -->
+
+</head>
+<body>
+        <!-- EMPIEZA HEADER DE FORMATOS -->
+		<script type="text/x-handlebars-template" id="template">
+         
+            {{{html}}}
+         
+        </script>
+        <div id="output">
+        </div>
+        <script>fill_template()</script>
+        <br>
+          <!-- TERMINA HEADER DE FORMATOS -->
+            <br>
+            <br>
+            <div class="container-fluid">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="background-color: lightgray;">Codificación</td>
+                        <td style="background-color: lightgray;">Procedimientos</td>
+                        <td style="background-color: lightgray;">Dirección</td>
+                        <td style="background-color: lightgray;">Responsable del SGM</td>
+                        <td style="background-color: lightgray;">Despachadores</td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-01 </td>
+                        <td>CONTROL DE DOCUMENTOS Y REGISTROS</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-02 </td>
+                        <td>COMPETENCIA Y CAPACITACIÓN </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-03 </td>
+                        <td>EVALUACIÓN Y CONTRATACIÓN DE PROVEEDORES Y PRESTADORES DE SERVICIOS</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-04 </td>
+                        <td>GESTIÓN DE LOS EQUIPOS DE MEDICIÓN DEL SGM</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-05 </td>
+                        <td>DEFINICIÓN DE INTERVALOS DE CONFIRMACIÓN METROLÓGICA</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-06 </td>
+                        <td>CONFIRMACIÓN METROLÓGICA</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-07 </td>
+                        <td>SEGUIMIENTO DE PROCESOS DE CONFIRMACIÓN METROLÓGICA Y MEDICIÓN</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-08 </td>
+                        <td>DETECCIÓN DE NO CONFORMIDADES, ACCIONES PREVENTIVAS Y CORRECTIVAS</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-09 </td>
+                        <td>GESTIÓN DE RIESGOS </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-10 </td>
+                        <td>ORGANIZACIÓN Y ADMINISTRACIÓN DEL SGM</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-11 </td>
+                        <td>AUDITORÍAS</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-12 </td>
+                        <td>REVISIÓN POR LA DIRECCIÓN </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-13 </td>
+                        <td>GESTIÓN DEL CAMBIO </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>P-SM-14 </td>
+                        <td>ESTIMACIÓN DE INCERTIDUMBRE</td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                        <td style="text-align: center;">
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        </div>
+                        </td>
+                    </tr>
+                </table> 
+                <div class="container">
+                    <table class="table table-bordered" style="text-align:center;">
+                        <thead>
+                            
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="background-color: lightgray;">
+                                    Revisado por:
+                                    <br>
+                                    <br>
+                                    
+                                    <input type="text" name="nombreResponsable" class="form-control" placeholder="INGRESE NOMBRE"> 
+                                    <br>
+                                    Responsable del SGM
+                                </td>
+                                <td>
+                                    <td style="background-color: lightgray;">
+                                    Aprobado por:
+                                    <br>
+                                    <br>
+                                
+                                    <input type="text" name="nombreAprueba" class="form-control" placeholder="INGRESE NOMBRE"> 
+                                    <br>
+                                    Dirección
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="background-color: lightgray;">No. Version#</td>
+                        <td style="background-color: lightgray;">Fecha de Elaboración</td>
+                        <td style="background-color: lightgray;">Seccion Revisada</td>
+                        <td style="background-color: lightgray;">Lista de Cambios</td>
+                    </tr>
+                    <tr>
+                        <td class="col-2"><input type="text" name="No.Version" class="form-control-plaintext" placeholder="No. Version"></td>
+                        <td class="col-2"><input type="date" name="fElaboracion" class="form-control-plaintext"></td>
+                        <td class="col-2"><input type="text" name="Seccion " class="form-control-plaintext" placeholder="Seccion Revisada"> </td>
+                        <td><input type="text" name="Lista" class="form-control-plaintext" placeholder="Lista de cambios"> </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+		<br>
+		<br>
+		<div style="text-align:center;">
+			Prohibida la reproducción total o parcial de este documento propiedad de <br> <b>  FLETES TOGO S.A. DE C.V.</b>
+		</div>
+		<br>
+		<br>
+	</form>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+ <!-- aqui van otros scripts que conectan con el arbol de documentos, y lo que hace que funcione la id del titulo con el del handlebar -->
+ <script>document.querySelector('#CLAVE').value=document.querySelector('title').innerHTML</script>
+ <script src="titulo.js"></script>
+ <script>document.querySelector('#TITULO').value=titulo.Formato21</script></body>  
+</html>
