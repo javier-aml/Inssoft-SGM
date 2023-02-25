@@ -29,7 +29,7 @@ class BalanceController {
         const salesData = await balanceHelper.getInvoicesByUIID();
 
         console.log("Dic-Ene First part")
-        const salesDicFirstPart = await balanceHelper.getInvoicesNatgasFirstPart(rfc,'2022-12-01','2023-01-01','V');// Primeras 20 pages de 50 rows
+        // salesDicFirstPart = await balanceHelper.getInvoicesNatgasFirstPart(rfc,'2022-12-01','2023-01-01','V');// Primeras 20 pages de 50 rows
         console.log("Dic-Ene Second part")
 
 
@@ -37,7 +37,7 @@ class BalanceController {
         //const salesDicSecondPart = await balanceHelper.getInvoicesNatgasSecondPart(rfc,'2022-12-01','2023-01-01','V');// Trae el resto
         //const salesDicThirdPart = await balanceHelper.getInvoicesNatgasThirdPart(rfc,'2022-12-01','2023-01-01','V');// Trae el resto
         
-        const allSales = [...salesData,...salesDicFirstPart];
+        const allSales = [...salesData];
         console.log(allSales.length)
         const salesResult = balanceHelper.validationsNatgas(allSales);
 
