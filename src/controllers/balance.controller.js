@@ -37,7 +37,7 @@ class BalanceController {
         //const salesDicSecondPart = await balanceHelper.getInvoicesNatgasSecondPart(rfc,'2022-12-01','2023-01-01','V');// Trae el resto
         //const salesDicThirdPart = await balanceHelper.getInvoicesNatgasThirdPart(rfc,'2022-12-01','2023-01-01','V');// Trae el resto
         
-        const allSales = [...salesData,...salesDicFirstPart,...salesDicSecondPart];
+        const allSales = [...salesData,...salesDicFirstPart];
         console.log(allSales.length)
         const salesResult = balanceHelper.validationsNatgas(allSales);
 
