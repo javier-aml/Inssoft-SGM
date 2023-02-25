@@ -25,11 +25,19 @@ class BalanceController {
 
       if(rfc == 'NQU120510QZ7'){
         
+        console.log("Invoices by uuid");
         const salesData = await balanceHelper.getInvoicesByUIID();
 
-        const salesDic = await balanceHelper.getInvoice(rfc,'2022-12-01','2023-01-01','C');
-        const allSales = [...salesData,...salesDic];
-      
+        console.log("Dic-Ene First part")
+        const salesDicFirstPart = await balanceHelper.getInvoicesNatgasFirstPart(rfc,'2022-12-01','2023-01-01','V');// Primeras 20 pages de 50 rows
+        console.log("Dic-Ene Second part")
+
+
+        
+        const salesDicSecondPart = await balanceHelper.getInvoicesNatgasSecondPart(rfc,'2022-12-01','2023-01-01','V');// Trae el resto
+        
+        const allSales = [...salesData,...salesDicFirstPart,...salesDicSecondPart];
+        console.log(allSales.length)
         const salesResult = balanceHelper.validationsNatgas(allSales);
 
         salesMXN = salesResult.acumuladoMXN.toFixed(2);
