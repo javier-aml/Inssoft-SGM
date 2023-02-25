@@ -150,14 +150,14 @@ module.exports.getInvoicesNatgasSecondPart = async (rfc, fechaInicio, fechaFin, 
 
       const lastView = datos['hydra:view']['hydra:last'];
       const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
-      const totalPages = 9;//lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const totalPages = lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
       const invoices = datos['hydra:member']
       allInvoices = [...allInvoices,...invoices];
       const promises = [];
 
       for(let i = 3; i <= totalPages; i++){
 
-        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=500&type=I`;
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=1000&type=I`;
 
         const promise =  axios({ 
           method: 'get', 
