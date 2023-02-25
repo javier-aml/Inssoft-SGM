@@ -188,6 +188,68 @@ module.exports.getInvoicesNatgasSecondPart = async (rfc, fechaInicio, fechaFin, 
 
 }//getInvoicesNatgasSecondPart
 
+module.exports.getInvoicesNatgasThirdPart = async (rfc, fechaInicio, fechaFin, type = 'C') => {
+
+  let allInvoices = [];
+
+  try{
+    let pageIndexCompra = 10
+
+
+    const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
+
+    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${pageIndexCompra}&itemsPerPage=1000&type=I`;
+
+    const firstPromise = axios({ 
+      method: 'get', 
+      url: url, 
+      headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+    });
+
+
+    await Promise.all([firstPromise]).then(async (response) => {
+      const datos =  response[0].data;
+
+      const lastView = datos['hydra:view']['hydra:last'];
+      const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
+      const totalPages = 19;//lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const invoices = datos['hydra:member']
+      allInvoices = [...allInvoices,...invoices];
+      const promises = [];
+
+      for(let i = 11; i <= totalPages; i++){
+
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=500&type=I`;
+
+        const promise =  axios({ 
+          method: 'get', 
+          url: url, 
+          headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+        });
+
+        promises.push(promise);
+      } 
+
+      await Promise.all(promises).then(function (response) {
+        
+        for(const key in response){
+          const datos = response[key];
+          const invoices = datos.data['hydra:member']
+
+          allInvoices = [...allInvoices,...invoices];
+
+        }   
+      });
+    });
+
+    return allInvoices;
+  } catch(error){
+    console.log(error)
+    return allInvoices;
+  }
+
+}//getInvoicesNatgasSecondPart
+
 module.exports.getInvoicesByUIID= async() => {
   const promises = [];
   let allInvoices = [];
