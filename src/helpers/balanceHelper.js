@@ -12,10 +12,7 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
 
     const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
 
-    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
-                  ${fechaFin}T06:00:00.000Z&issuedAt[after]=
-                  ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=
-                  ${pageIndexCompra}&itemsPerPage=1000&type=I`;
+    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${pageIndexCompra}&itemsPerPage=1000&type=I`;
 
     const firstPromise = axios({ 
       method: 'get', 
@@ -36,10 +33,7 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
 
       for(let i = 2; i <= totalPages; i++){
 
-        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
-                    ${fechaFin}T06:00:00.000Z&issuedAt[after]=
-                    ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=
-                    ${i}&itemsPerPage=1000&type=I`;
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=1000&type=I`;
 
         const promise =  axios({ 
           method: 'get', 
@@ -69,6 +63,192 @@ module.exports.getInvoice = async (rfc, fechaInicio, fechaFin, type = 'C') => {
   }
 
 }//getInvoice
+
+module.exports.getInvoicesNatgasFirstPart = async (rfc, fechaInicio, fechaFin, type = 'C') => {
+
+  let allInvoices = [];
+
+  try{
+    let pageIndexCompra = 1
+
+
+    const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
+
+    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${pageIndexCompra}&itemsPerPage=50&type=I`;
+
+    const firstPromise = axios({ 
+      method: 'get', 
+      url: url, 
+      headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+    });
+
+
+    await Promise.all([firstPromise]).then(async (response) => {
+      const datos =  response[0].data;
+
+      const lastView = datos['hydra:view']['hydra:last'];
+      const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
+      const totalPages = 20; //lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const invoices = datos['hydra:member']
+      allInvoices = [...allInvoices,...invoices];
+      const promises = [];
+
+      for(let i = 2; i <= totalPages; i++){
+
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=50&type=I`;
+
+        const promise =  axios({ 
+          method: 'get', 
+          url: url, 
+          headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+        });
+
+        promises.push(promise);
+      } 
+
+      await Promise.all(promises).then(function (response) {
+        
+        for(const key in response){
+          const datos = response[key];
+          const invoices = datos.data['hydra:member']
+
+          allInvoices = [...allInvoices,...invoices];
+
+        }   
+      });
+    });
+
+    return allInvoices;
+  } catch(error){
+    console.log(error)
+    return allInvoices;
+  }
+
+}//getInvoicesNatgasFirstPart
+
+module.exports.getInvoicesNatgasSecondPart = async (rfc, fechaInicio, fechaFin, type = 'C') => {
+
+  let allInvoices = [];
+
+  try{
+    let pageIndexCompra = 2
+
+
+    const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
+
+    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${pageIndexCompra}&itemsPerPage=1000&type=I`;
+
+    const firstPromise = axios({ 
+      method: 'get', 
+      url: url, 
+      headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+    });
+
+
+    await Promise.all([firstPromise]).then(async (response) => {
+      const datos =  response[0].data;
+
+      const lastView = datos['hydra:view']['hydra:last'];
+      const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
+      const totalPages = lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const invoices = datos['hydra:member']
+      allInvoices = [...allInvoices,...invoices];
+      const promises = [];
+
+      for(let i = 3; i <= totalPages; i++){
+
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=1000&type=I`;
+
+        const promise =  axios({ 
+          method: 'get', 
+          url: url, 
+          headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+        });
+
+        promises.push(promise);
+      } 
+
+      await Promise.all(promises).then(function (response) {
+        
+        for(const key in response){
+          const datos = response[key];
+          const invoices = datos.data['hydra:member']
+
+          allInvoices = [...allInvoices,...invoices];
+
+        }   
+      });
+    });
+
+    return allInvoices;
+  } catch(error){
+    console.log(error)
+    return allInvoices;
+  }
+
+}//getInvoicesNatgasSecondPart
+
+module.exports.getInvoicesNatgasThirdPart = async (rfc, fechaInicio, fechaFin, type = 'C') => {
+
+  let allInvoices = [];
+
+  try{
+    let pageIndexCompra = 10
+
+
+    const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
+
+    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${pageIndexCompra}&itemsPerPage=1000&type=I`;
+
+    const firstPromise = axios({ 
+      method: 'get', 
+      url: url, 
+      headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+    });
+
+
+    await Promise.all([firstPromise]).then(async (response) => {
+      const datos =  response[0].data;
+
+      const lastView = datos['hydra:view']['hydra:last'];
+      const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
+      const totalPages = 19;//lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const invoices = datos['hydra:member']
+      allInvoices = [...allInvoices,...invoices];
+      const promises = [];
+
+      for(let i = 11; i <= totalPages; i++){
+
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=500&type=I`;
+
+        const promise =  axios({ 
+          method: 'get', 
+          url: url, 
+          headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
+        });
+
+        promises.push(promise);
+      } 
+
+      await Promise.all(promises).then(function (response) {
+        
+        for(const key in response){
+          const datos = response[key];
+          const invoices = datos.data['hydra:member']
+
+          allInvoices = [...allInvoices,...invoices];
+
+        }   
+      });
+    });
+
+    return allInvoices;
+  } catch(error){
+    console.log(error)
+    return allInvoices;
+  }
+
+}//getInvoicesNatgasSecondPart
 
 module.exports.getInvoicesByUIID= async() => {
   const promises = [];
@@ -148,44 +328,6 @@ module.exports.getInvoicesByUIID= async() => {
   return allInvoices;
 }
 
-/*module.exports.getInvoicePagination = async (rfc, fechaInicio, fechaFin, type = 'C', page = 1) => {
-
-  let allInvoices = [];
-
-  try{
-
-
-    const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
-
-    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=
-                  ${fechaFin}T06:00:00.000Z&issuedAt[after]=
-                  ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=
-                  ${page}&itemsPerPage=50&type=I`;
-
-    const firstPromise = axios({ 
-      method: 'get', 
-      url: url, 
-      headers: { 'X-API-Key': '446771abe7ccc796716a7b2f5f5472eb' }
-    });
-
-
-    await Promise.all([firstPromise]).then(async (response) => {
-      const datos =  response[0].data;
-
-      const lastView = datos['hydra:view']['hydra:last'];
-      const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
-      const totalPages = lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
-      const invoices = datos['hydra:member']
-      allInvoices = invoices;
-    });
-
-    return allInvoices;
-  } catch(error){
-    console.log(error)
-    return allInvoices;
-  }
-
-}//getInvoicePagination*/
 
 module.exports.validationsGlencore = (invoices, type) => {
   let allInvoices = [];
@@ -284,7 +426,7 @@ module.exports.validationsNatgas = (invoices) => {
             for (let index = rfcNombre.length; index < 11; index++) {
               rfcNombre= rfcNombre + ' '
             }
-        }
+        }//if
 
         if (res.items.length<2) {
           const identificationNumber = res.items[0].identificationNumber
@@ -391,7 +533,7 @@ module.exports.validationsNatgas = (invoices) => {
                     inBalance: true,
                     fechaNuevaAplicacion: '',
                     horaNuevaAplicacion: '',
-                    justificacionCambio: '',
+                    justificacionCambio: '',                    
                     identificationNumber: identificationNumber
                     
                   }
@@ -423,7 +565,36 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
   let ClaveInstalacion = dataStation.claveInstalacion
   let productoEstructura = require(path.join(__dirname, '../public/json/NatGas/Mensual/productoEstructura.json'))
 
-
+  const nov =[
+    'B5B0D408-7671-11ED-822D-BDE83B1B2B56',
+    '87D95CAF-74C2-11ED-A002-E5B00C2E5FDA',
+    '0A422963-896A-11ED-8ABE-A1EAABC586BF',
+    '07912557-75B0-11ED-A4CD-79741F910A9C',
+    '03FD9E3F-75B0-11ED-9A70-CD318E6B658A',
+    '9A0C02CB-772F-11ED-8C8D-D1DB0F71A04F',
+    '6EB19573-7D79-11ED-9C6F-717862C1372B',
+    'ECFE82AF-7596-11ED-A046-17D4172A3019',
+    '712F3308-7685-11ED-9EE2-17CCACDE5971',
+    'EF60DC11-7596-11ED-8524-1D7FB1C4EAF4',
+    '2AC50A60-7826-11ED-9AD7-0548B97B728D',
+    '1719A396-7826-11ED-BFE0-036F92C89A17',
+    '5F38C661-7826-11ED-A6C2-21F21770A258',
+    '3CA6AD9D-7826-11ED-AF5C-CBC595120E8D',
+    '5183408D-7826-11ED-8442-7FCF3E93BFB5',
+    '1BDE581C-7826-11ED-AE25-A92AD6F423E6',
+    '12ED869D-7826-11ED-8D9C-E3EB970B47E1',
+    '1A149446-7826-11ED-B72E-1B51303CC06A',
+    '200A7537-7826-11ED-B88F-D12801702F9E',
+    '59DB7C18-7826-11ED-9ADC-2BF03625C0CF',
+    '2567C017-7826-11ED-A3A7-B993E0F4C63F',
+    '40D910E1-7B2F-11ED-BA48-CB11D3CFB6A6',
+    '94F64C5D-74C2-11ED-9662-27A6E625BCAB',
+    'AF5D13DD-751C-11ED-B128-5FC19EEE59BC',
+    'AE2BE6A0-751C-11ED-AA2D-E95EE35FA989',
+    'B1BF6D3F-751C-11ED-BA9A-3D2FDFD87BEC',
+    '2633D36A-8946-11ED-8981-C5C06711E7B2',
+    'E2E72D57-7CD6-11ED-9260-C14F15393A8A'
+    ]
   try{
 
     let noEmpty = 0;
@@ -443,11 +614,11 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
               }
           }
           
-          const identificationNumber = res.identificationNumber
+          const identificationNumber = res.noIdentificacion
         
           if (identificationNumber !== null) {
             try {
-              if (identificationNumber.includes(permisoEstacion) == true && res.productIdentification == '15111512') {
+              if (identificationNumber.includes(permisoEstacion) == true && res.claveSAT == '15111512') {
   
                 const alredyinJson = productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.some(element => element == res.rfcReceptor)
                   if (alredyinJson == false) {
@@ -469,8 +640,6 @@ module.exports.createJsonNatgasStation = (station, invoices) => {
                             }
                         }]
                         }
-                    
-                    
                       productoEstructura.ReporteDeVolumenMensual.Entregas.Complemento[0].Nacional.push(entrega)
                   } else {
                     let entrega = {
