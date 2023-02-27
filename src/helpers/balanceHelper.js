@@ -88,7 +88,7 @@ module.exports.getInvoicesNatgasFirstPart = async (rfc, fechaInicio, fechaFin, t
 
       const lastView = datos['hydra:view']['hydra:last'];
       const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
-      const totalPages = 2; //lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const totalPages = 3; //lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
       const invoices = datos['hydra:member']
       allInvoices = [...allInvoices,...invoices];
       const promises = [];
