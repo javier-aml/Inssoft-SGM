@@ -28,13 +28,13 @@ class BalanceController {
         console.log("Invoices by uuid");
         const salesData = await balanceHelper.getInvoicesByUIID();
 
-        const salesDicFirstPart = await balanceHelper.getInvoicesNatgasFirstPart(rfc,'2022-12-01','2023-01-01','V');// Primeras 20 pages de 50 rows
+        //const salesDicFirstPart = await balanceHelper.getInvoicesNatgasFirstPart(rfc,'2022-12-01','2023-01-01','V');// Primeras 20 pages de 50 rows
        
         const salesDicSecondPart = await balanceHelper.getInvoicesNatgasSecondPart(rfc,'2022-12-01','2023-01-01','V');// Trae el resto
         //const salesDicThirdPart = await balanceHelper.getInvoicesNatgasThirdPart(rfc,'2022-12-01','2023-01-01','V');// Trae el resto
         
-        const allSales = [...salesData,...salesDicFirstPart,...salesDicSecondPart];
-        
+        const allSales = [...salesData,...salesDicSecondPart];
+
         const salesResult = balanceHelper.validationsNatgas(allSales);
 
         salesMXN = salesResult.acumuladoMXN.toFixed(2);
