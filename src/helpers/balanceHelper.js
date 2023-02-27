@@ -74,7 +74,7 @@ module.exports.getInvoicesNatgasFirstPart = async (rfc, fechaInicio, fechaFin, t
 
     const urlType = type == 'C' ? 'receiver.rfc' : 'issuer.rfc';
 
-    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${pageIndexCompra}&itemsPerPage=50&type=I`;
+    const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]=${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${pageIndexCompra}&itemsPerPage=100&type=I`;
 
     const firstPromise = axios({ 
       method: 'get', 
@@ -88,14 +88,14 @@ module.exports.getInvoicesNatgasFirstPart = async (rfc, fechaInicio, fechaFin, t
 
       const lastView = datos['hydra:view']['hydra:last'];
       const lastViewParts = lastView != undefined ?  lastView.split("=") : [];
-      const totalPages = 20; //lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
+      const totalPages = 2; //lastViewParts.length > 0 ? lastViewParts[lastViewParts.length - 1] : 0;
       const invoices = datos['hydra:member']
       allInvoices = [...allInvoices,...invoices];
       const promises = [];
 
       for(let i = 2; i <= totalPages; i++){
 
-        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=50&type=I`;
+        const url = `https://api.satws.com/taxpayers/${rfc}/invoices?issuedAt[before]=${fechaFin}T06:00:00.000Z&issuedAt[after]= ${fechaInicio}T06:00:00.000Z&${urlType}=${rfc}&status=VIGENTE&page=${i}&itemsPerPage=100&type=I`;
 
         const promise =  axios({ 
           method: 'get', 
