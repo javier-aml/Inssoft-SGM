@@ -9,6 +9,7 @@ const pool = require('../database');
 const fs = require("fs");
 const cors = require("cors")
 const BalanceController = require('../controllers/balance.controller');
+const PdfToJsonController = require('../controllers/pdfToJson')
 const moment = require('moment');
 
 var corsOptions = {
@@ -8565,6 +8566,8 @@ router.post('/balance',BalanceController.balance);
 //router.post('/balance-pagination',BalanceController.balancePagination);
 
 router.post('/createBalanceJSON',BalanceController.createBalanceJSON);
+
+router.post('/pdfToJson', PdfToJsonController.postPdfToJson);
 
 function dateFormat(fecha) {
   const separar = fecha.split("-")
