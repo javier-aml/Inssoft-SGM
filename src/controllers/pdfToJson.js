@@ -3,8 +3,8 @@ const pdfToJson = require('../helpers/pdfToJson');
 
 exports.postPdfToJson = async (req, res) => {
     try{
-        // if(!req.body) throw new Error('Invalid file')
-        // else if (req.body.fileData) throw new Error('Invalid file')
+        if(!req.body) throw new Error('Invalid file')
+        else if (!req.body.fileData) throw new Error('Invalid file')
 
         const fileData = req.body.fileData.split('base64,')[1]
         
@@ -45,9 +45,14 @@ exports.postPdfToJson = async (req, res) => {
         }
 
         // EXECUTE OCR
-            res.setHeader('Content-Type', 'application/json');
-            res.send(await pdfToJson(ocrConfig, fileData))
+        const ocrRes = await pdfToJson(ocrConfig, fileData)
+        console.log('JAML')
+        console.log(ocrRes)
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(ocrRes)
     } catch (err) {
+        console.error(err)
         res.status(400).send(err)
     }
 }

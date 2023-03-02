@@ -20,7 +20,6 @@ function awsTextract () {
 function fetchData(config, dataInput) {
     try{
         if(!dataInput) throw new Error('Invalid data input')
-        else if(!dataInput.length) throw new Error('Invalid data input')
 
         // IF DEBUG MODE RETUNRNS FULL API RESPONSE
         if(config.debugMode) return dataInput
@@ -156,7 +155,6 @@ function pdfToJson (config, fileData) {
             // EXECTUE TEXTRAC
             textract.analyzeDocument(params, textractCb);
         } catch (err) {
-            console.error(err)
             reject(new Error(err))
         }
     })
