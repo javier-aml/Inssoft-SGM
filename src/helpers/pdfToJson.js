@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const pdf2base64 = require('pdf-to-base64');
 require("aws-sdk/lib/maintenance_mode_message").suppress = true;
 
 // GENERATES THE AWS OBJECT
@@ -17,29 +16,19 @@ function awsTextract () {
     }
 }
 
-// CONVERTS PDF FILE TO BASE64 BUFFER
-async function fileToBase64Buffer (filePath) {
-    try{
-        const base64String = await pdf2base64(filePath)
-
-        return Buffer.from(base64String, 'base64')
-    } catch(err) {
-        throw new Error(err)
-    }
-}
-
 // FETCH(FILTER) OCR GENERATED DATA
-function fetchData(configs, dataInput) {
+function fetchData(config, dataInput) {
     try{
         if(!dataInput) throw new Error('Invalid data input')
+        else if(!dataInput.length) throw new Error('Invalid data input')
 
         // IF DEBUG MODE RETUNRNS FULL API RESPONSE
-        if(configs.debugMode) return dataInput
+        if(config.debugMode) return dataInput
 
         const output = []
 
         // ITERATE THROUGH POLYGONS
-        for(let polygon of configs.polygons) {
+        for(let polygon of config.polygons) {
             // GET THE ORIGIN COORDENATE (RELATIVE OR ABSOLUTE)
             let origin = null
 
@@ -48,16 +37,31 @@ function fetchData(configs, dataInput) {
                 let anchorY = null
 
                 // GET ANCHOR COORDINATES
-                anchorX = dataInput.Blocks.filter(word => (word.Text ? word.Text : '').trim() === polygon.anchor.X)
+                anchorX = dataInput.Blocks.filter(word => (word.Text ? word.Text : '').trim() === polygon.anchor.X.text)
                 anchorX = anchorX.length ? anchorX[0] : []
-                anchorY = dataInput.Blocks.filter(word => (word.Text ? word.Text : '').trim() === polygon.anchor.Y)
+                anchorY = dataInput.Blocks.filter(word => (word.Text ? word.Text : '').trim() === polygon.anchor.Y.text)
                 anchorY = anchorY.length ? anchorY[0] : []
 
+                if(!anchorX && !anchorY) return;
+
+                const offsetX = polygon.anchor.X.offset
+                const offsetY = polygon.anchor.Y.offset
+
+                const tlx = anchorX.Geometry.Polygon[3].X
+                const tly = anchorY.Geometry.Polygon[3].Y
+                const brx = anchorX.Geometry.Polygon[1].X
+                const bry = anchorY.Geometry.Polygon[1].Y
+
+                const tlxOffset = tlx * (offsetX/100)
+                const tlyOffset = tly * (offsetY/100)
+                const brxOffset = brx * (offsetX/100)
+                const bryOffset = bry * (offsetY/100)
+
                 origin = {
-                    tlx: anchorX.Geometry.Polygon[3].X,
-                    tly: anchorY.Geometry.Polygon[3].Y,
-                    brx: anchorX.Geometry.Polygon[1].X,
-                    bry: anchorY.Geometry.Polygon[1].Y
+                    tlx: tlx + tlxOffset,
+                    tly: tly + tlyOffset,
+                    brx: brx + brxOffset,
+                    bry: bry + bryOffset
                 }
             } else if(polygon.coordinateType === 'absolute') {
                 origin = {
@@ -113,22 +117,24 @@ function fetchData(configs, dataInput) {
         
         return output
     } catch(err) {
-        throw new Error(err)
+        return new Error(err)
     }
 }
 
 // MAIN METHOD
-function pdfToJson (config, filePath) {
+function pdfToJson (config, fileData) {
     return new Promise(async (resolve, reject) => {
         try{
             if(!config) throw new Error('Invalid configuration')
-            if(!filePath) throw new Error('Invalid filepath')
+            if(!fileData) throw new Error('Invalid fileData')
 
             // GENERATES TEXTRACT OBJECT
             const textract = awsTextract();
             
             // FETCH FILE BASE64 BUFFER
-            const buffer  = await fileToBase64Buffer(filePath)
+            // const buffer  = await fileToBase64Buffer(filePath)
+
+            const buffer = Buffer.from(fileData, 'base64')
 
             // TEXTRACT PARAMETERS
             const params = {
@@ -150,6 +156,7 @@ function pdfToJson (config, filePath) {
             // EXECTUE TEXTRAC
             textract.analyzeDocument(params, textractCb);
         } catch (err) {
+            console.error(err)
             reject(new Error(err))
         }
     })

@@ -1,61 +1,53 @@
 const path = require('path')
 const pdfToJson = require('../helpers/pdfToJson');
 
-exports.postPdfToJson = async (_, res) => {
-     // THIS IS A TEST, TO BE REMOVED
-    const filePath= path.join(__dirname, '../public/pdf/TestOCR/TEST2.pdf')
-    
-    // POLIGON CONFIG(OVERRIDE CONFIG)
-    const testConfig = {
-        // IF DEBBUG MODE SET TO TRUE RETURNS THE FULL RESPONSE
-        debugMode: false,
+exports.postPdfToJson = async (req, res) => {
+    try{
+        // if(!req.body) throw new Error('Invalid file')
+        // else if (req.body.fileData) throw new Error('Invalid file')
 
-        // TYPE OF COORDINATE ABSOLUTE OR RELATIVE
-        // ABSOLUTE IS BASED ON THE ORIGIN OF THE DOCUMENT
-        // RELATIVE IS BASED ON THE ORIGIN OF A CERTAIN WORD
-        polygons: [
-            {
-                title: 'C1(Promedio)',
-                coordinateType: 'relative',
-                anchor: {
-                    X: '%C1',
-                    Y: 'Promedios'
+        const fileData = req.body.fileData.split('base64,')[1]
+        
+        // POLIGON CONFIG(OVERRIDE CONFIG)
+        const ocrConfig = {
+            // IF DEBBUG MODE SET TO TRUE RETURNS THE FULL RESPONSE
+            debugMode: false,
+
+            // TYPE OF COORDINATE ABSOLUTE OR RELATIVE
+            // ABSOLUTE IS BASED ON THE ORIGIN OF THE DOCUMENT
+            // RELATIVE IS BASED ON THE ORIGIN OF A CERTAIN WORD
+            polygons: [
+                {
+                    title: 'm3Corregidos',
+                    coordinateType: 'relative',
+                    anchor: {
+                        X: {text: 'CONSUMO m3 CORREGIDOS', offset: 0},
+                        Y: {text: 'CONSUMO m3 CORREGIDOS', offset: 4}
+                    },
+                    margin: {
+                        X: 3,
+                        Y: 3
+                    }
                 },
-                margin: {
-                    X: 3,
-                    Y: 2
+                {
+                    title: 'referencia',
+                    coordinateType: 'relative',
+                    anchor: {
+                        X: {text: 'Referencia', offset: 0},
+                        Y: {text: 'Referencia', offset: 4}
+                    },
+                    margin: {
+                        X: 11,
+                        Y: 3
+                    }
                 }
-            },{
-                title: 'C2(Promedio)',
-                coordinateType: 'absolute',
-                coordinates: {
-                    tlx: 0.15192900598049164,
-                    tly: 0.8022553324699402,
-                    brx: 0.16991327702999115,
-                    bry: 0.7942352294921875                    
-                },
-                margin: {
-                    X: 3,
-                    Y: 2
-                }
-            },{
-                title: 'C3(Promedio)',
-                coordinateType: 'relative',
-                anchor: {
-                    X: '%C3',
-                    Y: 'Promedios'
-                },
-                margin: {
-                    X: 3,
-                    Y: 2
-                }
-            }
-        ]
+            ]
+        }
+
+        // EXECUTE OCR
+            res.setHeader('Content-Type', 'application/json');
+            res.send(await pdfToJson(ocrConfig, fileData))
+    } catch (err) {
+        res.status(400).send(err)
     }
-
-    // EXECUTE OCR
-    const data = await pdfToJson(testConfig, filePath);
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(data)
 }
