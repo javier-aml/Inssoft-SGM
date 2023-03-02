@@ -1,0 +1,109 @@
+// Bootstrap and BootstrapVue SCSS files
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
+
+.main-body{
+    height: 800px;
+    min-height: calc(100vh - 100px);
+  }
+
+.fullCalendar{
+  max-width: 1200px;
+  margin: auto;
+}
+.fullCalendar .fc .fc-button-primary {
+  background-color: white;
+  border-color: #0A467A;
+  color: #0A467A;
+  font-weight: bolder;
+  font-size: 1rem;
+}
+
+.fullCalendar .fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: #0A467A;
+  border-color: #0A467A;
+  color: white;
+}
+
+.fullCalendar a {
+  color: black;
+}
+
+.fullCalendar .fc-header-toolbar .fc-toolbar .fc-toolbar-ltr {
+  display: flex;
+  flex-direction: column;
+  height: 140px;
+}
+
+.fullCalendar .fc .fc-daygrid-day.fc-day-today {
+  background-color: #E3E3E3;
+}
+
+.fullCalendar .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-top {
+  font-weight: bolder;
+}
+
+.fullCalendar .fc-h-event {
+  background-color: #FE891A;
+  border: #FE891A;
+  padding: 5px 5px;
+  cursor: pointer;
+}
+
+.fullCalendar .fc-event-time {
+  font-weight: bold;
+  background: white;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 4px 6px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  color: #0b467a;
+}
+
+.fullCalendar .fc-direction-ltr .fc-daygrid-event .fc-event-time {
+  padding: 0 4px;
+}
+
+.fullCalendar .fc-event-time::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-image: url(../../assets/img/icons/reloj.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 4px;
+}
+
+.fullCalendar .fc-h-event .fc-event-title,
+.fullCalendar .fc-v-event .fc-event-title,
+.fullCalendar .fc-list-event-title,
+.fullCalendar .fc-list-day-text,
+.fullCalendar .fc .fc-col-header-cell-cushion {
+  font-weight: bold;
+  vertical-align: text-top;
+  text-transform: capitalize;
+}
+
+.fullCalendar .fc .fc-toolbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 180px;
+}
+
+@media (min-width: 1000px) {
+  .fullCalendar .fc .fc-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 80px;
+  }
+
+}
+
+.fullCalendar .fc-toolbar-chunk {
+  text-transform: capitalize;
+}

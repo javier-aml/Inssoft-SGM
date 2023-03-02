@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="73.831" height="108.108" viewBox="0 0 73.831 108.108">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="5.371" gradientTransform="translate(0.65 4.57) scale(0.093 0.093)" gradientUnits="objectBoundingBox">
+      <stop offset="0.011" stop-color="#c8cacf"/>
+      <stop offset="1" stop-color="#fff"/>
+    </radialGradient>
+    <linearGradient id="linear-gradient" x1="1.153" y1="0.353" x2="0.729" y2="0.521" gradientUnits="objectBoundingBox">
+      <stop offset="0.212" stop-color="#009ad8"/>
+      <stop offset="0.302" stop-color="#0080ba"/>
+      <stop offset="0.451" stop-color="#025c8f"/>
+      <stop offset="0.585" stop-color="#03426f"/>
+      <stop offset="0.698" stop-color="#03325c"/>
+      <stop offset="0.776" stop-color="#042d56"/>
+      <stop offset="0.816" stop-color="#02264d"/>
+      <stop offset="0.924" stop-color="#00173a"/>
+      <stop offset="1" stop-color="#001234"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-0.666" y1="0.656" x2="0.169" y2="0.516" gradientUnits="objectBoundingBox">
+      <stop offset="0.109" stop-color="#ffed00"/>
+      <stop offset="0.399" stop-color="#e56c34"/>
+      <stop offset="1" stop-color="#bc0c1d"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="-0.601" y1="0.988" x2="0.484" y2="0.324" gradientUnits="objectBoundingBox">
+      <stop offset="0.089" stop-color="#e77036"/>
+      <stop offset="1" stop-color="#bc0c1d"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="0.867" y1="0.966" x2="0.397" y2="0.355" gradientUnits="objectBoundingBox">
+      <stop offset="0.109" stop-color="#fd0"/>
+      <stop offset="0.594" stop-color="#e77036"/>
+      <stop offset="1" stop-color="#cb3a21"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.199" y1="0.061" x2="0.402" y2="0.529" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#2cb3e5"/>
+      <stop offset="0.639" stop-color="#104279"/>
+      <stop offset="1" stop-color="#001335"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-6" x1="0.01" y1="0.224" x2="0.851" y2="1.075" gradientUnits="objectBoundingBox">
+      <stop offset="0.109" stop-color="#04b2e1"/>
+      <stop offset="0.421" stop-color="#0084c7"/>
+      <stop offset="0.729" stop-color="#0068b1"/>
+      <stop offset="0.983" stop-color="#00183b"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-7" x1="0.01" y1="0.224" x2="0.851" y2="1.075" gradientUnits="objectBoundingBox">
+      <stop offset="0.002" stop-color="#fffdf8"/>
+      <stop offset="0.506" stop-color="#69a4d4" stop-opacity="0.459"/>
+      <stop offset="1" stop-color="#69a4d4" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g id="Grupo_1184" data-name="Grupo 1184" transform="translate(-861 -202.893)">
+    <ellipse id="Elipse_1" data-name="Elipse 1" cx="36.915" cy="3.437" rx="36.915" ry="3.437" transform="translate(861 304.127)" fill="url(#radial-gradient)"/>
+    <g id="Grupo_3" data-name="Grupo 3" transform="translate(839.782 181.308)">
+      <g id="Grupo_2" data-name="Grupo 2">
+        <path id="Trazado_8" data-name="Trazado 8" d="M48.507,97.055a16.741,16.741,0,0,1,9.527-30.441c-4.38-5.366-7.428-10.6-8.839-16.113a34.049,34.049,0,0,0,8.938,66.9,34.4,34.4,0,0,0,3.764-.211C60.407,109.2,55.82,102.442,48.507,97.055Z" fill="url(#linear-gradient)"/>
+        <path id="Trazado_9" data-name="Trazado 9" d="M79.353,56.739h0c-.042-.032-.08-.064-.122-.095-.278-.22-.554-.44-.839-.651C58.213,40.333,60.179,21.585,60.179,21.585,54,32.714,52.735,41.7,55.256,50.087c.078.261.155.523.241.783.078.236.163.47.247.705s.167.467.256.7.191.486.29.728q.136.332.28.662c.109.249.219.5.334.748.1.205.195.411.3.616.127.26.252.521.385.781.082.159.17.317.255.476q.507.956,1.076,1.907c.043.071.082.142.125.213.191.315.393.631.594.946.086.135.171.269.259.4.2.313.415.625.629.938l.271.394q.339.484.691.971c.076.1.154.208.231.312.26.353.524.707.8,1.061l.023.029q1.934,2.508,4.26,5.06l.032.035q1.566,1.727,3.294,3.486a16.233,16.233,0,0,1,4.734,10.433c.015.292.023.587.023.883a16.744,16.744,0,0,1-16,16.726A30.379,30.379,0,0,1,67.5,116.09,34.04,34.04,0,0,0,79.353,56.739Z" fill="url(#linear-gradient-2)"/>
+      </g>
+      <path id="Trazado_10" data-name="Trazado 10" d="M68.659,63.076l1.462,8.965a17.333,17.333,0,0,1,2.025,2.5C81.358,87.376,76.041,103.6,67.5,116.09A34.026,34.026,0,0,0,88.214,67.428C82.1,66.093,68.659,63.076,68.659,63.076Z" fill="url(#linear-gradient-3)"/>
+      <path id="Trazado_11" data-name="Trazado 11" d="M92.181,83.357A33.977,33.977,0,0,0,79.353,56.739h0c-.042-.032-.08-.064-.122-.095-.278-.22-.554-.44-.839-.651C58.213,40.333,60.179,21.585,60.179,21.585,54,32.714,52.735,41.7,55.256,50.087c.078.261.155.523.241.783.078.236.163.47.247.705s.167.467.256.7.191.486.29.728q.136.332.28.662c.109.249.219.5.334.748.1.205.195.411.3.616.127.26.252.521.385.781.082.159.17.317.255.476q.507.956,1.076,1.907c.043.071.082.142.125.213.191.315.393.631.594.946.086.135.171.269.259.4.2.313.415.625.629.938l.271.394q.339.484.691.971c.076.1.154.208.231.312.26.353.524.707.8,1.061l.023.029q1.934,2.508,4.26,5.06l.032.035q1.566,1.727,3.294,3.486c10.476,11.33,14.646,17.8,14.634,32.526A33.869,33.869,0,0,0,92.181,83.357Z" fill="url(#linear-gradient-4)"/>
+      <path id="Trazado_12" data-name="Trazado 12" d="M61.9,117.194c-1.49-7.994-6.077-14.752-13.39-20.139a16.849,16.849,0,0,1-4.545-4.788h0c-.067-.107-.135-.213-.2-.321-7.4-11.737-8.222-22.733-5.013-36.57A34.041,34.041,0,0,0,58.133,117.4,34.4,34.4,0,0,0,61.9,117.194Z" fill="url(#linear-gradient-5)"/>
+      <path id="Trazado_13" data-name="Trazado 13" d="M28.058,67.395A34.047,34.047,0,0,0,58.133,117.4a34.4,34.4,0,0,0,3.764-.211c-1.49-7.994-6.077-14.752-13.39-20.139C40.7,91.639,32.33,86.659,28.058,67.395Z" fill="url(#linear-gradient-6)"/>
+      <path id="Trazado_14" data-name="Trazado 14" d="M28.058,67.395A34.047,34.047,0,0,0,58.133,117.4a34.4,34.4,0,0,0,3.764-.211c-1.49-7.994-6.077-14.752-13.39-20.139C40.7,91.639,32.33,86.659,28.058,67.395Z" opacity="0.36" fill="url(#linear-gradient-7)" style="mix-blend-mode: hard-light;isolation: isolate"/>
+    </g>
+  </g>
+</svg>
