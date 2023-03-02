@@ -46,8 +46,6 @@ exports.postPdfToJson = async (req, res) => {
 
         // EXECUTE OCR
         const ocrRes = await pdfToJson(ocrConfig, fileData)
-        console.log('JAML')
-        console.log(ocrRes)
 
         res.setHeader('Content-Type', 'application/json');
         res.send(ocrRes)

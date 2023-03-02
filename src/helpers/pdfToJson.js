@@ -21,6 +21,7 @@ function fetchData(config, dataInput) {
     try{
         if(!dataInput) throw new Error('Invalid data input')
 
+
         // IF DEBUG MODE RETUNRNS FULL API RESPONSE
         if(config.debugMode) return dataInput
 
@@ -40,8 +41,6 @@ function fetchData(config, dataInput) {
                 anchorX = anchorX.length ? anchorX[0] : []
                 anchorY = dataInput.Blocks.filter(word => (word.Text ? word.Text : '').trim() === polygon.anchor.Y.text)
                 anchorY = anchorY.length ? anchorY[0] : []
-
-                if(!anchorX && !anchorY) return;
 
                 const offsetX = polygon.anchor.X.offset
                 const offsetY = polygon.anchor.Y.offset
